@@ -1,7 +1,7 @@
-#include "../inc/framework.h"
+#include "../../inc/framework.h"
 using namespace BloomFramework;
 
-Events BloomFramework::InputHandler::getInput() {
+Events BloomFramework::EventHandler::getInput() {
 	//Handle events on queue
 	while(SDL_PollEvent(&e) != 0) {
 		//User requests quit
@@ -28,4 +28,5 @@ Events BloomFramework::InputHandler::getInput() {
 			return empty;
 		}
 	}
+
 }

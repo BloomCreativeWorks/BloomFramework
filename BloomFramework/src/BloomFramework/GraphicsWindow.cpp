@@ -1,4 +1,4 @@
-#include "../inc/framework.h"
+#include "../../inc/framework.h"
 bool BloomFramework::GraphicsWindow::initWindow() {
 	//Initialize SDL
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) {
@@ -17,13 +17,19 @@ bool BloomFramework::GraphicsWindow::initWindow() {
 	return true;
 }
 
-bool BloomFramework::GraphicsWindow::loadMedia(std::string imagePath) {
+bool BloomFramework::GraphicsWindow::loadMedia(const std::string imagePath) {
 	//Load splash image
 	gImage = SDL_LoadBMP(imagePath.c_str());
 	if(gImage == NULL) {
 		std::clog << "Unable to load image " << imagePath << "! SDL Error: " << SDL_GetError() << std::endl;
 		return false;
 	} 
+	return true;
+}
+
+bool BloomFramework::GraphicsWindow::loadMedia(SDL_Surface* texture) {
+	//Load splash image
+	gImage = texture;
 	return true;
 }
 

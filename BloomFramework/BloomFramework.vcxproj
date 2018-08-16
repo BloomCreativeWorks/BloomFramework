@@ -82,6 +82,7 @@
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
+      <NoEntryPoint>false</NoEntryPoint>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -95,6 +96,7 @@
     <Link />
     <Link>
       <SubSystem>Console</SubSystem>
+      <NoEntryPoint>false</NoEntryPoint>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,11 +128,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\GraphicsWindow.cpp" />
-    <ClCompile Include="src\InputHandler.cpp" />
+    <ClCompile Include="src\BloomFramework\GraphicsWindow.cpp" />
+    <ClCompile Include="src\BloomFramework\EventHandler.cpp" />
+    <ClCompile Include="src\BloomFramework\TextureStore.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\BloomFramework\EventHandler.h" />
+    <ClInclude Include="inc\BloomFramework\TextureStore.h" />
     <ClInclude Include="inc\framework.h" />
+    <ClInclude Include="inc\BloomFramework\GraphicsWindow.h" />
+    <ClInclude Include="inc\BloomFramework\stdIncludes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

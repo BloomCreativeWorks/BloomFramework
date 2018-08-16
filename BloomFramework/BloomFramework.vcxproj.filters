@@ -18,15 +18,30 @@
     <ClInclude Include="inc\framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\BloomFramework\stdIncludes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\BloomFramework\EventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\BloomFramework\TextureStore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\BloomFramework\GraphicsWindow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\GraphicsWindow.cpp">
+    <ClCompile Include="src\BloomFramework\GraphicsWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputHandler.cpp">
+    <ClCompile Include="src\BloomFramework\EventHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BloomFramework\TextureStore.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
