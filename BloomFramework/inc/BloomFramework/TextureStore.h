@@ -29,6 +29,7 @@ namespace BloomFramework {
 		/// <param name="nickname">Nickname given to texture when loading.</param>
 		/// <returns>A surface with the requested texture.</returns>
 		SDL_Surface* getTexture(std::string nickname);
+		
 	private:
 		std::vector<std::pair<std::string,SDL_Surface*>> storage;
 		SDL_Surface* TargetScreen;

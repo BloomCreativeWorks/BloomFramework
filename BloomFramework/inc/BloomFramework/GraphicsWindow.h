@@ -80,7 +80,5 @@ namespace BloomFramework {
 		int SCREEN_HEIGHT = 480;
 		int SCREEN_X_POS = SDL_WINDOWPOS_UNDEFINED;
 		int SCREEN_Y_POS = SDL_WINDOWPOS_UNDEFINED;
-
-
 	};
 }

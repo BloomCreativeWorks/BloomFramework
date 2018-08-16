@@ -28,5 +28,4 @@ Events BloomFramework::EventHandler::getInput() {
 			return empty;
 		}
 	}
-
 }
