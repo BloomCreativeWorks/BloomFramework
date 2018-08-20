@@ -17,7 +17,7 @@ namespace BloomFramework {
 		/// </summary>
 		/// <param name="imagePath">Path to the image file.</param>
 		/// <returns>Return true when image loading succeeded, false otherwise.</returns>
-		bool loadMedia(const std::string imagePath);
+		bool loadMedia(std::string imagePath);
 		/// <summary>
 		/// Load an image onto the surface.
 		/// </summary>
@@ -39,7 +39,7 @@ namespace BloomFramework {
 		/// Sets the title to be displayed in title bar.
 		/// </summary>
 		/// <param name="title">String to be used as title.</param>
-		void setWindowTitle(std::string title);
+		void setWindowTitle(const std::string &title);
 
 		/// <summary>
 		/// Sets window width.

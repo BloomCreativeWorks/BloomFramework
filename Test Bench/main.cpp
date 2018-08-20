@@ -2,9 +2,6 @@
 
 int main() {
 	BloomFramework::GraphicsWindow myWindow;
-	
-	
-
 	myWindow.setWindowTitle("Graphics Window");
 	myWindow.setHeight(337);
 	myWindow.setWidth(600);
