@@ -27,7 +27,7 @@ bool BloomFramework::TextureStore::loadTexture(std::string path, std::string nic
 	return true;
 }
 
-SDL_Surface* BloomFramework::TextureStore::getTexture(std::string nickname) {
+SDL_Surface* BloomFramework::TextureStore::getTexture(const std::string &nickname) {
 	for(std::pair<std::string, SDL_Surface*> i : storage){
 		if(i.first == nickname) {
 			return i.second;

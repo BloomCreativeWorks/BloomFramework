@@ -17,7 +17,7 @@ namespace BloomFramework {
 		/// </summary>
 		/// <param name="imagePath">Path to the image file.</param>
 		/// <returns>Return true when image loading succeeded, false otherwise.</returns>
-		bool loadMedia(std::string imagePath);
+		bool loadMedia(const std::string &imagePath);
 		/// <summary>
 		/// Load an image onto the surface.
 		/// </summary>

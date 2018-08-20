@@ -17,7 +17,7 @@ bool BloomFramework::GraphicsWindow::initWindow() {
 	return true;
 }
 
-bool BloomFramework::GraphicsWindow::loadMedia(std::string imagePath) {
+bool BloomFramework::GraphicsWindow::loadMedia(const std::string &imagePath) {
 	//Load splash image
 	gImage = SDL_LoadBMP(imagePath.c_str());
 	if(gImage == NULL) {
