@@ -5,19 +5,27 @@
 #define BLOOMFRAMEWORK_API __declspec(dllimport) 
 #endif
 
-//Using SDL and standard IO
-#include <SDL.h>
+#include "SDL.h"
 #undef main
-#include <stdio.h>
+#include <iostream>
 
 namespace BloomFramework {
-	class BLOOMFRAMEWORK_API GraphicsWindow {
+	class BLOOMFRAMEWORK_API Game {
 	public:
-		void initWindow();
+		Game();
+		~Game();
 
+		void init(const char* title, int xpos, int ypos, int width, int height, bool fullscreen);
+		void handleEvents();
+		void update();
+		void render();
+		void clean();
+
+		bool running() { return isRunning; };
 	private:
-		//Screen dimension constants
-		int SCREEN_WIDTH = 640;
-		int SCREEN_HEIGHT = 480;
+		int counter = 0;
+		bool isRunning;
+		SDL_Window* window = nullptr;
+		SDL_Renderer* renderer = nullptr;
 	};
 }
