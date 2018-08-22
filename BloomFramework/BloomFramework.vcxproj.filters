@@ -23,13 +23,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BloomFramework\GraphicsWindow.cpp">
+    <ClCompile Include="src\framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\BloomFramework\EventHandler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BloomFramework\TextureStore.cpp">
+    <ClCompile Include="src\framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
