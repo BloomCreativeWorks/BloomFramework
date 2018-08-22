@@ -12,7 +12,6 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 	}
 
 	if(!SDL_Init(SDL_INIT_EVERYTHING)) {
-
 		std::clog << "Subsystems initialized!" << std::endl;
 
 		window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
