@@ -1,9 +1,11 @@
 #include "../inc/Game.h"
 #include "../inc/TextureManager.h"
 #include "../inc/GameObject.h"
+#include "../inc/Map.h"
 using namespace BloomFramework;
-GameObject* player;
-GameObject* player2;
+GameObject * player;
+GameObject * player2;
+Map * map;
 SDL_Renderer * BloomFramework::Game::renderer = nullptr;
 
 BloomFramework::Game::Game() {}
@@ -31,6 +33,7 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 	}
 	player = new GameObject("assets/player.png");
 	player2 = new GameObject("assets/player2.png", 50, 50);
+	map = new Map();
 }
 
 void BloomFramework::Game::handleEvents() {
@@ -54,6 +57,7 @@ void BloomFramework::Game::update() {
 
 void BloomFramework::Game::render() {
 	SDL_RenderClear(renderer);
+	map->drawMap();
 	player->render();
 	player2->render();
 	SDL_RenderPresent(renderer);

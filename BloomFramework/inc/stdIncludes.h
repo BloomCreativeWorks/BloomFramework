@@ -10,3 +10,4 @@
 #include "SDL_image.h"
 #undef main
 #include <iostream>
+#include <vector>

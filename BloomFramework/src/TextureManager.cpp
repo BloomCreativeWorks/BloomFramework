@@ -6,3 +6,7 @@ SDL_Texture* BloomFramework::TextureManager::loadTexture(const char* fileName) {
 	SDL_FreeSurface(tmpSurface);
 	return texture;
 }
+
+void BloomFramework::TextureManager::draw(SDL_Texture * texture, SDL_Rect src, SDL_Rect dest) {
+	SDL_RenderCopy(Game::renderer, texture, &src, &dest);
+}
