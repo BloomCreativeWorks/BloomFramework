@@ -1,4 +1,9 @@
-#include "../inc/framework.h"
+#include "../inc/Game.h"
+#include "../inc/TextureManager.h"
+
+SDL_Texture* playerTex;
+SDL_Rect srcRect, destRect;
+
 
 BloomFramework::Game::Game() {}
 
@@ -23,6 +28,7 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 
 		isRunning = true;
 	}
+	playerTex = TextureManager::loadTexture("assets/player.png", renderer);
 }
 
 void BloomFramework::Game::handleEvents() {
@@ -41,11 +47,15 @@ void BloomFramework::Game::handleEvents() {
 
 void BloomFramework::Game::update() {
 	counter++;
+	destRect.h = 136;
+	destRect.w = 64;
+	destRect.x = counter;
 	std::cout << counter << std::endl;
 }
 
 void BloomFramework::Game::render() {
 	SDL_RenderClear(renderer);
+	SDL_RenderCopy(renderer, playerTex, NULL,&destRect);
 	SDL_RenderPresent(renderer);
 }
 
