@@ -1,9 +1,8 @@
 #include "../inc/GameObject.h"
 #include "../inc/TextureManager.h"
 
-BloomFramework::GameObject::GameObject(const char * textureSheet, SDL_Renderer * rend, int x, int y) {
-	renderer = rend;
-	objectTexture = TextureManager::loadTexture(textureSheet, rend);
+BloomFramework::GameObject::GameObject(const char * textureSheet, int x, int y) {
+	objectTexture = TextureManager::loadTexture(textureSheet);
 	xpos = x;
 	ypos = y;
 }
@@ -23,5 +22,5 @@ void BloomFramework::GameObject::update() {
 }
 
 void BloomFramework::GameObject::render() {
-	SDL_RenderCopy(renderer, objectTexture, &srcRect, &destRect);
+	SDL_RenderCopy(Game::renderer, objectTexture, &srcRect, &destRect);
 }

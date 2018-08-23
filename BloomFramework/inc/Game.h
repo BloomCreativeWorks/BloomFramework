@@ -12,12 +12,12 @@ namespace BloomFramework {
 		void update();
 		void render();
 		void clean();
-
 		bool running() { return isRunning; };
+
+		static SDL_Renderer * renderer;
 	private:
 		int counter = 0;
 		bool isRunning;
 		SDL_Window * window = nullptr;
-		SDL_Renderer * renderer = nullptr;
 	};
 }

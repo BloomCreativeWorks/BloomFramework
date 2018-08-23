@@ -1,10 +1,12 @@
 #pragma once
 #include "stdIncludes.h"
 
+#include "Game.h"
+
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API GameObject {
 	public:
-		GameObject(const char * textureSheet, SDL_Renderer * rend, int x = 0, int y = 0);
+		GameObject(const char * textureSheet, int x = 0, int y = 0);
 		~GameObject();
 
 		void update();
@@ -14,6 +16,5 @@ namespace BloomFramework {
 
 		SDL_Texture* objectTexture;
 		SDL_Rect srcRect, destRect;
-		SDL_Renderer* renderer;
 	};
 }

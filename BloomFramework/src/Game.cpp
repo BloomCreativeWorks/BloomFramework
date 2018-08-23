@@ -4,6 +4,7 @@
 using namespace BloomFramework;
 GameObject* player;
 GameObject* player2;
+SDL_Renderer * BloomFramework::Game::renderer = nullptr;
 
 BloomFramework::Game::Game() {}
 
@@ -28,8 +29,8 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 
 		isRunning = true;
 	}
-	player = new GameObject("assets/player.png", renderer);
-	player2 = new GameObject("assets/player2.png", renderer, 50, 50);
+	player = new GameObject("assets/player.png");
+	player2 = new GameObject("assets/player2.png", 50, 50);
 }
 
 void BloomFramework::Game::handleEvents() {
@@ -64,3 +65,4 @@ void BloomFramework::Game::clean() {
 	SDL_Quit();
 	std::clog << "Cleaned window!" << std::endl;
 }
+
