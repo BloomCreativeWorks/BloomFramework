@@ -3,3 +3,6 @@
 
 #include "Game.h"
 #include "TextureManager.h"
+#include "GameObject.h"
+#include "Map.h"
+#include "EntityComponentSystem.h"

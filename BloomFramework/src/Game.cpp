@@ -2,11 +2,17 @@
 #include "../inc/TextureManager.h"
 #include "../inc/GameObject.h"
 #include "../inc/Map.h"
+#include "../inc/EntityComponentSystem.h"
+#include "../inc/Components.h"
 using namespace BloomFramework;
+
 GameObject * player;
 GameObject * player2;
 Map * map;
 SDL_Renderer * BloomFramework::Game::renderer = nullptr;
+
+Manager manager;
+auto& newPlayer(manager.addEntity());
 
 BloomFramework::Game::Game() {}
 
@@ -34,6 +40,8 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 	player = new GameObject("assets/player.png");
 	player2 = new GameObject("assets/player2.png", 50, 50);
 	map = new Map();
+
+	newPlayer.addComponent<PositionComponent>();
 }
 
 void BloomFramework::Game::handleEvents() {
@@ -53,6 +61,8 @@ void BloomFramework::Game::handleEvents() {
 void BloomFramework::Game::update() {
 	player->update();
 	player2->update();
+	manager.update();
+	std::cout << newPlayer.getComponent<PositionComponent>().x() << ", " << newPlayer.getComponent<PositionComponent>().y() << std::endl;
 }
 
 void BloomFramework::Game::render() {
