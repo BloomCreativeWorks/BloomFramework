@@ -8,7 +8,6 @@ int main() {
 	const int framedelay = 1000 / fps;
 
 	Uint32 framestart;
-	int frametime;
 
 	game = new Game();
 	game->init("BloomFramework Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false);
@@ -17,7 +16,7 @@ int main() {
 		game->handleEvents();
 		game->update();
 		game->render();
-		frametime = SDL_GetTicks() - framestart;
+		int frametime = SDL_GetTicks() - framestart;
 
 		if(framedelay > frametime)
 			SDL_Delay(framedelay - frametime);

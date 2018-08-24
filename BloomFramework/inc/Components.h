@@ -27,6 +27,5 @@ namespace BloomFramework {
 		}
 	private:
 		int xpos = 0, ypos = 0;
-
 	};
 }

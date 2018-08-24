@@ -27,7 +27,6 @@ namespace BloomFramework {
 	using ComponentBitSet = std::bitset<maxComponents>;
 	using ComponentArray = std::array<Component*, maxComponents>;
 
-
 	class BLOOMFRAMEWORK_API Component {
 	public:
 		Entity* entity;
@@ -60,7 +59,6 @@ namespace BloomFramework {
 
 			c->init();
 			return *c;
-
 		}
 
 		template<typename T> T& getComponent() const {
@@ -98,8 +96,8 @@ namespace BloomFramework {
 
 			return *e;
 		}
+
 	private:
 		std::vector<std::unique_ptr<Entity>> entities;
-
 	};
 }
