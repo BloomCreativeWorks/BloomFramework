@@ -1,4 +1,4 @@
 #pragma once
 #include "EntityComponentSystem.h"
-#include "PositionComponent.h"
+#include "TransformComponent.h"
 #include "SpriteComponent.h"

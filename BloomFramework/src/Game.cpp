@@ -35,7 +35,7 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 	}
 	map = new Map();
 
-	player.addComponent<PositionComponent>(0,0);
+	player.addComponent<TransformComponent>(0,0);
 	player.addComponent<SpriteComponent>("assets/dirt.png");
 }
 
@@ -55,8 +55,8 @@ void BloomFramework::Game::handleEvents() {
 
 void BloomFramework::Game::update() {
 	manager.update();
-	std::clog << player.getComponent<PositionComponent>().x() << ", " << player.getComponent<PositionComponent>().y() << std::endl;
-	if(player.getComponent<PositionComponent>().x() > 100) {
+	player.getComponent<TransformComponent>().position.add(Vector2D(0, 5));
+	if(player.getComponent<TransformComponent>().position.x > 100) {
 		player.getComponent<SpriteComponent>().setTexture("assets/water.png");
 	}
 }
