@@ -29,5 +29,14 @@
     <Image Include="assets\player2.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="assets\dirt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\grass.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\water.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

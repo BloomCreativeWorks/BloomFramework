@@ -152,12 +152,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="assets\dirt.png" />
+    <Image Include="assets\grass.png" />
     <Image Include="assets\player.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="assets\player2.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="assets\water.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

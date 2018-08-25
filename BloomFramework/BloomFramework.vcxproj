@@ -150,8 +150,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Components.h" />
-    <ClInclude Include="inc\EntityComponentSystem.h" />
+    <ClInclude Include="inc\ECS\Components.h" />
+    <ClInclude Include="inc\ECS\PositionComponent.h" />
+    <ClInclude Include="inc\ECS\EntityComponentSystem.h" />
+    <ClInclude Include="inc\ECS\SpriteComponent.h" />
     <ClInclude Include="inc\Framework.h" />
     <ClInclude Include="inc\Game.h" />
     <ClInclude Include="inc\GameObject.h" />
@@ -160,7 +162,7 @@
     <ClInclude Include="inc\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\EntityComponentSystem.cpp" />
+    <ClCompile Include="src\ECS\EntityComponentSystem.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Map.cpp" />

@@ -1,18 +1,14 @@
 #include "../inc/Game.h"
 #include "../inc/TextureManager.h"
-#include "../inc/GameObject.h"
 #include "../inc/Map.h"
-#include "../inc/EntityComponentSystem.h"
-#include "../inc/Components.h"
+#include "../inc/ECS/Components.h"
 using namespace BloomFramework;
 
-GameObject * player;
-GameObject * player2;
 Map * map;
 SDL_Renderer * BloomFramework::Game::renderer = nullptr;
 
 Manager manager;
-auto& newPlayer(manager.addEntity());
+auto& player(manager.addEntity());
 
 BloomFramework::Game::Game() {}
 
@@ -37,11 +33,10 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 
 		isRunning = true;
 	}
-	player = new GameObject("assets/player.png");
-	player2 = new GameObject("assets/player2.png", 50, 50);
 	map = new Map();
 
-	newPlayer.addComponent<PositionComponent>();
+	player.addComponent<PositionComponent>(0,0);
+	player.addComponent<SpriteComponent>("assets/dirt.png");
 }
 
 void BloomFramework::Game::handleEvents() {
@@ -59,17 +54,17 @@ void BloomFramework::Game::handleEvents() {
 }
 
 void BloomFramework::Game::update() {
-	player->update();
-	player2->update();
 	manager.update();
-	std::cout << newPlayer.getComponent<PositionComponent>().x() << ", " << newPlayer.getComponent<PositionComponent>().y() << std::endl;
+	std::clog << player.getComponent<PositionComponent>().x() << ", " << player.getComponent<PositionComponent>().y() << std::endl;
+	if(player.getComponent<PositionComponent>().x() > 100) {
+		player.getComponent<SpriteComponent>().setTexture("assets/water.png");
+	}
 }
 
 void BloomFramework::Game::render() {
 	SDL_RenderClear(renderer);
 	map->drawMap();
-	player->render();
-	player2->render();
+	manager.draw();
 	SDL_RenderPresent(renderer);
 }
 

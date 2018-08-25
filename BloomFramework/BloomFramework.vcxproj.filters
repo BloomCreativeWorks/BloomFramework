@@ -33,10 +33,16 @@
     <ClInclude Include="inc\Map.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\EntityComponentSystem.h">
+    <ClInclude Include="inc\ECS\EntityComponentSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Components.h">
+    <ClInclude Include="inc\ECS\SpriteComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ECS\PositionComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ECS\Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -56,7 +62,7 @@
     <ClCompile Include="src\Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EntityComponentSystem.cpp">
+    <ClCompile Include="src\ECS\EntityComponentSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

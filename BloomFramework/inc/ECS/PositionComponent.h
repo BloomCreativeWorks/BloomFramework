@@ -1,21 +1,19 @@
 #pragma once
 
-#include "stdIncludes.h"
-#include "EntityComponentSystem.h"
+#include "Components.h"
 
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API PositionComponent : public Component {
 	public:
+		PositionComponent() : xpos(0), ypos(0) {}
+		PositionComponent(int x, int y) : xpos(x), ypos(y) {}
 		int x() {
 			return xpos;
 		}
 		int y() {
 			return ypos;
 		}
-		void init() override {
-			xpos = 0;
-			ypos = 0;
-		}
+		void init() override {}
 		void update() override {
 			xpos++;
 			ypos++;
