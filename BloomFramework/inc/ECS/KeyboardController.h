@@ -30,7 +30,6 @@ namespace BloomFramework {
 					break;
 				default:
 					break;
-
 				}
 			}
 
