@@ -6,6 +6,7 @@ using namespace BloomFramework;
 
 Map * map;
 SDL_Renderer * BloomFramework::Game::renderer = nullptr;
+SDL_Event	Game::event;
 
 Manager manager;
 auto& player(manager.addEntity());
@@ -37,11 +38,10 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 
 	player.addComponent<TransformComponent>(0,0);
 	player.addComponent<SpriteComponent>("assets/dirt.png");
+	player.addComponent<KeyboardController>();
 }
 
 void BloomFramework::Game::handleEvents() {
-	SDL_Event event;
-
 	SDL_PollEvent(&event);
 
 	switch(event.type) {
@@ -55,10 +55,6 @@ void BloomFramework::Game::handleEvents() {
 
 void BloomFramework::Game::update() {
 	manager.update();
-	player.getComponent<TransformComponent>().position.add(Vector2D(0, 5));
-	if(player.getComponent<TransformComponent>().position.x > 100) {
-		player.getComponent<SpriteComponent>().setTexture("assets/water.png");
-	}
 }
 
 void BloomFramework::Game::render() {
