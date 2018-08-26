@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdIncludes.h"
+#include <iostream>
 
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API Vector2D {

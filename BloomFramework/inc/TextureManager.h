@@ -1,6 +1,6 @@
 #pragma once
-#include "stdIncludes.h"
 
+#include "stdIncludes.h"
 #include "Game.h"
 
 namespace BloomFramework {

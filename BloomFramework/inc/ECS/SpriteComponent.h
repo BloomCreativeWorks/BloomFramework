@@ -1,39 +1,22 @@
 #pragma once
 
 #include "../stdIncludes.h"
-#include "Components.h"
+#include "../TextureManager.h"
+#include "EntityComponentSystem.h"
+#include "TransformComponent.h"
 
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API SpriteComponent : public Component {
 	public:
 		SpriteComponent() = default;
-		SpriteComponent(const char* texturePath) {
-			setTexture(texturePath);
-		}
-		~SpriteComponent() {
-			SDL_DestroyTexture(texture);
-		}
+		SpriteComponent(const char* texturePath);
+		~SpriteComponent();
 
-		void init() override {
-			transform = &entity->getComponent<TransformComponent>();
+		void init() override;
+		void update() override;
+		void draw() override;
 
-			srcRect.x = srcRect.y = 0;
-			srcRect.w = transform->width;
-			srcRect.h = transform->height;
-		}
-		void update() override {
-			destRect.x = (int)transform->position.x;
-			destRect.y = (int)transform->position.y;
-			destRect.w = transform->width * transform->scale;
-			destRect.h = transform->height * transform->scale;
-		}
-		void draw() override {
-			TextureManager::draw(texture, srcRect, destRect);
-		}
-
-		void setTexture(const char* texturePath) {
-			texture = TextureManager::loadTexture(texturePath);
-		}
+		void setTexture(const char* texturePath);
 
 	private:
 		TransformComponent* transform;

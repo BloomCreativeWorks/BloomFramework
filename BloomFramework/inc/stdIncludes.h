@@ -1,4 +1,5 @@
 #pragma once
+
 #ifdef BLOOMFRAMEWORK_EXPORT
 #define BLOOMFRAMEWORK_API __declspec(dllexport) 
 #else 
@@ -9,5 +10,3 @@
 #include "SDL.h"
 #include "SDL_image.h"
 #undef main
-#include <iostream>
-#include <vector>

@@ -1,6 +1,8 @@
 #pragma once
 
 #include "../stdIncludes.h"
+#include <iostream>
+#include <vector>
 #include <memory>
 #include <algorithm>
 #include <bitset>
@@ -10,9 +12,9 @@ namespace BloomFramework {
 	class BLOOMFRAMEWORK_API Component;
 	class BLOOMFRAMEWORK_API Entity;
 
-	using  ComponentID = std::size_t;
+	using ComponentID = std::size_t;
 
-	inline  ComponentID getComponentTypeID() {
+	inline ComponentID getComponentTypeID() {
 		static ComponentID lastID = 0;
 		return lastID++;
 	}

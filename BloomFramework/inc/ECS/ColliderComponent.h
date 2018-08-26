@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../stdIncludes.h"
-#include "Components.h"
+#include "EntityComponentSystem.h"
+#include "TransformComponent.h"
 
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API ColliderComponent : public Component {
@@ -12,19 +13,8 @@ namespace BloomFramework {
 
 		ColliderComponent(std::string t) : tag(t) {}
 
-		void init() override {
-			if(!entity->hasComponent<TransformComponent>())
-				entity->addComponent<TransformComponent>();
+		void init() override;
 
-			transform = &entity->getComponent<TransformComponent>();
-		}
-
-		void update() override {
-			collider.x = static_cast<int>(transform->position.x);
-			collider.y = static_cast<int>(transform->position.y);
-
-			collider.w = transform->width * transform->scale;
-			collider.h = transform->height * transform->scale;
-		}
+		void update() override;
 	};
 }
