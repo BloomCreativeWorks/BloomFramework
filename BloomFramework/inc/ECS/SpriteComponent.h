@@ -10,18 +10,22 @@ namespace BloomFramework {
 		SpriteComponent(const char* texturePath) {
 			setTexture(texturePath);
 		}
+		~SpriteComponent() {
+			SDL_DestroyTexture(texture);
+		}
 
 		void init() override {
 			transform = &entity->getComponent<TransformComponent>();
 
 			srcRect.x = srcRect.y = 0;
-			srcRect.w = srcRect.h = 32;
-
-			destRect.w = destRect.h = 64;
+			srcRect.w = transform->width;
+			srcRect.h = transform->height;
 		}
 		void update() override {
 			destRect.x = (int)transform->position.x;
 			destRect.y = (int)transform->position.y;
+			destRect.w = transform->width * transform->scale;
+			destRect.h = transform->height * transform->scale;
 		}
 		void draw() override {
 			TextureManager::draw(texture, srcRect, destRect);

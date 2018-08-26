@@ -33,7 +33,11 @@ BloomFramework::Map::Map() {
 	srcRect.h = destRect.h = 32;
 }
 
-BloomFramework::Map::~Map() {}
+BloomFramework::Map::~Map() {
+	SDL_DestroyTexture(grass);
+	SDL_DestroyTexture(water);
+	SDL_DestroyTexture(dirt);
+}
 
 void BloomFramework::Map::loadMap(int levelMap[20][25]) {
 	for(int row = 0; row < 20; row++) {

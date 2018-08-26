@@ -5,4 +5,4 @@
 #include "TextureManager.h"
 #include "GameObject.h"
 #include "Map.h"
-#include "ECS/EntityComponentSystem.h"
+#include "ECS/Components.h"

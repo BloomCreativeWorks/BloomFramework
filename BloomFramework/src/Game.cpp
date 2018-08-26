@@ -2,6 +2,7 @@
 #include "../inc/TextureManager.h"
 #include "../inc/Map.h"
 #include "../inc/ECS/Components.h"
+#include "../inc/Collision.h"
 using namespace BloomFramework;
 
 Map * map;
@@ -10,6 +11,8 @@ SDL_Event	Game::event;
 
 Manager manager;
 auto& player(manager.addEntity());
+auto& wall(manager.addEntity());
+
 
 BloomFramework::Game::Game() {}
 
@@ -36,9 +39,14 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 	}
 	map = new Map();
 
-	player.addComponent<TransformComponent>(0,0);
+	player.addComponent<TransformComponent>(2);
 	player.addComponent<SpriteComponent>("assets/dirt.png");
 	player.addComponent<KeyboardController>();
+	player.addComponent<ColliderComponent>("Player");
+
+	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
+	wall.addComponent<SpriteComponent>("assets/grass.png");
+	wall.addComponent<ColliderComponent>("wall");
 }
 
 void BloomFramework::Game::handleEvents() {
@@ -55,6 +63,12 @@ void BloomFramework::Game::handleEvents() {
 
 void BloomFramework::Game::update() {
 	manager.update();
+	if(Collision::AABB(player.getComponent<ColliderComponent>().collider,
+										 wall.getComponent<ColliderComponent>().collider)) {
+		player.getComponent<TransformComponent>().scale = 1;
+		std::clog << "Player collided with wall" << std::endl;
+	}
+
 }
 
 void BloomFramework::Game::render() {

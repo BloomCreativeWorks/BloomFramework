@@ -45,7 +45,7 @@ namespace BloomFramework {
 		bool isActive() const { return active; }
 		void destory() { active = false; }
 
-		template <typename T> bool hasComponent() const { return componentBitset[getComponentTypeID<T>]; }
+		template <typename T> bool hasComponent() const { return componentBitset[getComponentTypeID<T>()]; }
 
 		template <typename T, typename... TArgs>
 		T& addComponent(TArgs&&... mArgs) {
