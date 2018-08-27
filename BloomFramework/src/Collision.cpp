@@ -9,3 +9,11 @@ bool BloomFramework::Collision::AABB(const SDL_Rect & recA, const SDL_Rect & rec
 
 	return false;
 }
+
+bool BloomFramework::Collision::AABB(const ColliderComponent & colA, const ColliderComponent & colB) {
+	if(AABB(colA.collider, colB.collider)) {
+		std::cout << colA.tag << " collided with " << colB.tag << std::endl;
+		return true;
+	}
+	return false;
+}

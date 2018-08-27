@@ -154,6 +154,7 @@
     <ClInclude Include="inc\ECS\ColliderComponent.h" />
     <ClInclude Include="inc\ECS\Components.h" />
     <ClInclude Include="inc\ECS\KeyboardController.h" />
+    <ClInclude Include="inc\ECS\TileComponent.h" />
     <ClInclude Include="inc\ECS\TransformComponent.h" />
     <ClInclude Include="inc\ECS\EntityComponentSystem.h" />
     <ClInclude Include="inc\ECS\SpriteComponent.h" />
@@ -171,6 +172,7 @@
     <ClCompile Include="src\ECS\EntityComponentSystem.cpp" />
     <ClCompile Include="src\ECS\KeyboardController.cpp" />
     <ClCompile Include="src\ECS\SpriteComponent.cpp" />
+    <ClCompile Include="src\ECS\TileComponent.cpp" />
     <ClCompile Include="src\ECS\TransformComponent.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObject.cpp" />

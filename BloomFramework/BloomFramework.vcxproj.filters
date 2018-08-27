@@ -57,6 +57,9 @@
     <ClInclude Include="inc\Collision.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inc\ECS\TileComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -93,6 +96,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ECS\TransformComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\TileComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

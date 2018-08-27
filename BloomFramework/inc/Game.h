@@ -1,8 +1,13 @@
 #pragma once
 
 #include "stdIncludes.h"
+#include <iostream>
+#include <vector>
+
+
 
 namespace BloomFramework {
+	class ColliderComponent;
 	class BLOOMFRAMEWORK_API Game {
 	public:
 		Game();
@@ -17,6 +22,7 @@ namespace BloomFramework {
 
 		static SDL_Renderer * renderer;
 		static SDL_Event event;
+		static std::vector<ColliderComponent*> colliders;
 	private:
 		int counter = 0;
 		bool isRunning;
