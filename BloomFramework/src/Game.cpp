@@ -68,7 +68,6 @@ void BloomFramework::Game::update() {
 		player.getComponent<TransformComponent>().scale = 1;
 		std::clog << "Player collided with wall" << std::endl;
 	}
-
 }
 
 void BloomFramework::Game::render() {

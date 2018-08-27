@@ -42,10 +42,10 @@ namespace BloomFramework {
 		Entity() = default;
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
-		void update() { for(auto& c : components) c->update(); }
-		void draw() { for(auto& c : components) c->draw(); };
-		bool isActive() const { return active; }
-		void destory() { active = false; }
+		void update();
+		void draw();
+		bool isActive() const;
+		void destory();
 
 		template <typename T> bool hasComponent() const { return componentBitset[getComponentTypeID<T>()]; }
 
@@ -80,24 +80,10 @@ namespace BloomFramework {
 		Manager() = default;
 		Manager(const Manager&) = delete;
 		Manager& operator=(const Manager&) = delete;
-		void update() {
-			for(auto& e : entities) e->update();
-		}
-		void draw() {
-			for(auto& e : entities) e->draw();
-		}
-		void refresh() {
-			entities.erase(std::remove_if(std::begin(entities), std::end(entities),
-																		[](const std::unique_ptr<Entity> &mEntity) {return !mEntity->isActive(); }),
-										 std::end(entities));
-		}
-		Entity& addEntity() {
-			Entity* e = new Entity();
-			std::unique_ptr<Entity> uPtr{ e };
-			entities.emplace_back(std::move(uPtr));
-
-			return *e;
-		}
+		void update();
+		void draw();
+		void refresh();
+		Entity& addEntity();
 
 	private:
 		std::vector<std::unique_ptr<Entity>> entities;
