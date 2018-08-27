@@ -20,9 +20,5 @@ namespace BloomFramework {
 		SDL_Rect tileRect;
 		int tileID;
 		char* path;
-
-
-
-
 	};
 }

@@ -80,7 +80,6 @@ void BloomFramework::Game::update() {
 	for(auto i : colliders) {
 		Collision::AABB(player.getComponent<ColliderComponent>(), *i);
 	}
-
 }
 
 void BloomFramework::Game::render() {
