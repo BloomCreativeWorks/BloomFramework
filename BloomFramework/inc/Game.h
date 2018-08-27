@@ -25,7 +25,7 @@ namespace BloomFramework {
 		static std::vector<ColliderComponent*> colliders;
 	private:
 		int counter = 0;
-		bool isRunning;
+		bool isRunning = true;
 		SDL_Window * window = nullptr;
 	};
 }
