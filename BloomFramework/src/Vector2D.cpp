@@ -52,3 +52,17 @@ std::ostream & BloomFramework::operator<<(std::ostream stream, const Vector2D & 
 	stream << "(" << vec.x << ", " << vec.y << ")";
 	return stream;
 }
+
+BloomFramework::Vector2D & BloomFramework::Vector2D::operator*(const int & i) {
+	this->x *= i;
+	this->y *= i;
+
+	return *this;
+}
+
+BloomFramework::Vector2D & BloomFramework::Vector2D::zero() {
+	this->x = 0.0f;
+	this->y = 0.0f;
+
+	return *this;
+}

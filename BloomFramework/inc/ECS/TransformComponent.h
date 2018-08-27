@@ -7,15 +7,12 @@ namespace BloomFramework {
 	class BLOOMFRAMEWORK_API TransformComponent : public Component {
 	public:
 		TransformComponent();
-		TransformComponent(int scale) : position(0.0f, 0.0f), scale(scale) {}
-		TransformComponent(float x, float y) : position(x, y) {}
-		TransformComponent(float x, float y, int height, int width, int scale) : position(x, y), height(height), width(width), scale(scale) {}
-		void init() override { velocity = Vector2D(0, 0); }
+		TransformComponent(int scale);
+		TransformComponent(float x, float y);
+		TransformComponent(float x, float y, int height, int width, int scale);
+		void init() override;
 
-		void update() override {
-			position.x += velocity.x * speed;
-			position.y += velocity.y * speed;
-		}
+		void update() override;
 		
 		Vector2D position;
 		Vector2D velocity;

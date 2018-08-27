@@ -26,6 +26,9 @@ namespace BloomFramework {
 
 		friend std::ostream& operator<<(std::ostream stream, const Vector2D& vec);
 
+		Vector2D& operator* (const int & i);
+		Vector2D& zero();
+
 		float x, y;
 	};
 }
