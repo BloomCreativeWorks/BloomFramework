@@ -162,6 +162,9 @@
     </Image>
     <Image Include="assets\water.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="assets\tilemap.map" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\sdl2.nuget.redist.2.0.8\build\native\sdl2.nuget.redist.targets" Condition="Exists('..\packages\sdl2.nuget.redist.2.0.8\build\native\sdl2.nuget.redist.targets')" />

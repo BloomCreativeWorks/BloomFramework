@@ -1,8 +1,10 @@
 #pragma once
 
 #include "stdIncludes.h"
+#include <iostream>
 #include "Game.h"
-#include "TextureManager.h"
+#include <fstream>
+#include <string>
 
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API Map {
@@ -10,14 +12,7 @@ namespace BloomFramework {
 		Map();
 		~Map();
 
-		void loadMap(int levelMap[20][25]);
-		void drawMap();
+		static void loadMap(std::string path, int sizeX, int sizeY);
 	private:
-		SDL_Rect srcRect, destRect;
-		SDL_Texture* dirt;
-		SDL_Texture* grass;
-		SDL_Texture* water;
-
-		int map[20][25];
 	};
 }
