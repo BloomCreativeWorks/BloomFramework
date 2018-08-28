@@ -1,8 +1,6 @@
 #include "../inc/Map.h"
 
-BloomFramework::Map::Map() {
-
-}
+BloomFramework::Map::Map() {}
 
 BloomFramework::Map::~Map() {}
 
@@ -17,7 +15,6 @@ void BloomFramework::Map::loadMap(std::string path, int sizeX, int sizeY) {
 			mapFile.ignore();
 		}
 	}
-
 	mapFile.close();
 }
 
