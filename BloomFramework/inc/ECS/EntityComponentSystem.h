@@ -9,24 +9,30 @@
 #include <array>
 
 namespace BloomFramework {
-	class BLOOMFRAMEWORK_API Component;
-	class BLOOMFRAMEWORK_API Entity;
+	class Component;
+	class Entity;
+	class Manager;
 
 	using ComponentID = std::size_t;
+	using Group = std::size_t;
 
-	inline ComponentID getComponentTypeID() {
-		static ComponentID lastID = 0;
+	inline ComponentID getNewComponentTypeID() {
+		static ComponentID lastID = 0u;
 		return lastID++;
 	}
 
 	template <typename T> inline ComponentID getComponentTypeID() noexcept {
-		static ComponentID typeID = getComponentTypeID();
+		static_assert (std::is_base_of<Component, T>::value, "");
+		static ComponentID typeID = getNewComponentTypeID();
 		return typeID;
 	}
 
 	constexpr std::size_t maxComponents = 32;
+	constexpr std::size_t maxGroups = 32;
 
-	using ComponentBitSet = std::bitset<maxComponents>;
+	using ComponentBitset = std::bitset<maxComponents>;
+	using GroupBitset = std::bitset<maxGroups>;
+
 	using ComponentArray = std::array<Component*, maxComponents>;
 
 	class BLOOMFRAMEWORK_API Component {
@@ -40,12 +46,17 @@ namespace BloomFramework {
 	class BLOOMFRAMEWORK_API Entity {
 	public:
 		Entity() = default;
+		Entity(Manager& manager) : manager(manager) {};
 		Entity(const Entity&) = delete;
 		Entity& operator=(const Entity&) = delete;
 		void update();
 		void draw();
 		bool isActive() const;
 		void destory();
+		bool hasGroup(Group mGroup);
+		void addGroup(Group mGroup);
+		void delGroup(Group mGroup);
+
 
 		template <typename T> bool hasComponent() const { return componentBitset[getComponentTypeID<T>()]; }
 
@@ -69,10 +80,12 @@ namespace BloomFramework {
 		}
 
 	private:
+		Manager& manager;
 		bool active = true;
 		std::vector<std::unique_ptr<Component>> components;
 		ComponentArray componentArray;
-		ComponentBitSet componentBitset;
+		ComponentBitset componentBitset;
+		GroupBitset groupBitset;
 	};
 
 	class BLOOMFRAMEWORK_API Manager {
@@ -83,9 +96,12 @@ namespace BloomFramework {
 		void update();
 		void draw();
 		void refresh();
+		void addToGroup(Entity* mEntity, Group mGroup);
+		std::vector<Entity*>& getGroup(Group mGroup);
 		Entity& addEntity();
 
 	private:
 		std::vector<std::unique_ptr<Entity>> entities;
+		std::array<std::vector<Entity*>, maxGroups> groupedEntities;
 	};
 }
