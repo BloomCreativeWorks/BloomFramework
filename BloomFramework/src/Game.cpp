@@ -49,8 +49,8 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 
 	Map::loadMap("assets/tilemap.map", 25, 20);
 
-	player.addComponent<TransformComponent>(0.0f, 0.0f, 136, 64, 1);
-	player.addComponent<SpriteComponent>("assets/player.png");
+	player.addComponent<TransformComponent>(0.0f, 0.0f, 32, 32, 2);
+	player.addComponent<SpriteComponent>("assets/player_idle.png", 4, 100);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("Player");
 	player.addGroup(groupPlayers);

@@ -10,6 +10,7 @@ namespace BloomFramework {
 	public:
 		SpriteComponent() = default;
 		SpriteComponent(const char* texturePath);
+		SpriteComponent(const char* texturePath, int frames, int speed);
 		~SpriteComponent();
 
 		void init() override;
@@ -22,5 +23,9 @@ namespace BloomFramework {
 		TransformComponent* transform;
 		SDL_Texture* texture;
 		SDL_Rect srcRect, destRect;
+		
+		bool animated = false;
+		int frames = 0;
+		int speed = 100;
 	};
 }
