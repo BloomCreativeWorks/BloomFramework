@@ -151,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Collision.h" />
+    <ClInclude Include="inc\ECS\Animation.h" />
     <ClInclude Include="inc\ECS\ColliderComponent.h" />
     <ClInclude Include="inc\ECS\Components.h" />
     <ClInclude Include="inc\ECS\KeyboardController.h" />
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Collision.cpp" />
+    <ClCompile Include="src\ECS\Animation.cpp" />
     <ClCompile Include="src\ECS\ColliderComponent.cpp" />
     <ClCompile Include="src\ECS\EntityComponentSystem.cpp" />
     <ClCompile Include="src\ECS\KeyboardController.cpp" />

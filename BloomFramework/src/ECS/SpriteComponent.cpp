@@ -4,10 +4,15 @@ inline BloomFramework::SpriteComponent::SpriteComponent(const char * texturePath
 	setTexture(texturePath);
 }
 
-BloomFramework::SpriteComponent::SpriteComponent(const char * texturePath, int frames, int speed) {
-	animated = true;
-	this->frames = frames;
-	this->speed = speed;
+BloomFramework::SpriteComponent::SpriteComponent(const char * texturePath, bool isAnimated) {
+	animated = isAnimated;
+	Animation idle = Animation(0, 3, 100);
+	Animation walk = Animation(1, 8, 100);
+
+	animations.emplace("Idle", idle);
+	animations.emplace("Walk", walk);
+
+	play("Idle");
 	setTexture(texturePath);
 }
 
@@ -27,6 +32,7 @@ inline void BloomFramework::SpriteComponent::update() {
 	if(animated) {
 		srcRect.x = srcRect.w * static_cast<int>((SDL_GetTicks() / speed) % frames);
 	}
+	srcRect.y = animIndex * transform->height;
 
 	destRect.x = static_cast<int>(transform->position.x);
 	destRect.y = static_cast<int>(transform->position.y);
@@ -35,7 +41,13 @@ inline void BloomFramework::SpriteComponent::update() {
 }
 
 inline void BloomFramework::SpriteComponent::draw() {
-	TextureManager::draw(texture, srcRect, destRect);
+	TextureManager::draw(texture, srcRect, destRect, spriteFlip);
+}
+
+void BloomFramework::SpriteComponent::play(const char * animationTag) {
+	frames = animations[animationTag].frames;
+	animIndex = animations[animationTag].index;
+	speed = animations[animationTag].speed;
 }
 
 inline void BloomFramework::SpriteComponent::setTexture(const char * texturePath) {

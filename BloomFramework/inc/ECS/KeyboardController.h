@@ -8,7 +8,7 @@ namespace BloomFramework {
 	class BLOOMFRAMEWORK_API KeyboardController : public Component {
 	public:
 		TransformComponent* transform;
-
+		SpriteComponent* sprite;
 		void init() override;
 
 		void update() override;

@@ -7,6 +7,6 @@ SDL_Texture* BloomFramework::TextureManager::loadTexture(const char* fileName) {
 	return texture;
 }
 
-void BloomFramework::TextureManager::draw(SDL_Texture * texture, SDL_Rect src, SDL_Rect dest) {
-	SDL_RenderCopy(Game::renderer, texture, &src, &dest);
+void BloomFramework::TextureManager::draw(SDL_Texture * texture, SDL_Rect src, SDL_Rect dest, SDL_RendererFlip flip) {
+	SDL_RenderCopyEx(Game::renderer, texture, &src, &dest, NULL, NULL, flip);
 }
