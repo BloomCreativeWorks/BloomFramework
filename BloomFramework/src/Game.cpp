@@ -18,7 +18,7 @@ enum groupLabels : std::size_t {
 	groupColliders
 };
 
-BloomFramework::Game::Game() {}
+BloomFramework::Game::Game(): isRunning(false) {}
 
 BloomFramework::Game::~Game() {}
 

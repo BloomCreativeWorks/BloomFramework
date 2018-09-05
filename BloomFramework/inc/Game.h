@@ -27,8 +27,7 @@ namespace BloomFramework {
 		Manager * manager;
 
 	private:
-		int counter = 0;
-		bool isRunning = true;
+		bool isRunning;
 		SDL_Window * window = nullptr;
 	};
 }
