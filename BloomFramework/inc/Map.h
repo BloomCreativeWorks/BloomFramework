@@ -12,7 +12,7 @@ namespace BloomFramework {
 		Map();
 		~Map();
 
-		static void loadMap(std::string path, int sizeX, int sizeY);
+		static void loadMap(Game* gameObject, std::string path, int sizeX, int sizeY);
 	private:
 	};
 }

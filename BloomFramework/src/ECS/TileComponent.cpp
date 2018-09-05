@@ -1,6 +1,7 @@
 #include "..\..\inc\ECS\TileComponent.h"
 
-BloomFramework::TileComponent::TileComponent(int x, int y, int w, int h, int id) {
+BloomFramework::TileComponent::TileComponent(Game* gameObject, int x, int y, int w, int h, int id) {
+	this->gameObject = gameObject;
 	tileRect.x = x;
 	tileRect.y = y;
 	tileRect.w = w;
@@ -25,6 +26,6 @@ void BloomFramework::TileComponent::init() {
 	entity->addComponent<TransformComponent>((float)tileRect.x, (float)tileRect.y, (float)tileRect.w, (float)tileRect.h, 1);
 	transform = &entity->getComponent<TransformComponent>();
 
-	entity->addComponent<SpriteComponent>(path);
+	entity->addComponent<SpriteComponent>(gameObject, path);
 	sprite = &entity->getComponent<SpriteComponent>();
 }

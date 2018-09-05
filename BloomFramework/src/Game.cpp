@@ -6,14 +6,10 @@
 using namespace BloomFramework;
 
 Map * map;
-SDL_Renderer * BloomFramework::Game::renderer = nullptr;
-SDL_Event	Game::event;
 
-std::vector<ColliderComponent*> Game::colliders;
-
-Manager manager;
-auto& player(manager.addEntity());
-auto& wall(manager.addEntity());
+Manager * managerr = new Manager();
+auto& player(managerr->addEntity());
+auto& wall(managerr->addEntity());
 
 enum groupLabels : std::size_t {
 	groupMap,
@@ -45,19 +41,21 @@ void BloomFramework::Game::init(const char* title, int xpos, int ypos, int width
 
 		isRunning = true;
 	}
+
+	this->manager = managerr;
 	map = new Map();
 
-	Map::loadMap("assets/tilemap.map", 25, 20);
+	Map::loadMap(this,"assets/tilemap.map", 25, 20);
 
 	player.addComponent<TransformComponent>(0.0f, 0.0f, 32, 32, 2);
-	player.addComponent<SpriteComponent>("assets/player_anims.png", true);
-	player.addComponent<KeyboardController>();
-	player.addComponent<ColliderComponent>("Player");
+	player.addComponent<SpriteComponent>(this,"assets/player_anims.png", true);
+	player.addComponent<KeyboardController>(this);
+	player.addComponent<ColliderComponent>(this, "Player");
 	player.addGroup(groupPlayers);
 
 	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
-	wall.addComponent<SpriteComponent>("assets/grass.png");
-	wall.addComponent<ColliderComponent>("wall");
+	wall.addComponent<SpriteComponent>(this, "assets/grass.png");
+	wall.addComponent<ColliderComponent>(this,"wall");
 	wall.addGroup(groupMap);
 }
 
@@ -74,16 +72,16 @@ void BloomFramework::Game::handleEvents() {
 }
 
 void BloomFramework::Game::update() {
-	manager.update();
+	manager->update();
 	for(auto i : colliders) {
 		Collision::AABB(player.getComponent<ColliderComponent>(), *i);
 	}
 }
 
-auto& tiles(manager.getGroup(groupMap));
-auto& players(manager.getGroup(groupPlayers));
-auto& enemies(manager.getGroup(groupEnemies));
-auto& colliders(manager.getGroup(groupColliders));
+auto& tiles(managerr->getGroup(groupMap));
+auto& players(managerr->getGroup(groupPlayers));
+auto& enemies(managerr->getGroup(groupEnemies));
+auto& colliders(managerr->getGroup(groupColliders));
 
 void BloomFramework::Game::render() {
 	SDL_RenderClear(renderer);
@@ -103,7 +101,7 @@ void BloomFramework::Game::clean() {
 }
 
 void BloomFramework::Game::addTile(int id, int x, int y) {
-	auto& tile(manager.addEntity());
-	tile.addComponent<TileComponent>(x, y, 32, 32, id);
+	auto& tile(manager->addEntity());
+	tile.addComponent<TileComponent>(this, x, y, 32, 32, id);
 	tile.addGroup(groupMap);
 }

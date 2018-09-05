@@ -10,7 +10,7 @@ namespace BloomFramework {
 	class BLOOMFRAMEWORK_API TileComponent : public Component {
 	public:
 		TileComponent() = default;
-		TileComponent(int x, int y, int w, int h, int id);
+		TileComponent(Game* gameObject, int x, int y, int w, int h, int id);
 
 		void init() override;
 
@@ -20,5 +20,8 @@ namespace BloomFramework {
 		SDL_Rect tileRect;
 		int tileID;
 		char* path;
+
+	private:
+		Game* gameObject;
 	};
 }

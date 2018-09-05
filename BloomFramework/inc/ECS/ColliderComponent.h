@@ -11,8 +11,8 @@ namespace BloomFramework {
 		SDL_Rect collider;
 		std::string tag;
 		TransformComponent * transform;
-
-		ColliderComponent(std::string t) : tag(t) {}
+		Game* gameObject;
+		ColliderComponent(Game* gameObject,std::string t) : gameObject(gameObject), tag(t) {}
 
 		void init() override;
 

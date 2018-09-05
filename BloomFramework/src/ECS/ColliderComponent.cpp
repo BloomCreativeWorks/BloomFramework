@@ -5,7 +5,7 @@ void BloomFramework::ColliderComponent::init() {
 		entity->addComponent<TransformComponent>();
 
 	transform = &entity->getComponent<TransformComponent>();
-	Game::colliders.emplace_back(this);
+	gameObject->colliders.emplace_back(this);
 }
 
 void BloomFramework::ColliderComponent::update() {

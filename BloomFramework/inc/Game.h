@@ -3,8 +3,7 @@
 #include "stdIncludes.h"
 #include <iostream>
 #include <vector>
-
-
+#include "ECS/EntityComponentSystem.h"
 
 namespace BloomFramework {
 	class ColliderComponent;
@@ -20,11 +19,13 @@ namespace BloomFramework {
 		void clean();
 		bool running() { return isRunning; };
 
-		static void addTile(int id, int x, int y);
+		void addTile(int id, int x, int y);
 
-		static SDL_Renderer * renderer;
-		static SDL_Event event;
-		static std::vector<ColliderComponent*> colliders;
+		SDL_Renderer * renderer = nullptr;
+		SDL_Event event;
+		std::vector<ColliderComponent*> colliders;
+		Manager * manager;
+
 	private:
 		int counter = 0;
 		bool isRunning = true;

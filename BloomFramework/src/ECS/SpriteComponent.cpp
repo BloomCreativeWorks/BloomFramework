@@ -1,10 +1,12 @@
 #include "..\..\inc\ECS\SpriteComponent.h"
 
-inline BloomFramework::SpriteComponent::SpriteComponent(const char * texturePath) {
+inline BloomFramework::SpriteComponent::SpriteComponent(Game* gameObject, const char * texturePath) {
+	this->gameObject = gameObject;
 	setTexture(texturePath);
 }
 
-BloomFramework::SpriteComponent::SpriteComponent(const char * texturePath, bool isAnimated) {
+BloomFramework::SpriteComponent::SpriteComponent(Game* gameObject, const char * texturePath, bool isAnimated) {
+	this->gameObject = gameObject;
 	animated = isAnimated;
 	Animation idle = Animation(0, 3, 100);
 	Animation walk = Animation(1, 8, 100);
@@ -41,7 +43,7 @@ inline void BloomFramework::SpriteComponent::update() {
 }
 
 inline void BloomFramework::SpriteComponent::draw() {
-	TextureManager::draw(texture, srcRect, destRect, spriteFlip);
+	TextureManager::draw(gameObject->renderer, texture, srcRect, destRect, spriteFlip);
 }
 
 void BloomFramework::SpriteComponent::play(const char * animationTag) {
@@ -51,5 +53,5 @@ void BloomFramework::SpriteComponent::play(const char * animationTag) {
 }
 
 inline void BloomFramework::SpriteComponent::setTexture(const char * texturePath) {
-	texture = TextureManager::loadTexture(texturePath);
+	texture = TextureManager::loadTexture(gameObject->renderer, texturePath);
 }

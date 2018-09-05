@@ -6,15 +6,15 @@
 #include "TransformComponent.h"
 #include "Animation.h"
 #include <map>
-
+#include "SDL.h"
 
 
 namespace BloomFramework {
 	class BLOOMFRAMEWORK_API SpriteComponent : public Component {
 	public:
 		SpriteComponent() = default;
-		SpriteComponent(const char* texturePath);
-		SpriteComponent(const char* texturePath, bool isAnimated);
+		SpriteComponent(Game* gameObject, const char* texturePath);
+		SpriteComponent(Game* gameObject, const char* texturePath, bool isAnimated);
 		~SpriteComponent();
 
 		void init() override;
@@ -27,10 +27,12 @@ namespace BloomFramework {
 		int animIndex = 0;
 		std::map<const char*, Animation> animations;
 		SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
+
 	private:
 		TransformComponent* transform;
 		SDL_Texture* texture;
 		SDL_Rect srcRect, destRect;
+		Game* gameObject;
 		
 		bool animated = false;
 		int frames = 0;

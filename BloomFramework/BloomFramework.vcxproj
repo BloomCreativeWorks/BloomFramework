@@ -161,7 +161,6 @@
     <ClInclude Include="inc\ECS\SpriteComponent.h" />
     <ClInclude Include="inc\Framework.h" />
     <ClInclude Include="inc\Game.h" />
-    <ClInclude Include="inc\GameObject.h" />
     <ClInclude Include="inc\Map.h" />
     <ClInclude Include="inc\stdIncludes.h" />
     <ClInclude Include="inc\TextureManager.h" />
@@ -177,7 +176,6 @@
     <ClCompile Include="src\ECS\TileComponent.cpp" />
     <ClCompile Include="src\ECS\TransformComponent.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />

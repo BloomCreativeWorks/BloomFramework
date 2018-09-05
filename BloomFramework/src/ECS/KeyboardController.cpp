@@ -6,8 +6,8 @@ inline void BloomFramework::KeyboardController::init() {
 }
 
 inline void BloomFramework::KeyboardController::update() {
-	if(Game::event.type == SDL_KEYDOWN) {
-		switch(Game::event.key.keysym.sym) {
+	if(gameObject->event.type == SDL_KEYDOWN) {
+		switch(gameObject->event.key.keysym.sym) {
 		case SDLK_w:
 			transform->velocity.y = -1;
 			sprite->play("Walk");
@@ -31,8 +31,8 @@ inline void BloomFramework::KeyboardController::update() {
 		}
 	}
 
-	if(Game::event.type == SDL_KEYUP) {
-		switch(Game::event.key.keysym.sym) {
+	if(gameObject->event.type == SDL_KEYUP) {
+		switch(gameObject->event.key.keysym.sym) {
 		case SDLK_w:
 			transform->velocity.y = 0;
 			sprite->play("Idle");
