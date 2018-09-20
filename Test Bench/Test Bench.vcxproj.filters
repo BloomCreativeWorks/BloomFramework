@@ -18,42 +18,8 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="GameCode\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCode\Map\Map.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameCode\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameCode\Map\Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="assets\dirt.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\grass.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\player.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\player2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="assets\water.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="assets\tilemap.map" />
   </ItemGroup>
 </Project>
