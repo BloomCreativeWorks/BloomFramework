@@ -64,7 +64,6 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 		auto name = SDL_GetAudioDeviceName(i, isCapture);
 		std::cout << "Audio: " << name << std::endl;
 	}
-	/* Problems with nuget packages
 
 	// Initialize SDL_TTF 
 	if (TTF_Init() != 0) {
@@ -75,7 +74,7 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 	}
 	else {
 		std::clog << "SDL_ttf initialized." << std::endl;
-	}*/
+	}
 
 	isRunning = true;
 	std::clog << "Game is now running!" << std::endl;
@@ -109,7 +108,7 @@ void BloomFramework::Game::render()
 void BloomFramework::Game::clean() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
-	//TTF_Quit();
+	TTF_Quit();
 	Mix_Quit();
 	IMG_Quit();
 	SDL_Quit();
