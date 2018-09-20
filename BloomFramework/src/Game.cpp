@@ -16,7 +16,7 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		std::cerr << SDL_GetError() << std::endl;
+		std::cerr << "[SDL_Init] " << SDL_GetError() << std::endl;
 		return false;
 	}
 	else {
@@ -26,7 +26,7 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 	window = SDL_CreateWindow(title, xpos, ypos, screenWidth, screenHeight, windowFlags);
 	if (window == NULL)
 	{
-		std::cerr << SDL_GetError() << std::endl;
+		std::cerr << "[SDL_CreateWindow] " << SDL_GetError() << std::endl;
 		return false;
 	}
 	else {
@@ -36,7 +36,7 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 	renderer = SDL_CreateRenderer(window, -1, rendererFlags);
 	if (renderer == NULL)
 	{
-		std::cerr << SDL_GetError() << std::endl;
+		std::cerr << "[SDL_CreateRenderer] " <<  SDL_GetError() << std::endl;
 		return false;
 	}
 	else {
@@ -47,7 +47,8 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 	//Initialize SDL_mixer
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
-		printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
+		std::cerr << "[Mix_OpenAudio] " << SDL_GetError() << std::endl;
+		//printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 
 		SDL_DestroyWindow(window); window = nullptr;
 		SDL_DestroyRenderer(renderer); renderer = nullptr;
@@ -67,7 +68,9 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 
 	// Initialize SDL_TTF 
 	if (TTF_Init() != 0) {
-		printf("TTF_Init could not initialize! TTF_Init Error: %s\n", TTF_GetError());
+		std::cerr << "[TTF_Init] " << SDL_GetError() << std::endl;
+		//printf("TTF_Init could not initialize! TTF_Init Error: %s\n", TTF_GetError());
+
 		SDL_DestroyWindow(window); window = nullptr;
 		SDL_DestroyRenderer(renderer); renderer = nullptr;
 		return false;
