@@ -60,10 +60,10 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 
 	int isCapture = 0;
 	int n = SDL_GetNumAudioDevices(isCapture);
-	std::cout << "Audio devices: " << n << std::endl;
+	std::clog << "Audio devices: " << n << std::endl;
 	for (int i = 0; i < n; i++) {
 		auto name = SDL_GetAudioDeviceName(i, isCapture);
-		std::cout << "Audio: " << name << std::endl;
+		std::clog << "Audio: " << name << std::endl;
 	}
 
 	// Initialize SDL_TTF 
