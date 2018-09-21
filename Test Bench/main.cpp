@@ -1,5 +1,5 @@
 #include "Framework.h"
-using namespace BloomFramework;
+using namespace bloom;
 
 Game* game = nullptr;
 
@@ -10,8 +10,8 @@ int main() {
 	Uint32 framestart;
 
 	game = new Game(800, 600, NULL, NULL);
-	game->init("BloomFramework Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-	while(game->running()) {
+	game->init("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	while(game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->update();
@@ -21,6 +21,6 @@ int main() {
 		if(framedelay > frametime)
 			SDL_Delay(framedelay - frametime);
 	}
-	game->clean();
+	game->destroy();
 	return 0;
 }

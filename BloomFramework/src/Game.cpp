@@ -1,126 +1,127 @@
 #include "..\include\Game.h"
 
-BloomFramework::Game::Game(int width, int height, int windowFlags, int rendererFlags) :
-	screenWidth(width),
-	screenHeight(height),
-	windowFlags(windowFlags),
-	rendererFlags(rendererFlags),
-	isRunning(false) {}
+namespace bloom {
+	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
+		_screenWidth(width),
+		_screenHeight(height),
+		windowFlags(windowFlags),
+		rendererFlags(rendererFlags),
+		_running(false) {}
 
-BloomFramework::Game::~Game()
-{
-	clean();
-}
-
-bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
-{
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	Game::~Game()
 	{
-		std::cerr << "[SDL_Init] " << SDL_GetError() << std::endl;
-		return false;
-	}
-	else {
-		std::clog << "Subsystems initialized!" << std::endl;
+		destroy();
 	}
 
-	window = SDL_CreateWindow(title, xpos, ypos, screenWidth, screenHeight, windowFlags);
-	if (window == NULL)
+	bool Game::init(const std::string & title, int xpos, int ypos)
 	{
-		std::cerr << "[SDL_CreateWindow] " << SDL_GetError() << std::endl;
-		return false;
-	}
-	else {
-		std::clog << "Window created with width of " << screenWidth << " and height of " << screenHeight << "." << std::endl;
+		if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		{
+			std::cerr << "[SDL_Init] " << SDL_GetError() << std::endl;
+			return false;
+		}
+		else {
+			std::clog << "Subsystems initialized!" << std::endl;
+		}
+
+		_window = SDL_CreateWindow(title.c_str(), xpos, ypos, _screenWidth, _screenHeight, windowFlags);
+		if (_window == NULL)
+		{
+			std::cerr << "[SDL_CreateWindow] " << SDL_GetError() << std::endl;
+			return false;
+		}
+		else {
+			std::clog << "Window created with width of " << _screenWidth << " and height of " << _screenHeight << "." << std::endl;
+		}
+
+		_renderer = SDL_CreateRenderer(_window, -1, rendererFlags);
+		if (_renderer == NULL)
+		{
+			std::cerr << "[SDL_CreateRenderer] " << SDL_GetError() << std::endl;
+			return false;
+		}
+		else {
+			std::clog << "Renderer initialized." << std::endl;
+		}
+
+
+		//Initialize SDL_mixer
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			std::cerr << "[Mix_OpenAudio] " << SDL_GetError() << std::endl;
+
+			SDL_DestroyWindow(_window); _window = nullptr;
+			SDL_DestroyRenderer(_renderer); _renderer = nullptr;
+			return false;
+		}
+		else {
+			std::clog << "SDL_mixer initialized." << std::endl;
+		}
+
+		int isCapture = 0;
+		int n = SDL_GetNumAudioDevices(isCapture);
+		std::clog << "Audio devices: " << n << std::endl;
+		for (int i = 0; i < n; i++) {
+			auto name = SDL_GetAudioDeviceName(i, isCapture);
+			std::clog << "Audio: " << name << std::endl;
+		}
+
+		// Initialize SDL_TTF 
+		if (TTF_Init() != 0) {
+			std::cerr << "[TTF_Init] " << SDL_GetError() << std::endl;
+
+			SDL_DestroyWindow(_window); _window = nullptr;
+			SDL_DestroyRenderer(_renderer); _renderer = nullptr;
+			return false;
+		}
+		else {
+			std::clog << "SDL_ttf initialized." << std::endl;
+		}
+
+		_running = true;
+		std::clog << "Game is now running!" << std::endl;
+		return true;
 	}
 
-	renderer = SDL_CreateRenderer(window, -1, rendererFlags);
-	if (renderer == NULL)
+	void Game::handleEvents() {
+		SDL_PollEvent(&_events);
+
+		if (_events.type == SDL_QUIT)
+			_running = false;
+	}
+
+	void Game::update() {
+		// Nothing here yet.
+	}
+
+
+	void Game::render()
 	{
-		std::cerr << "[SDL_CreateRenderer] " <<  SDL_GetError() << std::endl;
-		return false;
-	}
-	else {
-		std::clog << "Renderer initialized." << std::endl;
+		SDL_RenderClear(_renderer);
+		// Hopefully draw stuff.
+		SDL_RenderPresent(_renderer);
 	}
 
+	void Game::destroy() {
+		SDL_DestroyRenderer(_renderer);
+		SDL_DestroyWindow(_window);
+		TTF_Quit();
+		Mix_Quit();
+		IMG_Quit();
+		SDL_Quit();
+		std::clog << "Window destroyed!" << std::endl;
+	}
 
-	//Initialize SDL_mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+	bool Game::isRunning()
 	{
-		std::cerr << "[Mix_OpenAudio] " << SDL_GetError() << std::endl;
-		//printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
-
-		SDL_DestroyWindow(window); window = nullptr;
-		SDL_DestroyRenderer(renderer); renderer = nullptr;
-		return false;
-	}
-	else {
-		std::clog << "SDL_mixer initialized." << std::endl;
+		return _running;
 	}
 
-	int isCapture = 0;
-	int n = SDL_GetNumAudioDevices(isCapture);
-	std::clog << "Audio devices: " << n << std::endl;
-	for (int i = 0; i < n; i++) {
-		auto name = SDL_GetAudioDeviceName(i, isCapture);
-		std::clog << "Audio: " << name << std::endl;
+	int Game::getScreenHeight() {
+		return _screenHeight;
 	}
 
-	// Initialize SDL_TTF 
-	if (TTF_Init() != 0) {
-		std::cerr << "[TTF_Init] " << SDL_GetError() << std::endl;
-		//printf("TTF_Init could not initialize! TTF_Init Error: %s\n", TTF_GetError());
-
-		SDL_DestroyWindow(window); window = nullptr;
-		SDL_DestroyRenderer(renderer); renderer = nullptr;
-		return false;
+	int Game::getScreenWidth() {
+		return _screenWidth;
 	}
-	else {
-		std::clog << "SDL_ttf initialized." << std::endl;
-	}
-
-	isRunning = true;
-	std::clog << "Game is now running!" << std::endl;
-	return true;
-}
-
-void BloomFramework::Game::handleEvents() {
-	SDL_PollEvent(&events);
-
-	if (events.type == SDL_QUIT)
-		isRunning = false;
-	/*switch (events.type) {
-	case SDL_QUIT:
-		isRunning = false;
-		break;
-	default:
-		break;
-	}*/
-}
-
-void BloomFramework::Game::update() {
-	// Nothing here yet.
-}
-
-
-void BloomFramework::Game::render()
-{
-	SDL_RenderClear(renderer);
-	// Hopefully draw stuff.
-	SDL_RenderPresent(renderer);
-}
-
-void BloomFramework::Game::clean() {
-	SDL_DestroyRenderer(renderer);
-	SDL_DestroyWindow(window);
-	TTF_Quit();
-	Mix_Quit();
-	IMG_Quit();
-	SDL_Quit();
-	std::clog << "Cleaned window!" << std::endl;
-}
-
-bool BloomFramework::Game::running()
-{
-	return isRunning;
 }

@@ -3,26 +3,29 @@
 #include <iostream>
 #include "SDL_mixer.h"
 
-namespace BloomFramework {
+namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 	public:
 		Game(int width, int height, int windowFlags, int rendererFlags);
 		~Game();
 
-		bool init(const char* title, int xpos, int ypos);
+		bool init(const std::string & title, int xpos, int ypos);
 		void update();
 		void render();
-		void clean();
+		void destroy();
 		void handleEvents();
-		bool running();
+		bool isRunning();
 
-		int screenWidth, screenHeight;
+		int getScreenWidth();
+		int getScreenHeight();
+
 		int windowFlags, rendererFlags;
-	protected:
 
-		SDL_Renderer * renderer = nullptr;
-		SDL_Event events;
-		bool isRunning;
-		SDL_Window * window = nullptr;
+	protected:
+		int _screenWidth, _screenHeight;
+		SDL_Renderer * _renderer = nullptr;
+		SDL_Event _events;
+		bool _running;
+		SDL_Window * _window = nullptr;
 	};
 }
