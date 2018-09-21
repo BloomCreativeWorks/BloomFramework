@@ -10,7 +10,12 @@ int main() {
 	Uint32 framestart;
 
 	game = new Game(800, 600, NULL, NULL);
-	game->init("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	try {
+		game->init("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+	}
+	catch (BloomException e) {
+		std::cerr << e.what() << std::endl;
+	}
 	while(game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
