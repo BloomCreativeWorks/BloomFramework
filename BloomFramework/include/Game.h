@@ -4,7 +4,7 @@
 #include "SDL_mixer.h"
 
 namespace BloomFramework {
-	class Game {
+	class BLOOMFRAMEWORK_API Game {
 	public:
 		Game(int width, int height, int windowFlags, int rendererFlags);
 		~Game();
