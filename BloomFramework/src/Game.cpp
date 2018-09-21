@@ -87,13 +87,15 @@ bool BloomFramework::Game::init(const char* title, int xpos, int ypos)
 void BloomFramework::Game::handleEvents() {
 	SDL_PollEvent(&events);
 
-	switch (events.type) {
+	if (events.type == SDL_QUIT)
+		isRunning = false;
+	/*switch (events.type) {
 	case SDL_QUIT:
 		isRunning = false;
 		break;
 	default:
 		break;
-	}
+	}*/
 }
 
 void BloomFramework::Game::update() {
