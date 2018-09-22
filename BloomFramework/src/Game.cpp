@@ -1,4 +1,12 @@
 #include "..\include\Game.h"
+#include "..\include\Texture.h"
+namespace bloom {
+	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
+		_screenWidth(width),
+		_screenHeight(height),
+		windowFlags(windowFlags),
+		rendererFlags(rendererFlags),
+		_running(false) {}
 
 namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
