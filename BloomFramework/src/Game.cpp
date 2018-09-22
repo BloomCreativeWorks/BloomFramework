@@ -6,7 +6,7 @@ namespace bloom {
 		m_screenHeight(height),
 		m_windowFlags(windowFlags),
 		m_rendererFlags(rendererFlags),
-		m_running(false) {
+		m_isRunning(false) {
 
 		if (SDL_WasInit(0) == 0)
 			initialize();
@@ -85,15 +85,15 @@ namespace bloom {
 			std::clog << "Renderer initialized." << std::endl;
 		}
 
-		m_running = true;
+		m_isRunning = true;
 		std::clog << "Game is now running!" << std::endl;
 	}
 
 	void Game::handleEvents() {
-		SDL_PollEvent(&m_events);
+		SDL_PollEvent(&m_event);
 
-		if (m_events.type == SDL_QUIT)
-			m_running = false;
+		if (m_event.type == SDL_QUIT)
+			m_isRunning = false;
 	}
 
 	void Game::update() {
@@ -115,7 +115,25 @@ namespace bloom {
 	}
 
 	bool Game::isRunning() {
-		return m_running;
+		return m_isRunning;
+	}
+
+	void Game::setColor(const SDL_Color & color) {
+		m_color = color;
+		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
+	}
+
+	void Game::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+		m_color = { r, g, b, a };
+		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
+	}
+
+	SDL_Color Game::getColor() {
+		return m_color;
+	}
+
+	void Game::getColor(Uint8 & r, Uint8 & g, Uint8 & b, Uint8 & a) {
+		r = m_color.r; g = m_color.g; b = m_color.b; a = m_color.a;
 	}
 
 	int Game::getScreenHeight() {
@@ -124,5 +142,9 @@ namespace bloom {
 
 	int Game::getScreenWidth() {
 		return m_screenWidth;
+	}
+
+	SDL_Event Game::getEvent() {
+		return m_event;
 	}
 }

@@ -1,4 +1,5 @@
 #include "Framework.h"
+#include <ctime>
 using namespace bloom;
 
 Game* game = nullptr;
@@ -23,6 +24,10 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
+	srand(static_cast<uint32_t>(time(0)));
+	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
+	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
+	game->setColor(randColor);
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();

@@ -21,15 +21,22 @@ namespace bloom {
 		void handleEvents();
 		bool isRunning();
 
+		void setColor(const SDL_Color & color);
+		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+
+		SDL_Color getColor();
+		void getColor(Uint8 & r, Uint8 & g, Uint8 & b, Uint8 & a);
 		int getScreenWidth();
 		int getScreenHeight();
+		SDL_Event getEvent();
 
 	protected:
 		int m_screenWidth, m_screenHeight;
-		int m_windowFlags, m_rendererFlags;
+		const int m_windowFlags, m_rendererFlags;
 		SDL_Renderer * m_renderer = nullptr;
 		SDL_Window * m_window = nullptr;
-		SDL_Event m_events;
-		bool m_running;
+		SDL_Color m_color;
+		SDL_Event m_event;
+		bool m_isRunning;
 	};
 }
