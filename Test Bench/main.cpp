@@ -40,5 +40,6 @@ int main() {
 	}
 	game->destroy();
 	Game::exit();
+	system("pause");
 	return 0;
 }
