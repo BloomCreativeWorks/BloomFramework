@@ -1,12 +1,12 @@
 #include "..\include\Game.h"
 
 namespace bloom {
-	Game::Game(int width, int height, int _windowFlags, int _rendererFlags) :
-		_screenWidth(width),
-		_screenHeight(height),
-		_windowFlags(_windowFlags),
-		_rendererFlags(_rendererFlags),
-		_running(false) {}
+	Game::Game(int width, int height, int m_windowFlags, int m_rendererFlags) :
+		m_screenWidth(width),
+		m_screenHeight(height),
+		m_windowFlags(m_windowFlags),
+		m_rendererFlags(m_rendererFlags),
+		m_running(false) {}
 
 	Game::~Game() {
 		destroy();
@@ -22,18 +22,18 @@ namespace bloom {
 			std::clog << "Subsystems initialized!" << std::endl;
 		}
 
-		_window = SDL_CreateWindow(title.c_str(), xpos, ypos, _screenWidth, _screenHeight, _windowFlags);
-		if (_window == NULL) {
+		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
+		if (m_window == NULL) {
 			//std::cerr << "[SDL_CreateWindow] " << SDL_GetError() << std::endl;
 			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
 			return false;
 		}
 		else {
-			std::clog << "Window created with width of " << _screenWidth << " and height of " << _screenHeight << "." << std::endl;
+			std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
 		}
 
-		_renderer = SDL_CreateRenderer(_window, -1, _rendererFlags);
-		if (_renderer == NULL) {
+		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
+		if (m_renderer == NULL) {
 			//std::cerr << "[SDL_CreateRenderer] " << SDL_GetError() << std::endl;
 			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
 			return false;
@@ -48,8 +48,8 @@ namespace bloom {
 			//std::cerr << "[Mix_OpenAudio] " << SDL_GetError() << std::endl;
 			throw Exception("[Mix_OpenAudio] " + std::string(SDL_GetError()));
 
-			SDL_DestroyWindow(_window); _window = nullptr;
-			SDL_DestroyRenderer(_renderer); _renderer = nullptr;
+			SDL_DestroyWindow(m_window); m_window = nullptr;
+			SDL_DestroyRenderer(m_renderer); m_renderer = nullptr;
 			return false;
 		}
 		else {
@@ -69,24 +69,24 @@ namespace bloom {
 			//std::cerr << "[TTF_Init] " << SDL_GetError() << std::endl;
 			throw Exception("[TTF_Init] " + std::string(SDL_GetError()));
 
-			SDL_DestroyWindow(_window); _window = nullptr;
-			SDL_DestroyRenderer(_renderer); _renderer = nullptr;
+			SDL_DestroyWindow(m_window); m_window = nullptr;
+			SDL_DestroyRenderer(m_renderer); m_renderer = nullptr;
 			return false;
 		}
 		else {
 			std::clog << "SDL_ttf initialized." << std::endl;
 		}
 
-		_running = true;
+		m_running = true;
 		std::clog << "Game is now running!" << std::endl;
 		return true;
 	}
 
 	void Game::handleEvents() {
-		SDL_PollEvent(&_events);
+		SDL_PollEvent(&m_events);
 
-		if (_events.type == SDL_QUIT)
-			_running = false;
+		if (m_events.type == SDL_QUIT)
+			m_running = false;
 	}
 
 	void Game::update() {
@@ -94,14 +94,14 @@ namespace bloom {
 	}
 
 	void Game::render() {
-		SDL_RenderClear(_renderer);
+		SDL_RenderClear(m_renderer);
 		// Hopefully draw stuff.
-		SDL_RenderPresent(_renderer);
+		SDL_RenderPresent(m_renderer);
 	}
 
 	void Game::destroy() {
-		SDL_DestroyRenderer(_renderer);
-		SDL_DestroyWindow(_window);
+		SDL_DestroyRenderer(m_renderer);
+		SDL_DestroyWindow(m_window);
 		TTF_Quit();
 		Mix_Quit();
 		IMG_Quit();
@@ -110,14 +110,14 @@ namespace bloom {
 	}
 
 	bool Game::isRunning() {
-		return _running;
+		return m_running;
 	}
 
 	int Game::getScreenHeight() {
-		return _screenHeight;
+		return m_screenHeight;
 	}
 
 	int Game::getScreenWidth() {
-		return _screenWidth;
+		return m_screenWidth;
 	}
 }

@@ -6,7 +6,7 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 	public:
-		Game(int width, int height, int _windowFlags, int _rendererFlags);
+		Game(int width, int height, int m_windowFlags, int m_rendererFlags);
 		~Game();
 
 		bool init(std::string const& title, int xpos, int ypos);
@@ -20,11 +20,11 @@ namespace bloom {
 		int getScreenHeight();
 
 	protected:
-		int _screenWidth, _screenHeight;
-		int _windowFlags, _rendererFlags;
-		SDL_Renderer * _renderer = nullptr;
-		SDL_Event _events;
-		bool _running;
-		SDL_Window * _window = nullptr;
+		int m_screenWidth, m_screenHeight;
+		int m_windowFlags, m_rendererFlags;
+		SDL_Renderer * m_renderer = nullptr;
+		SDL_Event m_events;
+		bool m_running;
+		SDL_Window * m_window = nullptr;
 	};
 }
