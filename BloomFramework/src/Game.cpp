@@ -1,56 +1,36 @@
 #include "..\include\Game.h"
 
 namespace bloom {
-	Game::Game(int width, int height, int m_windowFlags, int m_rendererFlags) :
+	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
-		m_windowFlags(m_windowFlags),
-		m_rendererFlags(m_rendererFlags),
-		m_running(false) {}
+		m_windowFlags(windowFlags),
+		m_rendererFlags(rendererFlags),
+		m_running(false) {
+
+		if (SDL_WasInit(0) == 0)
+			initialize();
+	}
 
 	Game::~Game() {
 		destroy();
 	}
 
-	bool Game::init(std::string const& title, int xpos, int ypos) {
-		if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-			//std::cerr << "[SDL_Init] " << SDL_GetError() << std::endl;
+	void Game::initialize(Uint32 initFlags, 
+		int mixerFrequency, Uint16 mixerFormat, int mixerChannels, int mixerChunksize,
+		int imageFlags) {
+
+		// Initialize SDL
+		if (SDL_Init(initFlags) < 0) {
 			throw Exception("[SDL_Init] " + std::string(SDL_GetError()));
-			return false;
 		}
 		else {
 			std::clog << "Subsystems initialized!" << std::endl;
 		}
 
-		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
-		if (m_window == NULL) {
-			//std::cerr << "[SDL_CreateWindow] " << SDL_GetError() << std::endl;
-			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
-			return false;
-		}
-		else {
-			std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
-		}
-
-		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
-		if (m_renderer == NULL) {
-			//std::cerr << "[SDL_CreateRenderer] " << SDL_GetError() << std::endl;
-			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
-			return false;
-		}
-		else {
-			std::clog << "Renderer initialized." << std::endl;
-		}
-
-
-		//Initialize SDL_mixer
-		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-			//std::cerr << "[Mix_OpenAudio] " << SDL_GetError() << std::endl;
+		// Initialize SDL_mixer
+		if (Mix_OpenAudio(mixerFrequency, mixerFormat, mixerChannels, mixerChunksize) < 0) {
 			throw Exception("[Mix_OpenAudio] " + std::string(SDL_GetError()));
-
-			SDL_DestroyWindow(m_window); m_window = nullptr;
-			SDL_DestroyRenderer(m_renderer); m_renderer = nullptr;
-			return false;
 		}
 		else {
 			std::clog << "SDL_mixer initialized." << std::endl;
@@ -64,22 +44,49 @@ namespace bloom {
 			std::clog << "Audio: " << name << std::endl;
 		}
 
-		// Initialize SDL_TTF 
+		// Initialize SDL_ttf
 		if (TTF_Init() != 0) {
-			//std::cerr << "[TTF_Init] " << SDL_GetError() << std::endl;
 			throw Exception("[TTF_Init] " + std::string(SDL_GetError()));
-
-			SDL_DestroyWindow(m_window); m_window = nullptr;
-			SDL_DestroyRenderer(m_renderer); m_renderer = nullptr;
-			return false;
 		}
 		else {
 			std::clog << "SDL_ttf initialized." << std::endl;
 		}
 
+		// Initialize SDL_image
+		if (IMG_Init(imageFlags) != imageFlags) {
+			throw Exception("[IMG_Init] " + std::string(SDL_GetError()));
+		}
+		else {
+			std::clog << "SDL_image initialized." << std::endl;
+		}
+	}
+
+	void Game::exit() {
+		IMG_Quit();
+		TTF_Quit();
+		Mix_Quit();
+		SDL_Quit();
+	}
+
+	void Game::create(std::string const& title, int xpos, int ypos) {
+		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
+		if (m_window == NULL) {
+			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
+		}
+		else {
+			std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
+		}
+
+		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
+		if (m_renderer == NULL) {
+			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
+		}
+		else {
+			std::clog << "Renderer initialized." << std::endl;
+		}
+
 		m_running = true;
 		std::clog << "Game is now running!" << std::endl;
-		return true;
 	}
 
 	void Game::handleEvents() {
@@ -102,10 +109,8 @@ namespace bloom {
 	void Game::destroy() {
 		SDL_DestroyRenderer(m_renderer);
 		SDL_DestroyWindow(m_window);
-		TTF_Quit();
-		Mix_Quit();
-		IMG_Quit();
-		SDL_Quit();
+		m_renderer = nullptr;
+		m_window = nullptr;
 		std::clog << "Window destroyed!" << std::endl;
 	}
 

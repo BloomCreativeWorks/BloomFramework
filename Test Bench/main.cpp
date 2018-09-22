@@ -8,10 +8,17 @@ int main() {
 	const int framedelay = (1000 / fps);
 
 	Uint32 framestart;
-
-	game = new Game(800, 600, NULL, NULL);
 	try {
-		game->init("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		Game::initialize();
+	}
+	catch (Exception & e) {
+		std::cerr << e.what() << std::endl;
+		system("pause");
+		exit(-1);
+	}
+	game = new Game(800, 600);
+	try {
+		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
@@ -27,5 +34,6 @@ int main() {
 			SDL_Delay(framedelay - frametime);
 	}
 	game->destroy();
+	Game::exit();
 	return 0;
 }
