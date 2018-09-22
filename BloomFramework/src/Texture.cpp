@@ -35,6 +35,10 @@ namespace bloom {
 			SDL_FreeSurface(loadedSurface);
 		}
 	}
+	Texture::~Texture()
+	{
+		SDL_DestroyTexture(_texture);
+	}
 	void Texture::render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip)
 	{
 		if (srcRect.w <= 0)
