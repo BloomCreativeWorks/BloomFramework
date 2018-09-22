@@ -9,7 +9,7 @@ namespace bloom {
 		Texture(const std::string & filePath, Game* gameInstance);
 
 
-		void render(int xPos, int yPos, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void render(SDL_Rect srcRect = { 0,0,0,0 }, SDL_Rect destRect = { 0,0,0,0 }, SDL_RendererFlip flip = SDL_FLIP_NONE);
 		int getTextureWidth();
 		int getTextureHeight();
 

@@ -35,13 +35,26 @@ namespace bloom {
 			SDL_FreeSurface(loadedSurface);
 		}
 	}
-	void Texture::render(int xPos, int yPos, SDL_RendererFlip flip)
+	void Texture::render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip)
 	{
+		if (srcRect.w <= 0)
+			std::cerr << "[Texture Render] srcRect's width is set to a non-signed positive integer" << std::endl
+			<< "                Was that intentional?" << std::endl;
+		if (srcRect.h <= 0)
+			std::cerr << "[Texture Render] srcRect's height is set to a non-signed positive integer" << std::endl
+			<< "                Was that intentional?" << std::endl;
+		if (destRect.w <= 0)
+			std::cerr << "[Texture Render] destRect's width is set to a non-signed positive integer" << std::endl
+			<< "                Was that intentional?" << std::endl;
+		if (destRect.h <= 0)
+			std::cerr << "[Texture Render] destRect's height is set to a non-signed positive integer" << std::endl
+			<< "                Was that intentional?" << std::endl;
+
 		//Set rendering space and render to screen
-		SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
+		//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
 
 		//Render to screen
-		SDL_RenderCopyEx(_gameInstance->getRenderer(), _texture, NULL, &renderQuad, NULL, NULL, flip);
+		SDL_RenderCopyEx(_gameInstance->getRenderer(), _texture, &srcRect, &destRect, NULL, NULL, flip);
 	}
 	int Texture::getTextureWidth()
 	{
