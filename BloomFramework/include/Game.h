@@ -1,5 +1,6 @@
 #pragma once
 #include "stdIncludes.h"
+#include "Exception.h"
 #include <iostream>
 
 namespace bloom {
@@ -25,13 +26,5 @@ namespace bloom {
 		SDL_Event _events;
 		bool _running;
 		SDL_Window * _window = nullptr;
-	};
-
-	class BloomException : public std::exception {
-	public:
-		BloomException(std::string && _Message) noexcept;
-		BloomException(std::string && _Message, int _ErrNo) noexcept;
-		BloomException(char const * const _Message) noexcept;
-		BloomException(char const * const _Message, int _ErrNo) noexcept;
 	};
 }

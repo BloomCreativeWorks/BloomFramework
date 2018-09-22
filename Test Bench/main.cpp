@@ -13,7 +13,7 @@ int main() {
 	try {
 		game->init("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
-	catch (BloomException & e) {
+	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
 	while (game->isRunning()) {

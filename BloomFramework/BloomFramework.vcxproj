@@ -153,11 +153,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Framework.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\stdIncludes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Game.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

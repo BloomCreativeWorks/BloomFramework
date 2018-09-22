@@ -15,7 +15,7 @@ namespace bloom {
 	bool Game::init(std::string const& title, int xpos, int ypos) {
 		if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
 			//std::cerr << "[SDL_Init] " << SDL_GetError() << std::endl;
-			throw BloomException("[SDL_Init] " + std::string(SDL_GetError()));
+			throw Exception("[SDL_Init] " + std::string(SDL_GetError()));
 			return false;
 		}
 		else {
@@ -25,7 +25,7 @@ namespace bloom {
 		_window = SDL_CreateWindow(title.c_str(), xpos, ypos, _screenWidth, _screenHeight, _windowFlags);
 		if (_window == NULL) {
 			//std::cerr << "[SDL_CreateWindow] " << SDL_GetError() << std::endl;
-			throw BloomException("[SDL_CreateWindow] " + std::string(SDL_GetError()));
+			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
 			return false;
 		}
 		else {
@@ -35,7 +35,7 @@ namespace bloom {
 		_renderer = SDL_CreateRenderer(_window, -1, _rendererFlags);
 		if (_renderer == NULL) {
 			//std::cerr << "[SDL_CreateRenderer] " << SDL_GetError() << std::endl;
-			throw BloomException("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
+			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
 			return false;
 		}
 		else {
@@ -46,7 +46,7 @@ namespace bloom {
 		//Initialize SDL_mixer
 		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 			//std::cerr << "[Mix_OpenAudio] " << SDL_GetError() << std::endl;
-			throw BloomException("[Mix_OpenAudio] " + std::string(SDL_GetError()));
+			throw Exception("[Mix_OpenAudio] " + std::string(SDL_GetError()));
 
 			SDL_DestroyWindow(_window); _window = nullptr;
 			SDL_DestroyRenderer(_renderer); _renderer = nullptr;
@@ -67,7 +67,7 @@ namespace bloom {
 		// Initialize SDL_TTF 
 		if (TTF_Init() != 0) {
 			//std::cerr << "[TTF_Init] " << SDL_GetError() << std::endl;
-			throw BloomException("[TTF_Init] " + std::string(SDL_GetError()));
+			throw Exception("[TTF_Init] " + std::string(SDL_GetError()));
 
 			SDL_DestroyWindow(_window); _window = nullptr;
 			SDL_DestroyRenderer(_renderer); _renderer = nullptr;
@@ -120,15 +120,4 @@ namespace bloom {
 	int Game::getScreenWidth() {
 		return _screenWidth;
 	}
-
-
-
-	BloomException::BloomException(std::string && _Message) noexcept : 
-		exception(_Message.c_str()) {}
-	BloomException::BloomException(std::string && _Message, int _ErrNo) noexcept : 
-		exception(_Message.c_str(), _ErrNo) {}
-	BloomException::BloomException(char const * const _Message) noexcept :
-		exception(_Message) {}
-	BloomException::BloomException(char const * const _Message, int _ErrNo) noexcept :
-		exception(_Message, _ErrNo) {}
 }

@@ -15,4 +15,3 @@
 
 #include <memory>
 #include <string>
-#include <exception>
