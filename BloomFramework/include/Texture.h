@@ -17,12 +17,12 @@ namespace bloom {
 		void setColorKey(Uint8 red, Uint8 green, Uint8 blue);
 		void setColorKey(bool enabled);
 	private:
-		SDL_Color _colorKey = { 0,0,0,0 };
-		bool _colorKeySet = false;
-		Game* _gameInstance;
-		int _textureWidth, _textureHeight;
-		int _scale = 3;
-		SDL_Texture * _texture;
+		SDL_Color m_colorKey = { 0,0,0,0 };
+		bool m_colorKeySet = false;
+		Game* m_gameInstance;
+		int m_textureWidth, m_textureHeight;
+		int m_scale = 3;
+		SDL_Texture * m_texture;
 
 	};
 }

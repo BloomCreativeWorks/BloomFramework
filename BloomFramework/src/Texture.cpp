@@ -2,26 +2,26 @@
 
 namespace bloom {
 	Texture::Texture(Game* gameInstance, const std::string & filePath) :
-		_textureWidth(0),
-		_textureHeight(0),
-		_texture(nullptr),
-		_gameInstance(gameInstance)
+		m_textureWidth(0),
+		m_textureHeight(0),
+		m_texture(nullptr),
+		m_gameInstance(gameInstance)
 	{
 		loadTexture(filePath);
 	}
 	Texture::Texture(Game * gameInstance, const std::string & filePath, SDL_Color colorKey):
-		_textureWidth(0),
-		_textureHeight(0),
-		_texture(nullptr),
-		_gameInstance(gameInstance),
-		_colorKey(colorKey),
-		_colorKeySet(true)
+		m_textureWidth(0),
+		m_textureHeight(0),
+		m_texture(nullptr),
+		m_gameInstance(gameInstance),
+		m_colorKey(colorKey),
+		m_colorKeySet(true)
 	{
 		loadTexture(filePath);
 	}
 	Texture::~Texture()
 	{
-		SDL_DestroyTexture(_texture);
+		SDL_DestroyTexture(m_texture);
 	}
 	void Texture::loadTexture(const std::string & filePath)
 	{
@@ -33,20 +33,20 @@ namespace bloom {
 		}
 		else
 		{
-			if (_colorKeySet) //Color key image
-				SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, _colorKey.r, _colorKey.g, _colorKey.b));
+			if (m_colorKeySet) //Color key image
+				SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, m_colorKey.r, m_colorKey.g, m_colorKey.b));
 
 			//Create texture from surface pixels
-			_texture = SDL_CreateTextureFromSurface(_gameInstance->getRenderer(), loadedSurface);
-			if (_texture == nullptr)
+			m_texture = SDL_CreateTextureFromSurface(m_gameInstance->getRenderer(), loadedSurface);
+			if (m_texture == nullptr)
 			{
 				std::cerr << "[SDL_Texture] " << SDL_GetError() << std::endl;
 			}
 			else
 			{
 				//Get image dimensions
-				_textureWidth = loadedSurface->w;
-				_textureHeight = loadedSurface->h;
+				m_textureWidth = loadedSurface->w;
+				m_textureHeight = loadedSurface->h;
 			}
 
 			//Get rid of old loaded surface
@@ -72,14 +72,14 @@ namespace bloom {
 		//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
 
 		//Render to screen
-		SDL_RenderCopyEx(_gameInstance->getRenderer(), _texture, &srcRect, &destRect, NULL, NULL, flip);
+		SDL_RenderCopyEx(m_gameInstance->getRenderer(), m_texture, &srcRect, &destRect, NULL, NULL, flip);
 	}
 	int Texture::getTextureWidth()
 	{
-		return _textureWidth;
+		return m_textureWidth;
 	}
 	int Texture::getTextureHeight()
 	{
-		return _textureHeight;
+		return m_textureHeight;
 	}
 }
