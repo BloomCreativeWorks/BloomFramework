@@ -6,7 +6,7 @@ namespace bloom {
 		_screenHeight(height),
 		windowFlags(windowFlags),
 		rendererFlags(rendererFlags),
-		_running(false) {}
+		_running(false){}
 
 namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
@@ -111,8 +111,8 @@ namespace bloom {
 	void Game::render() {
 		SDL_RenderClear(m_renderer);
 		// For texture rendering test.
-		Texture testIMG = Texture(this, "Assets/TestChar.png", {144,168});
-		testIMG.render({ 0,32,32,32 }, { 0,0,192,192 }); 
+		auto tmp = textureStore.load("Assets/TestChar.png");
+		tmp->render({ 0,32,32,32 }, { 0,0,192,192 }); 
 		// Testing ends here.
 		SDL_RenderPresent(m_renderer);
 	}

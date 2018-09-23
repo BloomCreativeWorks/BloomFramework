@@ -2,6 +2,7 @@
 #include "stdIncludes.h"
 #include "Exception.h"
 #include <iostream>
+#include "TextureStore.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
