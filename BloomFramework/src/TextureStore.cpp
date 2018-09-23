@@ -19,7 +19,7 @@ namespace bloom {
 		}
 		else
 		{	
-			if (colorKey == std::nullopt) {
+			if (colorKey != std::nullopt) {
 				SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
 			}
 			//Create texture from surface pixels
