@@ -39,5 +39,6 @@ namespace bloom {
 		SDL_Color m_color;
 		SDL_Event m_event;
 		bool m_isRunning;
+		TextureStore m_textureStore = TextureStore(&m_renderer);
 	};
 }

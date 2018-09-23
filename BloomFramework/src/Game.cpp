@@ -1,12 +1,5 @@
 #include "..\include\Game.h"
 #include "..\include\Texture.h"
-namespace bloom {
-	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
-		_screenWidth(width),
-		_screenHeight(height),
-		windowFlags(windowFlags),
-		rendererFlags(rendererFlags),
-		_running(false){}
 
 namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
@@ -111,7 +104,7 @@ namespace bloom {
 	void Game::render() {
 		SDL_RenderClear(m_renderer);
 		// For texture rendering test.
-		auto tmp = textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+		auto tmp = m_textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
 		tmp->render({ 0,32,32,32 }, { 0,0,192,192 }); 
 		// Testing ends here.
 		SDL_RenderPresent(m_renderer);
