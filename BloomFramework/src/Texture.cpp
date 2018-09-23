@@ -1,22 +1,40 @@
 #include "..\include\Texture.h"
 
 namespace bloom {
-	Texture::Texture(const std::string & filePath, Game* gameInstance) :
+	Texture::Texture(Game* gameInstance, const std::string & filePath) :
 		_textureWidth(0),
 		_textureHeight(0),
 		_texture(nullptr),
 		_gameInstance(gameInstance)
 	{
+		loadTexture(filePath);
+	}
+	Texture::Texture(Game * gameInstance, const std::string & filePath, SDL_Color colorKey):
+		_textureWidth(0),
+		_textureHeight(0),
+		_texture(nullptr),
+		_gameInstance(gameInstance),
+		_colorKey(colorKey),
+		_colorKeySet(true)
+	{
+		loadTexture(filePath);
+	}
+	Texture::~Texture()
+	{
+		SDL_DestroyTexture(_texture);
+	}
+	void Texture::loadTexture(const std::string & filePath)
+	{
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(filePath.c_str());
 		if (loadedSurface == NULL)
 		{
-			std::cerr << "[SDL_Init] " << IMG_GetError() << std::endl;
+			std::cerr << "[SDL_IMG] " << IMG_GetError() << std::endl;
 		}
 		else
 		{
-			//Color key image
-			SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 0, 0xFF, 0xFF));
+			if (_colorKeySet) //Color key image
+				SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, _colorKey.r, _colorKey.g, _colorKey.b));
 
 			//Create texture from surface pixels
 			_texture = SDL_CreateTextureFromSurface(_gameInstance->getRenderer(), loadedSurface);
@@ -34,10 +52,6 @@ namespace bloom {
 			//Get rid of old loaded surface
 			SDL_FreeSurface(loadedSurface);
 		}
-	}
-	Texture::~Texture()
-	{
-		SDL_DestroyTexture(_texture);
 	}
 	void Texture::render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip)
 	{

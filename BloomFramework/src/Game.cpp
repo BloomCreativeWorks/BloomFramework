@@ -111,7 +111,7 @@ namespace bloom {
 	void Game::render() {
 		SDL_RenderClear(m_renderer);
 		// For texture rendering test.
-		Texture testIMG = Texture("Assets/TestChar.png", this);
+		Texture testIMG = Texture(this, "Assets/TestChar.png", {144,168});
 		testIMG.render({ 0,32,32,32 }, { 0,0,192,192 }); 
 		// Testing ends here.
 		SDL_RenderPresent(m_renderer);
