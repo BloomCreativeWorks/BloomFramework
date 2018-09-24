@@ -5,17 +5,13 @@ namespace bloom {
 	void Texture::render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip)
 	{
 		if (srcRect.w <= 0)
-			std::cerr << "[Texture Render] srcRect's width is set to a non-signed positive integer" << std::endl
-			<< "                Was that intentional?" << std::endl;
+			throw Exception("[Texture Render] srcRect.w is <= 0.\nIs that intentional?" );
 		if (srcRect.h <= 0)
-			std::cerr << "[Texture Render] srcRect's height is set to a non-signed positive integer" << std::endl
-			<< "                Was that intentional?" << std::endl;
+			throw Exception("[Texture Render] srcRect.h is <= 0.\nIs that intentional?");
 		if (destRect.w <= 0)
-			std::cerr << "[Texture Render] destRect's width is set to a non-signed positive integer" << std::endl
-			<< "                Was that intentional?" << std::endl;
+			throw Exception("[Texture Render] destcRect.w is <= 0.\nIs that intentional?");
 		if (destRect.h <= 0)
-			std::cerr << "[Texture Render] destRect's height is set to a non-signed positive integer" << std::endl
-			<< "                Was that intentional?" << std::endl;
+			throw Exception("[Texture Render] destRect.h is <= 0.\nIs that intentional?");
 
 		//Set rendering space and render to screen
 		//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };

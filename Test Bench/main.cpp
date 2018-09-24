@@ -32,7 +32,12 @@ int main() {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->update();
-		game->render();
+		try {
+			game->render();
+		}
+		catch (Exception & e) {
+			std::cerr << e.what() << std::endl;
+		}
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)
@@ -40,6 +45,6 @@ int main() {
 	}
 	game->destroy();
 	Game::exit();
-	system("pause");
+	//system("pause");
 	return 0;
 }

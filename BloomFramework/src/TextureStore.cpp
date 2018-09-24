@@ -15,7 +15,7 @@ namespace bloom {
 		SDL_Surface* loadedSurface = IMG_Load(filePath.c_str());
 		if (loadedSurface == NULL)
 		{
-			std::cerr << "[SDL_IMG] " << IMG_GetError() << std::endl;
+			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
 		}
 		else
 		{	
@@ -26,7 +26,7 @@ namespace bloom {
 			SDL_Texture * texture = SDL_CreateTextureFromSurface(*m_renderer, loadedSurface);
 			if (texture == nullptr)
 			{
-				std::cerr << "[SDL_Texture] " << SDL_GetError() << std::endl;
+				throw Exception("[SDL_Texture] " + std::string(SDL_GetError()));
 			}
 			else {
 				TexturePtr ptr = std::make_shared<Texture>(texture, m_renderer);

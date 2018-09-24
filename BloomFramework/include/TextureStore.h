@@ -3,6 +3,7 @@
 #include <map>
 #include "Texture.h"
 #include <optional>
+#include "Exception.h"
 
 namespace bloom {
 	typedef std::shared_ptr<Texture> TexturePtr;

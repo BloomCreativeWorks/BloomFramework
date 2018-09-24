@@ -1,5 +1,6 @@
 #pragma once
 #include "stdIncludes.h"
+#include "Exception.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Texture {
