@@ -1,5 +1,5 @@
-#include "..\include\Game.h"
-#include "..\include\Texture.h"
+#include "Game.h"
+#include "Exception.h"
 
 namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
@@ -7,7 +7,8 @@ namespace bloom {
 		m_screenHeight(height),
 		m_windowFlags(windowFlags),
 		m_rendererFlags(rendererFlags),
-		m_isRunning(false)
+		m_isRunning(false),
+		m_textureStore(m_renderer)
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
@@ -99,13 +100,22 @@ namespace bloom {
 
 	void Game::update() {
 		// Nothing here yet.
+		SDL_RenderPresent(m_renderer);
+	}
+
+	void Game::clear() {
+		SDL_RenderClear(m_renderer);
+	}
+
+	void Game::delay(int intervalMs) {
+		SDL_Delay(intervalMs);
 	}
 
 	void Game::render() {
 		SDL_RenderClear(m_renderer);
 		// For texture rendering test.
-		auto tmp = m_textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-		tmp->render({ 0,32,32,32 }, { 0,0,192,192 }); 
+		//auto tmp = m_textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+		//tmp->render({ 0,32,32,32 }, { 0,0,192,192 }); 
 		// Testing ends here.
 		SDL_RenderPresent(m_renderer);
 	}
@@ -120,6 +130,14 @@ namespace bloom {
 
 	bool Game::isRunning() {
 		return m_isRunning;
+	}
+
+	TexturePtr Game::loadTexture(const std::string & filePath, std::optional<SDL_Color> colorKey) {
+		return m_textureStore.load(filePath, colorKey);
+	}
+
+	void Game::unloadTexture(const std::string & filePath) {
+		m_textureStore.unload(filePath);
 	}
 
 	void Game::setColor(const SDL_Color & color) {

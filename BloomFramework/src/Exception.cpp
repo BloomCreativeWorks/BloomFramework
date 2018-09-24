@@ -1,4 +1,4 @@
-#include "..\include\Exception.h"
+#include "Exception.h"
 
 namespace bloom {
 	Exception::Exception(std::string && _Message) noexcept :
