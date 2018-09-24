@@ -33,7 +33,6 @@ namespace bloom {
 				return ptr;
 			}
 		}
-
 	}
 
 	TexturePtr TextureStore::getTexture(const std::string & filePath) {
