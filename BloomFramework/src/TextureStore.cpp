@@ -1,13 +1,11 @@
 #include "..\include\TextureStore.h"
 
 namespace bloom {
-	TextureStore::TextureStore(SDL_Renderer ** renderer) : m_renderer(renderer)
-	{
-	}
-	TexturePtr TextureStore::load(const std::string & filePath, std::optional<SDL_Color> colorKey)
-	{
+	TextureStore::TextureStore(SDL_Renderer ** renderer) : m_renderer(renderer) {}
+
+	TexturePtr TextureStore::load(const std::string & filePath, std::optional<SDL_Color> colorKey) {
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
-		auto texture =  getTexture(filePath);
+		auto texture = getTexture(filePath);
 		if (texture != nullptr)
 			return texture;
 
@@ -18,7 +16,7 @@ namespace bloom {
 			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
 		}
 		else
-		{	
+		{
 			if (colorKey != std::nullopt) {
 				SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
 			}
@@ -35,23 +33,23 @@ namespace bloom {
 				return ptr;
 			}
 		}
-		
+
 	}
-	TexturePtr TextureStore::getTexture(const std::string & filePath)
-	{
+
+	TexturePtr TextureStore::getTexture(const std::string & filePath) {
 		auto texIterator = m_store.find(filePath);
 		if (texIterator != m_store.end())
 			return texIterator->second;
 		else {
-			// throw some sort of exception here.
+			throw Exception("[Texture Store] Can't get texture \"" + filePath + "\".\nIs it loaded?");
 			return nullptr;
 		}
 	}
-	void TextureStore::destroyTexture(const std::string & filePath)
-	{
+
+	void TextureStore::destroyTexture(const std::string & filePath) {
 		auto texIterator = m_store.find(filePath);
 		if (texIterator != m_store.end())
 			m_store.erase(texIterator);
-			// We can't dispose the actual Texture since other's may still be using it.
+		// We can't dispose the actual Texture since other's may still be using it.
 	}
 }
