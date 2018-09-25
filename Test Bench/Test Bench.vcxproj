@@ -155,6 +155,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="Assets\OverworldTestSpritesheet.png" />
     <Image Include="Assets\TestChar.png">
       <DeploymentContent>true</DeploymentContent>
       <FileType>Image</FileType>

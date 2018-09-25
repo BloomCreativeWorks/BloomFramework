@@ -13,6 +13,8 @@
 #include "SDL_mixer.h"
 #undef main
 
+#include "entt/entt.hpp"
+
 #include <memory>
 #include <string>
 #include <iostream>
