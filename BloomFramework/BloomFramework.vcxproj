@@ -126,7 +126,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
@@ -144,7 +143,6 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
       <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>

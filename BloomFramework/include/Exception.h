@@ -1,6 +1,6 @@
 #pragma once
 #include <exception>
-#include "stdIncludes.h"
+#include <string>
 
 namespace bloom {
 	class Exception : public std::exception {

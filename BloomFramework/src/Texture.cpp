@@ -1,7 +1,9 @@
-#include "..\include\Texture.h"
+#include "Texture.h"
+#include "Exception.h"
 
 namespace bloom {
-	Texture::Texture(SDL_Texture * texture, SDL_Renderer ** targetRenderer) : m_texture(texture), m_renderer(targetRenderer) {}
+	Texture::Texture(SDL_Texture * texture, SDL_Renderer *& targetRenderer) : m_texture(texture), m_renderer(targetRenderer) {}
+
 	void Texture::render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
 		if (srcRect.w <= 0)
 			throw Exception("[Texture Render] srcRect.w is <= 0.\nIs that intentional?");
@@ -16,7 +18,7 @@ namespace bloom {
 		//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
 
 		//Render to screen
-		SDL_RenderCopyEx(*m_renderer, m_texture, &srcRect, &destRect, NULL, NULL, flip);
+		SDL_RenderCopyEx(m_renderer, m_texture, &srcRect, &destRect, NULL, NULL, flip);
 	}
 
 	void Texture::dispose() {
