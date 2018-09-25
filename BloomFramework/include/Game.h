@@ -6,6 +6,7 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 		friend TextureStore::TextureStore(Game & object);
+
 	public:
 		Game(int width, int height, int windowFlags = NULL, int rendererFlags = NULL);
 		~Game();
