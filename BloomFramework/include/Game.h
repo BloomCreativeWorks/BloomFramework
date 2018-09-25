@@ -37,13 +37,13 @@ namespace bloom {
 		SDL_Event getEvent();
 
 	protected:
-		int m_screenWidth, m_screenHeight;
-		const int m_windowFlags, m_rendererFlags;
-		SDL_Renderer * m_renderer = nullptr;
-		SDL_Window * m_window = nullptr;
-		SDL_Color m_color;
-		SDL_Event m_event;
-		bool m_isRunning;
-		TextureStore m_textureStore;
+		SDL_Renderer *	m_renderer = nullptr;
+		SDL_Window *	m_window = nullptr;
+		int				m_screenWidth, m_screenHeight;
+		const int		m_windowFlags, m_rendererFlags;
+		SDL_Color		m_color;
+		SDL_Event		m_event;
+		bool			m_isRunning;
+		TextureStore	m_textureStore = TextureStore(m_renderer);
 	};
 }

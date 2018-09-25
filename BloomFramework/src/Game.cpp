@@ -7,8 +7,7 @@ namespace bloom {
 		m_screenHeight(height),
 		m_windowFlags(windowFlags),
 		m_rendererFlags(rendererFlags),
-		m_isRunning(false),
-		m_textureStore(m_renderer)
+		m_isRunning(false)
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();

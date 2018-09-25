@@ -7,10 +7,10 @@ namespace bloom {
 		Texture() = default;
 		explicit Texture(SDL_Texture * texture, SDL_Renderer *& targetRenderer);
 		~Texture();
-		void render(SDL_Rect srcRect = { 0,0,0,0 }, SDL_Rect destRect = { 0,0,0,0 }, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
 		void dispose();
 	private:
-		SDL_Texture * m_texture;
-		SDL_Renderer *& m_renderer;
+		SDL_Texture *	m_texture;
+		SDL_Renderer *&	m_renderer;
 	};
 }

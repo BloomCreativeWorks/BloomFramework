@@ -25,7 +25,7 @@ namespace bloom {
 	private:
 		TexturePtr findTexture(const std::string & filePath);
 
-		SDL_Renderer *& m_renderer;
-		std::unordered_map<std::string, TexturePtr> m_store;
+		SDL_Renderer *&	m_renderer;
+		std::unordered_map<std::string, TexturePtr>	m_store;
 	};
 }
