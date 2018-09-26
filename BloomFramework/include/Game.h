@@ -2,6 +2,7 @@
 #include <iostream>
 #include "stdIncludes.h"
 #include "TextureStore.h"
+#include "Timer.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
@@ -36,6 +37,8 @@ namespace bloom {
 		int getScreenWidth();
 		int getScreenHeight();
 		SDL_Event getEvent();
+
+		Timer timer;
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
