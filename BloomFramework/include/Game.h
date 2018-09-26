@@ -26,9 +26,6 @@ namespace bloom {
 		void handleEvents();
 		bool isRunning();
 
-		TexturePtr loadTexture(const std::string & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
-		void unloadTexture(const std::string & filePath);
-
 		void setColor(SDL_Color const& color);
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
@@ -38,6 +35,7 @@ namespace bloom {
 		int getScreenHeight();
 		SDL_Event getEvent();
 
+		TextureStore	textureStore = TextureStore(m_renderer);
 		Timer timer;
 
 	protected:
@@ -48,6 +46,5 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
-		TextureStore	m_textureStore = TextureStore(m_renderer);
 	};
 }

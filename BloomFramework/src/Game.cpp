@@ -132,14 +132,6 @@ namespace bloom {
 		return m_isRunning;
 	}
 
-	TexturePtr Game::loadTexture(const std::string & filePath, std::optional<SDL_Color> colorKey) {
-		return m_textureStore.load(filePath, colorKey);
-	}
-
-	void Game::unloadTexture(const std::string & filePath) {
-		m_textureStore.unload(filePath);
-	}
-
 	void Game::setColor(const SDL_Color & color) {
 		m_color = color;
 		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
