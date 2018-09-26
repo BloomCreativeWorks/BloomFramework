@@ -98,6 +98,8 @@ namespace bloom {
 	}
 
 	void Game::update() {
+		updateDeltaTimeValue();
+		std::clog << "Delta time: " << m_deltaTime << std::endl;
 		// Nothing here yet.
 		SDL_RenderPresent(m_renderer);
 	}
@@ -167,5 +169,14 @@ namespace bloom {
 
 	SDL_Event Game::getEvent() {
 		return m_event;
+	}
+	void Game::updateDeltaTimeValue()
+	{
+			INTERNAL_LAST_TICK = INTERNAL_CURRENT_TICK;
+			INTERNAL_CURRENT_TICK = SDL_GetPerformanceCounter();
+
+			m_deltaTime = ((INTERNAL_CURRENT_TICK - INTERNAL_LAST_TICK) * 1000 / (double)SDL_GetPerformanceFrequency());
+
+			/**Rendering**/
 	}
 }

@@ -36,6 +36,8 @@ namespace bloom {
 		int getScreenWidth();
 		int getScreenHeight();
 		SDL_Event getEvent();
+		double m_deltaTime = 0;
+		
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
@@ -46,5 +48,10 @@ namespace bloom {
 		SDL_Event		m_event;
 		bool			m_isRunning;
 		TextureStore	m_textureStore = TextureStore(m_renderer);
+
+	private:
+		void updateDeltaTimeValue();
+		Uint64 INTERNAL_CURRENT_TICK = SDL_GetPerformanceCounter();
+		Uint64 INTERNAL_LAST_TICK = 0;
 	};
 }
