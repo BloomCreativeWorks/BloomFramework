@@ -183,9 +183,15 @@
     <ClInclude Include="dep\entt\signal\dispatcher.hpp" />
     <ClInclude Include="dep\entt\signal\emitter.hpp" />
     <ClInclude Include="dep\entt\signal\sigh.hpp" />
+    <ClInclude Include="include\Components\Components.h" />
+    <ClInclude Include="include\Components\Position.h" />
+    <ClInclude Include="include\Components\Size.h" />
+    <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Framework.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\stdIncludes.h" />
     <ClInclude Include="include\TextureStore.h" />
@@ -193,6 +199,8 @@
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TextureStore.cpp" />
   </ItemGroup>
