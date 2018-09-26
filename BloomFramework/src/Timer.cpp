@@ -5,21 +5,21 @@ namespace bloom {
 		m_startTicks = SDL_GetPerformanceCounter();
 	}
 
-	double Timer::split() {
-		return (static_cast<double>(SDL_GetPerformanceCounter() - m_startTicks) / static_cast<double>(SDL_GetPerformanceFrequency()));
-	}
-
 	void Timer::restart() {
 		m_startTicks = SDL_GetPerformanceCounter(); //this is faster then using start() method
 	}
 
-	double Timer::totalTime() {
-		return (static_cast<double>(SDL_GetPerformanceCounter()) / static_cast<double>(SDL_GetPerformanceFrequency()));
+	Uint64 Timer::split() {
+		return ((SDL_GetPerformanceCounter() - m_startTicks) * 1000 / SDL_GetPerformanceFrequency());
 	}
 
-	double Timer::lap() {
+	Uint64 Timer::lap() {
 		Uint64 oldTicks = m_startTicks;
 		m_startTicks = SDL_GetPerformanceCounter();
-		return (static_cast<double>(SDL_GetPerformanceCounter() - oldTicks) / static_cast<double>(SDL_GetPerformanceFrequency()));
+		return ((m_startTicks - oldTicks) * 1000 / SDL_GetPerformanceFrequency());
+	}
+
+	Uint64 Timer::totalTime() {
+		return (SDL_GetPerformanceCounter() * 1000 / SDL_GetPerformanceFrequency());
 	}
 }
