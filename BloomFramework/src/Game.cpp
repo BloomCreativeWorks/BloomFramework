@@ -98,6 +98,7 @@ namespace bloom {
 	}
 
 	void Game::update() {
+		std::clog << "Delta time: " << timer.lap() << std::endl;
 		// Nothing here yet.
 		SDL_RenderPresent(m_renderer);
 	}
