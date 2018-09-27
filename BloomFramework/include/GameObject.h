@@ -8,6 +8,9 @@ namespace bloom {
 	class BLOOMFRAMEWORK_API GameObject {
 	public:
 		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
+
+		virtual void init() {}
+
 		~GameObject();
 
 	protected:

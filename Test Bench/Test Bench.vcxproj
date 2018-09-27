@@ -161,6 +161,9 @@
       <FileType>Image</FileType>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TestGameObject.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\sdl2.nuget.redist.2.0.8.2\build\native\sdl2.nuget.redist.targets" Condition="Exists('..\packages\sdl2.nuget.redist.2.0.8.2\build\native\sdl2.nuget.redist.targets')" />

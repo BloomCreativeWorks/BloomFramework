@@ -1,6 +1,8 @@
 #include "Framework.h"
 #include <ctime>
 
+#include "TestGameObject.h"
+
 using namespace bloom;
 
 Game* game = nullptr;
@@ -43,7 +45,8 @@ int main() {
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::RenderSystem renderSysTest;
-	bloom::GameObject testGO = bloom::GameObject(testRegistry, game);
+	TestChar testGO = TestChar(testRegistry, game);
+	testGO.init();
 	renderSysTest.update(testRegistry);
 	game->delay(500);
 	// Test ends here.
