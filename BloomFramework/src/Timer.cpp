@@ -2,24 +2,28 @@
 
 namespace bloom {
 	void Timer::start() {
-		m_startTicks = SDL_GetPerformanceCounter();
+		m_timerTicks = SDL_GetPerformanceCounter();
 	}
 
 	void Timer::restart() {
-		m_startTicks = SDL_GetPerformanceCounter(); //this is faster then using start() method
+		start();
 	}
 
 	Uint64 Timer::split() {
-		return ((SDL_GetPerformanceCounter() - m_startTicks) * 1000 / SDL_GetPerformanceFrequency());
+		return ((SDL_GetPerformanceCounter() - m_timerTicks) * 1000 / SDL_GetPerformanceFrequency());
 	}
 
 	Uint64 Timer::lap() {
-		Uint64 oldTicks = m_startTicks;
-		m_startTicks = SDL_GetPerformanceCounter();
-		return ((m_startTicks - oldTicks) * 1000 / SDL_GetPerformanceFrequency());
+		Uint64 oldTicks = m_timerTicks;
+		m_timerTicks = SDL_GetPerformanceCounter();
+		return ((m_timerTicks - oldTicks) * 1000 / SDL_GetPerformanceFrequency());
 	}
 
-	Uint64 Timer::totalTime() {
-		return (SDL_GetPerformanceCounter() * 1000 / SDL_GetPerformanceFrequency());
+	Uint64 Timer::objectLifetime() {
+		return ((SDL_GetPerformanceCounter() - m_startTicks) * 1000 / SDL_GetPerformanceFrequency());
+	}
+
+	Uint32 Timer::totalLifetime() {
+		return SDL_GetTicks();
 	}
 }
