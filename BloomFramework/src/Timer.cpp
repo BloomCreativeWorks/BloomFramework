@@ -9,18 +9,18 @@ namespace bloom {
 		start();
 	}
 
-	Uint64 Timer::split() {
-		return ((SDL_GetPerformanceCounter() - m_timerTicks) * 1000 / SDL_GetPerformanceFrequency());
+	double Timer::split() {
+		return (static_cast<double>(SDL_GetPerformanceCounter() - m_timerTicks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
 	}
 
-	Uint64 Timer::lap() {
+	double Timer::lap() {
 		Uint64 oldTicks = m_timerTicks;
 		m_timerTicks = SDL_GetPerformanceCounter();
-		return ((m_timerTicks - oldTicks) * 1000 / SDL_GetPerformanceFrequency());
+		return (static_cast<double>(m_timerTicks - oldTicks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
 	}
 
-	Uint64 Timer::objectLifetime() {
-		return ((SDL_GetPerformanceCounter() - m_startTicks) * 1000 / SDL_GetPerformanceFrequency());
+	double Timer::objectLifetime() {
+		return (static_cast<double>(SDL_GetPerformanceCounter() - m_startTicks) * 1000.0 / SDL_GetPerformanceFrequency());
 	}
 
 	Uint32 Timer::totalLifetime() {

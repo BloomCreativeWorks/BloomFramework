@@ -8,9 +8,9 @@ namespace bloom {
 
 		void start();
 		void restart();
-		Uint64 split();
-		Uint64 lap();
-		Uint64 objectLifetime();
+		double split();
+		double lap();
+		double objectLifetime();
 		static Uint32 totalLifetime();
 
 	private:
