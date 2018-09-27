@@ -2,13 +2,12 @@
 
 #include "stdIncludes.h"
 #include "TextureStore.h"
+#include <optional>
 
 namespace bloom {
 	struct Sprite {
-		Sprite(TexturePtr texture) : _texture(texture) {}
-		Sprite(TexturePtr texture, const SDL_Rect & srcRect) : _texture(texture), _srcRect(srcRect), _cropTexture(true) {}
+		Sprite(TexturePtr texture, std::optional<SDL_Rect> srcRect = std::nullopt) : _texture(texture), _srcRect(srcRect) {}
 		TexturePtr _texture;
-		SDL_Rect _srcRect;
-		bool _cropTexture;
+		std::optional<SDL_Rect> _srcRect;
 	};
 }

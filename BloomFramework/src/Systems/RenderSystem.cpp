@@ -11,7 +11,7 @@ namespace bloom {
 				static_cast<int>(size.w),
 				static_cast<int>(size.h)
 			};
-			spr._texture->render(spr._srcRect, destRect);
+				spr._texture->render(spr._srcRect, destRect);
 		});
 	}
 }
