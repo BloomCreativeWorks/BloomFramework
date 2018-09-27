@@ -1,16 +1,9 @@
 #include "Framework.h"
 #include <ctime>
 
-
-#include "GameObject.h"
-#include "Systems/RenderSystem.h"
 using namespace bloom;
 
 Game* game = nullptr;
-
-entt::DefaultRegistry testRegistry;
-bloom::GameObject testGO = bloom::GameObject(testRegistry);
-bloom::RenderSystem renderSysTest;
 
 
 int main() {
@@ -48,10 +41,9 @@ int main() {
 	game->delay(500);
 
 	// Test Game Object
-	testGO.assignComponent<bloom::Position>(50, 50);
-	testGO.assignComponent<bloom::Size>(256, 256);
-	auto tmp = game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	testGO.assignComponent<bloom::Sprite>(tmp, SDL_Rect{64,96,32,32});
+	entt::DefaultRegistry testRegistry;
+	bloom::RenderSystem renderSysTest;
+	bloom::GameObject testGO = bloom::GameObject(testRegistry, game);
 	renderSysTest.update(testRegistry);
 	game->delay(500);
 	// Test ends here.
