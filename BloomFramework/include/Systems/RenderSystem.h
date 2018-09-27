@@ -4,7 +4,7 @@
 #include "Components/Components.h"
 
 namespace bloom {
-	class RenderSystem {
+	class BLOOMFRAMEWORK_API RenderSystem {
 	public:
 		void update(entt::DefaultRegistry & registry);
 	};

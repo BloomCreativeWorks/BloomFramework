@@ -4,14 +4,14 @@
 #include "Components/Components.h"
 
 namespace bloom {
-	class GameObject {
+	class BLOOMFRAMEWORK_API GameObject {
 	public:
 		GameObject(entt::DefaultRegistry & registry);
 		~GameObject();
 
 		template <typename Component, typename... Args>
 		void assignComponent(Args &&... arguments) {
-			m_registry.assign<Component>(m_entity, std::forward<Args>(arguments));
+			m_registry.assign<Component>(m_entity, std::forward<Args>(arguments)...);
 		}
 		template <typename Component>
 		void removeComponent() {

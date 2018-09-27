@@ -1,8 +1,17 @@
 #include "Framework.h"
 #include <ctime>
+
+
+#include "GameObject.h"
+#include "Systems/RenderSystem.h"
 using namespace bloom;
 
 Game* game = nullptr;
+
+entt::DefaultRegistry testRegistry;
+bloom::GameObject testGO = bloom::GameObject(testRegistry);
+bloom::RenderSystem renderSysTest;
+
 
 int main() {
 	const int fps = 60;
@@ -37,6 +46,16 @@ int main() {
 	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
 	game->update();
 	game->delay(500);
+
+	// Test Game Object
+	//testGO.assignComponent<bloom::Position>(50, 50);
+	testGO.assignComponent<bloom::Size>(256, 256);
+	auto tmp = game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	testGO.assignComponent<bloom::Sprite>(tmp, SDL_Rect{64,96,32,32});
+	renderSysTest.update(testRegistry);
+	game->delay(500);
+	// Test ends here.
+
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
@@ -49,6 +68,7 @@ int main() {
 		}
 		testSprite->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		testSprite2->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
+		renderSysTest.update(testRegistry); // Test again.
 		game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
