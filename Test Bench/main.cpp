@@ -39,11 +39,11 @@ int main() {
 	game->setColor(randColor);
 	game->render();
 	auto testSprite = game->loadTexture("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	testSprite->render({ 0,0,32,32 }, { 0,0,128,128 });
+	testSprite->render(SDL_Rect{ 0,0,32,32 }, SDL_Rect{ 0,0,128,128 });
 	game->update();
 	game->delay(500);
 	auto testSprite2 = game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
+	testSprite2->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ 128,0,128,128 });
 	game->update();
 	game->delay(500);
 
@@ -66,8 +66,8 @@ int main() {
 		catch (Exception & e) {
 			std::cerr << e.what() << std::endl;
 		}
-		testSprite->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
-		testSprite2->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
+		testSprite->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
+		testSprite2->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		renderSysTest.update(testRegistry); // Test again.
 		game->update();
 		int frametime = SDL_GetTicks() - framestart;
