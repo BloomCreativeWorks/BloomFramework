@@ -48,7 +48,7 @@ int main() {
 	game->delay(500);
 
 	// Test Game Object
-	//testGO.assignComponent<bloom::Position>(50, 50);
+	testGO.assignComponent<bloom::Position>(50, 50);
 	testGO.assignComponent<bloom::Size>(256, 256);
 	auto tmp = game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
 	testGO.assignComponent<bloom::Sprite>(tmp, SDL_Rect{64,96,32,32});
