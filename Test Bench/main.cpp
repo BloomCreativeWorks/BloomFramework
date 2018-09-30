@@ -40,22 +40,22 @@ int main() {
 	game->delay(500);
 	game->music.play(BLOOM_AUDIO_LOOP);
 	while (game->isRunning()) {
-		framestart = SDL_GetTicks();
+		//framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		try {
-			game->render();
-		}
-		catch (Exception & e) {
-			std::cerr << e.what() << std::endl;
-		}
+		//try {
+		//	game->render();
+		//}
+		//catch (Exception & e) {
+		//	std::cerr << e.what() << std::endl;
+		//}
 		testSprite->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		testSprite2->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		game->update();
-		int frametime = SDL_GetTicks() - framestart;
+		//int frametime = SDL_GetTicks() - framestart;
 
-		if (framedelay > frametime)
-			game->delay(framedelay - frametime);
+		//if (framedelay > frametime)
+		//	game->delay(framedelay - frametime);
 	}
 	game->destroy();
 	Game::exit();
