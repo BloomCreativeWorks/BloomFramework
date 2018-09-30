@@ -7,8 +7,7 @@ namespace bloom {
 	}
 
 	BackgroundMusic::~BackgroundMusic() {
-		if (Mix_PlayingMusic())
-			Mix_HaltMusic();
+		stop();
 		Mix_FreeMusic(m_track);
 		m_track = nullptr;
 	}
@@ -31,7 +30,7 @@ namespace bloom {
 
 	void BackgroundMusic::pause() {
 		if (Mix_PausedMusic() == 0)
-			Mix_PausedMusic();
+			Mix_PauseMusic();
 		else
 			Mix_ResumeMusic();
 	}
@@ -40,7 +39,7 @@ namespace bloom {
 		if (Mix_PausedMusic() != 0)
 			Mix_ResumeMusic();
 		else
-			Mix_PausedMusic();
+			Mix_PauseMusic();
 	}
 
 	void BackgroundMusic::stop() {

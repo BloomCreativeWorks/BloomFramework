@@ -5,7 +5,7 @@ using namespace bloom;
 Game* game = nullptr;
 
 int main() {
-	const int fps = 60;
+	const int fps = 144;
 	const int framedelay = (1000 / fps);
 
 	Uint32 framestart;
