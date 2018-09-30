@@ -44,10 +44,10 @@ int main() {
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
-	bloom::RenderSystem renderSysTest;
+	bloom::RenderSystem renderSysTest(testRegistry);
 	TestChar testGO = TestChar(testRegistry, game);
 	testGO.init();
-	renderSysTest.update(testRegistry);
+	renderSysTest.update();
 	game->delay(500);
 	// Test ends here.
 
@@ -63,7 +63,7 @@ int main() {
 		}
 		testSprite->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		testSprite2->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
-		renderSysTest.update(testRegistry); // Test again.
+		renderSysTest.update(); // Test again.
 		game->update();
 		int frametime = SDL_GetTicks() - framestart;
 

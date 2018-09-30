@@ -18,3 +18,5 @@
 #include <memory>
 #include <string>
 #include <iostream>
+
+typedef double DeltaTime; // Remove this before merging.
