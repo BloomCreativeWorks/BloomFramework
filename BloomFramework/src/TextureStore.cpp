@@ -62,11 +62,10 @@ namespace bloom {
 	}
 
 	TexturePtr TextureStore::findTexture(const std::string & filePath) {
-		try {
-			auto temp = getTexture(filePath);
-			return temp;
-		}
-		catch (...) {
+		auto texIterator = m_store.find(filePath);
+		if (texIterator != m_store.end())
+			return texIterator->second;
+		else {
 			return nullptr;
 		}
 	}
