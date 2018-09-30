@@ -16,6 +16,7 @@ namespace bloom {
 	public:
 		TextureStore(SDL_Renderer *& renderer);
 		TextureStore(Game & renderer);
+		~TextureStore();
 
 		TexturePtr load(const std::string & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
 		TexturePtr getTexture(const std::string & filePath);

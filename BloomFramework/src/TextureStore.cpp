@@ -6,6 +6,13 @@ namespace bloom {
 
 	TextureStore::TextureStore(Game & object) : m_renderer(object.m_renderer) {}
 
+	TextureStore::~TextureStore() {
+		for (auto & v : m_store) {
+			v.second->dispose();
+		}
+		m_store.clear();
+	}
+
 	TexturePtr TextureStore::load(const std::string & filePath, std::optional<SDL_Color> colorKey) {
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
 		auto texture = findTexture(filePath);
