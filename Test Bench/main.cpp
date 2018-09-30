@@ -8,7 +8,7 @@ int main() {
 	const int fps = 144;
 	const int framedelay = (1000 / fps);
 
-	Uint32 framestart;
+	//Uint32 framestart;
 	try {
 		Game::initialize();
 	}
@@ -24,7 +24,7 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	game->music.load("Audio/sample.mp3");
+	game->music.load("Audio/sample_1-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
