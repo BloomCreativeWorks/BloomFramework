@@ -3,6 +3,7 @@
 #include "stdIncludes.h"
 #include "TextureStore.h"
 #include "Timer.h"
+#include "Audio.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
@@ -37,6 +38,7 @@ namespace bloom {
 
 		TextureStore	textureStore = TextureStore(m_renderer);
 		Timer timer;
+		BackgroundMusic music;
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;

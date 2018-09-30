@@ -24,6 +24,7 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
+	game->music.load("Audio/sample.mp3");
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
@@ -37,6 +38,7 @@ int main() {
 	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
 	game->update();
 	game->delay(500);
+	game->music.play(BLOOM_AUDIO_LOOP);
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
