@@ -31,9 +31,10 @@ int main() {
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
-	game->render();
-	auto testSprite = game->textureStore.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	testSprite->render({ 0,0,32,32 }, { 0,0,128,128 });
+	game->clear();
+	game->update();
+	auto testSprite = game->loadTexture("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
+	testSprite->render(SDL_Rect{ 0,0,32,32 }, SDL_Rect{ 0,0,128,128 });
 	game->update();
 	game->delay(500);
 	auto testSprite2 = game->textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });

@@ -27,6 +27,9 @@ namespace bloom {
 		void handleEvents();
 		bool isRunning();
 
+		void hideWindow();
+		void showWindow();
+
 		void setColor(SDL_Color const& color);
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 

@@ -134,6 +134,14 @@ namespace bloom {
 		return m_isRunning;
 	}
 
+	void Game::hideWindow() {
+		SDL_HideWindow(m_window);
+	}
+
+	void Game::showWindow() {
+		SDL_ShowWindow(m_window);
+	}
+
 	void Game::setColor(const SDL_Color & color) {
 		m_color = color;
 		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
