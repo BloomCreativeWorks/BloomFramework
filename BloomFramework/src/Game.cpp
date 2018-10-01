@@ -16,6 +16,16 @@ namespace bloom {
 			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
 		}
 	}
+	Game::Game(std::nothrow_t ,int width, int height, int windowFlags, int rendererFlags) :
+		m_screenWidth(width),
+		m_screenHeight(height),
+		m_windowFlags(windowFlags),
+		m_rendererFlags(rendererFlags),
+		m_isRunning(false)
+	{
+		if (SDL_WasInit(0) == 0)
+			initialize();
+	}
 
 	Game::~Game() {
 		destroy();
