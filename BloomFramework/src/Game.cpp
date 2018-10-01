@@ -12,11 +12,11 @@ namespace bloom {
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		if (windowFlags != 4097 && windowFlags & 1 == 1) {
+		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (windowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
 			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
 		}
 	}
-	Game::Game(std::nothrow_t ,int width, int height, int windowFlags, int rendererFlags) :
+	Game::Game(std::nothrow_t, int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
 		m_windowFlags(windowFlags),
@@ -25,6 +25,8 @@ namespace bloom {
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
+
+		std::clog << "[Game] the use of this ctor may be unsafe" << std::endl;
 	}
 
 	Game::~Game() {
