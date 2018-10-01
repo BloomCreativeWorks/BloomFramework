@@ -17,6 +17,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
+	
 	game = new Game(800, 600,1);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);

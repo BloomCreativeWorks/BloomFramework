@@ -5,15 +5,16 @@ namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
-		m_windowFlags((windowFlags & 1) ? (windowFlags ^ 1) : windowFlags),
+		m_windowFlags(windowFlags),
 		m_rendererFlags(rendererFlags),
 		m_isRunning(false)
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		if (windowFlags & 1 == 1)
-			std::cerr << "Exclusive fullscreen is not recommended. Flag unset." << std::endl;
+		if (windowFlags & 1 == 1) {
+			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
+		}
 	}
 
 	Game::~Game() {
