@@ -55,12 +55,12 @@ int main() {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		try {
-			game->render();
-		}
-		catch (Exception & e) {
-			std::cerr << e.what() << std::endl;
-		}
+		//try {
+		//	game->render();
+		//}
+		//catch (Exception & e) {
+		//	std::cerr << e.what() << std::endl;
+		//}
 		testSprite->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		testSprite2->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
 		renderSysTest.update(); // Test again.
