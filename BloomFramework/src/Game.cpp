@@ -5,7 +5,7 @@ namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
-		m_windowFlags(windowFlags & 1 ? windowFlags ^ 1 : windowFlags),
+		m_windowFlags((windowFlags & 1) ? (windowFlags ^ 1) : windowFlags),
 		m_rendererFlags(rendererFlags),
 		m_isRunning(false)
 	{

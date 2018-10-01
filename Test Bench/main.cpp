@@ -5,7 +5,7 @@ using namespace bloom;
 Game* game = nullptr;
 
 int main() {
-	const int fps = 1;
+	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
 	Uint32 framestart;
@@ -17,7 +17,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	game = new Game(1366, 768,1);
+	game = new Game(800, 600,1);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}

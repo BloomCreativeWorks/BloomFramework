@@ -9,7 +9,7 @@ namespace bloom {
 		friend TextureStore::TextureStore(Game & object);
 
 	public:
-		Game(int width, int height, int windowFlags = NULL, int rendererFlags = NULL);
+		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_PRESENTVSYNC);
 		~Game();
 
 		static void initialize(Uint32 initFlags = SDL_INIT_EVERYTHING,
