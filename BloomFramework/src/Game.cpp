@@ -12,7 +12,7 @@ namespace bloom {
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		if (windowFlags & 1 == 1) {
+		if (windowFlags != 4097 && windowFlags & 1 == 1) {
 			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
 		}
 	}
