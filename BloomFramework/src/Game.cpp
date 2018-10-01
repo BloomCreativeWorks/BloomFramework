@@ -5,12 +5,15 @@ namespace bloom {
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
-		m_windowFlags(windowFlags),
+		m_windowFlags(windowFlags & 1 ? windowFlags ^ 1 : windowFlags),
 		m_rendererFlags(rendererFlags),
 		m_isRunning(false)
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
+
+		if (windowFlags & 1 == 1)
+			std::cerr << "Exclusive fullscreen is not recommended. Flag unset." << std::endl;
 	}
 
 	Game::~Game() {
@@ -99,8 +102,6 @@ namespace bloom {
 
 	void Game::update() {
 		std::clog << "Delta time: " << timer.lap() << std::endl;
-		// Nothing here yet.
-		SDL_RenderPresent(m_renderer);
 	}
 
 	void Game::clear() {
@@ -112,11 +113,6 @@ namespace bloom {
 	}
 
 	void Game::render() {
-		SDL_RenderClear(m_renderer);
-		// For texture rendering test.
-		//auto tmp = m_textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-		//tmp->render({ 0,32,32,32 }, { 0,0,192,192 }); 
-		// Testing ends here.
 		SDL_RenderPresent(m_renderer);
 	}
 
