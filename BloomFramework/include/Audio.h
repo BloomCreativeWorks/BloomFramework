@@ -1,4 +1,5 @@
 #pragma once
+#include <queue>
 #include "stdIncludes.h"
 
 #define BLOOM_AUDIO_LOOP -1
@@ -35,5 +36,33 @@ namespace bloom {
 	private:
 		int m_channel;
 		Mix_Chunk * m_chunk = nullptr;
+	};
+
+	class MusicStore;
+
+	class BLOOMFRAMEWORK_API MusicStore {
+		using Track = std::pair<BackgroundMusic*, int>;
+	public:
+		MusicStore(bool infinitePlayback = false);
+		~MusicStore();
+		void launch();
+		void add(std::string fileName, int plays = 1);
+		void remove();
+		void play();
+		void pause();
+		void resume();
+		void skip();
+		void clear();
+		void exit();
+		void setInfinitePlayback(bool value);
+		bool isInfinitePlayback();
+
+	private:
+		static void next_track();
+		static MusicStore* m_currentObjectPtr;
+
+		MusicStore* m_oldObjectPtr = nullptr;
+		std::queue<Track> m_store;
+		bool m_infinitePlayback = true;
 	};
 }

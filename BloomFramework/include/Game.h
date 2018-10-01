@@ -41,7 +41,7 @@ namespace bloom {
 
 		TextureStore	textureStore = TextureStore(m_renderer);
 		Timer timer;
-		BackgroundMusic music;
+		MusicStore music;
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
