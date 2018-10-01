@@ -5,7 +5,7 @@ using namespace bloom;
 Game* game = nullptr;
 
 int main() {
-	const int fps = 200;
+	const int fps = 500;
 	const int framedelay = (1000 / fps);
 
 	//Uint32 framestart;
@@ -32,14 +32,14 @@ int main() {
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
 	game->clear();
-	game->update();
-	auto testSprite = game->loadTexture("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
+	game->render();
+	auto testSprite = game->textureStore.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	testSprite->render(SDL_Rect{ 0,0,32,32 }, SDL_Rect{ 0,0,128,128 });
-	game->update();
+	game->render();
 	game->delay(500);
 	auto testSprite2 = game->textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
 	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
-	game->update();
+	game->render();
 	game->delay(500);
 	game->music.play(BLOOM_AUDIO_LOOP);
 	int w = 0, h = 0;
@@ -47,15 +47,9 @@ int main() {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		//try {
-		//	game->render();
-		//}
-		//catch (Exception & e) {
-		//	std::cerr << e.what() << std::endl;
-		//}
 		testSprite->render({ 0, 0, 32, 32 }, { rand() % 1700, rand() % 900, 128, 128 });
 		testSprite2->render({ 0, 0, 32, 32 }, { w + 128, h, 128, 128 });
-		game->update();
+		game->render();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)
