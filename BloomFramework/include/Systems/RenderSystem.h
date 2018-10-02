@@ -14,7 +14,7 @@ namespace bloom {
 				[](auto entity, Position & pos, Size& size, Sprite & spr) {
 				SDL_Rect destRect{
 					static_cast<int>(pos.x),
-					static_cast<int>(pos.x),
+					static_cast<int>(pos.y),
 					static_cast<int>(size.w),
 					static_cast<int>(size.h)
 				};
