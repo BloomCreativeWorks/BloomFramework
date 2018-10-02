@@ -1,7 +1,8 @@
 #include "Framework.h"
 #include <ctime>
 
-#include "TestGameObject.h"
+#include "GameObjectTest/TestGameObject.h"
+#include "GameObjectTest/RandomizerSystem.h"
 
 using namespace bloom;
 
@@ -34,37 +35,36 @@ int main() {
 	game->setColor(randColor);
 	game->clear();
 	game->render();
-	auto testSprite = game->loadTexture("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	testSprite->render(SDL_Rect{ 0,0,32,32 }, SDL_Rect{ 0,0,128,128 });
-	game->render();
-	game->delay(500);
-	auto testSprite2 = game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	testSprite2->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ 128,0,128,128 });
-	game->render();
-	game->delay(500);
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::RenderSystem renderSysTest(testRegistry);
+	game->loadTexture("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
+	game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	TestChar testSprite = TestChar(testRegistry,game);
+	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
+	renderSysTest.update();
+	game->render();
+	game->delay(500);
+	TestChar testSprite2 = TestChar(testRegistry, game);
+	testSprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
+	renderSysTest.update();
+	game->render();
+	game->delay(500);
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init();
+	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{64, 96, 32, 32});
+	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	// Test ends here.
 
+	RandomPositionSystem randomizer(testRegistry);
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		//try {
-		//	game->render();
-		//}
-		//catch (Exception & e) {
-		//	std::cerr << e.what() << std::endl;
-		//}
-		testSprite->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
-		testSprite2->render(SDL_Rect{ 0, 0, 32, 32 }, SDL_Rect{ static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
+		randomizer.update();
 		renderSysTest.update(); // Test again.
 		game->render();
 		int frametime = SDL_GetTicks() - framestart;
