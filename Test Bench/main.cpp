@@ -18,7 +18,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	game = new Game(1000, 800, SDL_WINDOW_RESIZABLE, 0);
+	game = new Game(1000, 600, SDL_WINDOW_RESIZABLE, 0);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
@@ -61,7 +61,7 @@ int main() {
 		h += 1; w += 1;
 		h %= 1080; w %= 1920;
 	}
-	game->destroy();
-	Game::exit();
+	//game->destroy();
+	//Game::exit();
 	return 0;
 }
