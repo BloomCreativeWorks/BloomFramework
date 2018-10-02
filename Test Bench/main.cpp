@@ -30,11 +30,11 @@ int main() {
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
 	game->clear();
-	auto testSprite = game->textureStore.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
+	auto testSprite = game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	testSprite->render({ 0,0,32,32 }, { 0,0,128,128 });
 	game->render();
 	game->delay(500);
-	auto testSprite2 = game->textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	auto testSprite2 = game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
 	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
 	game->render();
 	game->delay(500);
