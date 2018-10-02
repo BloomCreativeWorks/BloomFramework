@@ -2,27 +2,27 @@
 #include "Exception.h"
 
 namespace bloom {
-	MusicStore* MusicStore::m_currentObjectPtr = nullptr;
+	_Basic_Music_Store* _Basic_Music_Store::m_currentObjectPtr = nullptr;
 
 
-	BackgroundMusic::BackgroundMusic(std::string fileName) {
+	Music::Music(std::string fileName) {
 		load(fileName);
 	}
 
-	BackgroundMusic::~BackgroundMusic() {
+	Music::~Music() {
 		stop();
 		Mix_FreeMusic(m_track);
 		m_track = nullptr;
 	}
 
-	void BackgroundMusic::load(std::string fileName) {
+	void Music::load(std::string fileName) {
 		m_track = Mix_LoadMUS(fileName.c_str());
 
 		if (m_track == NULL)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void BackgroundMusic::play(int plays) {
+	void Music::play(int plays) {
 		if (m_track == NULL or m_track == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play track");
 		}
@@ -31,43 +31,43 @@ namespace bloom {
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void BackgroundMusic::pause() {
+	void Music::pause() {
 		if (Mix_PausedMusic() == 0)
 			Mix_PauseMusic();
 		else
 			Mix_ResumeMusic();
 	}
 
-	void BackgroundMusic::resume() {
+	void Music::resume() {
 		if (Mix_PausedMusic() != 0)
 			Mix_ResumeMusic();
 		else
 			Mix_PauseMusic();
 	}
 
-	void BackgroundMusic::stop() {
+	void Music::stop() {
 		Mix_HaltMusic();
 	}
 
 
 
-	SoundEffects::SoundEffects(std::string fileName, int channel) {
+	SoundFX::SoundFX(std::string fileName, int channel) {
 		m_channel = channel;
 		load(fileName);
 	}
 
-	SoundEffects::~SoundEffects() {
+	SoundFX::~SoundFX() {
 		Mix_FreeChunk(m_chunk);
 	}
 
-	void SoundEffects::load(std::string fileName) {
+	void SoundFX::load(std::string fileName) {
 		m_chunk = Mix_LoadWAV(fileName.c_str());
 
 		if (m_chunk == NULL)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void SoundEffects::play(int loops) {
+	void SoundFX::play(int loops) {
 		if (m_chunk == NULL or m_chunk == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play chunk");
 		}
@@ -76,44 +76,44 @@ namespace bloom {
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void SoundEffects::pause() {
+	void SoundFX::pause() {
 		if (Mix_Paused(m_channel) == 0)
 			Mix_Pause(m_channel);
 		else
 			Mix_Resume(m_channel);
 	}
 
-	void SoundEffects::resume() {
+	void SoundFX::resume() {
 		if (Mix_Paused(m_channel) != 0)
 			Mix_Resume(m_channel);
 		else
 			Mix_Pause(m_channel);
 	}
 
-	void SoundEffects::stop() {
+	void SoundFX::stop() {
 		Mix_HaltChannel(m_channel);
 	}
 
 
 
-	MusicStore::MusicStore(bool infinitePlayback) : m_infinitePlayback(infinitePlayback) {}
+	_Basic_Music_Store::_Basic_Music_Store(bool infinitePlayback) : m_infinitePlayback(infinitePlayback) {}
 
-	MusicStore::~MusicStore() {
+	_Basic_Music_Store::~_Basic_Music_Store() {
 		clear();
 		exit();
 	}
 
-	void MusicStore::launch() {
+	void _Basic_Music_Store::launch() {
 		m_oldObjectPtr = m_currentObjectPtr;
 		m_currentObjectPtr = this;
-		Mix_HookMusicFinished((void(*) ())(MusicStore::next_track));
+		Mix_HookMusicFinished((void(*) ())(_Basic_Music_Store::next_track));
 	}
 
-	void MusicStore::add(std::string fileName, int plays, bool ignoreInfinitePlayback) {
-		m_store.push({ new BackgroundMusic(fileName), plays, ignoreInfinitePlayback });
+	void _Basic_Music_Store::add(std::string fileName, int plays, bool ignoreInfinitePlayback) {
+		m_store.push({ new Music(fileName), plays, ignoreInfinitePlayback });
 	}
 
-	void MusicStore::remove() {
+	void _Basic_Music_Store::remove() {
 		if (!m_store.empty()) {
 			exit();
 			m_store.front().track->stop();
@@ -124,7 +124,7 @@ namespace bloom {
 		}
 	}
 
-	void MusicStore::play() {
+	void _Basic_Music_Store::play() {
 		if (m_store.empty())
 			throw Exception("[MusicStore] store is empty");
 		if (m_currentObjectPtr != this)
@@ -133,38 +133,38 @@ namespace bloom {
 		track.track->play(track.plays);
 	}
 
-	void MusicStore::pause() {
+	void _Basic_Music_Store::pause() {
 		m_store.front().track->pause();
 	}
 
-	void MusicStore::resume() {
+	void _Basic_Music_Store::resume() {
 		m_store.front().track->resume();
 	}
 
-	void MusicStore::skip() {
+	void _Basic_Music_Store::skip() {
 		m_store.front().track->stop();
 	}
 
-	void MusicStore::clear() {
+	void _Basic_Music_Store::clear() {
 		m_store = std::queue<Track>();
 	}
 
-	void MusicStore::exit() {
+	void _Basic_Music_Store::exit() {
 		if (m_currentObjectPtr == this) {
 			m_currentObjectPtr = m_oldObjectPtr;
-			Mix_HookMusicFinished((void(*) ())(MusicStore::next_track));
+			Mix_HookMusicFinished((void(*) ())(_Basic_Music_Store::next_track));
 		}
 	}
 
-	void MusicStore::setInfinitePlayback(bool value) {
+	void _Basic_Music_Store::setInfinitePlayback(bool value) {
 		m_infinitePlayback = value;
 	}
 
-	bool MusicStore::isInfinitePlayback() {
+	bool _Basic_Music_Store::isInfinitePlayback() {
 		return m_infinitePlayback;
 	}
 
-	void MusicStore::next_track() {
+	void _Basic_Music_Store::next_track() {
 		if (m_currentObjectPtr != nullptr) {
 			if (!m_currentObjectPtr->m_store.front().ignoreInfinitePlayback && m_currentObjectPtr->m_infinitePlayback) {
 				m_currentObjectPtr->m_store.push(m_currentObjectPtr->m_store.front());

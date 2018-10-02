@@ -5,7 +5,7 @@ using namespace bloom;
 Game* game = nullptr;
 
 int main() {
-	const int fps = 500;
+	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
 	//Uint32 framestart;
@@ -18,15 +18,16 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	game = new Game(1000, 800, SDL_WINDOW_RESIZABLE | SDL_WINDOW_FULLSCREEN_DESKTOP, 0);
+	game = new Game(1000, 800, SDL_WINDOW_RESIZABLE, 0);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	game->music.add("Audio/sample_1.mp3", 1, true);
-	game->music.add("Audio/sample_2.mp3");
+	music.add(music.load("Audio/sample_1.mp3"), 1, true);
+	music.add(music.load("Audio/sample_2.mp3"), 1, false);
+	music.add(music.load("Audio/sample_2-full.mp3"));
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
@@ -42,8 +43,8 @@ int main() {
 	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
 	game->render();
 	game->delay(500);
-	game->music.setInfinitePlayback(true);
-	game->music.play();
+	music.setInfinitePlayback(true);
+	music.play();
 	int w = 0, h = 0;
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();

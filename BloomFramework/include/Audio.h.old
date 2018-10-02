@@ -1,0 +1,80 @@
+#pragma once
+#include <queue>
+#include <unordered_map>
+#include "stdIncludes.h"
+
+#define BLOOM_AUDIO_LOOP -1
+
+namespace bloom {
+
+	using TrackPtr = std::shared_ptr<Music>;
+
+	class BLOOMFRAMEWORK_API Music {
+	public:
+		Music() {}
+		Music(std::string fileName);
+		~Music();
+
+		void load(std::string fileName);
+		void play(int plays = 1);
+		void pause();
+		void resume();
+		void stop();
+
+	private:
+		Mix_Music * m_track = nullptr;
+	};
+
+	class BLOOMFRAMEWORK_API SoundFX {
+	public:
+		SoundFX(int channel = -1) : m_channel(channel) {}
+		SoundFX(std::string fileName, int channel = -1);
+		~SoundFX();
+
+		void load(std::string fileName);
+		void play(int loops = 0);
+		void pause();
+		void resume();
+		void stop();
+
+	private:
+		int m_channel;
+		Mix_Chunk * m_chunk = nullptr;
+	};
+
+	//class BLOOMFRAMEWORK_API MusicStore {
+	//public:
+	//	TrackPtr load(const std::string & filePath);
+	//	TrackPtr find(const std::string & filePath);
+	//	void unload(const std::string & filePath);
+
+	//private:
+	//	std::unordered_map<std::string, TrackPtr> m_store;
+	//};
+
+	class BLOOMFRAMEWORK_API _Basic_Music_Store {
+		struct Track { Music* track; int plays; bool ignoreInfinitePlayback; };
+	public:
+		_Basic_Music_Store(bool infinitePlayback = false);
+		~_Basic_Music_Store();
+		void launch();
+		void add(std::string fileName, int plays = 1, bool ignoreInfinitePlayback = false);
+		void remove();
+		void play();
+		void pause();
+		void resume();
+		void skip();
+		void clear();
+		void exit();
+		void setInfinitePlayback(bool value);
+		bool isInfinitePlayback();
+
+	private:
+		static void next_track();
+		static _Basic_Music_Store* m_currentObjectPtr;
+
+		_Basic_Music_Store* m_oldObjectPtr = nullptr;
+		std::queue<Track> m_store;
+		bool m_infinitePlayback = true;
+	};
+}

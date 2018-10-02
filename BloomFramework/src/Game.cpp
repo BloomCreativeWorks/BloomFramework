@@ -115,7 +115,7 @@ namespace bloom {
 	}
 
 	void Game::destroy() {
-		music.~MusicStore();
+		//music.~_Basic_Music_Store();
 		textureStore.~TextureStore();
 		SDL_DestroyRenderer(m_renderer);
 		SDL_DestroyWindow(m_window);
