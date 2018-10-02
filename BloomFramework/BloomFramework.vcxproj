@@ -95,7 +95,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -109,7 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link />
@@ -126,7 +126,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -155,34 +155,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dep\entt\config\config.h" />
-    <ClInclude Include="dep\entt\core\algorithm.hpp" />
-    <ClInclude Include="dep\entt\core\family.hpp" />
-    <ClInclude Include="dep\entt\core\hashed_string.hpp" />
-    <ClInclude Include="dep\entt\core\ident.hpp" />
-    <ClInclude Include="dep\entt\core\monostate.hpp" />
-    <ClInclude Include="dep\entt\entity\actor.hpp" />
-    <ClInclude Include="dep\entt\entity\attachee.hpp" />
-    <ClInclude Include="dep\entt\entity\entity.hpp" />
-    <ClInclude Include="dep\entt\entity\entt_traits.hpp" />
-    <ClInclude Include="dep\entt\entity\helper.hpp" />
-    <ClInclude Include="dep\entt\entity\prototype.hpp" />
-    <ClInclude Include="dep\entt\entity\registry.hpp" />
-    <ClInclude Include="dep\entt\entity\snapshot.hpp" />
-    <ClInclude Include="dep\entt\entity\sparse_set.hpp" />
-    <ClInclude Include="dep\entt\entity\utility.hpp" />
-    <ClInclude Include="dep\entt\entity\view.hpp" />
-    <ClInclude Include="dep\entt\entt.hpp" />
-    <ClInclude Include="dep\entt\locator\locator.hpp" />
-    <ClInclude Include="dep\entt\process\process.hpp" />
-    <ClInclude Include="dep\entt\process\scheduler.hpp" />
-    <ClInclude Include="dep\entt\resource\cache.hpp" />
-    <ClInclude Include="dep\entt\resource\handle.hpp" />
-    <ClInclude Include="dep\entt\resource\loader.hpp" />
-    <ClInclude Include="dep\entt\signal\delegate.hpp" />
-    <ClInclude Include="dep\entt\signal\dispatcher.hpp" />
-    <ClInclude Include="dep\entt\signal\emitter.hpp" />
-    <ClInclude Include="dep\entt\signal\sigh.hpp" />
     <ClInclude Include="include\Components\Components.h" />
     <ClInclude Include="include\Components\Position.h" />
     <ClInclude Include="include\Components\Size.h" />
