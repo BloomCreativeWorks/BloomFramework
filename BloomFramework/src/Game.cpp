@@ -98,8 +98,6 @@ namespace bloom {
 	}
 
 	void Game::update() {
-		// Nothing here yet.
-		SDL_RenderPresent(m_renderer);
 	}
 
 	void Game::clear() {
@@ -111,11 +109,6 @@ namespace bloom {
 	}
 
 	void Game::render() {
-		SDL_RenderClear(m_renderer);
-		// For texture rendering test.
-		//auto tmp = m_textureStore.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-		//tmp->render({ 0,32,32,32 }, { 0,0,192,192 }); 
-		// Testing ends here.
 		SDL_RenderPresent(m_renderer);
 	}
 
