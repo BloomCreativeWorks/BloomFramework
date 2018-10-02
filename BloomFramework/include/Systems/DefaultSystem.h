@@ -12,5 +12,5 @@ namespace bloom {
 	protected:
 		entt::DefaultRegistry& m_registry;
 	};
-	typedef DefaultSystem System;
+	using System = DefaultSystem;
 }
