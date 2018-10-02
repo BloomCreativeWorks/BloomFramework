@@ -13,8 +13,8 @@ public:
 		m_registry.view<Position>().each(
 			[this](auto entity, Position & pos) {
 			if (!m_registry.has<NoRandomPos>(entity)) {
-				pos.x = static_cast<uint16_t>(rand() % 672);
-				pos.y = static_cast<uint16_t>(rand() % 472);
+				pos.x = static_cast<float>(rand() % 672);
+				pos.y = static_cast<float>(rand() % 472);
 			}
 		});
 	}
