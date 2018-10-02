@@ -41,12 +41,12 @@ namespace bloom {
 	class MusicStore;
 
 	class BLOOMFRAMEWORK_API MusicStore {
-		using Track = std::pair<BackgroundMusic*, int>;
+		struct Track { BackgroundMusic* track; int plays; bool ignoreInfinitePlayback; };
 	public:
 		MusicStore(bool infinitePlayback = false);
 		~MusicStore();
 		void launch();
-		void add(std::string fileName, int plays = 1);
+		void add(std::string fileName, int plays = 1, bool ignoreInfinitePlayback = false);
 		void remove();
 		void play();
 		void pause();

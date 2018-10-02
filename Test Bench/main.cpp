@@ -25,7 +25,7 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	game->music.add("Audio/sample_1.mp3");
+	game->music.add("Audio/sample_1.mp3", 1, true);
 	game->music.add("Audio/sample_2.mp3");
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));

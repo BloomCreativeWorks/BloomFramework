@@ -1,6 +1,5 @@
 #include "Audio.h"
 #include "Exception.h"
-#include <functional>
 
 namespace bloom {
 	MusicStore* MusicStore::m_currentObjectPtr = nullptr;
@@ -110,14 +109,14 @@ namespace bloom {
 		Mix_HookMusicFinished((void(*) ())(MusicStore::next_track));
 	}
 
-	void MusicStore::add(std::string fileName, int plays) {
-		m_store.push({ new BackgroundMusic(fileName) , plays });
+	void MusicStore::add(std::string fileName, int plays, bool ignoreInfinitePlayback) {
+		m_store.push({ new BackgroundMusic(fileName), plays, ignoreInfinitePlayback });
 	}
 
 	void MusicStore::remove() {
 		if (!m_store.empty()) {
 			exit();
-			m_store.front().first->stop();
+			m_store.front().track->stop();
 			m_store.pop();
 			launch();
 			if (!m_store.empty())
@@ -131,19 +130,19 @@ namespace bloom {
 		if (m_currentObjectPtr != this)
 			launch();
 		auto track = m_store.front();
-		track.first->play(track.second);
+		track.track->play(track.plays);
 	}
 
 	void MusicStore::pause() {
-		m_store.front().first->pause();
+		m_store.front().track->pause();
 	}
 
 	void MusicStore::resume() {
-		m_store.front().first->resume();
+		m_store.front().track->resume();
 	}
 
 	void MusicStore::skip() {
-		m_store.front().first->stop();
+		m_store.front().track->stop();
 	}
 
 	void MusicStore::clear() {
@@ -167,7 +166,7 @@ namespace bloom {
 
 	void MusicStore::next_track() {
 		if (m_currentObjectPtr != nullptr) {
-			if (m_currentObjectPtr->m_infinitePlayback) {
+			if (!m_currentObjectPtr->m_store.front().ignoreInfinitePlayback && m_currentObjectPtr->m_infinitePlayback) {
 				m_currentObjectPtr->m_store.push(m_currentObjectPtr->m_store.front());
 			}
 			m_currentObjectPtr->m_store.pop();
