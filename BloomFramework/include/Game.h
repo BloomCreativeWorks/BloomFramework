@@ -51,5 +51,8 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
+
+	private:
+		inline static int m_instances = 0;
 	};
 }

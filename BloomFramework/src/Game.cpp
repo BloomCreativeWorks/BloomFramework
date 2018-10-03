@@ -11,10 +11,15 @@ namespace bloom {
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
+
+		m_instances++;
 	}
 
 	Game::~Game() {
-		destroy(); exit();
+		destroy(); 
+		m_instances--;
+		if (!m_instances)
+			exit();
 	}
 
 	void Game::initialize(Uint32 initFlags,
