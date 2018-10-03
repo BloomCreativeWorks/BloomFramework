@@ -13,4 +13,6 @@ namespace bloom {
 		SDL_Texture *	m_texture;
 		SDL_Renderer *&	m_renderer;
 	};
+
+	using TexturePtr = std::shared_ptr<Texture>;
 }
