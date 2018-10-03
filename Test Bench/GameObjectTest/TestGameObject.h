@@ -10,7 +10,7 @@ public:
 	void init(SDL_Rect pos_and_size = SDL_Rect{ 50,50, 256, 256 }, const std::string & texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt) {
 		m_registry.replace<bloom::Position>(m_entity, static_cast<float>(pos_and_size.x), static_cast<float>(pos_and_size.y));
 		m_registry.assign<bloom::Size>(m_entity, static_cast<float>(pos_and_size.w), static_cast<float>(pos_and_size.h));
-		auto tmp = m_gameInstance->loadTexture(texturePath);
+		auto tmp = m_gameInstance->textures.load(texturePath);
 
 		m_registry.assign<bloom::Sprite>(m_entity, tmp, srcRect);
 	}
