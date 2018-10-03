@@ -2,6 +2,4 @@
 
 #include "Framework.h"
 
-struct NoRandomPos {
-	bool set = true;
-};
+struct NoRandomPos {};

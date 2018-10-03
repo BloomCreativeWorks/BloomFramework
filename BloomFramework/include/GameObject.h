@@ -22,6 +22,7 @@ namespace bloom {
 		virtual void init() {}
 
 		~GameObject();
+		uint32_t getEntityID();
 
 	protected:
 		entt::DefaultRegistry & m_registry;

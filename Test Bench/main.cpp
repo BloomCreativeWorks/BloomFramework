@@ -41,7 +41,7 @@ int main() {
 	bloom::RenderSystem renderSysTest(testRegistry);
 	game->loadTexture("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	game->loadTexture("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	TestChar testSprite = TestChar(testRegistry,game);
+	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
@@ -52,15 +52,22 @@ int main() {
 	game->render();
 	game->delay(500);
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{64, 96, 32, 32});
+	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
-	// Test ends here.
 
-	RandomPositionSystem randomizer(testRegistry);
+	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
+	RandomPositionSystem randomizer(testRegistry); 
+
+	int testX = 0, testY = 0;
 	while (game->isRunning()) {
+		// If manual control of entities is required, this is the method to do so.
+		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+		testGOpos.x = static_cast<float>(testX++);
+		testGOpos.y = static_cast<float>(testY++);
+		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
