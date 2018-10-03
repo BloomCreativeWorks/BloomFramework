@@ -53,7 +53,7 @@ namespace bloom {
 		bool			m_isRunning;
 
 	private:
-		void exit();
+		static void exit();
 		inline static int m_instances = 0;
 	};
 }
