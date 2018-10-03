@@ -61,7 +61,7 @@ int main() {
 		h += 1; w += 1;
 		h %= 1080; w %= 1920;
 	}
-	//game->destroy();
+	game->destroy();
 	//Game::exit();
 	return 0;
 }

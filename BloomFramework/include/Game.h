@@ -15,7 +15,7 @@ namespace bloom {
 		static void initialize(Uint32 initFlags = SDL_INIT_EVERYTHING,
 			int mixerFrequency = 44100, Uint16 mixerformat = MIX_DEFAULT_FORMAT, int mixerChannels = 2, int mixerChunksize = 2048,
 			int imageFlags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
-		static void exit();
+		
 
 		void create(std::string const& title, int xpos, int ypos);
 		void update();
@@ -53,6 +53,7 @@ namespace bloom {
 		bool			m_isRunning;
 
 	private:
+		void exit();
 		inline static int m_instances = 0;
 	};
 }
