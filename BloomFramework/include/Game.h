@@ -40,8 +40,6 @@ namespace bloom {
 
 		TextureStore	textureStore = TextureStore(m_renderer);
 		Timer timer;
-		//_Basic_Music_Store music;
-		
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
@@ -54,6 +52,6 @@ namespace bloom {
 
 	private:
 		static void exit();
-		inline static int m_instances = 0;
+		inline static int m_runningInstancesQnt = 0;
 	};
 }

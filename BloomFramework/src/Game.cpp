@@ -12,13 +12,13 @@ namespace bloom {
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		m_instances++;
+		m_runningInstancesQnt++;
 	}
 
 	Game::~Game() {
 		destroy(); 
-		m_instances--;
-		if (!m_instances)
+		m_runningInstancesQnt--;
+		if (m_runningInstancesQnt <= 0)
 			exit();
 	}
 
@@ -120,8 +120,6 @@ namespace bloom {
 	}
 
 	void Game::destroy() {
-		//music.~_Basic_Music_Store();
-		textureStore.~TextureStore();
 		SDL_DestroyRenderer(m_renderer);
 		SDL_DestroyWindow(m_window);
 		m_renderer = nullptr;

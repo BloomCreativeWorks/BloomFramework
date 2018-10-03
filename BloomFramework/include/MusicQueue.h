@@ -19,11 +19,11 @@ namespace bloom {
 		bool isInfinitePlayback();
 
 	private:
-		static void next_track();
-		static MusicQueue* m_currentObjectPtr;
-
 		MusicQueue* m_oldObjectPtr = nullptr;
 		std::queue<Track> m_queue;
 		bool m_infinitePlayback = true;
+
+		static void next_track();
+		inline static MusicQueue* m_currentObjectPtr = nullptr;
 	};
 }

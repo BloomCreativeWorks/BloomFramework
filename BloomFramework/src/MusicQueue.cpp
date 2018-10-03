@@ -2,8 +2,6 @@
 #include "Exception.h"
 
 namespace bloom {
-	MusicQueue* MusicQueue::m_currentObjectPtr = nullptr;
-
 	void MusicQueue::launch() {
 		m_oldObjectPtr = m_currentObjectPtr;
 		m_currentObjectPtr = this;
@@ -53,8 +51,9 @@ namespace bloom {
 	void MusicQueue::exit() {
 		if (m_currentObjectPtr == this) {
 			m_currentObjectPtr = m_oldObjectPtr;
-			Mix_HookMusicFinished((void(*) ())(MusicQueue::next_track));
 		}
+		if (!m_currentObjectPtr)
+			Mix_HookMusicFinished(nullptr);
 	}
 
 	void MusicQueue::setInfinitePlayback(bool value) {

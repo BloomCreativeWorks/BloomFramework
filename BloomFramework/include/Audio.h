@@ -7,18 +7,16 @@
 #define BLOOM_AUDIO_INFINITE_REPEAT -1
 
 namespace bloom {
-	class MusicFull : public MusicStore, public MusicQueue {
+	class MusicFull {
 	public:
-		MusicFull() {
-			launch();
+		~MusicFull() {
+			queue.exit();
 		}
 
-		~MusicFull() {
-			exit();
-		}
+		MusicStore	store;
+		MusicQueue	queue;
 	};
 
-	MusicFull music = MusicFull();
-
-	SoundFX sounds;
+	MusicFull music;
+	SoundFXStore sounds;
 }

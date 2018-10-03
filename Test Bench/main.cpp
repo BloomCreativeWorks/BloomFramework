@@ -25,9 +25,9 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	music.add(music.load("Audio/sample_1.mp3"), 1, true);
-	music.add(music.load("Audio/sample_2.mp3"), 1, false);
-	music.add(music.load("Audio/sample_2-full.mp3"));
+	music.queue.add(music.store.load("Audio/sample_1.mp3"), 1, true);
+	music.queue.add(music.store.load("Audio/sample_2.mp3"), 1, false);
+	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
@@ -43,8 +43,8 @@ int main() {
 	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
 	game->render();
 	game->delay(500);
-	music.setInfinitePlayback(true);
-	music.play();
+	music.queue.setInfinitePlayback(true);
+	music.queue.play();
 	int w = 0, h = 0;
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
@@ -53,6 +53,7 @@ int main() {
 		testSprite->render({ 0, 0, 32, 32 }, { rand() % 1700, rand() % 900, 128, 128 });
 		testSprite2->render({ 0, 0, 32, 32 }, { w + 128, h, 128, 128 });
 		game->render();
+		game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)
