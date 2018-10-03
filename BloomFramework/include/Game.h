@@ -2,13 +2,15 @@
 #include <iostream>
 #include "stdIncludes.h"
 #include "TextureStore.h"
+#include "Timer.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 		friend TextureStore::TextureStore(Game & object);
 
 	public:
-		Game(int width, int height, int windowFlags = NULL, int rendererFlags = NULL);
+		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		~Game();
 
 		static void initialize(Uint32 initFlags = SDL_INIT_EVERYTHING,
@@ -25,9 +27,6 @@ namespace bloom {
 		void handleEvents();
 		bool isRunning();
 
-		TexturePtr loadTexture(const std::string & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
-		void unloadTexture(const std::string & filePath);
-
 		void setColor(SDL_Color const& color);
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
 
@@ -37,6 +36,9 @@ namespace bloom {
 		int getScreenHeight();
 		SDL_Event getEvent();
 
+		TextureStore	textures = TextureStore(m_renderer);
+		Timer			timer;
+
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
 		SDL_Window *	m_window = nullptr;
@@ -45,6 +47,5 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
-		TextureStore	m_textureStore = TextureStore(m_renderer);
 	};
 }

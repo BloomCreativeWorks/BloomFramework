@@ -11,6 +11,23 @@ namespace bloom {
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
+
+		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (windowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
+		}
+	}
+
+	Game::Game(std::nothrow_t, int width, int height, int windowFlags, int rendererFlags) :
+		m_screenWidth(width),
+		m_screenHeight(height),
+		m_windowFlags(windowFlags),
+		m_rendererFlags(rendererFlags),
+		m_isRunning(false)
+	{
+		if (SDL_WasInit(0) == 0)
+			initialize();
+
+		std::clog << "[Game] the use of this ctor may be unsafe" << std::endl;
 	}
 
 	Game::~Game() {
@@ -98,6 +115,7 @@ namespace bloom {
 	}
 
 	void Game::update() {
+		std::clog << "Delta time: " << timer.lap() << std::endl;
 	}
 
 	void Game::clear() {
@@ -122,14 +140,6 @@ namespace bloom {
 
 	bool Game::isRunning() {
 		return m_isRunning;
-	}
-
-	TexturePtr Game::loadTexture(const std::string & filePath, std::optional<SDL_Color> colorKey) {
-		return m_textureStore.load(filePath, colorKey);
-	}
-
-	void Game::unloadTexture(const std::string & filePath) {
-		m_textureStore.unload(filePath);
 	}
 
 	void Game::setColor(const SDL_Color & color) {

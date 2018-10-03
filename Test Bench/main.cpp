@@ -22,7 +22,8 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	game = new Game(800, 600);
+	
+	game = new Game(std::nothrow, 800, 600);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
@@ -74,6 +75,7 @@ int main() {
 		randomizer.update();
 		renderSysTest.update(); // Test again.
 		game->render();
+		game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)

@@ -169,6 +169,7 @@
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\stdIncludes.h" />
     <ClInclude Include="include\TextureStore.h" />
+    <ClInclude Include="include\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp" />
@@ -176,6 +177,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TextureStore.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
