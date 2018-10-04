@@ -18,10 +18,10 @@ namespace bloom {
 	class BLOOMFRAMEWORK_API GameObject {
 	public:
 		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
+		~GameObject();
 
 		virtual void init() {}
 
-		~GameObject();
 		uint32_t getEntityID();
 
 	protected:

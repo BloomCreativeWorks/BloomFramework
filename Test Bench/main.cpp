@@ -66,8 +66,8 @@ int main() {
 	while (game->isRunning()) {
 		// If manual control of entities is required, this is the method to do so.
 		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
-		testGOpos.x = static_cast<float>(testX++);
-		testGOpos.y = static_cast<float>(testY++);
+		testGOpos.x = testX++;
+		testGOpos.y = testY++;
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();

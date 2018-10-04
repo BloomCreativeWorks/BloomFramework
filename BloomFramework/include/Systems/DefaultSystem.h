@@ -10,7 +10,7 @@ namespace bloom {
 		virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
 
 	protected:
-		entt::DefaultRegistry& m_registry;
+		entt::DefaultRegistry & m_registry;
 	};
 	using System = DefaultSystem;
 }

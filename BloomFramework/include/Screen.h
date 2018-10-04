@@ -8,7 +8,7 @@ namespace bloom {
 		Screen(Game& gameInstance);
 		void handleInput();
 		void render();
-		
+
 	private:
 		// std::vector<GameObject> gameObjects; // GameObject not implemented yet.
 		entt::DefaultRegistry registry;
