@@ -6,3 +6,6 @@
 #include "TextureStore.h"
 #include "Game.h"
 #include "Audio.h"
+#include "GameObject.h"
+#include "Components/Components.h"
+#include "Systems/Systems.h"

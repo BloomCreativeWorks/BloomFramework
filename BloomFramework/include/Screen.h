@@ -11,6 +11,7 @@ namespace bloom {
 
 	private:
 		// std::vector<GameObject> gameObjects; // GameObject not implemented yet.
+		entt::DefaultRegistry registry;
 		Game& _gameInstance;
 	};
 }

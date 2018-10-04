@@ -95,8 +95,8 @@
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>NotSet</SubSystem>
@@ -109,8 +109,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link />
     <Link>
@@ -126,8 +126,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -143,8 +143,8 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <PreprocessorDefinitions>BLOOMFRAMEWORK_EXPORT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include/;dep/</AdditionalIncludeDirectories>
-      <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalIncludeDirectories>include/;../entt/src/</AdditionalIncludeDirectories>
+      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -160,10 +160,18 @@
     <ClInclude Include="include\Music.h" />
     <ClInclude Include="include\MusicQueue.h" />
     <ClInclude Include="include\MusicStore.h" />
+    <ClInclude Include="include\Components\Components.h" />
+    <ClInclude Include="include\Components\Position.h" />
+    <ClInclude Include="include\Components\Size.h" />
+    <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Framework.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\SoundFX.h" />
+    <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Systems\DefaultSystem.h" />
+    <ClInclude Include="include\Systems\RenderSystem.h" />
+    <ClInclude Include="include\Systems\Systems.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\stdIncludes.h" />
     <ClInclude Include="include\TextureStore.h" />
@@ -177,6 +185,7 @@
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\SoundFX.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TextureStore.cpp" />
     <ClCompile Include="src\Timer.cpp" />
