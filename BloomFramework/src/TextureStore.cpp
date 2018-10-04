@@ -57,7 +57,7 @@ namespace bloom {
 		}
 	}
 
-	TexturePtr TextureStore::find(std::nothrow_t, const std::string & filePath) {
+	TexturePtr TextureStore::find(std::nothrow_t, const std::string & filePath) noexcept {
 		auto texIterator = m_store.find(filePath);
 		if (texIterator != m_store.end())
 			return texIterator->second;
