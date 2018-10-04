@@ -1,3 +1,6 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "MusicStore.h"
 #include "Exception.h"
 
@@ -21,7 +24,7 @@ namespace bloom {
 		}
 	}
 
-	TrackPtr MusicStore::find(std::nothrow_t, const std::string & filePath) {
+	TrackPtr MusicStore::find(std::nothrow_t, const std::string & filePath) noexcept {
 		auto trackIt = m_store.find(filePath);
 		if (trackIt != m_store.end())
 			return trackIt->second;

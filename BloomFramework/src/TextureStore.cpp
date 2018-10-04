@@ -1,3 +1,6 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "Exception.h"
 #include "Game.h"
 
@@ -28,7 +31,7 @@ namespace bloom {
 		else
 		{
 			if (colorKey != std::nullopt) {
-				SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
+				SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
 			}
 			//Create texture from surface pixels
 			SDL_Texture * texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);

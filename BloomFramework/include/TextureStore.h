@@ -1,5 +1,4 @@
 #pragma once
-#pragma warning(disable:4251) //Ignore warnings about templates in dll
 
 #include <unordered_map>
 #include <optional>

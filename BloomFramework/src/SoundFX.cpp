@@ -1,3 +1,6 @@
+// This is an open source non-commercial project. Dear PVS-Studio, please check it.
+// PVS-Studio Static Code Analyzer for C, C++ and C#: http://www.viva64.com
+
 #include "SoundFX.h"
 #include "Exception.h"
 
@@ -14,12 +17,12 @@ namespace bloom {
 	void SoundFX::load(std::string fileName) {
 		m_chunk = Mix_LoadWAV(fileName.c_str());
 
-		if (m_chunk == NULL)
+		if (m_chunk == nullptr)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
 	void SoundFX::play(int loops) {
-		if (m_chunk == NULL or m_chunk == nullptr) {
+		if (m_chunk == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play chunk");
 		}
 
