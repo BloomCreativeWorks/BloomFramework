@@ -8,6 +8,9 @@ using namespace bloom;
 
 Game* game = nullptr;
 
+const int WINDOW_WIDTH = 1000;
+const int WINDOW_HEIGHT = 800;
+
 
 int main() {
 	const int fps = 60;
@@ -23,7 +26,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	game = new Game(std::nothrow, 800, 600);
+	game = new Game(std::nothrow, WINDOW_WIDTH, WINDOW_HEIGHT);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
@@ -74,11 +77,12 @@ int main() {
 		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 		testGOpos.x = testX++;
 		testGOpos.y = testY++;
+		testX %= WINDOW_WIDTH; testY %= WINDOW_HEIGHT;
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		randomizer.update();
+		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
 		renderSysTest.update(); // Test again.
 		game->render();
 		game->update();
@@ -86,9 +90,6 @@ int main() {
 
 		if (framedelay > frametime)
 			game->delay(framedelay - frametime);
-
-		h += 1; w += 1;
-		h %= 1080; w %= 1920;
 	}
 	game->destroy();
 	//Game::exit();

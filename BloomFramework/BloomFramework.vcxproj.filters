@@ -28,40 +28,49 @@
     <Filter Include="Header Files\Game">
       <UniqueIdentifier>{c603319f-7912-409b-b186-08aa9f81a460}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Music">
+      <UniqueIdentifier>{7fc13c1a-f460-40c3-98a5-cd8c02e6a7d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Texture">
+      <UniqueIdentifier>{5e97ba07-4a37-46da-8292-4ed5288fa773}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{9b126fec-94e4-40c2-a8bb-af3052d971e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureStore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\MusicStore.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Music.cpp">
+      <Filter>Source Files\Music</Filter>
     </ClCompile>
     <ClCompile Include="src\MusicQueue.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Music.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Music</Filter>
     </ClCompile>
     <ClCompile Include="src\SoundFX.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Music</Filter>
     </ClCompile>
     <ClCompile Include="src\SoundFXStore.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Music</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureStore.cpp">
+      <Filter>Source Files\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MusicStore.cpp">
+      <Filter>Source Files\Music</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>Source Files\Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
