@@ -1,4 +1,5 @@
 #pragma once
+
 #include "stdIncludes.h"
 
 namespace bloom {

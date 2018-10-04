@@ -1,8 +1,13 @@
 #include "Framework.h"
 #include <ctime>
+
+#include "GameObjectTest/TestGameObject.h"
+#include "GameObjectTest/RandomizerSystem.h"
+
 using namespace bloom;
 
 Game* game = nullptr;
+
 
 int main() {
 	const int fps = 60;
@@ -30,23 +35,47 @@ int main() {
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
 	game->clear();
-	auto testSprite = game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	testSprite->render({ 0,0,32,32 }, { 0,0,128,128 });
+	game->render();
+
+	// Test Game Object
+	entt::DefaultRegistry testRegistry;
+	bloom::RenderSystem renderSysTest(testRegistry);
+	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
+	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	TestChar testSprite = TestChar(testRegistry, game);
+	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
+	renderSysTest.update();
 	game->render();
 	game->delay(500);
-	auto testSprite2 = game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	testSprite2->render({ 0, 0, 32, 32 }, { 128,0,128,128 });
+	TestChar testSprite2 = TestChar(testRegistry, game);
+	testSprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
+	renderSysTest.update();
 	game->render();
 	game->delay(500);
-	
+	TestChar testGO = TestChar(testRegistry, game);
+	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
+	testGO.disableRandomPos();
+	renderSysTest.update();
+	game->render();
+	game->delay(500);
+
+	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
+	RandomPositionSystem randomizer(testRegistry); 
+
+	int testX = 0, testY = 0;
 	while (game->isRunning()) {
-		game->clear();
+		// If manual control of entities is required, this is the method to do so.
+		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+		testGOpos.x = testX++;
+		testGOpos.y = testY++;
+		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
-		testSprite->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
-		testSprite2->render({ 0, 0, 32, 32 }, { static_cast<uint16_t>(rand() % 672), static_cast<uint16_t>(rand() % 472), 128, 128 });
-		game->update();
+		game->clear();
+		randomizer.update();
+		renderSysTest.update(); // Test again.
 		game->render();
+		game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)

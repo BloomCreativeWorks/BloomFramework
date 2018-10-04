@@ -26,5 +26,19 @@
     <Image Include="Assets\TestChar.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Assets\OverworldTestSpritesheet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameObjectTest\TestGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTest\RandomizerSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTest\NoRandomComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
