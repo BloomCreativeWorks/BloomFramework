@@ -8,7 +8,7 @@ class RandomPositionSystem : bloom::System {
 public:
 	using bloom::System::DefaultSystem;
 public:
-	void bloom::System::update(std::optional<double> dt = std::nullopt)
+	void update(std::optional<double> dt = std::nullopt)
 	{
 		m_registry.view<Position>().each(
 			[this](auto entity, Position & pos) {
