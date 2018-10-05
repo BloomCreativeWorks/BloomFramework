@@ -32,10 +32,11 @@ int main() {
 		std::cerr << e.what() << std::endl;
 	}
 
-	Screen temp = Screen(game);
-	temp.registerSystem<DefaultSystem>(0);
-	temp.registerSystem<RenderSystem>(1);
-	temp.registerSystem<DefaultSystem>(2);
+	Screen screenTest = Screen(game);
+	std::vector<size_t> testVector4Screen;
+	testVector4Screen.push_back(screenTest.registerSystem<DefaultSystem>());
+	testVector4Screen.push_back(screenTest.registerSystem<RenderSystem>());
+	testVector4Screen.push_back(screenTest.registerSystem<DefaultSystem>());
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };

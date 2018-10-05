@@ -28,7 +28,7 @@ namespace bloom {
 
 		// System stuff
 		template <typename T>
-		void registerSystem(int index) {
+		size_t registerSystem() {
 			static_assert (std::is_base_of<System, T>::value, "Type T passed in is not a System.");
 			//bool found = false;
 			//for (auto i : m_systems) {
@@ -37,16 +37,19 @@ namespace bloom {
 			//		break;
 			//	}
 			//}
-			if (std::find_if(m_systems.begin(), m_systems.end(),
-				[](auto & i) -> bool {if (typeid(*i).name() == typeid(T).name()) return true; return false; }) == m_systems.end())
+			if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
+				[](auto & i) -> bool {if (typeid(*i).name() == typeid(T).name()) return true; return false; }); v == m_systems.end())
 			{
 
-				m_systems.insert(m_systems.begin() + index, std::unique_ptr<T>{new T(m_registry)});
+				m_systems.emplace_back(std::unique_ptr<T>{new T(m_registry)});
+				return (m_systems.size() - 1);
 			}
 			//if (!found)
 			//	m_systems.insert(m_systems.begin + index, new T(m_registry));
-			else
+			else {
 				std::clog << "This system is already registered." << std::endl;
+				return (v - m_systems.begin());
+			}
 		}
 		template <typename T>
 		void unregisterSystem() {
@@ -54,12 +57,12 @@ namespace bloom {
 		}
 
 	private:
-		template<typename T> struct Box : public std::unique_ptr<T> {
+		template<typename T> struct Container : public std::unique_ptr<T> {
 			using std::unique_ptr<T>::unique_ptr;
 			operator T &() const { return **this; }
 		};
 
-		std::vector<Box<System>> m_systems;
+		std::vector<Container<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		entt::DefaultRegistry m_registry;
 		Game *& m_gameInstance;
