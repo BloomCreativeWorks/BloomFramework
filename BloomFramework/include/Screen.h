@@ -57,12 +57,13 @@ namespace bloom {
 		}
 
 	private:
-		template<typename T> struct Container : public std::unique_ptr<T> {
-			using std::unique_ptr<T>::unique_ptr;
-			operator T &() const { return **this; }
-		};
+		//template<typename T> struct Container : public std::unique_ptr<T> {
+		//	using std::unique_ptr<T>::unique_ptr;
+		//	operator T &() const { return **this; }
+		//};
+		template<class T> using SysPtr =  std::unique_ptr<T>;
 
-		std::vector<Container<System>> m_systems;
+		std::vector<SysPtr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		entt::DefaultRegistry m_registry;
 		Game *& m_gameInstance;
