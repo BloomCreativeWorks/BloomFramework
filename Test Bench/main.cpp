@@ -1,6 +1,7 @@
 #include "Framework.h"
 #include <ctime>
 
+#include "Screen.h"
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
 
@@ -30,6 +31,11 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
+
+	Screen temp = Screen(game);
+	temp.registerSystem<DefaultSystem>(0);
+	temp.registerSystem<RenderSystem>(1);
+	temp.registerSystem<DefaultSystem>(2);
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };

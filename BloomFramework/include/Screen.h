@@ -5,10 +5,13 @@
 #include "GameObject.h"
 #include <unordered_map>
 #include <map>
+#include <algorithm>
+#include <typeinfo>
+
 namespace bloom {
 	class BLOOMFRAMEWORK_API Screen {
 	public:
-		Screen(Game& gameInstance);
+		Screen(Game *& gameInstance) : m_gameInstance(gameInstance) {}
 		void update();
 
 		//Game Object stuff
@@ -27,15 +30,21 @@ namespace bloom {
 		template <typename T>
 		void registerSystem(int index) {
 			static_assert (std::is_base_of<System, T>::value, "Type T passed in is not a System.");
-			bool found = false;
-			for (auto i : m_systems) {
-				if (typeid(i) == typeid(T)) { // Need some kind of Type checking here.
-					found = true;
-					break;
-				}
+			//bool found = false;
+			//for (auto i : m_systems) {
+			//	if (type_info(i) == type_info(T)) { // Need some kind of Type checking here.
+			//		found = true;
+			//		break;
+			//	}
+			//}
+			if (std::find_if(m_systems.begin(), m_systems.end(),
+				[](auto & i) -> bool {if (typeid(*i).name() == typeid(T).name()) return true; return false; }) == m_systems.end())
+			{
+
+				m_systems.insert(m_systems.begin() + index, std::unique_ptr<T>{new T(m_registry)});
 			}
-			if (!found)
-				m_systems.insert(m_systems.begin + index, new T(m_registry));
+			//if (!found)
+			//	m_systems.insert(m_systems.begin + index, new T(m_registry));
 			else
 				std::clog << "This system is already registered." << std::endl;
 		}
@@ -45,7 +54,12 @@ namespace bloom {
 		}
 
 	private:
-		std::vector<std::unique_ptr<System>> m_systems;
+		template<typename T> struct Box : public std::unique_ptr<T> {
+			using std::unique_ptr<T>::unique_ptr;
+			operator T &() const { return **this; }
+		};
+
+		std::vector<Box<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		entt::DefaultRegistry m_registry;
 		Game *& m_gameInstance;
