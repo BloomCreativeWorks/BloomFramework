@@ -4,7 +4,8 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API SoundFX {
 	public:
-		SoundFX(int channel = -1) : m_channel(channel) {}
+		SoundFX() : m_channel(-1) {}
+		SoundFX(int channel) : m_channel(channel) {}
 		SoundFX(std::string fileName, int channel = -1);
 		~SoundFX();
 
