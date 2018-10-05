@@ -18,12 +18,12 @@ namespace bloom {
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void SoundFX::play(int loops) {
+	void SoundFX::play(int plays) {
 		if (m_chunk == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play chunk");
 		}
 
-		if (Mix_PlayChannel(m_channel, m_chunk, loops) == -1)
+		if (Mix_PlayChannel(m_channel, m_chunk, --plays) == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
@@ -43,5 +43,14 @@ namespace bloom {
 
 	void SoundFX::stop() {
 		Mix_HaltChannel(m_channel);
+	}
+
+	void SoundFX::setVolume(int volume) {
+		if (volume < 0) volume *= -1;
+		Mix_VolumeChunk(m_chunk, volume);
+	}
+
+	int SoundFX::getVolume() {
+		return Mix_VolumeChunk(m_chunk, -1);
 	}
 }

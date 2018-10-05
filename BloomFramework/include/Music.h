@@ -12,6 +12,7 @@ namespace bloom {
 		void play(int plays = 1);
 		void pause();
 		void resume();
+		void rewind();
 		void stop();
 
 	private:

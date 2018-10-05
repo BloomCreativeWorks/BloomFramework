@@ -12,9 +12,12 @@ namespace bloom {
 		void play();
 		void pause();
 		void resume();
+		void rewind();
 		void skip();
 		void clear();
 		void exit();
+		void setVolume(int volume);
+		int getVolume();
 		void setInfinitePlayback(bool value);
 		bool isInfinitePlayback();
 

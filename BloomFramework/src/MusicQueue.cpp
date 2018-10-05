@@ -40,6 +40,10 @@ namespace bloom {
 		m_queue.front().track->resume();
 	}
 
+	void MusicQueue::rewind() {
+		m_queue.front().track->rewind();
+	}
+
 	void MusicQueue::skip() {
 		m_queue.front().track->stop();
 	}
@@ -54,6 +58,15 @@ namespace bloom {
 		}
 		if (!m_currentObjectPtr)
 			Mix_HookMusicFinished(nullptr);
+	}
+
+	void MusicQueue::setVolume(int volume) {
+		if (volume < 0) volume *= -1;
+		Mix_VolumeMusic(volume);
+	}
+
+	int MusicQueue::getVolume() {
+		return Mix_VolumeMusic(-1);
 	}
 
 	void MusicQueue::setInfinitePlayback(bool value) {

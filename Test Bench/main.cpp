@@ -34,8 +34,18 @@ int main() {
 		std::cerr << e.what() << std::endl;
 	}
 	music.queue.add(music.store.load("Audio/sample_1.mp3"), 1, true);
-	music.queue.add(music.store.load("Audio/sample_2.mp3"), 1, false);
+	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
 	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
+
+	std::vector<SoundFXPtr> sound_vector;
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04684.wav")); //0
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04685.wav")); //1
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_11989.wav")); //2
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_11998.wav")); //3
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12000.wav")); //4
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12011.wav")); //5
+	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12020.wav")); //6
+
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
@@ -43,6 +53,8 @@ int main() {
 	game->setColor(randColor);
 	game->clear();
 	game->render();
+
+	sound_vector[0]->play();
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
@@ -53,23 +65,24 @@ int main() {
 	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
-	game->delay(500);
+	game->delay(750);
 	TestChar testSprite2 = TestChar(testRegistry, game);
 	testSprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
-	game->delay(500);
+	game->delay(750);
 	TestChar testGO = TestChar(testRegistry, game);
 	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
-	game->delay(500);
+	game->delay(1000);
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry); 
 
 	int testX = 0, testY = 0;
+	music.queue.setVolume(64);
 	music.queue.setInfinitePlayback(true);
 	music.queue.play();
 	while (game->isRunning()) {
@@ -86,10 +99,16 @@ int main() {
 		renderSysTest.update(); // Test again.
 		game->render();
 		game->update();
+
+		if (rand() % 500 == 0)
+			sound_vector[3]->play();
+		//if (rand() % 1000 == 0)
+		//	sound_vector[rand() % 5 + 2]->play();
 		int frametime = SDL_GetTicks() - framestart;
 
-		if (framedelay > frametime)
+		if (framedelay > frametime) {
 			game->delay(framedelay - frametime);
+		}
 	}
 	game->destroy();
 	//Game::exit();

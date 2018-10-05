@@ -42,6 +42,10 @@ namespace bloom {
 			Mix_PauseMusic();
 	}
 
+	void Music::rewind() {
+		Mix_RewindMusic();
+	}
+
 	void Music::stop() {
 		Mix_HaltMusic();
 	}
