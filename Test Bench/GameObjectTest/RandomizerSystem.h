@@ -4,7 +4,7 @@
 #include "NoRandomComponent.h"
 
 using namespace bloom;
-class RandomPositionSystem : bloom::System {
+class RandomPositionSystem : public bloom::System {
 public:
 	using bloom::System::DefaultSystem;
 public:
