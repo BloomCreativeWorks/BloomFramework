@@ -4,6 +4,8 @@
 #include "stdIncludes.h"
 #include "TextureStore.h"
 #include "Timer.h"
+#include "Screen.h"
+#include "Exception.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
@@ -40,6 +42,28 @@ namespace bloom {
 		TextureStore	textures = TextureStore(m_renderer);
 		Timer			timer;
 
+		template <typename T>
+		void registerScreen(const std::string & tag) {
+			static_assert (std::is_base_of<Screen, T>::value, "Type T passed in is not a Screen");
+			if (m_screens.find(tag) != m_screens.end()) {
+				m_screens.emplace(tag, std::unique_ptr<T>);
+			}
+			else {
+				throw Exception("Screen with tag " + tag + " has been registered already");
+			}
+		}
+
+		void unregisterScreen(const std::string & tag) {
+				m_screens.erase(tag);
+		}
+		void setActiveScreen(const std::string & tag) {
+			auto tmp = m_screens.find(tag);
+			if (tmp != m_screens.end())
+				m_activeScreen = tmp->second;
+			else
+				throw Exception("Can't set Screen with tag " + tag + " as active screen. It is not registered.");
+		}
+
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
 		SDL_Window *	m_window = nullptr;
@@ -48,5 +72,7 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
+		std::unordered_map<std::string, ScrPtr> m_screens;
+		ScrPtr m_activeScreen;
 	};
 }

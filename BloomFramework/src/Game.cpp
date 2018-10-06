@@ -115,7 +115,8 @@ namespace bloom {
 	}
 
 	void Game::update() {
-		std::clog << "Delta time: " << timer.lap() << std::endl;
+		if(m_activeScreen != nullptr)
+			m_activeScreen->update();
 	}
 
 	void Game::clear() {
