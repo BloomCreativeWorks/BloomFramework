@@ -45,16 +45,17 @@ namespace bloom {
 		template <typename T>
 		void registerScreen(const std::string & tag) {
 			static_assert (std::is_base_of<Screen, T>::value, "Type T passed in is not a Screen");
-			if (m_screens.find(tag) != m_screens.end()) {
-				m_screens.emplace(tag, std::unique_ptr<T>);
+			if (m_screens.find(tag) == m_screens.end()) {
+				m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
+				m_screens[tag]->init();
 			}
 			else {
-				throw Exception("Screen with tag " + tag + " has been registered already");
+				//throw Exception("Screen with tag " + tag + " has been registered already");
 			}
 		}
 
 		void unregisterScreen(const std::string & tag) {
-				m_screens.erase(tag);
+			m_screens.erase(tag);
 		}
 		void setActiveScreen(const std::string & tag) {
 			auto tmp = m_screens.find(tag);

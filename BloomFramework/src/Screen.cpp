@@ -1,6 +1,6 @@
 #include "Screen.h"
 #include "Game.h"
-bloom::Screen::Screen(Game *& gameInstance) : m_gameInstance(gameInstance) {
+bloom::Screen::Screen(Game * gameInstance) : m_gameInstance(gameInstance) {
 }
 
 bloom::Screen::~Screen()

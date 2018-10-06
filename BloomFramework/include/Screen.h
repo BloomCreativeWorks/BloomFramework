@@ -15,7 +15,7 @@ namespace bloom {
 	*/
 	class BLOOMFRAMEWORK_API Screen {
 	public:
-		Screen(Game *& gameInstance);
+		Screen(Game * gameInstance);
 		~Screen();
 		virtual void init() = 0;
 		void update();
@@ -75,7 +75,7 @@ namespace bloom {
 		std::vector<SysPtr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		entt::DefaultRegistry m_registry;
-		Game *& m_gameInstance;
+		Game * m_gameInstance;
 	};
 
 	using ScrPtr = std::shared_ptr<Screen>;
