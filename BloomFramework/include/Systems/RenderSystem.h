@@ -8,7 +8,7 @@ namespace bloom {
 	class RenderSystem : public System {
 		using System::DefaultSystem;
 	public:
-		void update(std::optional<double> deltaTime = std::nullopt)
+		void System::update(std::optional<double> deltaTime)
 		{
 			m_registry.view<Position, Size, Sprite>().each(
 				[](auto entity, Position & pos, Size& size, Sprite & spr) {
