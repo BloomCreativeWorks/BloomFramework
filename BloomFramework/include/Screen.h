@@ -66,7 +66,7 @@ namespace bloom {
 			}
 		}
 
-	protected:
+	private:
 		//template<typename T> struct Container : public std::unique_ptr<T> {
 		//	using std::unique_ptr<T>::unique_ptr;
 		//	operator T &() const { return **this; }
