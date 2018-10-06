@@ -17,7 +17,7 @@ namespace bloom {
 	class BLOOMFRAMEWORK_API Screen {
 	public:
 		Screen(Game *& gameInstance);
-		//~Screen();
+		~Screen();
 		virtual void init() = 0;
 		void update();
 
