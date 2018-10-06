@@ -32,9 +32,7 @@ namespace bloom {
 				derived->init(std::forward<TArgs>(initArgs)...);
 		}
 
-		void destroyGameObject(std::string tag) {
-			m_gameObjects.erase(tag);
-		}
+		void destroyGameObject(std::string tag);
 
 		// System stuff
 		template <typename T>
@@ -66,10 +64,6 @@ namespace bloom {
 		}
 
 	private:
-		//template<typename T> struct Container : public std::unique_ptr<T> {
-		//	using std::unique_ptr<T>::unique_ptr;
-		//	operator T &() const { return **this; }
-		//};
 		template<class T> using SysPtr = std::unique_ptr<T>;
 
 		std::vector<SysPtr<System>> m_systems;

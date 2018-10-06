@@ -39,9 +39,7 @@ namespace bloom {
 		int getScreenHeight();
 		SDL_Event getEvent();
 
-		TextureStore	textures = TextureStore(m_renderer);
-		Timer			timer;
-
+		// Screen stuff
 		template <typename T>
 		void registerScreen(const std::string & tag) {
 			static_assert (std::is_base_of<Screen, T>::value, "Type T passed in is not a Screen");
@@ -50,20 +48,19 @@ namespace bloom {
 				m_screens[tag]->init();
 			}
 			else {
-				//throw Exception("Screen with tag " + tag + " has been registered already");
+				std::clog << "Tag has already been registered, overwriting..." << std::endl;
+				m_screens.erase(tag);
+				m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
+				m_screens[tag]->init();
+
 			}
 		}
 
-		void unregisterScreen(const std::string & tag) {
-			m_screens.erase(tag);
-		}
-		void setActiveScreen(const std::string & tag) {
-			auto tmp = m_screens.find(tag);
-			if (tmp != m_screens.end())
-				m_activeScreen = tmp->second;
-			else
-				throw Exception("Can't set Screen with tag " + tag + " as active screen. It is not registered.");
-		}
+		void unregisterScreen(const std::string & tag);
+		void setActiveScreen(const std::string & tag);
+
+		TextureStore	textures = TextureStore(m_renderer);
+		Timer			timer;
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
