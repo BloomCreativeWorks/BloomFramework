@@ -13,6 +13,8 @@ namespace bloom {
 	}
 
 	void Music::load(std::string fileName) {
+		if (m_track)
+			Mix_FreeMusic(m_track);
 		m_track = Mix_LoadMUS(fileName.c_str());
 
 		if (m_track == NULL)

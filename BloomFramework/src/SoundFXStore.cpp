@@ -9,7 +9,8 @@ namespace bloom {
 
 		SoundFXPtr ptr = std::make_shared<SoundFX>(filePath);
 		m_store.emplace(filePath, ptr);
-		Mix_AllocateChannels(static_cast<int>(m_store.size()));
+		m_channels += m_def_channels4sound;
+		Mix_AllocateChannels(m_channels + m_extraChannels);
 
 		return ptr;
 	}
@@ -36,7 +37,14 @@ namespace bloom {
 		auto SoundFXIt = m_store.find(filePath);
 		if (SoundFXIt != m_store.end()) {
 			m_store.erase(SoundFXIt);
-			Mix_AllocateChannels(static_cast<int>(m_store.size()));
+			m_channels -= m_def_channels4sound;
+			Mix_AllocateChannels(m_channels + m_extraChannels);
 		}
+	}
+
+	void SoundFXStore::_extraChannels(int extraChannels) {
+		if (extraChannels < 0) extraChannels *= -1;
+		m_extraChannels = extraChannels;
+		Mix_AllocateChannels(m_channels + m_extraChannels);
 	}
 }

@@ -26,7 +26,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	game = new Game(std::nothrow, WINDOW_WIDTH, WINDOW_HEIGHT);
+	game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}

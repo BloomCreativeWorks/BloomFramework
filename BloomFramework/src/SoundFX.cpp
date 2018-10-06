@@ -1,6 +1,8 @@
 #include "SoundFX.h"
 #include "Exception.h"
 
+#define BLOOM_AUDIO_INFINITE_REPEAT -1
+
 namespace bloom {
 	SoundFX::SoundFX(std::string fileName, int channel) {
 		m_channel = channel;
@@ -12,19 +14,28 @@ namespace bloom {
 	}
 
 	void SoundFX::load(std::string fileName) {
+		if (m_chunk) 
+			Mix_FreeChunk(m_chunk);
 		m_chunk = Mix_LoadWAV(fileName.c_str());
 
 		if (m_chunk == nullptr)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void SoundFX::play(int plays) {
+	void SoundFX::play(int channel, int plays) {
 		if (m_chunk == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play chunk");
 		}
 
-		if (Mix_PlayChannel(m_channel, m_chunk, --plays) == -1)
+		if (plays != BLOOM_AUDIO_INFINITE_REPEAT)
+			--plays;
+
+		if (Mix_PlayChannel(channel, m_chunk, plays) == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+	}
+
+	void SoundFX::play(int plays) {
+		play(m_channel, plays);
 	}
 
 	void SoundFX::pause() {

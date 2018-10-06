@@ -10,6 +10,7 @@ namespace bloom {
 		~SoundFX();
 
 		void load(std::string fileName);
+		void play(int channel, int plays = 1);
 		void play(int plays = 1);
 		void pause();
 		void resume();
