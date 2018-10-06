@@ -4,6 +4,7 @@
 #include "Screen.h"
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
+#include "TestScreen.h"
 
 using namespace bloom;
 
@@ -31,12 +32,11 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
+	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
+	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	TestScreen screenTest = TestScreen(game);
+	screenTest.init();
 
-	Screen screenTest = Screen(game);
-	std::vector<size_t> testVector4Screen;
-	testVector4Screen.push_back(screenTest.registerSystem<DefaultSystem>());
-	testVector4Screen.push_back(screenTest.registerSystem<RenderSystem>());
-	testVector4Screen.push_back(screenTest.registerSystem<DefaultSystem>());
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
@@ -45,10 +45,9 @@ int main() {
 	game->render();
 
 	// Test Game Object
-	entt::DefaultRegistry testRegistry;
+	/*entt::DefaultRegistry testRegistry;
 	bloom::RenderSystem renderSysTest(testRegistry);
-	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	
 	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
@@ -64,23 +63,24 @@ int main() {
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
-	game->delay(500);
+	game->delay(500);*/
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
-	RandomPositionSystem randomizer(testRegistry); 
+	//RandomPositionSystem randomizer(testRegistry); 
 
 	int testX = 0, testY = 0;
 	while (game->isRunning()) {
 		// If manual control of entities is required, this is the method to do so.
-		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+		/*auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 		testGOpos.x = testX++;
-		testGOpos.y = testY++;
+		testGOpos.y = testY++;*/
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		randomizer.update();
-		renderSysTest.update(); // Test again.
+		screenTest.update();
+		//randomizer.update();
+		//renderSysTest.update(); // Test again.
 		game->render();
 		game->update();
 		int frametime = SDL_GetTicks() - framestart;

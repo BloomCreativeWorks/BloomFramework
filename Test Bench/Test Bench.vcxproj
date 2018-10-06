@@ -165,6 +165,7 @@
     <ClInclude Include="GameObjectTest\NoRandomComponent.h" />
     <ClInclude Include="GameObjectTest\RandomizerSystem.h" />
     <ClInclude Include="GameObjectTest\TestGameObject.h" />
+    <ClInclude Include="TestScreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
