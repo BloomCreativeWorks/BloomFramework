@@ -1,14 +1,13 @@
 #pragma once
 #include "stdIncludes.h"
-#include "Game.h"
 #include "Systems/Systems.h"
 #include "GameObject.h"
 #include <unordered_map>
-#include <map>
 #include <algorithm>
 #include <typeinfo>
-
 namespace bloom {
+
+	class Game;
 	/* This class serves as a container for GameObjects and Systems meant for a particular purpose.
 	*
 	*	 Add the GameObjects and Systems required in the init() function.
@@ -78,4 +77,6 @@ namespace bloom {
 		entt::DefaultRegistry m_registry;
 		Game *& m_gameInstance;
 	};
+
+	using ScrPtr = std::shared_ptr<Screen>;
 }

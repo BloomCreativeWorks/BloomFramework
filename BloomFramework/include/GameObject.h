@@ -2,9 +2,9 @@
 
 #include "stdIncludes.h"
 #include "Components/Components.h"
-#include "Game.h"
 
 namespace bloom {
+	class Game;
 	/*
 	* This class is used to make a sort of prefab object.
 	*
