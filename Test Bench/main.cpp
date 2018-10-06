@@ -100,10 +100,14 @@ int main() {
 		game->render();
 		game->update();
 
-		if (rand() % 500 == 0)
-			sound_vector[3]->play();
-		//if (rand() % 1000 == 0)
-		//	sound_vector[rand() % 5 + 2]->play();
+		if (rand() % 300 == 0) {
+			try {
+				sound_vector[3]->play();
+			}
+			catch (Exception & e) {
+				std::cerr << e.what() << std::endl;
+			}
+		}
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime) {

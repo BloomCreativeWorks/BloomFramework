@@ -4,9 +4,13 @@
 #define BLOOM_AUDIO_INFINITE_REPEAT -1
 
 namespace bloom {
-	SoundFX::SoundFX(std::string fileName, int channel) {
-		m_channel = channel;
+	SoundFX::SoundFX() {
+		Mix_ChannelFinished(SoundFX::_finished);
+	}
+
+	SoundFX::SoundFX(std::string fileName) {
 		load(fileName);
+		Mix_ChannelFinished(SoundFX::_finished);
 	}
 
 	SoundFX::~SoundFX() {
@@ -22,7 +26,7 @@ namespace bloom {
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void SoundFX::play(int channel, int plays) {
+	void SoundFX::play(int plays) {
 		if (m_chunk == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play chunk");
 		}
@@ -30,30 +34,34 @@ namespace bloom {
 		if (plays != BLOOM_AUDIO_INFINITE_REPEAT)
 			--plays;
 
-		if (Mix_PlayChannel(channel, m_chunk, plays) == -1)
+		_add_channel();
+
+		if (m_channel = Mix_PlayChannel(-1, m_chunk, plays); m_channel == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void SoundFX::play(int plays) {
-		play(m_channel, plays);
-	}
-
 	void SoundFX::pause() {
-		if (Mix_Paused(m_channel) == 0)
-			Mix_Pause(m_channel);
-		else
-			Mix_Resume(m_channel);
+		if (m_channel >= 0) {
+			if (Mix_Paused(m_channel) == 0)
+				Mix_Pause(m_channel);
+			else
+				Mix_Resume(m_channel);
+		}
 	}
 
 	void SoundFX::resume() {
-		if (Mix_Paused(m_channel) != 0)
-			Mix_Resume(m_channel);
-		else
-			Mix_Pause(m_channel);
+		if (m_channel >= 0) {
+			if (Mix_Paused(m_channel) != 0)
+				Mix_Resume(m_channel);
+			else
+				Mix_Pause(m_channel);
+		}
 	}
 
 	void SoundFX::stop() {
-		Mix_HaltChannel(m_channel);
+		if (m_channel >= 0) {
+			Mix_HaltChannel(m_channel);
+		}
 	}
 
 	void SoundFX::setVolume(int volume) {
@@ -63,5 +71,11 @@ namespace bloom {
 
 	int SoundFX::getVolume() {
 		return Mix_VolumeChunk(m_chunk, -1);
+	}
+	void SoundFX::_finished(int) {
+		Mix_AllocateChannels(Mix_AllocateChannels(-1) - 1);
+	}
+	void SoundFX::_add_channel() {
+		Mix_AllocateChannels(Mix_AllocateChannels(-1) + 1);
 	}
 }

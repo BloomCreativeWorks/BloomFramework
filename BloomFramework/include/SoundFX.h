@@ -4,13 +4,11 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API SoundFX {
 	public:
-		SoundFX() : m_channel(-1) {}
-		SoundFX(int channel) : m_channel(channel) {}
-		SoundFX(std::string fileName, int channel = -1);
+		SoundFX();
+		SoundFX(std::string fileName);
 		~SoundFX();
 
 		void load(std::string fileName);
-		void play(int channel, int plays = 1);
 		void play(int plays = 1);
 		void pause();
 		void resume();
@@ -19,8 +17,11 @@ namespace bloom {
 		int getVolume();
 
 	private:
-		int m_channel;
 		Mix_Chunk * m_chunk = nullptr;
+		int m_channel = -1;
+
+		static void _finished(int);
+		static void _add_channel();
 	};
 
 	using SoundFXPtr = std::shared_ptr<SoundFX>;

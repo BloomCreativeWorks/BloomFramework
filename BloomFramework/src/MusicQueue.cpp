@@ -5,7 +5,7 @@ namespace bloom {
 	void MusicQueue::launch() {
 		m_oldObjectPtr = m_currentObjectPtr;
 		m_currentObjectPtr = this;
-		Mix_HookMusicFinished((void(*) ())(MusicQueue::next_track));
+		Mix_HookMusicFinished(MusicQueue::next_track);
 	}
 
 	void MusicQueue::add(TrackPtr track, int plays, bool ignoreInfinitePlayback) {
