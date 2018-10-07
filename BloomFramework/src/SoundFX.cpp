@@ -4,13 +4,19 @@
 #define BLOOM_AUDIO_INFINITE_REPEAT -1
 
 namespace bloom {
-	SoundFX::SoundFX() {
-		Mix_ChannelFinished(SoundFX::_finished);
+	SoundFX::SoundFX(bool useAutoChannels) : m_autochannels(useAutoChannels) {
+		if (m_autochannels)
+			Mix_ChannelFinished(SoundFX::_finished);
+		else
+			Mix_ChannelFinished(nullptr);
 	}
 
-	SoundFX::SoundFX(std::string fileName) {
+	SoundFX::SoundFX(std::string fileName, bool useAutoChannels) : m_autochannels(useAutoChannels) {
 		load(fileName);
-		Mix_ChannelFinished(SoundFX::_finished);
+		if (m_autochannels)
+			Mix_ChannelFinished(SoundFX::_finished);
+		else
+			Mix_ChannelFinished(nullptr);
 	}
 
 	SoundFX::~SoundFX() {
@@ -34,7 +40,8 @@ namespace bloom {
 		if (plays != BLOOM_AUDIO_INFINITE_REPEAT)
 			--plays;
 
-		_add_channel();
+		if (m_autochannels)
+			_add_channel();
 
 		if (m_channel = Mix_PlayChannel(-1, m_chunk, plays); m_channel == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
@@ -72,9 +79,11 @@ namespace bloom {
 	int SoundFX::getVolume() {
 		return Mix_VolumeChunk(m_chunk, -1);
 	}
+
 	void SoundFX::_finished(int) {
 		Mix_AllocateChannels(Mix_AllocateChannels(-1) - 1);
 	}
+
 	void SoundFX::_add_channel() {
 		Mix_AllocateChannels(Mix_AllocateChannels(-1) + 1);
 	}

@@ -37,6 +37,8 @@ int main() {
 	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
 	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
 
+	//sounds.disableAutoChannels(false);
+	//sounds.manageExtraChannels(5000);
 	std::vector<SoundFXPtr> sound_vector;
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04684.wav")); //0
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04685.wav")); //1
@@ -55,6 +57,7 @@ int main() {
 	game->render();
 
 	sound_vector[0]->play();
+	sound_vector[2]->play();
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
@@ -100,9 +103,18 @@ int main() {
 		game->render();
 		game->update();
 
-		if (rand() % 300 == 0) {
+		//sound_vector[0]->play();
+		//sound_vector[1]->play();
+		//sound_vector[2]->play();
+		//sound_vector[3]->play();
+		//sound_vector[4]->play();
+		//sound_vector[5]->play();
+		//sound_vector[6]->play();
+
+		if (testX % 1000 == 0) {
 			try {
 				sound_vector[3]->play();
+				std::clog << Mix_AllocateChannels(-1) << std::endl;
 			}
 			catch (Exception & e) {
 				std::cerr << e.what() << std::endl;

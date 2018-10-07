@@ -4,8 +4,8 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API SoundFX {
 	public:
-		SoundFX();
-		SoundFX(std::string fileName);
+		SoundFX(bool useAutoChannels = true);
+		SoundFX(std::string fileName, bool useAutoChannels = true);
 		~SoundFX();
 
 		void load(std::string fileName);
@@ -19,6 +19,7 @@ namespace bloom {
 	private:
 		Mix_Chunk * m_chunk = nullptr;
 		int m_channel = -1;
+		bool m_autochannels;
 
 		static void _finished(int);
 		static void _add_channel();

@@ -7,7 +7,7 @@ namespace bloom {
 		if (SoundFXIt != m_store.end())
 			return SoundFXIt->second;
 
-		SoundFXPtr ptr = std::make_shared<SoundFX>(filePath);
+		SoundFXPtr ptr = std::make_shared<SoundFX>(filePath, !m_autochannels);
 		m_store.emplace(filePath, ptr);
 
 		return ptr;
@@ -38,13 +38,15 @@ namespace bloom {
 		}
 	}
 
-	//void SoundFXStore::_channel_stop_func(int) {
-	//	//--_channels;
-	//	//Mix_AllocateChannels(_channels);
-	//}
+	void SoundFXStore::disableAutoChannels(bool state) {
+		m_autochannels = !state;
+		if (!m_autochannels)
+			Mix_AllocateChannels(m_extraChannels);
+	}
 
-	//void SoundFXStore::_add_channel() {
-	//	//++_channels;
-	//	//Mix_AllocateChannels(_channels);
-	//}
+	void SoundFXStore::manageExtraChannels(int qnt) {
+		m_extraChannels = (qnt == 0 ? 1 : (qnt < 0 ? -qnt : qnt));
+		if (!m_autochannels)
+			Mix_AllocateChannels(m_extraChannels);
+	}
 }
