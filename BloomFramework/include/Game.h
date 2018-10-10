@@ -4,7 +4,7 @@
 #include "stdIncludes.h"
 #include "TextureStore.h"
 #include "Timer.h"
-
+#include "Input/InputManager.h"
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 		friend TextureStore::TextureStore(Game & object);
@@ -48,5 +48,6 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
+		InputManager input;
 	};
 }
