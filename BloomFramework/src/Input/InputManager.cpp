@@ -39,16 +39,17 @@ namespace bloom {
 
 				if (InputManager::isPrintable(event.key.keysym.sym))
 					m_curPrintableKey = event.key.keysym.sym;
+				break; 
 			}
-												break;
 
 			case SDL_KEYUP: {
 				m_keyboard = SDL_GetKeyboardState(nullptr);
 
 				int index = event.key.keysym.scancode;
 				m_keyUp[index] = true;
+
+				break;
 			}
-											break;
 
 			case SDL_MOUSEMOTION:
 				m_mouseX = event.motion.x;
