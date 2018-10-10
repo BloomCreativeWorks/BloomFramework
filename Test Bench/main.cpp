@@ -126,6 +126,9 @@ int main() {
 			game->delay(framedelay - frametime);
 		}
 	}
+	music.queue.pause();
+	sound_vector[1]->play();
+	game->delay(2000);
 	game->destroy();
 	//Game::exit();
 	return 0;
