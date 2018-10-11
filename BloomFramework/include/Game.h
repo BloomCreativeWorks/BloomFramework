@@ -39,7 +39,7 @@ namespace bloom {
 
 		TextureStore	textures = TextureStore(m_renderer);
 		Timer			timer;
-
+		InputManager input;
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
 		SDL_Window *	m_window = nullptr;
@@ -48,6 +48,6 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
-		InputManager input;
+		
 	};
 }

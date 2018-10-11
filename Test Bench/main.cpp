@@ -40,8 +40,11 @@ int main() {
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::RenderSystem renderSysTest(testRegistry);
+	game->textures.load("Assets/testCursor.png");
 	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	TestChar cursor = TestChar(testRegistry, game);
+	
 	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
@@ -61,13 +64,18 @@ int main() {
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry); 
-
+	cursor.init(SDL_Rect{ 0,0,39,55 }, "Assets/testCursor.png");
+	cursor.disableRandomPos();
+	
 	int testX = 0, testY = 0;
 	while (game->isRunning()) {
 		// If manual control of entities is required, this is the method to do so.
 		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 		testGOpos.x = testX++;
 		testGOpos.y = testY++;
+		auto & cursorPos = testRegistry.get<Position>(cursor.getEntityID());
+		cursorPos.x = game->input.getMouseX();
+		cursorPos.y = game->input.getMouseY();
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();

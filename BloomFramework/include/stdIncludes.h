@@ -6,7 +6,6 @@
 #define BLOOMFRAMEWORK_API __declspec(dllimport) 
 #endif
 
-
 #include "SDL.h"
 #include "SDL_image.h"
 #include "SDL_ttf.h"
