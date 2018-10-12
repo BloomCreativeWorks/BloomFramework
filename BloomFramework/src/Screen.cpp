@@ -13,6 +13,7 @@ namespace bloom {
 	Screen::~Screen() {
 		for (auto& gameObj : m_gameObjects)
 			gameObj.second->~GameObject();
+		SDL_DestroyTexture(m_screenTexture);
 	}
 
 	void Screen::update() {
