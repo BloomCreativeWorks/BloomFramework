@@ -133,7 +133,7 @@ int main() {
 		}
 	}
 	music.queue.pause();
-	sound_vector[1]->play();
+	player_vector[1].play();
 	game->delay(2000);
 	game->destroy();
 	//Game::exit();
