@@ -128,6 +128,8 @@ namespace bloom {
 	}
 
 	void Game::render() {
+		SDL_SetRenderTarget(m_renderer, NULL);
+		SDL_RenderCopyEx(m_renderer, m_activeScreen->getScreenTexture(),NULL,NULL, NULL,NULL, SDL_FLIP_NONE);
 		SDL_RenderPresent(m_renderer);
 	}
 
@@ -171,6 +173,9 @@ namespace bloom {
 
 	SDL_Event Game::getEvent() {
 		return m_event;
+	}
+	SDL_Renderer * Game::getRenderer(){
+		return m_renderer;
 	}
 	void Game::unregisterScreen(const std::string & tag) {
 		m_screens.erase(tag);

@@ -39,6 +39,8 @@ namespace bloom {
 		int getScreenHeight();
 		SDL_Event getEvent();
 
+		SDL_Renderer * getRenderer();
+
 		// Screen stuff
 		template <typename T>
 		void registerScreen(const std::string & tag) {
