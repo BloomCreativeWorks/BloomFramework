@@ -1,14 +1,27 @@
 #pragma once
 #include "stdIncludes.h"
+#include <unordered_map>
 
 namespace bloom {
-	class BLOOMFRAMEWORK_API SoundFX {
-	public:
-		SoundFX(bool useAutoChannels = true);
-		SoundFX(std::string fileName, bool useAutoChannels = true);
-		~SoundFX();
+	class BLOOMFRAMEWORK_API SoundPlayer;
 
-		void load(std::string fileName);
+	class SoundChunk {
+		friend class SoundPlayer;
+	public:
+		SoundChunk(const std::string & filename);
+		~SoundChunk();
+
+	private:
+		std::string m_filename;
+		Mix_Chunk * m_chunk = nullptr;
+	};
+
+	using SoundChunkPtr = std::shared_ptr<SoundChunk>;
+
+	class BLOOMFRAMEWORK_API SoundPlayer {
+	public:
+		SoundPlayer(SoundChunkPtr & chunk);
+
 		void play(int plays = 1);
 		void pause();
 		void resume();
@@ -17,13 +30,8 @@ namespace bloom {
 		int getVolume();
 
 	private:
-		Mix_Chunk * m_chunk = nullptr;
-		int m_channel = -1;
-		bool m_autochannels;
-
-		static void _finished(int);
-		static void _add_channel();
+		SoundChunkPtr & m_chunk;
+		int m_channel;
+		inline static int m_nextChannel = 0;
 	};
-
-	using SoundFXPtr = std::shared_ptr<SoundFX>;
 }

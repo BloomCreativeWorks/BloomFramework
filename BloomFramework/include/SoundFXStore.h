@@ -6,17 +6,12 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API SoundFXStore {
 	public:
-		SoundFXPtr load(const std::string & filePath);
-		SoundFXPtr find(const std::string & filePath);
-		SoundFXPtr find(std::nothrow_t, const std::string & filePath) noexcept;
+		SoundChunkPtr load(const std::string & filePath);
+		SoundChunkPtr find(const std::string & filePath);
+		SoundChunkPtr find(std::nothrow_t, const std::string & filePath) noexcept;
 		void unload(const std::string & filePath);
 
-		static void disableAutoChannels(bool state);
-		static void manageExtraChannels(int qnt);
-
 	private:
-		std::unordered_map<std::string, SoundFXPtr> m_store;
-		inline static unsigned m_autochannels = true;
-		inline static int m_extraChannels = 500;
+		std::unordered_map<std::string, SoundChunkPtr> m_store;
 	};
 }
