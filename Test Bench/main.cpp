@@ -88,7 +88,7 @@ int main() {
 	game->delay(1000);
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
-	RandomPositionSystem randomizer(testRegistry); 
+	RandomPositionSystem randomizer(testRegistry);
 
 	int testX = 0, testY = 0;
 	music.queue.setVolume(64);
@@ -132,10 +132,10 @@ int main() {
 			game->delay(framedelay - frametime);
 		}
 	}
-	music.queue.pause();
+	music.queue.clear();
+	game->destroy();
 	player_vector[1].play();
 	game->delay(2000);
-	game->destroy();
 	//Game::exit();
 	return 0;
 }

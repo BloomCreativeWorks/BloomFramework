@@ -9,7 +9,7 @@ namespace bloom {
 	}
 
 	void MusicQueue::add(TrackPtr track, int plays, bool ignoreInfinitePlayback) {
-		m_queue.push( { track, plays, ignoreInfinitePlayback } );
+		m_queue.push({ track, plays, ignoreInfinitePlayback });
 	}
 
 	void MusicQueue::remove() {
@@ -49,6 +49,8 @@ namespace bloom {
 	}
 
 	void MusicQueue::clear() {
+		exit();
+		m_queue.front().track->stop();
 		m_queue = std::queue<Track>();
 	}
 

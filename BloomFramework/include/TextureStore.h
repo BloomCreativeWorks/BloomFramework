@@ -18,7 +18,7 @@ namespace bloom {
 		TexturePtr find(const std::string & filePath);
 		TexturePtr find(std::nothrow_t, const std::string & filePath) noexcept;
 		void unload(const std::string & filePath);
- 
+
 	private:
 		SDL_Renderer *&	m_renderer;
 		std::unordered_map<std::string, TexturePtr>	m_store;

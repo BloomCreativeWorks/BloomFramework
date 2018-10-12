@@ -33,7 +33,7 @@ namespace bloom {
 	}
 
 	Game::~Game() {
-		destroy(); 
+		destroy();
 		m_runningInstancesQnt--;
 		if (m_runningInstancesQnt <= 0)
 			exit();
