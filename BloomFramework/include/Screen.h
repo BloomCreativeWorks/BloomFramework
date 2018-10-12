@@ -67,7 +67,6 @@ namespace bloom {
 
 	private:
 		template<class T> using SysPtr = std::unique_ptr<T>;
-		void m_createTexture();
 		std::vector<SysPtr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		entt::DefaultRegistry m_registry;

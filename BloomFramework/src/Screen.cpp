@@ -3,7 +3,11 @@
 
 namespace bloom {
 	Screen::Screen(Game * gameInstance) : m_gameInstance(gameInstance) {
-		m_createTexture();
+		m_screenTexture = SDL_CreateTexture(m_gameInstance->getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
+			m_gameInstance->getScreenWidth(),
+			m_gameInstance->getScreenHeight());
+
+		SDL_SetTextureBlendMode(m_screenTexture, SDL_BLENDMODE_BLEND);
 	}
 
 	Screen::~Screen() {
@@ -12,8 +16,8 @@ namespace bloom {
 	}
 
 	void Screen::update() {
-		m_createTexture();
 		SDL_SetRenderTarget(m_gameInstance->getRenderer(), m_screenTexture);
+		SDL_RenderClear(m_gameInstance->getRenderer());
 		double dt = m_gameInstance->timer.lap();
 		for (auto& sys : m_systems)
 			sys->update(dt);
@@ -25,16 +29,5 @@ namespace bloom {
 	SDL_Texture *& Screen::getScreenTexture()
 	{
 		return m_screenTexture;
-	}
-	void Screen::m_createTexture()
-	{
-		if (!m_screenTexture)
-			SDL_DestroyTexture(m_screenTexture);
-
-		m_screenTexture = SDL_CreateTexture(m_gameInstance->getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
-			m_gameInstance->getScreenWidth(),
-			m_gameInstance->getScreenHeight());
-
-		SDL_SetTextureBlendMode(m_screenTexture, SDL_BLENDMODE_BLEND);
 	}
 }

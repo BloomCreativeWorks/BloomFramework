@@ -120,6 +120,7 @@ namespace bloom {
 	}
 
 	void Game::clear() {
+		SDL_SetRenderTarget(m_renderer, NULL);
 		SDL_RenderClear(m_renderer);
 	}
 
