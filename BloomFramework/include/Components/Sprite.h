@@ -1,6 +1,5 @@
 #pragma once
 
-#include "stdIncludes.h"
 #include "TextureStore.h"
 #include <optional>
 
