@@ -27,6 +27,6 @@ namespace bloom {
 	protected:
 		entt::DefaultRegistry & m_registry;
 		Game *& m_gameInstance;
-		uint32_t m_entity;
+		entt::DefaultRegistry::entity_type m_entity;
 	};
 }
