@@ -37,4 +37,8 @@ namespace bloom {
 			m_store.erase(SoundFXIt);
 		}
 	}
+
+	void SoundFXStore::unload_all() {
+		m_store.clear();
+	}
 }

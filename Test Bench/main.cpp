@@ -136,6 +136,7 @@ int main() {
 	game->destroy();
 	player_vector[1].play();
 	game->delay(2000);
+	sounds.unload_all();
 	//Game::exit();
 	return 0;
 }

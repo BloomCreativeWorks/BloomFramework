@@ -35,4 +35,8 @@ namespace bloom {
 		if (trackIt != m_store.end())
 			m_store.erase(trackIt);
 	}
+
+	void MusicStore::unload_all() {
+		m_store.clear();
+	}
 }
