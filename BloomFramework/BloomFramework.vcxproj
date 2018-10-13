@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="include\Components\Components.h" />
     <ClInclude Include="include\Components\Position.h" />
+    <ClInclude Include="include\Components\Priority.h" />
     <ClInclude Include="include\Components\Size.h" />
     <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Exception.h" />
