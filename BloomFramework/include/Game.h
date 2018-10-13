@@ -43,20 +43,7 @@ namespace bloom {
 
 		// Screen stuff
 		template <typename T>
-		void registerScreen(const std::string & tag) {
-			static_assert (std::is_base_of<Screen, T>::value, "Type T passed in is not a Screen");
-			if (m_screens.find(tag) == m_screens.end()) {
-				m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
-				m_screens[tag]->init();
-			}
-			else {
-				std::clog << "Tag has already been registered, overwriting..." << std::endl;
-				m_screens.erase(tag);
-				m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
-				m_screens[tag]->init();
-
-			}
-		}
+		void registerScreen(const std::string & tag);
 
 		void unregisterScreen(const std::string & tag);
 		void setActiveScreen(const std::string & tag);
@@ -75,4 +62,20 @@ namespace bloom {
 		std::unordered_map<std::string, ScrPtr> m_screens;
 		ScrPtr m_activeScreen;
 	};
+
+	template <typename T>
+	void Game::registerScreen(const std::string & tag) {
+		static_assert (std::is_base_of<Screen, T>::value, "Type T passed in is not a Screen");
+		if (m_screens.find(tag) == m_screens.end()) {
+			m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
+			m_screens[tag]->init();
+		}
+		else {
+			std::clog << "Tag has already been registered, overwriting..." << std::endl;
+			m_screens.erase(tag);
+			m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
+			m_screens[tag]->init();
+
+		}
+	}
 }
