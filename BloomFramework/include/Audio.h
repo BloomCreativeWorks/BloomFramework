@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "MusicStore.h"
 #include "MusicQueue.h"
 #include "SoundFX.h"
@@ -18,5 +19,6 @@ namespace bloom {
 	};
 
 	MusicFull music;
-	SoundFXStore sounds;
+	SoundFXStore sounds_store;
+	std::vector<SoundControl> sounds;
 }

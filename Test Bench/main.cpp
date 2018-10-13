@@ -38,16 +38,15 @@ int main() {
 	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
 	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
 
-	//sounds.disableAutoChannels(false);
-	//sounds.manageExtraChannels(5000);
-	std::vector<SoundControl> sound_vector;
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04684.wav")); //0
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04685.wav")); //1
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_11989.wav")); //2
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_11998.wav")); //3
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12000.wav")); //4
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12011.wav")); //5
-	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12020.wav")); //6
+	//sounds_store.disableAutoChannels(false);
+	//sounds_store.manageExtraChannels(5000);
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_04684.wav")); //0
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_04685.wav")); //1
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_11989.wav")); //2
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_11998.wav")); //3
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_12000.wav")); //4
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_12011.wav")); //5
+	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_12020.wav")); //6
 
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
@@ -57,14 +56,14 @@ int main() {
 	game->clear();
 	game->render();
 
-	sound_vector[0].player.play();
+	sounds[0].player.play();
 
-	auto testPtr = sound_vector[0].chunk;
+	auto testPtr = sounds[0].chunk;
 
-	std::clog << sound_vector[0].chunk.use_count() << std::endl;
-	sound_vector[0].player.play();
-	sound_vector[0].player.play();
-	//sound_vector[2]->play();
+	std::clog << sounds[0].chunk.use_count() << std::endl;
+	sounds[0].player.play();
+	sounds[0].player.play();
+	//sounds[2]->play();
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
@@ -110,17 +109,17 @@ int main() {
 		game->render();
 		game->update();
 
-		//sound_vector[0]->play();
-		//sound_vector[1]->play();
-		//sound_vector[2]->play();
-		//sound_vector[3]->play();
-		//sound_vector[4]->play();
-		//sound_vector[5]->play();
-		//sound_vector[6]->play();
+		//sounds[0]->play();
+		//sounds[1]->play();
+		//sounds[2]->play();
+		//sounds[3]->play();
+		//sounds[4]->play();
+		//sounds[5]->play();
+		//sounds[6]->play();
 
 		//if (testX % 5 == 0) {
 		//	try {
-		//		sound_vector[3]->play();
+		//		sounds[3]->play();
 		//		std::clog << Mix_AllocateChannels(-1) << std::endl;
 		//	}
 		//	catch (Exception & e) {
@@ -135,10 +134,10 @@ int main() {
 	}
 	music.queue.clear();
 	game->destroy();
-	sound_vector[1].player.play();
+	sounds[1].player.play();
 	game->delay(2500);
-	sound_vector.clear();
-	sounds.unload_all();
+	sounds.clear();
+	sounds_store.unload_all();
 	std::clog << testPtr.use_count() << std::endl;
 	//Game::exit();
 	return 0;
