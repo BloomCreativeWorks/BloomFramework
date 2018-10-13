@@ -11,7 +11,7 @@ namespace bloom {
 	public:
 		void System::update(std::optional<double> deltaTime)
 		{
-			std::vector<std::tuple<Sprite, SDL_Rect, Priority>> renderQueue{};
+			std::vector<std::tuple<Sprite, SDL_Rect, LayerGroup>> renderQueue{};
 
 			m_registry.view<Position, Size, Sprite>().each(
 				[&](auto entity, Position & pos, Size& size, Sprite & spr) {
@@ -22,9 +22,9 @@ namespace bloom {
 					static_cast<int>(size.h)
 				};
 
-				Priority tmp2;
-				if (m_registry.has<Priority>(entity))
-					tmp2 = m_registry.get<Priority>(entity);
+				LayerGroup tmp2;
+				if (m_registry.has<LayerGroup>(entity))
+					tmp2 = m_registry.get<LayerGroup>(entity);
 				else
 					tmp2 = 0;
 

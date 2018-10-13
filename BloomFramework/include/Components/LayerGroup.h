@@ -1,5 +1,5 @@
 #pragma once
 
 namespace bloom {
-	using Priority = Uint32;
+	using LayerGroup = Uint32;
 }

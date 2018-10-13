@@ -14,7 +14,7 @@ public:
 		m_registry.assign<bloom::Sprite>(m_entity, tmp, srcRect);
 
 		if (priority != std::nullopt)
-			m_registry.assign<bloom::Priority>(m_entity, priority.value());
+			m_registry.assign<bloom::LayerGroup>(m_entity, priority.value());
 	}
 	void disableRandomPos() {
 		m_registry.assign<NoRandomPos>(m_entity);

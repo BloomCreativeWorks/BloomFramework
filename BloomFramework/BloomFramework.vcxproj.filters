@@ -92,7 +92,7 @@
     <ClInclude Include="include\Screen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Components\Priority.h">
+    <ClInclude Include="include\Components\LayerGroup.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
