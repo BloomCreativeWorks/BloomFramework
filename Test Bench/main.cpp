@@ -6,6 +6,7 @@
 
 using namespace bloom;
 
+
 Game* game = nullptr;
 
 const int WINDOW_WIDTH = 1000;
@@ -39,7 +40,7 @@ int main() {
 
 	//sounds.disableAutoChannels(false);
 	//sounds.manageExtraChannels(5000);
-	std::vector<SoundChunkPtr> sound_vector;
+	std::vector<SoundControl> sound_vector;
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04684.wav")); //0
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_04685.wav")); //1
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_11989.wav")); //2
@@ -47,10 +48,6 @@ int main() {
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12000.wav")); //4
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12011.wav")); //5
 	sound_vector.emplace_back(sounds.load("Audio/Sounds/Sound_12020.wav")); //6
-
-	std::vector<SoundPlayer> player_vector;
-	for (size_t i = 0; i < sound_vector.size(); ++i)
-		player_vector.emplace_back(SoundPlayer(sound_vector[i]));
 
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
@@ -60,9 +57,13 @@ int main() {
 	game->clear();
 	game->render();
 
-	player_vector[0].play();
-	player_vector[0].play();
-	player_vector[0].play();
+	sound_vector[0].player.play();
+
+	auto testPtr = sound_vector[0].chunk;
+
+	std::clog << sound_vector[0].chunk.use_count() << std::endl;
+	sound_vector[0].player.play();
+	sound_vector[0].player.play();
 	//sound_vector[2]->play();
 
 	// Test Game Object
@@ -134,9 +135,11 @@ int main() {
 	}
 	music.queue.clear();
 	game->destroy();
-	player_vector[1].play();
-	game->delay(2000);
+	sound_vector[1].player.play();
+	game->delay(2500);
+	sound_vector.clear();
 	sounds.unload_all();
+	std::clog << testPtr.use_count() << std::endl;
 	//Game::exit();
 	return 0;
 }

@@ -15,4 +15,11 @@ namespace bloom {
 	private:
 		std::unordered_map<std::string, SoundChunkPtr> m_store;
 	};
+
+	class BLOOMFRAMEWORK_API SoundControl {
+	public:
+		SoundControl(SoundChunkPtr chunk) : chunk(chunk), player(chunk) {}
+		SoundChunkPtr chunk;
+		SoundPlayer player;
+	};
 }
