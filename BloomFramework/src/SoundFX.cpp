@@ -15,7 +15,7 @@ namespace bloom {
 	}
 
 
-	SoundPlayer::SoundPlayer(SoundChunkPtr & chunk) : m_chunk(chunk), m_channel(m_nextChannel) {
+	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : m_chunk(chunk), m_channel(m_nextChannel) {
 		m_nextChannel++;
 	}
 

@@ -20,7 +20,7 @@ namespace bloom {
 
 	class BLOOMFRAMEWORK_API SoundPlayer {
 	public:
-		SoundPlayer(SoundChunkPtr & chunk);
+		SoundPlayer(SoundChunkPtr chunk);
 
 		void play(int plays = 1);
 		void pause();
@@ -30,7 +30,7 @@ namespace bloom {
 		int getVolume();
 
 	private:
-		SoundChunkPtr & m_chunk;
+		SoundChunkPtr m_chunk;
 		int m_channel;
 		inline static int m_nextChannel = 0;
 	};
