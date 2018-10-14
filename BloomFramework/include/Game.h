@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include "stdIncludes.h"
 #include "Graphics/TextureStore.h"
 #include "Timer.h"
