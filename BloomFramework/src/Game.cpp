@@ -34,9 +34,9 @@ namespace bloom {
 		destroy();
 	}
 
-	void Game::initialize(Uint32 initFlags, 
+	void Game::initialize(Uint32 initFlags,
 		int mixerFrequency, Uint16 mixerFormat, int mixerChannels, int mixerChunksize,
-		int imageFlags) 
+		int imageFlags)
 	{
 		// Initialize SDL
 		if (SDL_Init(initFlags) < 0) {
