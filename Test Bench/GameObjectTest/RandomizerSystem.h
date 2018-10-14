@@ -5,7 +5,6 @@
 
 using namespace bloom::systems;
 class RandomPositionSystem : System {
-public:
 	using System::DefaultSystem;
 public:
 	void System::update(std::optional<double> dt = std::nullopt)
