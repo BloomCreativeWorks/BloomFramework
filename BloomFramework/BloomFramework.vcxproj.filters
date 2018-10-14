@@ -19,6 +19,9 @@
     <Filter Include="Header Files\Systems">
       <UniqueIdentifier>{422683c9-c337-41bd-9505-150d54cfee33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{59baa8cc-f83a-4ce2-a5fb-38d77ba45b87}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp">
@@ -81,10 +84,10 @@
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="include\Graphics\Texture.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="include\Graphics\TextureStore.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
