@@ -8,8 +8,6 @@
 namespace bloom {
 	class Game;
 	namespace graphics {
-		//template class BLOOMFRAMEWORK_API std::unordered_map<std::string, TexturePtr>;
-
 		class BLOOMFRAMEWORK_API TextureStore {
 		public:
 			TextureStore(SDL_Renderer *& renderer);
