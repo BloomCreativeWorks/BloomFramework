@@ -2,10 +2,12 @@
 #include <queue>
 #include "Music.h"
 
-namespace bloom {
+namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicQueue {
 		struct Track { TrackPtr track; int plays; bool ignoreInfinitePlayback; };
 	public:
+		~MusicQueue();
+
 		void launch();
 		void add(TrackPtr track, int plays = 1, bool ignoreInfinitePlayback = false);
 		void remove();

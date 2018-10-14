@@ -1,7 +1,7 @@
 #pragma once
 #include "stdIncludes.h"
 
-namespace bloom {
+namespace bloom::audio {
 	class BLOOMFRAMEWORK_API Music {
 	public:
 		Music() {}

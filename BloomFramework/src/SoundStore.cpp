@@ -1,8 +1,12 @@
-#include "SoundFXStore.h"
+#include "SoundStore.h"
 #include "Exception.h"
 
-namespace bloom {
-	SoundChunkPtr SoundFXStore::load(const std::string & filePath) {
+namespace bloom::audio {
+	SoundStore::~SoundStore() {
+		unloadAll();
+	}
+
+	SoundChunkPtr SoundStore::load(const std::string & filePath) {
 		auto SoundFXIt = m_store.find(filePath);
 		if (SoundFXIt != m_store.end())
 			return SoundFXIt->second;
@@ -13,7 +17,7 @@ namespace bloom {
 		return ptr;
 	}
 
-	SoundChunkPtr SoundFXStore::find(const std::string & filePath) {
+	SoundChunkPtr SoundStore::find(const std::string & filePath) {
 		auto SoundFXIt = m_store.find(filePath);
 		if (SoundFXIt != m_store.end())
 			return SoundFXIt->second;
@@ -22,7 +26,7 @@ namespace bloom {
 		}
 	}
 
-	SoundChunkPtr SoundFXStore::find(std::nothrow_t, const std::string & filePath) noexcept {
+	SoundChunkPtr SoundStore::find(std::nothrow_t, const std::string & filePath) noexcept {
 		auto SoundFXIt = m_store.find(filePath);
 		if (SoundFXIt != m_store.end())
 			return SoundFXIt->second;
@@ -31,14 +35,14 @@ namespace bloom {
 		}
 	}
 
-	void SoundFXStore::unload(const std::string & filePath) {
+	void SoundStore::unload(const std::string & filePath) {
 		auto SoundFXIt = m_store.find(filePath);
 		if (SoundFXIt != m_store.end()) {
 			m_store.erase(SoundFXIt);
 		}
 	}
 
-	void SoundFXStore::unload_all() {
+	void SoundStore::unloadAll() {
 		m_store.clear();
 	}
 }

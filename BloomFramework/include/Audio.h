@@ -2,23 +2,22 @@
 #include <vector>
 #include "MusicStore.h"
 #include "MusicQueue.h"
-#include "SoundFX.h"
-#include "SoundFXStore.h"
+#include "SoundChunk.h"
+#include "SoundStore.h"
+#include "SoundPlayer.h"
+#include "AudioDefine.h"
 
-#define BLOOM_AUDIO_INFINITE_REPEAT -1
-
-namespace bloom {
-	class MusicFull {
-	public:
-		~MusicFull() {
-			queue.exit();
-		}
-
+namespace bloom::audio {
+	struct MusicFull {
 		MusicStore	store;
 		MusicQueue	queue;
 	};
 
+	struct SoundFull {
+		SoundStore store;
+		std::vector<SoundPlayer> players;
+	};
+
 	MusicFull music;
-	SoundFXStore sounds_store;
-	std::vector<SoundControl> sounds;
+	SoundFull sounds;
 }

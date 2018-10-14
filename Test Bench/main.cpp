@@ -5,6 +5,7 @@
 #include "GameObjectTest/RandomizerSystem.h"
 
 using namespace bloom;
+using namespace bloom::audio;
 
 
 Game* game = nullptr;
@@ -38,15 +39,15 @@ int main() {
 	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
 	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
 
-	//sounds_store.disableAutoChannels(false);
-	//sounds_store.manageExtraChannels(5000);
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_04684.wav")); //0
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_04685.wav")); //1
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_11989.wav")); //2
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_11998.wav")); //3
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_12000.wav")); //4
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_12011.wav")); //5
-	sounds.emplace_back(sounds_store.load("Audio/Sounds/Sound_12020.wav")); //6
+	//sounds.store.disableAutoChannels(false);
+	//sounds.store.manageExtraChannels(5000);
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_04684.wav")); //0
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_04685.wav")); //1
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_11989.wav")); //2
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_11998.wav")); //3
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12000.wav")); //4
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12011.wav")); //5
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12020.wav")); //6
 
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
@@ -56,13 +57,17 @@ int main() {
 	game->clear();
 	game->render();
 
-	sounds[0].player.play();
+	sounds.players[0].play();
 
-	auto testPtr = sounds[0].chunk;
+	auto testPtr = sounds.players[0].chunk();
 
-	std::clog << sounds[0].chunk.use_count() << std::endl;
-	sounds[0].player.play();
-	sounds[0].player.play();
+	std::clog << testPtr.use_count() << std::endl;
+
+	std::clog << sounds.players[0].chunk().use_count() << std::endl;
+
+	std::clog << testPtr.use_count() << std::endl;
+	sounds.players[0].play();
+	sounds.players[0].play();
 	//sounds[2]->play();
 
 	// Test Game Object
@@ -134,10 +139,10 @@ int main() {
 	}
 	music.queue.clear();
 	game->destroy();
-	sounds[1].player.play();
+	sounds.players[1].play();
 	game->delay(2500);
-	sounds.clear();
-	sounds_store.unload_all();
+	sounds.players.clear();
+	sounds.store.unloadAll();
 	std::clog << testPtr.use_count() << std::endl;
 	//Game::exit();
 	return 0;

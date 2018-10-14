@@ -19,9 +19,6 @@
     <Filter Include="Header Files\Systems">
       <UniqueIdentifier>{422683c9-c337-41bd-9505-150d54cfee33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Music">
-      <UniqueIdentifier>{91153568-16e8-4684-82a5-dce4be5c6640}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Texture">
       <UniqueIdentifier>{2b886389-4bfa-4aa2-a478-f71645261e1f}</UniqueIdentifier>
     </Filter>
@@ -37,6 +34,9 @@
     <Filter Include="Source Files\Game">
       <UniqueIdentifier>{9b126fec-94e4-40c2-a8bb-af3052d971e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{91153568-16e8-4684-82a5-dce4be5c6640}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp">
@@ -49,12 +49,6 @@
       <Filter>Source Files\Music</Filter>
     </ClCompile>
     <ClCompile Include="src\MusicQueue.cpp">
-      <Filter>Source Files\Music</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SoundFX.cpp">
-      <Filter>Source Files\Music</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SoundFXStore.cpp">
       <Filter>Source Files\Music</Filter>
     </ClCompile>
     <ClCompile Include="src\Texture.cpp">
@@ -71,6 +65,15 @@
     </ClCompile>
     <ClCompile Include="src\GameObject.cpp">
       <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundStore.cpp">
+      <Filter>Source Files\Music</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundChunk.cpp">
+      <Filter>Source Files\Music</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SoundPlayer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -108,22 +111,16 @@
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
     <ClInclude Include="include\Audio.h">
-      <Filter>Header Files\Music</Filter>
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\Music.h">
-      <Filter>Header Files\Music</Filter>
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\MusicQueue.h">
-      <Filter>Header Files\Music</Filter>
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\MusicStore.h">
-      <Filter>Header Files\Music</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SoundFXStore.h">
-      <Filter>Header Files\Music</Filter>
-    </ClInclude>
-    <ClInclude Include="include\SoundFX.h">
-      <Filter>Header Files\Music</Filter>
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
     <ClInclude Include="include\Texture.h">
       <Filter>Header Files\Texture</Filter>
@@ -136,6 +133,18 @@
     </ClInclude>
     <ClInclude Include="include\GameObject.h">
       <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundChunk.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundStore.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SoundPlayer.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AudioDefine.h">
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

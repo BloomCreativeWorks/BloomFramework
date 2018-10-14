@@ -1,7 +1,7 @@
 #include "Music.h"
 #include "Exception.h"
 
-namespace bloom {
+namespace bloom::audio {
 	Music::Music(std::string fileName) {
 		load(fileName);
 	}

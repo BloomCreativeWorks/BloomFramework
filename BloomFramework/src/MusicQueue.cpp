@@ -1,7 +1,11 @@
 #include "MusicQueue.h"
 #include "Exception.h"
 
-namespace bloom {
+namespace bloom::audio {
+	MusicQueue::~MusicQueue() {
+		clear();
+	}
+
 	void MusicQueue::launch() {
 		m_oldObjectPtr = m_currentObjectPtr;
 		m_currentObjectPtr = this;

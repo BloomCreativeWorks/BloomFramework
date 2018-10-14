@@ -1,7 +1,11 @@
 #include "MusicStore.h"
 #include "Exception.h"
 
-namespace bloom {
+namespace bloom::audio {
+	MusicStore::~MusicStore() {
+		unloadAll();
+	}
+
 	TrackPtr MusicStore::load(const std::string & filePath) {
 		auto trackIt = m_store.find(filePath);
 		if (trackIt != m_store.end())
@@ -36,7 +40,7 @@ namespace bloom {
 			m_store.erase(trackIt);
 	}
 
-	void MusicStore::unload_all() {
+	void MusicStore::unloadAll() {
 		m_store.clear();
 	}
 }

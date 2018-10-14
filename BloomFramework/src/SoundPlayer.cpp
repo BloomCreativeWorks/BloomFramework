@@ -1,20 +1,8 @@
-#include "SoundFX.h"
+#include "SoundPlayer.h"
 #include "Exception.h"
+#include "AudioDefine.h"
 
-#define BLOOM_AUDIO_INFINITE_REPEAT -1
-
-namespace bloom {
-	SoundChunk::SoundChunk(const std::string & filename) : m_filename(filename) {
-		m_chunk = Mix_LoadWAV(filename.c_str());
-		if (m_chunk == nullptr)
-			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
-	}
-
-	SoundChunk::~SoundChunk() {
-		Mix_FreeChunk(m_chunk);
-	}
-
-
+namespace bloom::audio {
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : m_chunk(chunk), m_channel(m_nextChannel) {
 		m_nextChannel++;
 	}
@@ -55,5 +43,9 @@ namespace bloom {
 
 	int SoundPlayer::getVolume() {
 		return Mix_VolumeChunk(m_chunk->m_chunk, -1);
+	}
+
+	SoundChunkPtr SoundPlayer::chunk() {
+		return m_chunk;
 	}
 }
