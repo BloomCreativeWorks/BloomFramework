@@ -8,7 +8,7 @@ using namespace bloom::graphics;
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
-		friend graphics::TextureStore::TextureStore(Game & object);
+		friend TextureStore::TextureStore(Game & object);
 
 	public:
 		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
