@@ -5,6 +5,7 @@
 #include "Game.h"
 
 namespace bloom {
+	using namespace components;
 	/*
 	* This class is used to make a sort of prefab object.
 	*
