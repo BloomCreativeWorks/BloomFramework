@@ -22,7 +22,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	game = new Game(std::nothrow, 800, 600);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -60,7 +60,7 @@ int main() {
 	game->delay(500);
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
-	RandomPositionSystem randomizer(testRegistry); 
+	RandomPositionSystem randomizer(testRegistry);
 
 	int testX = 0, testY = 0;
 	while (game->isRunning()) {

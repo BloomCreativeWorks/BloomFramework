@@ -2,9 +2,9 @@
 #pragma warning(disable:4251) //Ignore warnings about templates in dll
 
 #ifdef BLOOMFRAMEWORK_EXPORT
-#define BLOOMFRAMEWORK_API __declspec(dllexport) 
+#define BLOOMFRAMEWORK_API __declspec(dllexport)
 #else 
-#define BLOOMFRAMEWORK_API __declspec(dllimport) 
+#define BLOOMFRAMEWORK_API __declspec(dllimport)
 #endif
 
 
