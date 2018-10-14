@@ -10,9 +10,9 @@ namespace bloom::graphics {
 		if (destRect.h <= 0)
 			throw Exception("[Texture Render] destRect.h is <= 0.\nIs that intentional?");
 		if (srcRect.has_value()) {
-			if (srcRect.value().w <= 0)
+			if (srcRect->w <= 0)
 				throw Exception("[Texture Render] srcRect.w is <= 0.\nIs that intentional?");
-			if (srcRect.value().h <= 0)
+			if (srcRect->h <= 0)
 				throw Exception("[Texture Render] srcRect.h is <= 0.\nIs that intentional?");
 
 			//Set rendering space and render to screen
