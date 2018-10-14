@@ -4,7 +4,7 @@
 #include "DefaultSystem.h"
 #include "Components/Components.h"
 
-namespace bloom {
+namespace bloom::systems {
 	using namespace components;
 	class RenderSystem : public System {
 		using System::DefaultSystem;

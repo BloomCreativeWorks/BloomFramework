@@ -3,7 +3,7 @@
 #include "stdIncludes.h"
 #include <optional>
 
-namespace bloom {
+namespace bloom::systems {
 	class DefaultSystem {
 	public:
 		DefaultSystem(entt::DefaultRegistry & registry) : m_registry(registry) {};

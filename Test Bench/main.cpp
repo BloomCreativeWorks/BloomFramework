@@ -39,7 +39,7 @@ int main() {
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
-	bloom::RenderSystem renderSysTest(testRegistry);
+	bloom::systems::RenderSystem renderSysTest(testRegistry);
 	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
