@@ -70,6 +70,8 @@ int main() {
 	sounds.players[0].play();
 	//sounds[2]->play();
 
+	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
+
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::RenderSystem renderSysTest(testRegistry);
@@ -143,6 +145,20 @@ int main() {
 	game->delay(2500);
 	sounds.clear();
 	std::clog << testPtr.use_count() << std::endl;
+	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
+
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12000.wav")); //4
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12011.wav")); //5
+	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12020.wav")); //6
+
+
+	game->delay(2500);
+
+	//sounds.players[2].play();
+
+	game->delay(2500);
+
+	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 	//Game::exit();
 	return 0;
 }

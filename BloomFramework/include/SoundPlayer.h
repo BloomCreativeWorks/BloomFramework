@@ -3,7 +3,10 @@
 #include "SoundChunk.h"
 
 namespace bloom::audio {
+	struct SoundFull;
+
 	class BLOOMFRAMEWORK_API SoundPlayer {
+		friend struct SoundFull;
 	public:
 		SoundPlayer(SoundChunkPtr chunk);
 
@@ -18,6 +21,6 @@ namespace bloom::audio {
 	private:
 		SoundChunkPtr m_chunk;
 		int m_channel;
-		inline static int m_nextChannel = 0;
+		inline static int m_channelsQnt = 0;
 	};
 }

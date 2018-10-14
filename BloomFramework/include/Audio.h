@@ -25,6 +25,8 @@ namespace bloom::audio {
 		void clear() {
 			players.clear();
 			store.unloadAll();
+			SoundPlayer::m_channelsQnt = 0;
+			Mix_AllocateChannels(SoundPlayer::m_channelsQnt);
 		}
 	};
 
