@@ -1,7 +1,8 @@
+#include "Graphics/TextureStore.h"
 #include "Exception.h"
 #include "Game.h"
 
-namespace bloom {
+namespace bloom::graphics {
 	TextureStore::TextureStore(SDL_Renderer *& renderer) : m_renderer(renderer) {}
 
 	TextureStore::TextureStore(Game & object) : m_renderer(object.m_renderer) {}

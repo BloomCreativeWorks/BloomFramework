@@ -1,7 +1,7 @@
-#include "Texture.h"
+#include "Graphics/Texture.h"
 #include "Exception.h"
 
-namespace bloom {
+namespace bloom::graphics {
 	Texture::Texture(SDL_Texture * texture, SDL_Renderer *& targetRenderer) : m_texture(texture), m_renderer(targetRenderer) {}
 
 	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {

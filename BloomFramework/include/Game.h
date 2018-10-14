@@ -2,12 +2,14 @@
 
 #include <iostream>
 #include "stdIncludes.h"
-#include "TextureStore.h"
+#include "Graphics/TextureStore.h"
 #include "Timer.h"
+
+using namespace bloom::graphics;
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
-		friend TextureStore::TextureStore(Game & object);
+		friend graphics::TextureStore::TextureStore(Game & object);
 
 	public:
 		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);

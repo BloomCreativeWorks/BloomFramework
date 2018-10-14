@@ -1,8 +1,10 @@
 #pragma once
 
 #include "stdIncludes.h"
-#include "TextureStore.h"
+#include "Graphics/TextureStore.h"
 #include <optional>
+
+using namespace bloom::graphics;
 
 namespace bloom {
 	struct Sprite {
