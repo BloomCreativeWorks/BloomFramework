@@ -9,7 +9,7 @@ namespace bloom::graphics {
 			throw Exception("[Texture Render] destcRect.w is <= 0.\nIs that intentional?");
 		if (destRect.h <= 0)
 			throw Exception("[Texture Render] destRect.h is <= 0.\nIs that intentional?");
-		if (srcRect != std::nullopt) {
+		if (srcRect.has_value()) {
 			if (srcRect.value().w <= 0)
 				throw Exception("[Texture Render] srcRect.w is <= 0.\nIs that intentional?");
 			if (srcRect.value().h <= 0)
@@ -17,9 +17,14 @@ namespace bloom::graphics {
 
 			//Set rendering space and render to screen
 			//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
+
+			//Render to screen
+			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, 0.0, nullptr, flip);
 		}
-		//Render to screen
-		SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value_or(nullptr), &destRect, 0.0, nullptr, flip);
+		else {
+			//Render to screen
+			SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &destRect, 0.0, nullptr, flip);
+		}
 	}
 
 	void Texture::dispose() {
