@@ -9,8 +9,8 @@ namespace bloom {
 	GameObject::~GameObject() {
 		m_registry.destroy(m_entity);
 	}
-	uint32_t GameObject::getEntityID()
-	{
+
+	uint32_t GameObject::getEntityID() {
 		return m_entity;
 	}
 }

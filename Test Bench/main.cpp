@@ -8,7 +8,6 @@ using namespace bloom;
 
 Game* game = nullptr;
 
-
 int main() {
 	const int fps = 60;
 	const int framedelay = (1000 / fps);

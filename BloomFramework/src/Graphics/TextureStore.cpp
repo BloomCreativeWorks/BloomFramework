@@ -60,7 +60,6 @@ namespace bloom::graphics {
 	void TextureStore::unload(const std::string & filePath) {
 		auto texIterator = m_store.find(filePath);
 		if (texIterator != m_store.end())
-			m_store.erase(texIterator);
-		// We can't dispose the actual Texture since other's may still be using it.
+			m_store.erase(texIterator); // We can't dispose the actual Texture since other's may still be using it.
 	}
 }
