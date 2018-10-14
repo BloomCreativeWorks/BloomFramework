@@ -92,7 +92,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DiagnosticsFormat>Caret</DiagnosticsFormat>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -102,8 +104,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DiagnosticsFormat>Caret</DiagnosticsFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -118,8 +122,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DiagnosticsFormat>Caret</DiagnosticsFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -135,8 +141,10 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
-      <AdditionalOptions>/Zc:__cplusplus /std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
+      <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <DiagnosticsFormat>Caret</DiagnosticsFormat>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
