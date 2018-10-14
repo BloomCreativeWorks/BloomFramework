@@ -137,12 +137,11 @@ int main() {
 			game->delay(framedelay - frametime);
 		}
 	}
-	music.queue.clear();
+	music.clear();
 	game->destroy();
 	sounds.players[1].play();
 	game->delay(2500);
-	sounds.players.clear();
-	sounds.store.unloadAll();
+	sounds.clear();
 	std::clog << testPtr.use_count() << std::endl;
 	//Game::exit();
 	return 0;

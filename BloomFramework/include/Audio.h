@@ -11,11 +11,21 @@ namespace bloom::audio {
 	struct MusicFull {
 		MusicStore	store;
 		MusicQueue	queue;
+
+		void clear() {
+			queue.clear();
+			store.unloadAll();
+		}
 	};
 
 	struct SoundFull {
 		SoundStore store;
 		std::vector<SoundPlayer> players;
+
+		void clear() {
+			players.clear();
+			store.unloadAll();
+		}
 	};
 
 	MusicFull music;
