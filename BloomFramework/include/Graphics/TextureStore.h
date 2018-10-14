@@ -1,6 +1,6 @@
 #pragma once
-#pragma warning(disable:4251) //Ignore warnings about templates in dll
 
+#include "stdIncludes.h"
 #include <unordered_map>
 #include <optional>
 #include "Texture.h"
