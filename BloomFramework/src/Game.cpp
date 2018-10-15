@@ -88,7 +88,7 @@ namespace bloom {
 
 	void Game::create(std::string const& title, int xpos, int ypos) {
 		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
-		if (m_window == NULL) {
+		if (m_window == nullptr) {
 			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
 		}
 		else {
@@ -96,7 +96,7 @@ namespace bloom {
 		}
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
-		if (m_renderer == NULL) {
+		if (m_renderer == nullptr) {
 			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
 		}
 		else {

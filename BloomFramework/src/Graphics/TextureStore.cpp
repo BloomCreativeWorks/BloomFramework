@@ -15,7 +15,7 @@ namespace bloom::graphics {
 
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(filePath.c_str());
-		if (loadedSurface == NULL)
+		if (loadedSurface == nullptr)
 		{
 			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
 		}
