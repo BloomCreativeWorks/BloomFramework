@@ -6,23 +6,23 @@
 class TestChar : public bloom::GameObject {
 	using bloom::GameObject::GameObject;
 public:
-	void init(SDL_Rect pos_and_size = SDL_Rect{ 50,50, 256, 256 }, const std::string & texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt);
+	void init(SDL_Rect pos_and_size = SDL_Rect{ 50,50, 256, 256 }, const std::string & texture_path = "Assets/TestChar.png", std::optional<SDL_Rect> src_rect = std::nullopt);
 	void disableRandomPos();
 	void enableRandomPos();
 };
 
-void TestChar::init(SDL_Rect pos_and_size, const std::string & texturePath, std::optional<SDL_Rect> srcRect) {
-	m_registry.replace<bloom::Position>(m_entity, pos_and_size.x, pos_and_size.y);
-	m_registry.assign<bloom::Size>(m_entity, pos_and_size.w, pos_and_size.h);
-	auto tmp = m_gameInstance->textures.load(texturePath);
+void TestChar::init(SDL_Rect pos_and_size, const std::string & texture_path, std::optional<SDL_Rect> src_rect) {
+	registry_.replace<bloom::Position>(entity_, pos_and_size.x, pos_and_size.y);
+	registry_.assign<bloom::Size>(entity_, pos_and_size.w, pos_and_size.h);
+	auto tmp = game_instance_->textures.load(texture_path);
 
-	m_registry.assign<bloom::Sprite>(m_entity, tmp, srcRect);
+	registry_.assign<bloom::Sprite>(entity_, tmp, src_rect);
 }
 
 void TestChar::disableRandomPos() {
-	m_registry.assign<NoRandomPos>(m_entity);
+	registry_.assign<NoRandomPos>(entity_);
 }
 
 void TestChar::enableRandomPos() {
-	m_registry.reset<NoRandomPos>(m_entity);
+	registry_.reset<NoRandomPos>(entity_);
 }

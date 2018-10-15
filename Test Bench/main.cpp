@@ -30,49 +30,49 @@ int main() {
 		std::cerr << e.what() << std::endl;
 	}
 	srand(static_cast<uint32_t>(time(0)));
-	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
-	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
-	game->setColor(randColor);
+	SDL_Color rand_color = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
+		static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
+	game->setColor(rand_color);
 	game->clear();
 	game->render();
 
 	// Test Game Object
-	entt::DefaultRegistry testRegistry;
-	bloom::systems::RenderSystem renderSysTest(testRegistry);
+	entt::DefaultRegistry test_registry;
+	bloom::systems::RenderSystem render_sys_test(test_registry);
 	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
-	renderSysTest.update();
+	TestChar test_sprite = TestChar(test_registry, game);
+	test_sprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
+	render_sys_test.update();
 	game->render();
 	game->delay(500);
-	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
-	renderSysTest.update();
+	TestChar test_sprite2 = TestChar(test_registry, game);
+	test_sprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
+	render_sys_test.update();
 	game->render();
 	game->delay(500);
-	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
-	testGO.disableRandomPos();
-	renderSysTest.update();
+	TestChar test_GO = TestChar(test_registry, game);
+	test_GO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
+	test_GO.disableRandomPos();
+	render_sys_test.update();
 	game->render();
 	game->delay(500);
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
-	RandomPositionSystem randomizer(testRegistry);
+	RandomPositionSystem randomizer(test_registry);
 
-	int testX = 0, testY = 0;
+	int test_x = 0, test_y = 0;
 	while (game->isRunning()) {
 		// If manual control of entities is required, this is the method to do so.
-		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
-		testGOpos.x = testX++;
-		testGOpos.y = testY++;
+		auto & test_GO_pos = test_registry.get<Position>(test_GO.getEntityID());
+		test_GO_pos.x = test_x++;
+		test_GO_pos.y = test_y++;
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
 		randomizer.update();
-		renderSysTest.update(); // Test again.
+		render_sys_test.update(); // Test again.
 		game->render();
 		game->update();
 		int frametime = SDL_GetTicks() - framestart;

@@ -7,14 +7,14 @@ namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API Texture {
 	public:
 		Texture() = default;
-		explicit Texture(SDL_Texture * texture, SDL_Renderer *& targetRenderer);
+		explicit Texture(SDL_Texture * texture, SDL_Renderer *& target_renderer);
 		~Texture();
 
-		void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void render(std::optional<SDL_Rect> src_rect, SDL_Rect dest_rect, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	private:
-		SDL_Texture *	m_texture;
-		SDL_Renderer *&	m_renderer;
+		SDL_Texture *	texture_;
+		SDL_Renderer *&	renderer_;
 	};
 
 	using TexturePtr = std::shared_ptr<Texture>;

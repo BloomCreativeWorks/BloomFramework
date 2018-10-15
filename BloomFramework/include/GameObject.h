@@ -18,7 +18,7 @@ namespace bloom {
 	*/
 	class BLOOMFRAMEWORK_API GameObject {
 	public:
-		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
+		GameObject(entt::DefaultRegistry & registry, Game *& game_instance);
 		~GameObject();
 
 		virtual void init() {}
@@ -26,8 +26,8 @@ namespace bloom {
 		uint32_t getEntityID();
 
 	protected:
-		entt::DefaultRegistry & m_registry;
-		Game *& m_gameInstance;
-		uint32_t m_entity;
+		entt::DefaultRegistry & registry_;
+		Game *& game_instance_;
+		uint32_t entity_;
 	};
 }

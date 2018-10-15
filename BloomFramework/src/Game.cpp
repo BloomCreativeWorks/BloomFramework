@@ -2,32 +2,32 @@
 #include "Exception.h"
 
 namespace bloom {
-	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
-		m_screenWidth(width),
-		m_screenHeight(height),
-		m_windowFlags(windowFlags),
-		m_rendererFlags(rendererFlags),
-		m_isRunning(false)
+	Game::Game(int width, int height, int window_flags, int renderer_flags) :
+		screen_width_(width),
+		screen_height_(height),
+		window_flags_(window_flags),
+		renderer_flags_(renderer_flags),
+		is_running_(false)
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (windowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
+		if ((window_flags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (window_flags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
 			throw Exception("[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead.");
 		}
 	}
 
-	Game::Game(std::nothrow_t, int width, int height, int windowFlags, int rendererFlags) :
-		m_screenWidth(width),
-		m_screenHeight(height),
-		m_windowFlags(windowFlags),
-		m_rendererFlags(rendererFlags),
-		m_isRunning(false)
+	Game::Game(std::nothrow_t, int width, int height, int window_flags, int renderer_flags) :
+		screen_width_(width),
+		screen_height_(height),
+		window_flags_(window_flags),
+		renderer_flags_(renderer_flags),
+		is_running_(false)
 	{
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN)
+		if ((window_flags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN)
 			std::clog << "[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration!" << std::endl;
 	}
 
@@ -35,12 +35,12 @@ namespace bloom {
 		destroy();
 	}
 
-	void Game::initialize(Uint32 initFlags,
-		int mixerFrequency, Uint16 mixerFormat, int mixerChannels, int mixerChunksize,
-		int imageFlags)
+	void Game::initialize(Uint32 init_flags,
+		int mixer_frequency, Uint16 mixer_format, int mixer_channels, int mixer_chunksize,
+		int image_flags)
 	{
 		// Initialize SDL
-		if (SDL_Init(initFlags) < 0) {
+		if (SDL_Init(init_flags) < 0) {
 			throw Exception("[SDL_Init] " + std::string(SDL_GetError()));
 		}
 		else {
@@ -48,18 +48,18 @@ namespace bloom {
 		}
 
 		// Initialize SDL_mixer
-		if (Mix_OpenAudio(mixerFrequency, mixerFormat, mixerChannels, mixerChunksize) < 0) {
+		if (Mix_OpenAudio(mixer_frequency, mixer_format, mixer_channels, mixer_chunksize) < 0) {
 			throw Exception("[Mix_OpenAudio] " + std::string(SDL_GetError()));
 		}
 		else {
 			std::clog << "SDL_mixer initialized." << std::endl;
 		}
 
-		int isCapture = 0;
-		int n = SDL_GetNumAudioDevices(isCapture);
+		int is_capture = 0;
+		int n = SDL_GetNumAudioDevices(is_capture);
 		std::clog << "Audio devices: " << n << std::endl;
 		for (int i = 0; i < n; i++) {
-			auto name = SDL_GetAudioDeviceName(i, isCapture);
+			auto name = SDL_GetAudioDeviceName(i, is_capture);
 			std::clog << "Audio: " << name << std::endl;
 		}
 
@@ -72,7 +72,7 @@ namespace bloom {
 		}
 
 		// Initialize SDL_image
-		if (IMG_Init(imageFlags) != imageFlags) {
+		if (IMG_Init(image_flags) != image_flags) {
 			throw Exception("[IMG_Init] " + std::string(SDL_GetError()));
 		}
 		else {
@@ -87,32 +87,32 @@ namespace bloom {
 		SDL_Quit();
 	}
 
-	void Game::create(std::string const& title, int xpos, int ypos) {
-		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
-		if (m_window == nullptr) {
+	void Game::create(std::string const& title, int x_pos, int y_pos) {
+		window_ = SDL_CreateWindow(title.c_str(), x_pos, y_pos, screen_width_, screen_height_, window_flags_);
+		if (window_ == nullptr) {
 			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
 		}
 		else {
-			std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
+			std::clog << "Window created with width of " << screen_width_ << " and height of " << screen_height_ << "." << std::endl;
 		}
 
-		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
-		if (m_renderer == nullptr) {
+		renderer_ = SDL_CreateRenderer(window_, -1, renderer_flags_);
+		if (renderer_ == nullptr) {
 			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
 		}
 		else {
 			std::clog << "Renderer initialized." << std::endl;
 		}
 
-		m_isRunning = true;
+		is_running_ = true;
 		std::clog << "Game is now running!" << std::endl;
 	}
 
 	void Game::handleEvents() {
-		SDL_PollEvent(&m_event);
+		SDL_PollEvent(&event_);
 
-		if (m_event.type == SDL_QUIT)
-			m_isRunning = false;
+		if (event_.type == SDL_QUIT)
+			is_running_ = false;
 	}
 
 	void Game::update() {
@@ -120,56 +120,56 @@ namespace bloom {
 	}
 
 	void Game::clear() {
-		SDL_RenderClear(m_renderer);
+		SDL_RenderClear(renderer_);
 	}
 
-	void Game::delay(int intervalMs) {
-		SDL_Delay(intervalMs);
+	void Game::delay(int interval_ms) {
+		SDL_Delay(interval_ms);
 	}
 
 	void Game::render() {
-		SDL_RenderPresent(m_renderer);
+		SDL_RenderPresent(renderer_);
 	}
 
 	void Game::destroy() {
-		SDL_DestroyRenderer(m_renderer);
-		SDL_DestroyWindow(m_window);
-		m_renderer = nullptr;
-		m_window = nullptr;
+		SDL_DestroyRenderer(renderer_);
+		SDL_DestroyWindow(window_);
+		renderer_ = nullptr;
+		window_ = nullptr;
 		std::clog << "Window destroyed!" << std::endl;
 	}
 
 	bool Game::isRunning() {
-		return m_isRunning;
+		return is_running_;
 	}
 
 	void Game::setColor(const SDL_Color & color) {
-		m_color = color;
-		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
+		color_ = color;
+		SDL_SetRenderDrawColor(renderer_, color_.a, color_.g, color_.b, color_.a);
 	}
 
 	void Game::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
-		m_color = { r, g, b, a };
-		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
+		color_ = { r, g, b, a };
+		SDL_SetRenderDrawColor(renderer_, color_.a, color_.g, color_.b, color_.a);
 	}
 
 	SDL_Color Game::getColor() {
-		return m_color;
+		return color_;
 	}
 
 	void Game::getColor(Uint8 & r, Uint8 & g, Uint8 & b, Uint8 & a) {
-		r = m_color.r; g = m_color.g; b = m_color.b; a = m_color.a;
+		r = color_.r; g = color_.g; b = color_.b; a = color_.a;
 	}
 
 	int Game::getScreenHeight() {
-		return m_screenHeight;
+		return screen_height_;
 	}
 
 	int Game::getScreenWidth() {
-		return m_screenWidth;
+		return screen_width_;
 	}
 
 	SDL_Event Game::getEvent() {
-		return m_event;
+		return event_;
 	}
 }

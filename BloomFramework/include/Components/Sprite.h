@@ -7,9 +7,9 @@ using namespace bloom::graphics;
 
 namespace bloom::components {
 	struct Sprite {
-		Sprite(TexturePtr texture, std::optional<SDL_Rect> srcRect = std::nullopt) : _texture(texture), _srcRect(srcRect) {}
+		Sprite(TexturePtr texture, std::optional<SDL_Rect> src_rect = std::nullopt) : texture(texture), src_rect(src_rect) {}
 
-		TexturePtr _texture;
-		std::optional<SDL_Rect> _srcRect;
+		TexturePtr texture;
+		std::optional<SDL_Rect> src_rect;
 	};
 }

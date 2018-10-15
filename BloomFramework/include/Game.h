@@ -11,19 +11,19 @@ namespace bloom {
 		friend TextureStore::TextureStore(Game & object);
 
 	public:
-		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(int width, int height, int window_flags = NULL, int renderer_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(std::nothrow_t, int width, int height, int window_flags = NULL, int renderer_flags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		~Game();
 
-		static void initialize(Uint32 initFlags = SDL_INIT_EVERYTHING,
-			int mixerFrequency = 44100, Uint16 mixerformat = MIX_DEFAULT_FORMAT, int mixerChannels = 2, int mixerChunksize = 2048,
-			int imageFlags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
+		static void initialize(Uint32 init_flags = SDL_INIT_EVERYTHING,
+			int mixer_frequency = 44100, Uint16 mixer_format = MIX_DEFAULT_FORMAT, int mixer_channels = 2, int mixer_chunksize = 2048,
+			int image_flags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
 		static void exit();
 
-		void create(const std::string & title, int xpos, int ypos);
+		void create(const std::string & title, int x_pos, int y_pos);
 		void update();
 		void clear();
-		void delay(int intervalMs);
+		void delay(int interval_ms);
 		void render();
 		void destroy();
 		void handleEvents();
@@ -38,16 +38,16 @@ namespace bloom {
 		int getScreenHeight();
 		SDL_Event getEvent();
 
-		TextureStore	textures = TextureStore(m_renderer);
+		TextureStore	textures = TextureStore(renderer_);
 		Timer			timer;
 
 	protected:
-		SDL_Renderer *	m_renderer = nullptr;
-		SDL_Window *	m_window = nullptr;
-		int				m_screenWidth, m_screenHeight;
-		const int		m_windowFlags, m_rendererFlags;
-		SDL_Color		m_color;
-		SDL_Event		m_event;
-		bool			m_isRunning;
+		SDL_Renderer *	renderer_ = nullptr;
+		SDL_Window *	window_ = nullptr;
+		int				screen_width_, screen_height_;
+		const int		window_flags_, renderer_flags_;
+		SDL_Color		color_;
+		SDL_Event		event_;
+		bool			is_running_;
 	};
 }

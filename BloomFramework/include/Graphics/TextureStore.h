@@ -14,14 +14,14 @@ namespace bloom {
 			TextureStore(SDL_Renderer *& renderer);
 			TextureStore(Game & renderer);
 
-			TexturePtr load(const std::string & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
-			TexturePtr find(const std::string & filePath);
-			TexturePtr find(std::nothrow_t, const std::string & filePath);
-			void unload(const std::string & filePath);
+			TexturePtr load(const std::string & file_path, std::optional<SDL_Color> color_key = std::nullopt);
+			TexturePtr find(const std::string & file_path);
+			TexturePtr find(std::nothrow_t, const std::string & file_path);
+			void unload(const std::string & file_path);
 
 		private:
-			SDL_Renderer *&	m_renderer;
-			std::unordered_map<std::string, TexturePtr>	m_store;
+			SDL_Renderer *&	renderer_;
+			std::unordered_map<std::string, TexturePtr>	store_;
 		};
 	}
 }

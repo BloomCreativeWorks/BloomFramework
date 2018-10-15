@@ -6,7 +6,7 @@ namespace bloom {
 	}
 
 	void Timer::start() {
-		m_timerTicks = SDL_GetPerformanceCounter();
+		timer_ticks_ = SDL_GetPerformanceCounter();
 	}
 
 	void Timer::restart() {
@@ -14,16 +14,16 @@ namespace bloom {
 	}
 
 	double Timer::split() {
-		return (static_cast<double>(SDL_GetPerformanceCounter() - m_timerTicks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
+		return (static_cast<double>(SDL_GetPerformanceCounter() - timer_ticks_) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
 	}
 
 	double Timer::lap() {
-		Uint64 oldTicks = m_timerTicks;
-		m_timerTicks = SDL_GetPerformanceCounter();
-		return (static_cast<double>(m_timerTicks - oldTicks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
+		Uint64 old_ticks = timer_ticks_;
+		timer_ticks_ = SDL_GetPerformanceCounter();
+		return (static_cast<double>(timer_ticks_ - old_ticks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
 	}
 
 	double Timer::objectLifetime() {
-		return (static_cast<double>(SDL_GetPerformanceCounter() - m_startTicks) * 1000.0 / SDL_GetPerformanceFrequency());
+		return (static_cast<double>(SDL_GetPerformanceCounter() - start_ticks_) * 1000.0 / SDL_GetPerformanceFrequency());
 	}
 }

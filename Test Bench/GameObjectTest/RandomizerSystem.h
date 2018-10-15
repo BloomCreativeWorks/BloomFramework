@@ -7,13 +7,13 @@ using namespace bloom::systems;
 class RandomPositionSystem : public System {
 	using System::DefaultSystem;
 public:
-	void update(std::optional<double> deltaTime = std::nullopt) override;
+	void update(std::optional<double> delta_time = std::nullopt) override;
 };
 
-void RandomPositionSystem::update(std::optional<double> deltaTime) {
-	m_registry.view<Position>().each(
+void RandomPositionSystem::update(std::optional<double> delta_time) {
+	registry_.view<Position>().each(
 		[this](auto entity, Position & pos) {
-		if (!m_registry.has<NoRandomPos>(entity)) {
+		if (!registry_.has<NoRandomPos>(entity)) {
 			pos.x = rand() % 672;
 			pos.y = rand() % 472;
 		}

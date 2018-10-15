@@ -5,7 +5,7 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API Timer {
 	public:
-		Timer() : m_startTicks(SDL_GetPerformanceCounter()), m_timerTicks(m_startTicks) {}
+		Timer() : start_ticks_(SDL_GetPerformanceCounter()), timer_ticks_(start_ticks_) {}
 
 		static Uint32 totalLifetime();
 
@@ -16,6 +16,6 @@ namespace bloom {
 		double objectLifetime();
 
 	private:
-		Uint64	m_startTicks, m_timerTicks;
+		Uint64	start_ticks_, timer_ticks_;
 	};
 }
