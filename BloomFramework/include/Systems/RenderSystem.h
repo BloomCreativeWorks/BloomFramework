@@ -6,6 +6,7 @@
 
 namespace bloom::systems {
 	using namespace components;
+
 	class RenderSystem : public System {
 		using System::DefaultSystem;
 	public:

@@ -7,6 +7,7 @@
 
 namespace bloom {
 	class Game;
+
 	namespace graphics {
 		class BLOOMFRAMEWORK_API TextureStore {
 		public:
