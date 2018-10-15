@@ -10,7 +10,10 @@ namespace bloom::systems {
 	class RenderSystem : public System {
 		using System::DefaultSystem;
 	public:
-		void System::update(std::optional<double> deltaTime = std::nullopt) {
+		void update(std::optional<double> deltaTime = std::nullopt) override;
+	};
+
+	void RenderSystem::update (std::optional<double> deltaTime) {
 			m_registry.view<Position, Size, Sprite>().each(
 				[](auto entity, Position & pos, Size& size, Sprite & spr) {
 				SDL_Rect destRect{
@@ -21,6 +24,5 @@ namespace bloom::systems {
 				};
 				spr._texture->render(spr._srcRect, destRect);
 			});
-		}
-	};
-}
+	}
+} 
