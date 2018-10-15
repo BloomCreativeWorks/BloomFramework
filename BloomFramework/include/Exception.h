@@ -11,4 +11,4 @@ namespace bloom {
 		Exception(char const * const message) noexcept;
 		Exception(char const * const message, int err_no) noexcept;
 	};
-}
+} // namespace bloom

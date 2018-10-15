@@ -18,4 +18,4 @@ namespace bloom::graphics {
 	};
 
 	using TexturePtr = std::shared_ptr<Texture>;
-}
+} // namespace bloom::graphics

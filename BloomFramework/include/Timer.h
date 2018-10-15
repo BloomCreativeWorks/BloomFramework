@@ -18,4 +18,4 @@ namespace bloom {
 	private:
 		Uint64	start_ticks_, timer_ticks_;
 	};
-}
+} // namespace bloom

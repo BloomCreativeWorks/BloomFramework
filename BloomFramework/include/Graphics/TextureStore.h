@@ -23,5 +23,5 @@ namespace bloom {
 			SDL_Renderer *&	renderer_;
 			std::unordered_map<std::string, TexturePtr>	store_;
 		};
-	}
-}
+} // namespace bloom::graphics
+} // namespace bloom

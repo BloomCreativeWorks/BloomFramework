@@ -3,9 +3,10 @@
 #include "Framework.h"
 #include "NoRandomComponent.h"
 
-using namespace bloom::systems;
-class RandomPositionSystem : public System {
-	using System::DefaultSystem;
+class RandomPositionSystem : public bloom::systems::System {
+	using Position = bloom::components::Position;
+	using bloom::systems::System::DefaultSystem;
+
 public:
 	void Update(std::optional<double> delta_time = std::nullopt) override;
 };

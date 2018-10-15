@@ -6,4 +6,4 @@ namespace bloom::components {
 
 		int x, y;
 	};
-}
+} // namespace bloom::components

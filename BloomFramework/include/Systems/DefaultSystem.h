@@ -15,4 +15,4 @@ namespace bloom::systems {
 	};
 
 	using System = DefaultSystem;
-}
+} // namespace bloom::systems

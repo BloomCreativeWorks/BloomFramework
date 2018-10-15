@@ -5,10 +5,12 @@
 #include "Components/Components.h"
 
 namespace bloom::systems {
-	using namespace components;
-
 	class RenderSystem : public System {
+		using Position = bloom::components::Position;
+		using Size = bloom::components::Size;
+		using Sprite = bloom::components::Sprite;
 		using System::DefaultSystem;
+
 	public:
 		void Update(std::optional<double> delta_time = std::nullopt) override;
 	};
@@ -25,4 +27,4 @@ namespace bloom::systems {
 				spr.texture->Render(spr.src_rect, destRect);
 			});
 	}
-} 
+} // namespace bloom::systems
