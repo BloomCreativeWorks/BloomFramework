@@ -8,7 +8,7 @@ namespace bloom::systems {
 	public:
 		DefaultSystem(entt::DefaultRegistry & registry) : registry_(registry) {};
 
-		virtual void update(std::optional<double> delta_time = std::nullopt) = 0;
+		virtual void Update(std::optional<double> delta_time = std::nullopt) = 0;
 
 	protected:
 		entt::DefaultRegistry & registry_;

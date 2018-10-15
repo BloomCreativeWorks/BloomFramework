@@ -12,7 +12,7 @@ namespace bloom {
 	* This class by default will create an entity with the registry provided.
 	* The entity will be assigned with bloom::Position since it is expected that an entity would have position.
 	*
-	* Use the init() function to assign/replace/reset any Components required.
+	* Use the Init() function to assign/replace/reset any Components required.
 	*
 	* The destructor will automatically destroy the entity from the registry when GameObject gets out of scope.
 	*/
@@ -21,9 +21,9 @@ namespace bloom {
 		GameObject(entt::DefaultRegistry & registry, Game *& game_instance);
 		~GameObject();
 
-		virtual void init() {}
+		virtual void Init() {}
 
-		uint32_t getEntityID();
+		uint32_t entity_ID();
 
 	protected:
 		entt::DefaultRegistry & registry_;

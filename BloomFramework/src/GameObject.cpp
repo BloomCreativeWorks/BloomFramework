@@ -10,7 +10,7 @@ namespace bloom {
 		registry_.destroy(entity_);
 	}
 
-	uint32_t GameObject::getEntityID() {
+	uint32_t GameObject::entity_ID() {
 		return entity_;
 	}
 }

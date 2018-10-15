@@ -7,7 +7,7 @@ namespace bloom::graphics {
 
 	TextureStore::TextureStore(Game & object) : renderer_(object.renderer_) {}
 
-	TexturePtr TextureStore::load(const std::string & file_path, std::optional<SDL_Color> color_key) {
+	TexturePtr TextureStore::Load(const std::string & file_path, std::optional<SDL_Color> color_key) {
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
 		auto texture_it = store_.find(file_path);
 		if (texture_it != store_.end())
@@ -39,7 +39,7 @@ namespace bloom::graphics {
 		}
 	}
 
-	TexturePtr TextureStore::find(const std::string & file_path) {
+	TexturePtr TextureStore::Find(const std::string & file_path) {
 		auto texture_it = store_.find(file_path);
 		if (texture_it != store_.end())
 			return texture_it->second;
@@ -48,7 +48,7 @@ namespace bloom::graphics {
 		}
 	}
 
-	TexturePtr TextureStore::find(std::nothrow_t, const std::string & file_path) {
+	TexturePtr TextureStore::Find(std::nothrow_t, const std::string & file_path) {
 		auto texture_it = store_.find(file_path);
 		if (texture_it != store_.end())
 			return texture_it->second;
@@ -57,7 +57,7 @@ namespace bloom::graphics {
 		}
 	}
 
-	void TextureStore::unload(const std::string & file_path) {
+	void TextureStore::Unload(const std::string & file_path) {
 		auto texture_it = store_.find(file_path);
 		if (texture_it != store_.end())
 			store_.erase(texture_it); // We can't dispose the actual Texture since other's may still be using it.

@@ -10,7 +10,7 @@ namespace bloom::graphics {
 		explicit Texture(SDL_Texture * texture, SDL_Renderer *& target_renderer);
 		~Texture();
 
-		void render(std::optional<SDL_Rect> src_rect, SDL_Rect dest_rect, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void Render(std::optional<SDL_Rect> src_rect, SDL_Rect dest_rect, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	private:
 		SDL_Texture *	texture_;

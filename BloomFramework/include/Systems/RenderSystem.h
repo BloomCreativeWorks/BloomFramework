@@ -10,10 +10,10 @@ namespace bloom::systems {
 	class RenderSystem : public System {
 		using System::DefaultSystem;
 	public:
-		void update(std::optional<double> delta_time = std::nullopt) override;
+		void Update(std::optional<double> delta_time = std::nullopt) override;
 	};
 
-	void RenderSystem::update (std::optional<double> deltaTime) {
+	void RenderSystem::Update (std::optional<double> delta_time) {
 			registry_.view<Position, Size, Sprite>().each(
 				[](auto entity, Position & pos, Size& size, Sprite & spr) {
 				SDL_Rect destRect{
@@ -22,7 +22,7 @@ namespace bloom::systems {
 					static_cast<int>(size.w),
 					static_cast<int>(size.h)
 				};
-				spr.texture->render(spr.src_rect, destRect);
+				spr.texture->Render(spr.src_rect, destRect);
 			});
 	}
 } 
