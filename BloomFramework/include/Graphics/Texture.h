@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_GRAPHICS_TEXTURE_H
+#define BLOOM_GRAPHICS_TEXTURE_H
 
 #include "stdIncludes.h"
 #include <optional>
@@ -19,3 +20,5 @@ namespace bloom::graphics {
 
 	using TexturePtr = std::shared_ptr<Texture>;
 } // namespace bloom::graphics
+
+#endif // !BLOOM_GRAPHICS_TEXTURE_H

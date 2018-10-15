@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_GAME_H_
+#define BLOOM_GAME_H_
 
 #include "stdIncludes.h"
 #include "Graphics/TextureStore.h"
@@ -50,3 +51,5 @@ namespace bloom {
 		bool			is_running_;
 	};
 } // namespace bloom
+
+#endif // !BLOOM_GAME_H_

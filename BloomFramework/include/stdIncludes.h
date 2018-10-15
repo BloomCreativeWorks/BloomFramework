@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BLOOM_STDINCLUDES_H_
+#define BLOOM_STDINCLUDES_H_
+
 #pragma warning(disable:4251) //Ignore warnings about templates in dll
 
 #ifdef BLOOMFRAMEWORK_EXPORT
@@ -19,3 +21,5 @@
 #include <memory>
 #include <string>
 #include <iostream>
+
+#endif // !BLOOM_STDINCLUDES_H_

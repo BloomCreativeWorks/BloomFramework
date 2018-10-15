@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_COMPONENTS_SPRITE_H_
+#define BLOOM_COMPONENTS_SPRITE_H_
 
 #include "Graphics/TextureStore.h"
 #include <optional>
@@ -13,3 +14,5 @@ namespace bloom::components {
 		std::optional<SDL_Rect> src_rect;
 	};
 } // namespace bloom::components
+
+#endif // !BLOOM_COMPONENTS_SPRITE_H_

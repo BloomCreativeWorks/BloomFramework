@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_SYSTEMS_DEFAULTSYSTEM_H_
+#define BLOOM_SYSTEMS_DEFAULTSYSTEM_H_
 
 #include "stdIncludes.h"
 #include <optional>
@@ -16,3 +17,5 @@ namespace bloom::systems {
 
 	using System = DefaultSystem;
 } // namespace bloom::systems
+
+#endif // !BLOOM_SYSTEMS_DEFAULTSYSTEM_H_

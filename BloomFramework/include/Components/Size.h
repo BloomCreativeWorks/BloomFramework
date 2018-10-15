@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_COMPONENTS_SIZE_H_
+#define BLOOM_COMPONENTS_SIZE_H
 
 namespace bloom::components {
 	struct Size {
@@ -7,3 +8,5 @@ namespace bloom::components {
 		int w, h;
 	};
 } // namespace bloom::components
+
+#endif // !BLOOM_COMPONENTS_SIZE_H_

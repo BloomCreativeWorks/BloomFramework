@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_GRAPHICS_TEXTURESTORE_H_
+#define BLOOM_GRAPHICS_TEXTURESTORE_H_
 
 #include "stdIncludes.h"
 #include <unordered_map>
@@ -25,3 +26,5 @@ namespace bloom {
 		};
 } // namespace bloom::graphics
 } // namespace bloom
+
+#endif // !BLOOM_GRAPHICS_TEXTURESTORE_H_

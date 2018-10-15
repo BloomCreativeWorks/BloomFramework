@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TESTBENCH_RANDOMIZERSYSTEM_H_
+#define TESTBENCH_RANDOMIZERSYSTEM_H_
 
 #include "Framework.h"
 #include "NoRandomComponent.h"
@@ -20,3 +21,5 @@ void RandomPositionSystem::Update(std::optional<double> delta_time) {
 		}
 	});
 }
+
+#endif // !TESTBENCH_RANDOMIZERSYSTEM_H_

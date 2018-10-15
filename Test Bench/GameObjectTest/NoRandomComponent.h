@@ -1,3 +1,6 @@
-#pragma once
+#ifndef TESTBENCH_NORANDOMCOMPONENT_H_
+#define TESTBENCH_NORANDOMCOMPONENT_H_
 
 struct NoRandomPos {};
+
+#endif // !TESTBENCH_NORANDOMCOMPONENT_H_

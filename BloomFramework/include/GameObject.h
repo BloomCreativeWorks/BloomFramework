@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_GAMEOBJECT_H_
+#define BLOOM_GAMEOBJECT_H_
 
 #include "stdIncludes.h"
 #include "Components/Components.h"
@@ -32,3 +33,5 @@ namespace bloom {
 		uint32_t entity_;
 	};
 } // namespace bloom
+
+#endif // !BLOOM_GAMEOBJECT_H_

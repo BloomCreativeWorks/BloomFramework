@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_SYSTEMS_RENDERSYSTEM_H_
+#define BLOOM_SYSTEMS_RENDERSYSTEM_H_
 
 #include "stdIncludes.h"
 #include "DefaultSystem.h"
@@ -28,3 +29,5 @@ namespace bloom::systems {
 			});
 	}
 } // namespace bloom::systems
+
+#endif // !BLOOM_SYSTEMS_RENDERSYSTEM_H_

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_COMPONENTS_POSITION_H_
+#define BLOOM_COMPONENTS_POSITION_H_
 
 namespace bloom::components {
 	struct Position {
@@ -7,3 +8,5 @@ namespace bloom::components {
 		int x, y;
 	};
 } // namespace bloom::components
+
+#endif // !BLOOM_COMPONENTS_POSITION_H_

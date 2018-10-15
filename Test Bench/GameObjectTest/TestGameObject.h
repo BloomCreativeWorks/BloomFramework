@@ -1,4 +1,5 @@
-#pragma once
+#ifndef TESTBENCH_TESTGAMEOBJECT_H_
+#define TESTBENCH_TESTGAMEOBJECT_H_
 
 #include "Framework.h"
 #include "NoRandomComponent.h"
@@ -29,3 +30,5 @@ void TestChar::DisableRandomPos() {
 void TestChar::EnableRandomPos() {
 	registry_.reset<NoRandomPos>(entity_);
 }
+
+#endif // !TESTBENCH_TESTGAMEOBJECT_H_

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_TIMER_H_
+#define BLOOM_TIMER_H_
 
 #include "stdIncludes.h"
 
@@ -19,3 +20,5 @@ namespace bloom {
 		Uint64	start_ticks_, timer_ticks_;
 	};
 } // namespace bloom
+
+#endif // !BLOOM_TIMER_H_

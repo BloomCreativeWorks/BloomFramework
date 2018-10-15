@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BLOOM_EXCEPTION_H_
+#define BLOOM_EXCEPTION_H_
 
 #include <exception>
 #include <string>
@@ -12,3 +13,5 @@ namespace bloom {
 		Exception(char const * const message, int err_no) noexcept;
 	};
 } // namespace bloom
+
+#endif // !BLOOM_EXCEPTION_H_
