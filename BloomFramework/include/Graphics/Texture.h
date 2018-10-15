@@ -11,7 +11,6 @@ namespace bloom::graphics {
 		~Texture();
 
 		void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
-		void dispose();
 
 	private:
 		SDL_Texture *	m_texture;

@@ -27,12 +27,8 @@ namespace bloom::graphics {
 		}
 	}
 
-	void Texture::dispose() {
+	Texture::~Texture() {
 		SDL_DestroyTexture(m_texture);
 		m_texture = nullptr;
-	}
-
-	Texture::~Texture() {
-		dispose();
 	}
 }
