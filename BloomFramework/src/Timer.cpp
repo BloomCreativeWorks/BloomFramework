@@ -1,6 +1,10 @@
 #include "Timer.h"
 
 namespace bloom {
+	Uint32 Timer::totalLifetime() {
+		return SDL_GetTicks();
+	}
+
 	void Timer::start() {
 		m_timerTicks = SDL_GetPerformanceCounter();
 	}
@@ -21,9 +25,5 @@ namespace bloom {
 
 	double Timer::objectLifetime() {
 		return (static_cast<double>(SDL_GetPerformanceCounter() - m_startTicks) * 1000.0 / SDL_GetPerformanceFrequency());
-	}
-
-	Uint32 Timer::totalLifetime() {
-		return SDL_GetTicks();
 	}
 }
