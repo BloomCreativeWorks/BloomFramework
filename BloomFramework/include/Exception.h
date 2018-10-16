@@ -2,13 +2,16 @@
 
 #include <exception>
 #include <string>
+#include "stdIncludes.h"
 
 namespace bloom {
-	class Exception : public std::exception {
+	class BLOOMFRAMEWORK_API std::exception;
+
+	class BLOOMFRAMEWORK_API Exception : public std::exception {
 	public:
-		Exception(std::string && _Message) noexcept;
-		Exception(std::string && _Message, int _ErrNo) noexcept;
-		Exception(char const * const _Message) noexcept;
-		Exception(char const * const _Message, int _ErrNo) noexcept;
+		Exception(std::string && message) noexcept;
+		Exception(std::string && message, int errr_no) noexcept;
+		Exception(char const * const message) noexcept;
+		Exception(char const * const message, int errr_no) noexcept;
 	};
 }
