@@ -3,13 +3,13 @@
 #include "Graphics/TextureStore.h"
 #include <optional>
 
-using namespace bloom::graphics;
-
 namespace bloom::components {
 	struct Sprite {
-		Sprite(TexturePtr texture, std::optional<SDL_Rect> srcRect = std::nullopt) : _texture(texture), _srcRect(srcRect) {}
+		using TexturePtr = bloom::graphics::TexturePtr;
 
-		TexturePtr _texture;
-		std::optional<SDL_Rect> _srcRect;
+		Sprite(TexturePtr texture, std::optional<SDL_Rect> srcRect = std::nullopt) : _texture(texture), srcRect(srcRect) {}
+
+		TexturePtr texture;
+		std::optional<SDL_Rect> srcRect;
 	};
 }

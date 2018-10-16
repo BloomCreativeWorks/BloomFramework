@@ -4,10 +4,9 @@
 #include "Graphics/TextureStore.h"
 #include "Timer.h"
 
-using namespace bloom::graphics;
-
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
+		using TextureStore = bloom::graphics::TextureStore;
 		friend TextureStore::TextureStore(Game & object);
 
 	public:
