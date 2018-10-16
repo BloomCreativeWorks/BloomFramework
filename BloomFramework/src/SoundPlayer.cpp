@@ -8,9 +8,9 @@ namespace bloom::audio {
 
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : m_chunk(chunk), m_channel(static_cast<int>(channels.size())) {
 		if (free_channels > 0) {
-			for (int i = 0; i < channels.size(); ++i)
+			for (size_t i = 0; i < channels.size(); ++i)
 				if (channels[i] == false) {
-					m_channel = i;
+					m_channel = static_cast<int>(i);
 					channels[i] = true;
 					free_channels--;
 					break;
