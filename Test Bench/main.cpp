@@ -39,15 +39,13 @@ int main() {
 	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
 	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
 
-	//sounds.store.disableAutoChannels(false);
-	//sounds.store.manageExtraChannels(5000);
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_04684.wav")); //0
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_04685.wav")); //1
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_11989.wav")); //2
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_11998.wav")); //3
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12000.wav")); //4
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12011.wav")); //5
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12020.wav")); //6
+	sounds.add("Audio/Sounds/Sound_04684.wav"); //0
+	sounds.add("Audio/Sounds/Sound_04685.wav"); //1
+	sounds.add("Audio/Sounds/Sound_11989.wav"); //2
+	sounds.add("Audio/Sounds/Sound_11998.wav"); //3
+	sounds.add("Audio/Sounds/Sound_12000.wav"); //4
+	sounds.add("Audio/Sounds/Sound_12011.wav"); //5
+	sounds.add("Audio/Sounds/Sound_12020.wav"); //6
 
 	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
@@ -57,17 +55,22 @@ int main() {
 	game->clear();
 	game->render();
 
-	sounds.players[0].play();
+	sounds.players[0]->play();
+	//sounds.players[1]->play();
+	//sounds.players[2]->play();
+	//sounds.players[3]->play();
+	//sounds.players[4]->play();
+	//sounds.players[5]->play();
 
-	auto testPtr = sounds.players[0].chunk();
+	auto testPtr = sounds.players[0]->chunk();
 
 	std::clog << testPtr.use_count() << std::endl;
 
-	std::clog << sounds.players[0].chunk().use_count() << std::endl;
+	std::clog << sounds.players[0]->chunk().use_count() << std::endl;
 
 	std::clog << testPtr.use_count() << std::endl;
-	sounds.players[0].play();
-	sounds.players[0].play();
+	sounds.players[0]->play();
+	sounds.players[0]->play();
 	//sounds[2]->play();
 
 	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
@@ -141,22 +144,22 @@ int main() {
 	}
 	music.clear();
 	game->destroy();
-	sounds.players[1].play();
+	sounds.players[1]->play();
 	game->delay(2500);
 	sounds.clear();
 	std::clog << testPtr.use_count() << std::endl;
 	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12000.wav")); //4
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12011.wav")); //5
-	sounds.players.emplace_back(sounds.store.load("Audio/Sounds/Sound_12020.wav")); //6
+	//sounds.add("Audio/Sounds/Sound_12000.wav"); //4
+	//sounds.add("Audio/Sounds/Sound_12011.wav"); //5
+	//sounds.add("Audio/Sounds/Sound_12020.wav"); //6
 
 
-	game->delay(2500);
+	//game->delay(2500);
 
-	//sounds.players[2].play();
+	//sounds.players[2]->play();
 
-	game->delay(2500);
+	//game->delay(2500);
 
 	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 	//Game::exit();

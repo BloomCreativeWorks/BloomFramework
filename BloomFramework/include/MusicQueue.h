@@ -6,6 +6,7 @@ namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicQueue {
 		struct Track { TrackPtr track; int plays; bool ignoreInfinitePlayback; };
 	public:
+		MusicQueue();
 		~MusicQueue();
 
 		void launch();
@@ -24,11 +25,11 @@ namespace bloom::audio {
 		bool isInfinitePlayback();
 
 	private:
-		MusicQueue* m_oldObjectPtr = nullptr;
 		std::queue<Track> m_queue;
 		bool m_infinitePlayback = true;
 
 		static void next_track();
-		inline static MusicQueue* m_currentObjectPtr = nullptr;
+		inline static MusicQueue * m_thisObjectPtr = nullptr;
+		inline static size_t obj_qnt = 0;
 	};
 }

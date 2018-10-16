@@ -188,12 +188,12 @@
     <ClInclude Include="include\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\SoundPlayer.cpp" />
     <ClCompile Include="src\SoundStore.cpp" />
     <ClCompile Include="src\Music.cpp" />
     <ClCompile Include="src\MusicQueue.cpp" />
     <ClCompile Include="src\MusicStore.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\SoundChunk.cpp" />
     <ClCompile Include="src\GameObject.cpp" />

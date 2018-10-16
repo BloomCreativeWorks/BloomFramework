@@ -1,14 +1,16 @@
 #pragma once
+#include <vector>
 #include "stdIncludes.h"
 #include "SoundChunk.h"
 
 namespace bloom::audio {
-	struct SoundFull;
+	class SoundFull;
 
 	class BLOOMFRAMEWORK_API SoundPlayer {
-		friend struct SoundFull;
+		friend class SoundFull;
 	public:
 		SoundPlayer(SoundChunkPtr chunk);
+		~SoundPlayer();
 
 		void play(int plays = 1);
 		void pause();
@@ -21,6 +23,9 @@ namespace bloom::audio {
 	private:
 		SoundChunkPtr m_chunk;
 		int m_channel;
-		inline static int m_channelsQnt = 0;
+		inline static std::vector<bool> channels;
+		inline static int free_channels = 0;
 	};
+
+	using SoundPlayerPtr = std::unique_ptr<SoundPlayer>;
 }

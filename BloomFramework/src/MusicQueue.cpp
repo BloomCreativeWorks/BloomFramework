@@ -2,13 +2,18 @@
 #include "Exception.h"
 
 namespace bloom::audio {
+	MusicQueue::MusicQueue() {
+		if (obj_qnt > 0)
+			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
+		obj_qnt++;
+	}
+
 	MusicQueue::~MusicQueue() {
 		clear();
 	}
 
 	void MusicQueue::launch() {
-		m_oldObjectPtr = m_currentObjectPtr;
-		m_currentObjectPtr = this;
+		m_thisObjectPtr = this;
 		Mix_HookMusicFinished(MusicQueue::next_track);
 	}
 
@@ -30,7 +35,7 @@ namespace bloom::audio {
 	void MusicQueue::play() {
 		if (m_queue.empty())
 			throw Exception("[MusicStore] store is empty");
-		if (m_currentObjectPtr != this)
+		if (m_thisObjectPtr != this)
 			launch();
 		auto track = m_queue.front();
 		track.track->play(track.plays);
@@ -54,16 +59,14 @@ namespace bloom::audio {
 
 	void MusicQueue::clear() {
 		exit();
-		m_queue.front().track->stop();
-		m_queue = std::queue<Track>();
+		if (m_queue.size() != 0) {
+			m_queue.front().track->stop();
+			m_queue = std::queue<Track>();
+		}
 	}
 
 	void MusicQueue::exit() {
-		if (m_currentObjectPtr == this) {
-			m_currentObjectPtr = m_oldObjectPtr;
-		}
-		if (!m_currentObjectPtr)
-			Mix_HookMusicFinished(nullptr);
+		Mix_HookMusicFinished(nullptr);
 	}
 
 	void MusicQueue::setVolume(int volume) {
@@ -84,14 +87,14 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::next_track() {
-		if (m_currentObjectPtr != nullptr) {
-			if (!m_currentObjectPtr->m_queue.front().ignoreInfinitePlayback && m_currentObjectPtr->m_infinitePlayback) {
-				m_currentObjectPtr->m_queue.push(m_currentObjectPtr->m_queue.front());
+		if (m_thisObjectPtr) {
+			if (!m_thisObjectPtr->m_queue.front().ignoreInfinitePlayback && m_thisObjectPtr->m_infinitePlayback) {
+				m_thisObjectPtr->m_queue.push(m_thisObjectPtr->m_queue.front());
 			}
-			m_currentObjectPtr->m_queue.pop();
+			m_thisObjectPtr->m_queue.pop();
 
-			if (!m_currentObjectPtr->m_queue.empty())
-				m_currentObjectPtr->play();
+			if (!m_thisObjectPtr->m_queue.empty())
+				m_thisObjectPtr->play();
 		}
 	}
 }
