@@ -2,6 +2,9 @@
 #include "Exception.h"
 
 namespace bloom::audio {
+	MusicQueue * MusicQueue::m_thisObjectPtr = nullptr;
+	size_t MusicQueue::obj_qnt = 0;
+
 	MusicQueue::MusicQueue() {
 		if (obj_qnt > 0)
 			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");

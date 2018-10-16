@@ -1,4 +1,5 @@
 #pragma once
+
 #include <unordered_map>
 #include "stdIncludes.h"
 #include "Music.h"
@@ -18,6 +19,6 @@ namespace bloom::audio {
 	private:
 		std::unordered_map<std::string, TrackPtr> m_store;
 
-		inline static size_t obj_qnt = 0;
+		static size_t obj_qnt;
 	};
 }

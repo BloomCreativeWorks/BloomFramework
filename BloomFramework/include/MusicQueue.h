@@ -1,4 +1,5 @@
 #pragma once
+
 #include <queue>
 #include "Music.h"
 
@@ -29,7 +30,7 @@ namespace bloom::audio {
 		bool m_infinitePlayback = true;
 
 		static void next_track();
-		inline static MusicQueue * m_thisObjectPtr = nullptr;
-		inline static size_t obj_qnt = 0;
+		static MusicQueue * m_thisObjectPtr;
+		static size_t obj_qnt;
 	};
 }

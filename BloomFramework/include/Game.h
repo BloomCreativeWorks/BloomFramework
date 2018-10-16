@@ -54,6 +54,6 @@ namespace bloom {
 
 	private:
 		static void exit();
-		inline static int m_runningInstancesQnt = 0;
+		static int m_runningInstancesQnt;
 	};
 }

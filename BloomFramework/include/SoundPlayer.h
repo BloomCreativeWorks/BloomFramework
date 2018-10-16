@@ -1,4 +1,5 @@
 #pragma once
+
 #include <vector>
 #include "stdIncludes.h"
 #include "SoundChunk.h"
@@ -23,8 +24,8 @@ namespace bloom::audio {
 	private:
 		SoundChunkPtr m_chunk;
 		int m_channel;
-		inline static std::vector<bool> channels;
-		inline static int free_channels = 0;
+		static std::vector<bool> channels;
+		static int free_channels;
 	};
 
 	using SoundPlayerPtr = std::unique_ptr<SoundPlayer>;

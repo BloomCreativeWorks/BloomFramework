@@ -2,6 +2,8 @@
 #include "Exception.h"
 
 namespace bloom {
+	int Game::m_runningInstancesQnt = 0;
+
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),

@@ -3,6 +3,9 @@
 #include "AudioDefine.h"
 
 namespace bloom::audio {
+	std::vector<bool> SoundPlayer::channels = std::vector<bool>();
+	int SoundPlayer::free_channels = 0;
+
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : m_chunk(chunk), m_channel(static_cast<int>(channels.size())) {
 		if (free_channels > 0) {
 			for (int i = 0; i < channels.size(); ++i)

@@ -1,5 +1,6 @@
 #pragma once
-#include <vector>
+
+#include "Exception.h"
 #include "MusicStore.h"
 #include "MusicQueue.h"
 #include "SoundChunk.h"
@@ -21,7 +22,7 @@ namespace bloom::audio {
 		}
 
 	private:
-		inline static size_t obj_qnt = 0;
+		static size_t obj_qnt;
 	};
 
 	MusicFull::MusicFull() {
@@ -30,13 +31,12 @@ namespace bloom::audio {
 		obj_qnt++;
 	}
 
+	size_t MusicFull::obj_qnt = 0;
+
+
 	class SoundFull {
 	public:
-		SoundFull() {
-			if (obj_qnt > 1)
-				throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
-			obj_qnt++;
-		}
+		SoundFull();
 
 		int add(const std::string & filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
@@ -55,8 +55,17 @@ namespace bloom::audio {
 		std::vector<SoundPlayerPtr> players;
 
 	private:
-		inline static size_t obj_qnt = 0;
+		static size_t obj_qnt;
 	};
+
+	SoundFull::SoundFull() {
+		if (obj_qnt > 1)
+			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
+		obj_qnt++;
+	}
+
+	size_t SoundFull::obj_qnt = 0;
+
 
 	MusicFull music;
 	SoundFull sounds;
