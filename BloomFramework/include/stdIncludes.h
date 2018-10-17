@@ -7,6 +7,9 @@
 #define BLOOMFRAMEWORK_API __declspec(dllimport)
 #endif
 
+#include <memory>
+#include <string>
+#include <iostream>
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -15,7 +18,3 @@
 #undef main
 
 #include "entt/entt.hpp"
-
-#include <memory>
-#include <string>
-#include <iostream>

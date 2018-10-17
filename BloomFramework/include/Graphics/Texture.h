@@ -1,7 +1,7 @@
 #pragma once
 
-#include "stdIncludes.h"
 #include <optional>
+#include "stdIncludes.h"
 
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API Texture {

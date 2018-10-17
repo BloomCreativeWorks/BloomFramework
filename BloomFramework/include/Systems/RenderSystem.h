@@ -1,8 +1,8 @@
 #pragma once
 
 #include "stdIncludes.h"
-#include "DefaultSystem.h"
 #include "Components/Components.h"
+#include "DefaultSystem.h"
 
 namespace bloom::systems {
 	class RenderSystem : public System {

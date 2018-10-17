@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Graphics/TextureStore.h"
 #include <optional>
+#include "Graphics/TextureStore.h"
 
 namespace bloom::components {
 	struct Sprite {
