@@ -1,6 +1,8 @@
 #include "Timer.h"
 
 namespace bloom {
+	Timer::Timer() : m_startTicks(SDL_GetPerformanceCounter()), m_timerTicks(m_startTicks) {}
+
 	Uint32 Timer::totalLifetime() {
 		return SDL_GetTicks();
 	}
