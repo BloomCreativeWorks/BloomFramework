@@ -6,7 +6,6 @@
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API Texture {
 	public:
-		Texture() = default;
 		explicit Texture(SDL_Texture * texture, SDL_Renderer *& targetRenderer);
 		~Texture();
 
