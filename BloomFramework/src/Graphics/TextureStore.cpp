@@ -14,7 +14,7 @@ namespace bloom::graphics {
 			return textureIt->second;
 
 		//Load image at specified path
-		SDL_Surface* loadedSurface = IMG_Load(filePath.c_str());
+		SDL_Surface * loadedSurface = IMG_Load(filePath.c_str());
 		if (loadedSurface == nullptr)
 		{
 			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));

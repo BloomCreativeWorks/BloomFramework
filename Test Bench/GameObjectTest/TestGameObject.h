@@ -15,6 +15,7 @@ public:
 	void disableRandomPos();
 	void enableRandomPos();
 };
+
 void TestChar::init(SDL_Rect pos_and_size, const std::string & texturePath, std::optional<SDL_Rect> srcRect) {
 	m_registry.replace<Position>(m_entity, pos_and_size.x, pos_and_size.y);
 	m_registry.assign<Size>(m_entity, pos_and_size.w, pos_and_size.h);
