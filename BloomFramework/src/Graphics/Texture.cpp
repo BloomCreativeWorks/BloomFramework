@@ -29,6 +29,5 @@ namespace bloom::graphics {
 
 	Texture::~Texture() {
 		SDL_DestroyTexture(m_texture);
-		m_texture = nullptr;
 	}
 }
