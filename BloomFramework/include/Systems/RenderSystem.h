@@ -22,14 +22,14 @@ namespace bloom {
 					static_cast<int>(size.h)
 				};
 
-				LayerGroup tmp2;
+				LayerGroup layerNo;
 				if (m_registry.has<LayerGroup>(entity))
-					tmp2 = m_registry.get<LayerGroup>(entity);
+					layerNo = m_registry.get<LayerGroup>(entity);
 				else
-					tmp2 = 0;
+					layerNo = 0;
 
 				// Place sprites into queue for sorting later.
-				renderQueue.emplace_back(std::make_tuple(spr,destRect,tmp2));
+				renderQueue.emplace_back(std::make_tuple(spr,destRect,layer));
 			});
 			
 			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
