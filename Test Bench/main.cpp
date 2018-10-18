@@ -101,7 +101,7 @@ int main() {
 	RandomPositionSystem randomizer(testRegistry);
 
 	int testX = 0, testY = 0;
-	music.queue.setVolume(64);
+	music.queue.setVolume(100);
 	music.queue.setInfinitePlayback(true);
 	music.queue.play();
 	while (game->isRunning()) {
