@@ -72,13 +72,16 @@ namespace bloom::audio {
 		Mix_HookMusicFinished(nullptr);
 	}
 
-	void MusicQueue::setVolume(int volume) {
-		if (volume < 0) volume *= -1;
-		Mix_VolumeMusic(volume);
+	void MusicQueue::setVolume(int volumePercent) {
+		if (volumePercent < 0) volumePercent *= -1;
+		if (volumePercent > 100) volumePercent = 100;
+		double actualVolume = (MIX_MAX_VOLUME / 100) * volumePercent;
+		Mix_VolumeMusic(static_cast<int>(actualVolume));
 	}
 
 	int MusicQueue::getVolume() {
-		return Mix_VolumeMusic(-1);
+		int volumePercent = (Mix_VolumeMusic(-1) / MIX_MAX_VOLUME) * 100;
+		return volumePercent;
 	}
 
 	void MusicQueue::setInfinitePlayback(bool value) {

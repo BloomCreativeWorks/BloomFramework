@@ -56,13 +56,16 @@ namespace bloom::audio {
 		Mix_HaltChannel(m_channel);
 	}
 
-	void SoundPlayer::setVolume(int volume) {
-		if (volume < 0) volume *= -1;
-		Mix_VolumeChunk(m_chunk->m_chunk, volume);
+	void SoundPlayer::setVolume(int volumePercent) {
+		if (volumePercent < 0) volumePercent *= -1;
+		if (volumePercent > 100) volumePercent = 100;
+		double actualVolume = (MIX_MAX_VOLUME / 100) * volumePercent;
+		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>(actualVolume));
 	}
 
 	int SoundPlayer::getVolume() {
-		return Mix_VolumeChunk(m_chunk->m_chunk, -1);
+		int volumePercent = (Mix_VolumeChunk(m_chunk->m_chunk, -1) / MIX_MAX_VOLUME) * 100;
+		return volumePercent;
 	}
 
 	SoundChunkPtr SoundPlayer::chunk() {
