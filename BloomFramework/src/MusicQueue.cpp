@@ -79,8 +79,15 @@ namespace bloom::audio {
 		Mix_VolumeMusic(static_cast<int>(actualVolume));
 	}
 
-	int MusicQueue::getVolume() {
-		int volumePercent = (Mix_VolumeMusic(-1) / MIX_MAX_VOLUME) * 100;
+	void MusicQueue::setVolume(double volumePercent){
+		if (volumePercent < 0) volumePercent *= -1;
+		if (volumePercent > 100) volumePercent = 100;
+		double actualVolume = (static_cast<double>(MIX_MAX_VOLUME) / 100) * volumePercent;
+		Mix_VolumeMusic(static_cast<int>(actualVolume));
+	}
+
+	double MusicQueue::getVolume() {
+		double volumePercent = (static_cast<double>(Mix_VolumeMusic(-1)) / MIX_MAX_VOLUME) * 100;
 		return volumePercent;
 	}
 

@@ -20,8 +20,9 @@ namespace bloom::audio {
 		void skip();
 		void clear();
 		void exit();
-		void setVolume(int volume);
-		int getVolume();
+		void setVolume(int volumePercent);
+		void setVolume(double volumePercent);
+		double getVolume();
 		void setInfinitePlayback(bool value);
 		bool isInfinitePlayback();
 
