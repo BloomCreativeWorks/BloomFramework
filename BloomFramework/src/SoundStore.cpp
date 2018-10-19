@@ -22,7 +22,7 @@ namespace bloom::audio {
 		if (SoundFXIt != m_store.end())
 			return SoundFXIt->second;
 		else {
-			throw Exception("[Music Store] Can't get SoundFX \"" + filePath + "\".\nIs it loaded?");
+			throw Exception("[Sound Store] Can't get SoundFX \"" + filePath + "\".\nIs it loaded?");
 		}
 	}
 
