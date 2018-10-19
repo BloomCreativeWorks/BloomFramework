@@ -63,7 +63,7 @@ namespace bloom::audio {
 	}
 
 	void SoundPlayer::setVolume(double volumePercent) {
-		if (volumePercent < DBL_EPSILON) volumePercent = -volumePercent;
+		if (volumePercent < std::numeric_limits<double>::epsilon()) volumePercent = -volumePercent;
 		if (volumePercent > 100.0) volumePercent = 100.0;
 		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}

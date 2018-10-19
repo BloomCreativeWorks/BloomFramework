@@ -79,7 +79,7 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::setVolume(double volumePercent){
-		if (volumePercent < DBL_EPSILON) volumePercent = -volumePercent;
+		if (volumePercent < std::numeric_limits<double>::epsilon()) volumePercent = -volumePercent;
 		if (volumePercent > 100.0) volumePercent = 100.0;
 		Mix_VolumeMusic(static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
