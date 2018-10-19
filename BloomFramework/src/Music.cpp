@@ -21,13 +21,20 @@ namespace bloom::audio {
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void Music::play(int plays) {
+	void Music::play(int plays, int fadeIn) {
+		fadeIn = fadeIn < 0 ? fadeIn * -1 : fadeIn;
 		if (m_track == NULL or m_track == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play track");
 		}
 
-		if (Mix_PlayMusic(m_track, plays) == -1)
-			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		if (fadeIn > 0) {
+			if (Mix_FadeInMusic(m_track, plays, fadeIn) == -1)
+				throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		}
+		else {
+			if (Mix_PlayMusic(m_track, plays) == -1)
+				throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		}
 	}
 
 	void Music::pause() {
@@ -48,7 +55,11 @@ namespace bloom::audio {
 		Mix_RewindMusic();
 	}
 
-	void Music::stop() {
-		Mix_HaltMusic();
+	void Music::stop(int fadeOut) {
+		fadeOut = fadeOut < 0 ? fadeOut * -1 : fadeOut;
+		if (fadeOut > 0)
+			Mix_FadeOutMusic(fadeOut);
+		else
+			Mix_HaltMusic();
 	}
 }
