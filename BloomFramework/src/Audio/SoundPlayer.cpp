@@ -7,7 +7,7 @@ namespace bloom::audio {
 	std::stack<int> SoundPlayer::freeChannels;
 
 	void SoundPlayer::optimizeChannels() {
-		while (freeChannels.size() > 0) {
+		while (!freeChannels.empty()) {
 			if (freeChannels.top() > static_cast<int>(channels.size())) {
 				freeChannels.pop();
 				continue;
@@ -23,7 +23,7 @@ namespace bloom::audio {
 	}
 
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : m_chunk(chunk), m_channel(static_cast<int>(channels.size())) {
-		if (freeChannels.size() > 0) {
+		if (!freeChannels.empty()) {
 			channels[freeChannels.top()] = this;
 			freeChannels.pop();
 		}
