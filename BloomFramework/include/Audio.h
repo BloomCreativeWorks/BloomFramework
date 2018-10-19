@@ -17,7 +17,7 @@ namespace bloom::audio {
 		MusicQueue	queue;
 
 		void clear() {
-			queue.clear();
+			queue.clear(true);
 			store.unloadAll();
 		}
 

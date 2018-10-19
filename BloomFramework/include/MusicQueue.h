@@ -5,20 +5,21 @@
 
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicQueue {
-		struct Track { TrackPtr track; int plays; bool ignoreInfinitePlayback; };
+		struct Track { TrackPtr track; int plays; bool ignoreInfinitePlayback; int fadeIn = 0; int fadeOut = 0; };
 	public:
 		MusicQueue();
 		~MusicQueue();
 
 		void launch();
-		void add(TrackPtr track, int plays = 1, bool ignoreInfinitePlayback = false);
-		void remove();
-		void play();
+		void add(TrackPtr track, int plays = 1, bool ignoreInfinitePlayback = false, int fadeIn = 0, int fadeOut = 0);
+		void add(Track track);
+		void remove(bool bypassFade = false);
+		void play(bool bypassFade = false);
 		void pause();
 		void resume();
 		void rewind();
-		void skip();
-		void clear();
+		void skip(bool bypassFade = false);
+		void clear(bool bypassFade = false);
 		void exit();
 		void setVolume(int volumePercent);
 		void setVolume(double volumePercent);
