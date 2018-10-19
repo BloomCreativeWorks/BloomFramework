@@ -13,6 +13,7 @@ namespace bloom::audio {
 				continue;
 			}
 
+			channels.back()->stop();
 			channels[freeChannels.top()] = channels.back();
 			channels.pop_back();
 			freeChannels.pop();
