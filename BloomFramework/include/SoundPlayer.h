@@ -17,9 +17,10 @@ namespace bloom::audio {
 		void pause();
 		void resume();
 		void stop();
-		void setVolume(int volumePercent);
+		void setRawVolume(int rawVolume);
 		void setVolume(double volumePercent);
 		double getVolume();
+		int getRawVolume();
 		SoundChunkPtr chunk();
 
 	private:

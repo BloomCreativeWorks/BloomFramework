@@ -56,23 +56,24 @@ namespace bloom::audio {
 		Mix_HaltChannel(m_channel);
 	}
 
-	void SoundPlayer::setVolume(int volumePercent) {
-		if (volumePercent < 0) volumePercent *= -1;
-		if (volumePercent > 100) volumePercent = 100;
-		double actualVolume = (static_cast<double>(MIX_MAX_VOLUME) / 100) * volumePercent;
-		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>(actualVolume));
+	void SoundPlayer::setRawVolume(int rawVolume) {
+		if (rawVolume < 0) rawVolume = -rawVolume;
+		if (rawVolume > MIX_MAX_VOLUME) rawVolume = MIX_MAX_VOLUME;
+		Mix_VolumeMusic(rawVolume);
 	}
 
 	void SoundPlayer::setVolume(double volumePercent) {
-		if (volumePercent < 0) volumePercent *= -1;
-		if (volumePercent > 100) volumePercent = 100;
-		double actualVolume = (static_cast<double>(MIX_MAX_VOLUME) / 100) * volumePercent;
-		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>(actualVolume));
+		if (volumePercent < DBL_EPSILON) volumePercent = -volumePercent;
+		if (volumePercent > 100.0) volumePercent = 100.0;
+		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
 
 	double SoundPlayer::getVolume() {
-		double volumePercent = (static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) / MIX_MAX_VOLUME) * 100;
-		return volumePercent;
+		return (static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) / MIX_MAX_VOLUME) * 100.0;
+	}
+
+	int SoundPlayer::getRawVolume() {
+		return Mix_VolumeMusic(-1);
 	}
 
 	SoundChunkPtr SoundPlayer::chunk() {
