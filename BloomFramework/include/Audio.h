@@ -47,8 +47,12 @@ namespace bloom::audio {
 			players.clear();
 			store.unloadAll();
 			SoundPlayer::channels.clear();
-			SoundPlayer::free_channels = 0;
+			while (SoundPlayer::freeChannels.size() > 0) SoundPlayer::freeChannels.pop();
 			Mix_AllocateChannels(0);
+		}
+
+		void optimize() {
+			SoundPlayer::optimizeChannels();
 		}
 
 		SoundStore store;

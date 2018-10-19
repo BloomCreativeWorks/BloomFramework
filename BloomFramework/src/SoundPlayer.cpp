@@ -3,28 +3,38 @@
 #include "AudioDefine.h"
 
 namespace bloom::audio {
-	std::vector<bool> SoundPlayer::channels = std::vector<bool>();
-	int SoundPlayer::free_channels = 0;
+	std::vector<SoundPlayer*> SoundPlayer::channels;
+	std::stack<int> SoundPlayer::freeChannels;
+
+	void SoundPlayer::optimizeChannels() {
+		while (freeChannels.size() > 0) {
+			if (freeChannels.top() > static_cast<int>(channels.size())) {
+				freeChannels.pop();
+				continue;
+			}
+
+			channels[freeChannels.top()] = channels.back();
+			channels.pop_back();
+			freeChannels.pop();
+		}
+
+		Mix_AllocateChannels(static_cast<int>(channels.size()));
+	}
 
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : m_chunk(chunk), m_channel(static_cast<int>(channels.size())) {
-		if (free_channels > 0) {
-			for (size_t i = 0; i < channels.size(); ++i)
-				if (channels[i] == false) {
-					m_channel = static_cast<int>(i);
-					channels[i] = true;
-					free_channels--;
-					break;
-				}
+		if (freeChannels.size() > 0) {
+			channels[freeChannels.top()] = this;
+			freeChannels.pop();
 		}
 		else {
-			channels.push_back(true);
+			channels.push_back(this);
 			Mix_AllocateChannels(static_cast<int>(channels.size()));
 		}
 	}
 
 	SoundPlayer::~SoundPlayer() {
-		channels[m_channel] = false;
-		free_channels++;
+		freeChannels.push(m_channel);
+		channels[m_channel] = nullptr;
 	}
 
 	void SoundPlayer::play(int plays) {

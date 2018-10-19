@@ -150,9 +150,11 @@ int main() {
 	std::clog << testPtr.use_count() << std::endl;
 	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 
-	//sounds.add("Audio/Sounds/Sound_12000.wav"); //4
-	//sounds.add("Audio/Sounds/Sound_12011.wav"); //5
-	//sounds.add("Audio/Sounds/Sound_12020.wav"); //6
+	sounds.add("Audio/Sounds/Sound_12000.wav"); //4
+	sounds.add("Audio/Sounds/Sound_12011.wav"); //5
+	sounds.add("Audio/Sounds/Sound_12020.wav"); //6
+
+	sounds.optimize();
 
 
 	//game->delay(2500);
