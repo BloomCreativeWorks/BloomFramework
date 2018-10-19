@@ -15,6 +15,7 @@ namespace bloom::audio {
 		~SoundPlayer();
 
 		void play(int plays = 1);
+		void replay(int plays = 1) { stop(); play(plays); }
 		void pause();
 		void resume();
 		void stop();
