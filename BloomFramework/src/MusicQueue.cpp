@@ -49,7 +49,7 @@ namespace bloom::audio {
 			launch();
 		auto track = m_queue.front();
 
-		if (track.fadeIn > 0)
+		if (track.fadeIn > 0 and !bypassFade)
 			track.track->play(track.plays, track.fadeIn);
 		else
 			track.track->play(track.plays);

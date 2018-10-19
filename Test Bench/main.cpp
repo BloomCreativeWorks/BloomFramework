@@ -35,7 +35,7 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	music.queue.add(music.store.load("Audio/sample_1.mp3"), 1, true,3000, 3000);
+	music.queue.add(music.store.load("Audio/sample_1.mp3"), 1, true, 3000, 3000);
 	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
 	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
 
