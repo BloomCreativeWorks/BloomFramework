@@ -163,13 +163,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Audio.h" />
-    <ClInclude Include="include\AudioDefine.h" />
-    <ClInclude Include="include\SoundPlayer.h" />
-    <ClInclude Include="include\SoundStore.h" />
-    <ClInclude Include="include\Music.h" />
-    <ClInclude Include="include\MusicQueue.h" />
-    <ClInclude Include="include\MusicStore.h" />
+    <ClInclude Include="include\Audio\Audio.h" />
+    <ClInclude Include="include\Audio\AudioDefine.h" />
+    <ClInclude Include="include\Audio\SoundPlayer.h" />
+    <ClInclude Include="include\Audio\SoundStore.h" />
+    <ClInclude Include="include\Audio\Music.h" />
+    <ClInclude Include="include\Audio\MusicQueue.h" />
+    <ClInclude Include="include\Audio\MusicStore.h" />
     <ClInclude Include="include\Components\Components.h" />
     <ClInclude Include="include\Components\Position.h" />
     <ClInclude Include="include\Components\Size.h" />
@@ -177,7 +177,7 @@
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Framework.h" />
     <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\SoundChunk.h" />
+    <ClInclude Include="include\Audio\SoundChunk.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Systems\DefaultSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
@@ -189,13 +189,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp" />
-    <ClCompile Include="src\SoundPlayer.cpp" />
-    <ClCompile Include="src\SoundStore.cpp" />
-    <ClCompile Include="src\Music.cpp" />
-    <ClCompile Include="src\MusicQueue.cpp" />
-    <ClCompile Include="src\MusicStore.cpp" />
+    <ClCompile Include="src\Audio\SoundPlayer.cpp" />
+    <ClCompile Include="src\Audio\SoundStore.cpp" />
+    <ClCompile Include="src\Audio\Music.cpp" />
+    <ClCompile Include="src\Audio\MusicQueue.cpp" />
+    <ClCompile Include="src\Audio\MusicStore.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\SoundChunk.cpp" />
+    <ClCompile Include="src\Audio\SoundChunk.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\TextureStore.cpp" />

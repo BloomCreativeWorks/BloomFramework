@@ -1,7 +1,7 @@
 #pragma once
 
 #include "stdIncludes.h"
-#include "Audio.h"
+#include "Audio/Audio.h"
 #include "Exception.h"
 #include "Texture.h"
 #include "TextureStore.h"

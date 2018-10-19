@@ -1,6 +1,6 @@
-#include "SoundPlayer.h"
+#include "Audio/SoundPlayer.h"
 #include "Exception.h"
-#include "AudioDefine.h"
+#include "Audio/AudioDefine.h"
 
 namespace bloom::audio {
 	std::vector<SoundPlayer*> SoundPlayer::channels;

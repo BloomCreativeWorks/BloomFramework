@@ -1,4 +1,4 @@
-#include "SoundStore.h"
+#include "Audio/SoundStore.h"
 #include "Exception.h"
 
 namespace bloom::audio {
