@@ -6,7 +6,7 @@
 #include "Texture.h"
 
 namespace bloom {
-	class Game;
+	class BLOOMFRAMEWORK_API Game;
 
 	namespace graphics {
 		class BLOOMFRAMEWORK_API TextureStore {
