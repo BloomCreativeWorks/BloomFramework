@@ -35,9 +35,14 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	music.queue.add(music.store.load("Audio/sample_1.mp3"), 1, true, 3000, 3000);
-	music.queue.add(music.store.load("Audio/sample_2.mp3"), 2);
-	music.queue.add(music.store.load("Audio/sample_2-full.mp3"));
+	//music.push("Audio/sample_1.mp3", 1, true, 3000, 3000);
+	//music.push("Audio/sample_2.mp3", 2);
+	music.push("Audio/sample_3.mp3", 1, false, 100, 100);
+	music.push("Audio/sample_4.mp3", 1, false, 50, 50);
+	music.push("Audio/sample_5.mp3");
+	music.push("Audio/sample_6.mp3");
+	music.push("Audio/sample_7.mp3");
+	music.push("Audio/sample_6.mp3");
 
 	sounds.add("Audio/Sounds/Sound_04684.wav"); //0
 	sounds.add("Audio/Sounds/Sound_04685.wav"); //1
@@ -100,16 +105,21 @@ int main() {
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
 
-	int testX = 0, testY = 0;
 	music.queue.setVolume(100);
 	music.queue.setInfinitePlayback(true);
 	music.queue.play();
+
+	// If manual control of entities is required, this is the method to do so.
+	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+
+	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
+	int testX = -testGOsize.w, testY = -testGOsize.h;
+
 	while (game->isRunning()) {
-		// If manual control of entities is required, this is the method to do so.
-		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
-		testGOpos.x = testX++;
-		testGOpos.y = testY++;
-		testX %= WINDOW_WIDTH; testY %= WINDOW_HEIGHT;
+		testGOpos.x = testX += 3;
+		testGOpos.y = testY += 3;
+		if (testX >= WINDOW_WIDTH)	testX = -testGOsize.w;
+		if (testY >= WINDOW_HEIGHT)	testY = -testGOsize.h;
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();

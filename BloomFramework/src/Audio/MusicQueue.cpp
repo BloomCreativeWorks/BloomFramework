@@ -20,26 +20,12 @@ namespace bloom::audio {
 		Mix_HookMusicFinished(MusicQueue::next_track);
 	}
 
-	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeIn, int fadeOut) {
-		m_queue.push({ track, plays, bypassInfinitePlayback, fadeIn, fadeOut });
+	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs, int fadeOutMs) {
+		m_queue.push({ track, plays, bypassInfinitePlayback, fadeInMs, fadeOutMs });
 	}
 
 	void MusicQueue::add(Track track) {
 		m_queue.push(track);
-	}
-
-	void MusicQueue::remove(bool bypassFade) {
-		if (!m_queue.empty()) {
-			exit();
-			if (m_queue.front().fadeOut > 0 && !bypassFade)
-				m_queue.front().track->stop(m_queue.front().fadeOut);
-			else
-				m_queue.front().track->stop();
-			m_queue.pop();
-			launch();
-			if (!m_queue.empty())
-				play();
-		}
 	}
 
 	void MusicQueue::play(bool bypassFade) {
@@ -73,6 +59,13 @@ namespace bloom::audio {
 		else
 			m_queue.front().track->stop();
 		
+	}
+
+	void MusicQueue::removeLast() {
+		if (m_queue.size() > 1)
+			m_queue.pop();
+		else
+			skip();
 	}
 
 	void MusicQueue::clear(bool bypassFade) {
