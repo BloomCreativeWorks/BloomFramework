@@ -29,7 +29,7 @@ namespace bloom {
 					layerNo = 0;
 
 				// Place sprites into queue for sorting later.
-				renderQueue.emplace_back(std::make_tuple(spr,destRect,layer));
+				renderQueue.emplace_back(std::make_tuple(spr,destRect,layerNo));
 			});
 			
 			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
