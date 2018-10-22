@@ -17,13 +17,13 @@ namespace bloom::audio {
 			Mix_FreeMusic(m_track);
 		m_track = Mix_LoadMUS(fileName.c_str());
 
-		if (m_track == NULL)
+		if (m_track == nullptr)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
 	void Music::play(int plays, int fadeIn) {
 		fadeIn = fadeIn < 0 ? fadeIn * -1 : fadeIn;
-		if (m_track == NULL or m_track == nullptr) {
+		if (m_track == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play track");
 		}
 

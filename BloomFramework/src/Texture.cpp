@@ -19,10 +19,10 @@ namespace bloom {
 			//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
 
 			//Render to screen
-			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, NULL, NULL, flip);
+			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, 0.0, nullptr, flip);
 		}
 		else {
-			SDL_RenderCopyEx(m_renderer, m_texture, NULL, &destRect, NULL, NULL, flip);
+			SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &destRect, 0.0, nullptr, flip);
 		}
 	}
 
