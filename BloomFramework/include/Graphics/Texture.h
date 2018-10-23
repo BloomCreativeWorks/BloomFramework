@@ -6,7 +6,7 @@
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API Texture {
 	public:
-		explicit Texture(SDL_Renderer *& targetRenderer, const std::string & filePath, std::optional<SDL_Color> colorKey);
+		explicit Texture(SDL_Renderer *& targetRenderer, const std::string & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
 		~Texture();
 
 		void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
