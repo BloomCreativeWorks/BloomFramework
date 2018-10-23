@@ -167,7 +167,7 @@
     <ClInclude Include="include\Audio\AudioDefine.h" />
     <ClInclude Include="include\Audio\SoundPlayer.h" />
     <ClInclude Include="include\Audio\SoundStore.h" />
-    <ClInclude Include="include\Audio\Music.h" />
+    <ClInclude Include="include\Audio\MusicTrack.h" />
     <ClInclude Include="include\Audio\MusicQueue.h" />
     <ClInclude Include="include\Audio\MusicStore.h" />
     <ClInclude Include="include\Components\Components.h" />
@@ -191,7 +191,7 @@
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Audio\SoundPlayer.cpp" />
     <ClCompile Include="src\Audio\SoundStore.cpp" />
-    <ClCompile Include="src\Audio\Music.cpp" />
+    <ClCompile Include="src\Audio\MusicTrack.cpp" />
     <ClCompile Include="src\Audio\MusicQueue.cpp" />
     <ClCompile Include="src\Audio\MusicStore.cpp" />
     <ClCompile Include="src\Game.cpp" />

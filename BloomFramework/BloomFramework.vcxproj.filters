@@ -33,9 +33,6 @@
     <ClCompile Include="src\Exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Audio\Music.cpp">
-      <Filter>Source Files\Audio</Filter>
-    </ClCompile>
     <ClCompile Include="src\Audio\MusicQueue.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
@@ -62,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="src\GameObject.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Audio\MusicTrack.cpp">
+      <Filter>Source Files\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -104,9 +104,6 @@
     <ClInclude Include="include\Audio\AudioDefine.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="include\Audio\Music.h">
-      <Filter>Header Files\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="include\Audio\MusicQueue.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
@@ -133,6 +130,9 @@
     </ClInclude>
     <ClInclude Include="include\TextureStore.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Audio\MusicTrack.h">
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

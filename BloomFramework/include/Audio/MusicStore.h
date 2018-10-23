@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include "stdIncludes.h"
-#include "Music.h"
+#include "MusicTrack.h"
 
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicStore {
@@ -10,10 +10,10 @@ namespace bloom::audio {
 		MusicStore();
 		~MusicStore();
 
-		TrackPtr load(const std::string & filePath);
-		TrackPtr find(const std::string & filePath);
-		TrackPtr find(std::nothrow_t, const std::string & filePath) noexcept;
-		void unload(const std::string & filePath);
+		TrackPtr load(const std::filesystem::path & filePath);
+		TrackPtr find(const std::filesystem::path & filePath);
+		TrackPtr find(std::nothrow_t, const std::filesystem::path & filePath) noexcept;
+		void unload(const std::filesystem::path & filePath);
 		void unloadAll();
 
 	private:

@@ -30,6 +30,7 @@ namespace bloom::audio {
 	private:
 		SoundChunkPtr m_chunk;
 		int m_channel;
+
 		static std::vector<SoundPlayer*> channels;
 		static std::stack<int> freeChannels;
 	};

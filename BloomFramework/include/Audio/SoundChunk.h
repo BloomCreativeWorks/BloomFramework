@@ -8,11 +8,10 @@ namespace bloom::audio {
 	class SoundChunk {
 		friend class SoundPlayer;
 	public:
-		SoundChunk(const std::string & filename);
+		SoundChunk(const std::filesystem::path & filePath);
 		~SoundChunk();
 
 	private:
-		std::string m_filename;
 		Mix_Chunk * m_chunk = nullptr;
 	};
 

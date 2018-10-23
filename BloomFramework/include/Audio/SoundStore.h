@@ -9,10 +9,10 @@ namespace bloom::audio {
 	public:
 		~SoundStore();
 
-		SoundChunkPtr load(const std::string & filePath);
-		SoundChunkPtr find(const std::string & filePath);
-		SoundChunkPtr find(std::nothrow_t, const std::string & filePath) noexcept;
-		void unload(const std::string & filePath);
+		SoundChunkPtr load(const std::filesystem::path & filePath);
+		SoundChunkPtr find(const std::filesystem::path & filePath);
+		SoundChunkPtr find(std::nothrow_t, const std::filesystem::path & filePath) noexcept;
+		void unload(const std::filesystem::path & filePath);
 		void unloadAll();
 
 	private:
