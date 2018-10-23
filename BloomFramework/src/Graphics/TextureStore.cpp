@@ -13,30 +13,9 @@ namespace bloom::graphics {
 		if (textureIt != m_store.end())
 			return textureIt->second;
 
-		//Load image at specified path
-		SDL_Surface * loadedSurface = IMG_Load(filePath.c_str());
-		if (loadedSurface == nullptr)
-		{
-			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
-		}
-		else
-		{
-			if (colorKey != std::nullopt) {
-				SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
-			}
-			//Create texture from surface pixels
-			SDL_Texture * texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
-			if (texture == nullptr)
-			{
-				throw Exception("[SDL_Texture] " + std::string(SDL_GetError()));
-			}
-			else {
-				TexturePtr ptr = std::make_shared<Texture>(texture, m_renderer);
-				m_store.emplace(filePath, ptr);
-				SDL_FreeSurface(loadedSurface);
-				return ptr;
-			}
-		}
+		TexturePtr ptr = std::make_shared<Texture>(m_renderer, filePath, colorKey);
+		m_store.emplace(filePath, ptr);
+		return ptr;
 	}
 
 	TexturePtr TextureStore::find(const std::string & filePath) {

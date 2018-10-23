@@ -2,7 +2,24 @@
 #include "Exception.h"
 
 namespace bloom::graphics {
-	Texture::Texture(SDL_Texture * texture, SDL_Renderer *& targetRenderer) : m_texture(texture), m_renderer(targetRenderer) {}
+	Texture::Texture(SDL_Renderer *& targetRenderer, const std::string & filePath, std::optional<SDL_Color> colorKey) : m_renderer(targetRenderer) {
+		//Load image at specified path
+		SDL_Surface * loadedSurface = IMG_Load(filePath.c_str());
+		if (loadedSurface == nullptr) {
+			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
+		}
+		else {
+			if (colorKey.has_value()) {
+				SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
+			}
+			//Create texture from surface pixels
+			m_texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
+			if (m_texture == nullptr) {
+				throw Exception("[SDL_Texture] " + std::string(SDL_GetError()));
+			}
+			SDL_FreeSurface(loadedSurface);
+		}
+	}
 
 	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
 		if (destRect.w <= 0)
