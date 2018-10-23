@@ -7,14 +7,14 @@ namespace bloom::graphics {
 
 	TextureStore::TextureStore(Game & object) : m_renderer(object.m_renderer) {}
 
-	TexturePtr TextureStore::load(const std::string & filePath, std::optional<SDL_Color> colorKey) {
+	TexturePtr TextureStore::load(const std::filesystem::path & filePath, std::optional<SDL_Color> colorKey) {
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
-		auto textureIt = m_store.find(filePath);
+		auto textureIt = m_store.find(filePath.string());
 		if (textureIt != m_store.end())
 			return textureIt->second;
 
 		//Load image at specified path
-		SDL_Surface * loadedSurface = IMG_Load(filePath.c_str());
+		SDL_Surface * loadedSurface = IMG_Load(filePath.string().c_str());
 		if (loadedSurface == nullptr)
 		{
 			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
@@ -32,24 +32,24 @@ namespace bloom::graphics {
 			}
 			else {
 				TexturePtr ptr = std::make_shared<Texture>(texture, m_renderer);
-				m_store.emplace(filePath, ptr);
+				m_store.emplace(filePath.string(), ptr);
 				SDL_FreeSurface(loadedSurface);
 				return ptr;
 			}
 		}
 	}
 
-	TexturePtr TextureStore::find(const std::string & filePath) {
-		auto texIterator = m_store.find(filePath);
+	TexturePtr TextureStore::find(const std::filesystem::path & filePath) {
+		auto texIterator = m_store.find(filePath.string());
 		if (texIterator != m_store.end())
 			return texIterator->second;
 		else {
-			throw Exception("[Texture Store] Can't get texture \"" + filePath + "\".\nIs it loaded?");
+			throw Exception("[Texture Store] Can't get texture \"" + filePath.string() +"\".\nIs it loaded?");
 		}
 	}
 
-	TexturePtr TextureStore::find(std::nothrow_t, const std::string & filePath) {
-		auto texIterator = m_store.find(filePath);
+	TexturePtr TextureStore::find(std::nothrow_t, const std::filesystem::path & filePath) {
+		auto texIterator = m_store.find(filePath.string());
 		if (texIterator != m_store.end())
 			return texIterator->second;
 		else {
@@ -57,8 +57,8 @@ namespace bloom::graphics {
 		}
 	}
 
-	void TextureStore::unload(const std::string & filePath) {
-		auto texIterator = m_store.find(filePath);
+	void TextureStore::unload(const std::filesystem::path & filePath) {
+		auto texIterator = m_store.find(filePath.string());
 		if (texIterator != m_store.end())
 			m_store.erase(texIterator); // We can't dispose the actual Texture since other's may still be using it.
 	}
