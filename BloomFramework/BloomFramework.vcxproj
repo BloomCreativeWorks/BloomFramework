@@ -174,17 +174,17 @@
     <ClInclude Include="include\Systems\DefaultSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Systems\Systems.h" />
-    <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\Graphics\Texture.h" />
     <ClInclude Include="include\stdIncludes.h" />
-    <ClInclude Include="include\TextureStore.h" />
+    <ClInclude Include="include\Graphics\TextureStore.h" />
     <ClInclude Include="include\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\Texture.cpp" />
-    <ClCompile Include="src\TextureStore.cpp" />
+    <ClCompile Include="src\Graphics\Texture.cpp" />
+    <ClCompile Include="src\Graphics\TextureStore.cpp" />
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

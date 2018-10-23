@@ -2,8 +2,8 @@
 
 #include "stdIncludes.h"
 #include "Exception.h"
-#include "Texture.h"
-#include "TextureStore.h"
+#include "Graphics/Texture.h"
+#include "Graphics/TextureStore.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Components/Components.h"

@@ -5,9 +5,9 @@
 #include "GameObjectTest/RandomizerSystem.h"
 
 using namespace bloom;
+using bloom::components::Position;
 
 Game* game = nullptr;
-
 
 int main() {
 	const int fps = 60;
@@ -22,7 +22,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	game = new Game(std::nothrow, 800, 600);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -39,7 +39,7 @@ int main() {
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
-	bloom::RenderSystem renderSysTest(testRegistry);
+	bloom::systems::RenderSystem renderSysTest(testRegistry);
 	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
@@ -60,7 +60,7 @@ int main() {
 	game->delay(500);
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
-	RandomPositionSystem randomizer(testRegistry); 
+	RandomPositionSystem randomizer(testRegistry);
 
 	int testX = 0, testY = 0;
 	while (game->isRunning()) {

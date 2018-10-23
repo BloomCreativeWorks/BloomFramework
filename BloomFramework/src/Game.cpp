@@ -13,7 +13,7 @@ namespace bloom {
 			initialize();
 
 		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (windowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
-			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
+			throw Exception("[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead.");
 		}
 	}
 
@@ -27,16 +27,17 @@ namespace bloom {
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		std::clog << "[Game] the use of this ctor may be unsafe" << std::endl;
+		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN)
+			std::clog << "[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration!" << std::endl;
 	}
 
 	Game::~Game() {
 		destroy();
 	}
 
-	void Game::initialize(Uint32 initFlags, 
+	void Game::initialize(Uint32 initFlags,
 		int mixerFrequency, Uint16 mixerFormat, int mixerChannels, int mixerChunksize,
-		int imageFlags) 
+		int imageFlags)
 	{
 		// Initialize SDL
 		if (SDL_Init(initFlags) < 0) {
@@ -88,7 +89,7 @@ namespace bloom {
 
 	void Game::create(std::string const& title, int xpos, int ypos) {
 		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
-		if (m_window == NULL) {
+		if (m_window == nullptr) {
 			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
 		}
 		else {
@@ -96,7 +97,7 @@ namespace bloom {
 		}
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
-		if (m_renderer == NULL) {
+		if (m_renderer == nullptr) {
 			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
 		}
 		else {
