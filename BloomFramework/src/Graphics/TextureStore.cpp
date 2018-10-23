@@ -8,6 +8,10 @@ namespace bloom::graphics {
 	TextureStore::TextureStore(Game & object) : m_renderer(object.m_renderer) {}
 
 	TexturePtr TextureStore::load(const std::filesystem::path & filePath, std::optional<SDL_Color> colorKey) {
+		if (!std::filesystem::exists(filePath)) {
+			throw Exception("[TextureStore::load] texture file not exists");
+		}
+
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
 		auto textureIt = m_store.find(filePath.u8string());
 		if (textureIt != m_store.end())
