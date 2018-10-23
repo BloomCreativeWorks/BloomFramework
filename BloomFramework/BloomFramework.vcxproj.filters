@@ -19,15 +19,15 @@
     <Filter Include="Header Files\Systems">
       <UniqueIdentifier>{422683c9-c337-41bd-9505-150d54cfee33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics">
+      <UniqueIdentifier>{59baa8cc-f83a-4ce2-a5fb-38d77ba45b87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics">
+      <UniqueIdentifier>{901b4a12-4da2-4795-b576-f703b5eb63bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Exception.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TextureStore.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
@@ -38,6 +38,12 @@
     </ClCompile>
     <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Texture.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TextureStore.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,12 +57,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Exception.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="include\TextureStore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\GameObject.h">
@@ -85,6 +85,12 @@
     </ClInclude>
     <ClInclude Include="include\Systems\Systems.h">
       <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\Texture.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Graphics\TextureStore.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
