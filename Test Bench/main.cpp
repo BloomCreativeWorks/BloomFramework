@@ -38,11 +38,11 @@ int main() {
 	game->render();
 
 	namespace fs = std::filesystem;
-	fs::path currentDir = fs::current_path();
+	//fs::path currentDir = fs::current_path();
 	fs::path assetsDir = L"Assets";
 
-	fs::path spriteSheetPath = currentDir / assetsDir / "OverworldTestSpritesheet.png";
-	fs::path testCharPath = currentDir / assetsDir / "TestChar.png";
+	fs::path spriteSheetPath = assetsDir / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = assetsDir / "TestChar.png";
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
