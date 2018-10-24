@@ -4,12 +4,15 @@
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
 
+#define BLOOM_REAL_PATH // uncomment this if you keep your data files near the .exe (not using VS or other IDE)
+#define BLOOM_VS_DEBUG
+
 using namespace bloom;
 using bloom::components::Position;
 
 Game* game = nullptr;
 
-int main() {
+int main(int argc, char * argv[]) {
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
@@ -39,16 +42,21 @@ int main() {
 
 	namespace fs = std::filesystem;
 
+	fs::path assetsDir = L"Assets";
+	fs::path executableDir;
 
-	fs::path executableDir = SDL_GetBasePath();
-	fs::path assetsDir = "Assets";
-
-#ifndef NDEBUG
 	// Because VS doesn't copy resources to build directory by default, so a little QOL code here.
 	// But this behaviour should never be in release.
-	if (!std::filesystem::exists(executableDir / assetsDir))
-		executableDir = std::filesystem::current_path();
-#endif 
+#ifdef BLOOM_REAL_PATH
+	executableDir = fs::path(argv[0]).parent_path();
+	#ifdef BLOOM_VS_DEBUG
+		executableDir = executableDir.parent_path().parent_path() / L"Test Bench";
+	#endif
+#else
+	executableDir = std::filesystem::current_path();
+#endif
+
+	std::clog << executableDir << std::endl;
 
 	if (!std::filesystem::exists(executableDir / assetsDir))
 		throw bloom::Exception("Required assets can't be found.");
