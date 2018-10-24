@@ -12,7 +12,7 @@ namespace bloom::graphics {
 		auto textureIt = m_store.find(filePath);
 		if (textureIt != m_store.end())
 			return textureIt->second;
-
+    
 		TexturePtr ptr = std::make_shared<Texture>(m_renderer, filePath, colorKey);
 		m_store.emplace(filePath, ptr);
 		return ptr;
