@@ -3,13 +3,12 @@
 #include "Framework.h"
 #include "NoRandomComponent.h"
 
-using namespace bloom;
-class RandomPositionSystem : public bloom::System {
+class RandomPositionSystem : public bloom::systems::System {
+	using Position = bloom::components::Position;
+	using bloom::systems::System::DefaultSystem;
+
 public:
-	using bloom::System::DefaultSystem;
-public:
-	void System::update(std::optional<double> dt)
-	{
+	void update(std::optional<double> deltaTime = std::nullopt) override {
 		m_registry.view<Position>().each(
 			[this](auto entity, Position & pos) {
 			if (!m_registry.has<NoRandomPos>(entity)) {

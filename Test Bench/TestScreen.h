@@ -2,6 +2,8 @@
 #include "Screen.h"
 #include "GameObjectTest/TestGameObject.h"
 class TestScreen : public bloom::Screen {
+	using RenderSystem = bloom::systems::RenderSystem;
+
 public:
 	using bloom::Screen::Screen;
 

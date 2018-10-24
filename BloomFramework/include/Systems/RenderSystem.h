@@ -1,16 +1,21 @@
 #pragma once
 
 #include "stdIncludes.h"
+#include "Components/Components.h"
 #include "DefaultSystem.h"
 #include "Components/Components.h"
 #include <utility>
 
-namespace bloom {
+namespace bloom::systems {
 	class RenderSystem : public System {
+		using Position = bloom::components::Position;
+		using Size = bloom::components::Size;
+		using Sprite = bloom::components::Sprite;
+		using LayerGroup = bloom::components::LayerGroup;
 		using System::DefaultSystem;
+
 	public:
-		void System::update(std::optional<double> deltaTime)
-		{
+		void update(std::optional<double> deltaTime = std::nullopt) override {
 			std::vector<std::tuple<Sprite, SDL_Rect, LayerGroup>> renderQueue{};
 
 			m_registry.view<Position, Size, Sprite>().each(
@@ -41,8 +46,8 @@ namespace bloom {
 			for (auto i : renderQueue) {
 				auto & spr = std::get<0>(i);
 				auto & destRect = std::get<1>(i);
-				spr._texture->render(spr._srcRect, destRect);
+				spr.texture->render(spr.srcRect, destRect);
 			}
 		}
 	};
-}
+} 

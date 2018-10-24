@@ -14,6 +14,8 @@ namespace bloom {
 	*
 	*/
 	class BLOOMFRAMEWORK_API Screen {
+		using System = bloom::systems::System;
+
 	public:
 		Screen(Game * gameInstance);
 		~Screen();

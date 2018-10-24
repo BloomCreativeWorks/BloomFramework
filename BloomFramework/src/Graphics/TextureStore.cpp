@@ -1,7 +1,8 @@
+#include "Graphics/TextureStore.h"
 #include "Exception.h"
 #include "Game.h"
 
-namespace bloom {
+namespace bloom::graphics {
 	TextureStore::TextureStore(SDL_Renderer *& renderer) : m_renderer(renderer) {}
 
 	TextureStore::TextureStore(Game & object) : m_renderer(object.m_renderer) {}
@@ -13,8 +14,8 @@ namespace bloom {
 			return textureIt->second;
 
 		//Load image at specified path
-		SDL_Surface* loadedSurface = IMG_Load(filePath.c_str());
-		if (loadedSurface == NULL)
+		SDL_Surface * loadedSurface = IMG_Load(filePath.c_str());
+		if (loadedSurface == nullptr)
 		{
 			throw Exception("[SDL_IMG] " + std::string(SDL_GetError()));
 		}
@@ -59,7 +60,6 @@ namespace bloom {
 	void TextureStore::unload(const std::string & filePath) {
 		auto texIterator = m_store.find(filePath);
 		if (texIterator != m_store.end())
-			m_store.erase(texIterator);
-		// We can't dispose the actual Texture since other's may still be using it.
+			m_store.erase(texIterator); // We can't dispose the actual Texture since other's may still be using it.
 	}
 }

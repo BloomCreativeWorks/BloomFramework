@@ -7,9 +7,9 @@
 #include "TestScreen.h"
 
 using namespace bloom;
+using bloom::components::Position;
 
 Game* game = nullptr;
-
 
 int main() {
 	const int fps = 60;
@@ -24,7 +24,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	game = new Game(std::nothrow, 800, 600);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);

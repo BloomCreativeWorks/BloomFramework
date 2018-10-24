@@ -1,14 +1,14 @@
 #pragma once
 
-#include <iostream>
 #include "stdIncludes.h"
-#include "TextureStore.h"
+#include "Graphics/TextureStore.h"
 #include "Timer.h"
 #include "Screen.h"
 #include "Exception.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
+		using TextureStore = bloom::graphics::TextureStore;
 		friend TextureStore::TextureStore(Game & object);
 
 	public:
