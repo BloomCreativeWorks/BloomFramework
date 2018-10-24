@@ -4,8 +4,7 @@
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
 
-#define BLOOM_REAL_PATH // uncomment this if you keep your data files near the .exe (not using VS or other IDE)
-#define BLOOM_VS_DEBUG
+#define BLOOM_REAL_PATH // uncomment this if you keep your data files near the .exe
 
 using namespace bloom;
 using bloom::components::Position;
@@ -49,7 +48,7 @@ int main(int argc, char * argv[]) {
 	// But this behaviour should never be in release.
 #ifdef BLOOM_REAL_PATH
 	executableDir = fs::path(argv[0]).parent_path();
-	#ifdef BLOOM_VS_DEBUG
+	#ifdef BLOOM_DEBUG
 		executableDir = executableDir.parent_path().parent_path() / L"Test Bench";
 	#endif
 #else
