@@ -40,7 +40,7 @@ int main(int argc, char * argv[]) {
 	namespace fs = std::filesystem;
 
 	fs::path workingDir = fs::path(argv[0]).parent_path();
-	fs::path assetsDir = L"Assets";
+	fs::path assetsDir = L"data\\Assets";
 	
 	if (!std::filesystem::exists(workingDir / assetsDir))
 		throw bloom::Exception("Required assets can't be found.");

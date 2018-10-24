@@ -98,7 +98,7 @@
       <PreprocessorDefinitions>BLOOM_VS_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PostBuildEvent>
-      <Command>(robocopy "$(ProjectDir)Assets\\" "$(OutDir)Assets\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
       <Message>Copying required assets to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -119,7 +119,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>(robocopy "$(ProjectDir)Assets\\" "$(OutDir)Assets\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
       <Message>Copying required assets to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -143,7 +143,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>(robocopy "$(ProjectDir)Assets\\" "$(OutDir)Assets\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
       <Message>Copying required assets to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -167,7 +167,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PostBuildEvent>
-      <Command>(robocopy "$(ProjectDir)Assets\\" "$(OutDir)Assets\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
+      <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
       <Message>Copying required assets to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
