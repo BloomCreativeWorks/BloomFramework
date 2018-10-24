@@ -20,7 +20,6 @@ namespace bloom::graphics {
 			SDL_FreeSurface(loadedSurface);
 		}
 	}
-
   
 	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
 		if (destRect.w <= 0)
