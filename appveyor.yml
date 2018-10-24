@@ -1,5 +1,7 @@
 version: 0.0.{build}-{branch}
 
+clone_depth: 1
+
 pull_requests:
   do_not_increment_build_number: true
 
