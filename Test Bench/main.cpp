@@ -37,23 +37,42 @@ int main() {
 	game->clear();
 	game->render();
 
+	namespace fs = std::filesystem;
+
+
+	fs::path executableDir = SDL_GetBasePath();
+	fs::path assetsDir = "Assets";
+
+#ifndef NDEBUG
+	// Because VS doesn't copy resources to build directory by default, so a little QOL code here.
+	// But this behaviour should never be in release.
+	if (!std::filesystem::exists(executableDir / assetsDir))
+		executableDir = std::filesystem::current_path();
+#endif 
+
+	if (!std::filesystem::exists(executableDir / assetsDir))
+		throw bloom::Exception("Required assets can't be found.");
+
+	fs::path spriteSheetPath = executableDir / assetsDir / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = executableDir / assetsDir / "TestChar.png";
+
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
+	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
+	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
+	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();

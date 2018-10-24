@@ -10,6 +10,7 @@
 #include <memory>
 #include <string>
 #include <iostream>
+#include <filesystem>
 
 #include "SDL.h"
 #include "SDL_image.h"
