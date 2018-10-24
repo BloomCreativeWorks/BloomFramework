@@ -4,9 +4,6 @@
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
 
-#define BLOOM_REAL_PATH // uncomment this if you keep your data files near the .exe (not using VS or other IDE)
-#define BLOOM_VS_DEBUG
-
 using namespace bloom;
 using bloom::components::Position;
 
@@ -42,27 +39,14 @@ int main(int argc, char * argv[]) {
 
 	namespace fs = std::filesystem;
 
+	fs::path workingDir = fs::path(argv[0]).parent_path();
 	fs::path assetsDir = L"Assets";
-	fs::path executableDir;
-
-	// Because VS doesn't copy resources to build directory by default, so a little QOL code here.
-	// But this behaviour should never be in release.
-#ifdef BLOOM_REAL_PATH
-	executableDir = fs::path(argv[0]).parent_path();
-	#ifdef BLOOM_VS_DEBUG
-		executableDir = executableDir.parent_path().parent_path() / L"Test Bench";
-	#endif
-#else
-	executableDir = std::filesystem::current_path();
-#endif
-
-	std::clog << executableDir << std::endl;
-
-	if (!std::filesystem::exists(executableDir / assetsDir))
+	
+	if (!std::filesystem::exists(workingDir / assetsDir))
 		throw bloom::Exception("Required assets can't be found.");
 
-	fs::path spriteSheetPath = executableDir / assetsDir / "OverworldTestSpritesheet.png";
-	fs::path testCharPath = executableDir / assetsDir / "TestChar.png";
+	fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
