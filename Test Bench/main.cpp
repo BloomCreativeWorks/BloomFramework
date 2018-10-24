@@ -38,8 +38,20 @@ int main() {
 	game->render();
 
 	namespace fs = std::filesystem;
+
+
 	fs::path executableDir = SDL_GetBasePath();
 	fs::path assetsDir = "Assets";
+
+#ifdef _DEBUG
+	// Because VS doesn't copy resources to build directory by default, so a little QOL code here.
+	// But this behaviour should never be in release.
+	if (!std::filesystem::exists(executableDir / assetsDir))
+		executableDir = std::filesystem::current_path();
+#endif 
+
+	if (!std::filesystem::exists(executableDir / assetsDir))
+		throw bloom::Exception("Required assets can't be found.");
 
 	fs::path spriteSheetPath = executableDir / assetsDir / "OverworldTestSpritesheet.png";
 	fs::path testCharPath = executableDir / assetsDir / "TestChar.png";
