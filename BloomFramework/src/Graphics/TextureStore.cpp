@@ -18,7 +18,7 @@ namespace bloom::graphics {
 			return textureIt->second;
     
 		TexturePtr ptr = std::make_shared<Texture>(m_renderer, filePath, colorKey);
-		m_store.emplace(filePath, ptr);
+		m_store.emplace(filePath.u8string(), ptr);
 		return ptr;
 	}
 
