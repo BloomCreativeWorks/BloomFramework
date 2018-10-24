@@ -43,7 +43,7 @@ int main() {
 	fs::path executableDir = SDL_GetBasePath();
 	fs::path assetsDir = "Assets";
 
-#ifdef _DEBUG
+#ifndef NDEBUG
 	// Because VS doesn't copy resources to build directory by default, so a little QOL code here.
 	// But this behaviour should never be in release.
 	if (!std::filesystem::exists(executableDir / assetsDir))
