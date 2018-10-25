@@ -28,6 +28,8 @@ namespace bloom {
 			result.y = rendererHeight / 2 - height / 2 - y;
 		else if ((relativeTo & bottom) == bottom) 
 			result.y = rendererHeight - height - y;
+		else
+			result.y = y;
 
 		return result;
 	}
