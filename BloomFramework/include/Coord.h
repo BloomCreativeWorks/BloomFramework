@@ -29,7 +29,6 @@ namespace bloom {
 		Coord getSDLPos(SDL_Renderer * targetRenderer, int width, int height);
 
 		int x, y;
-		CoordType type;
 		int relativeTo;
 	};
 }
