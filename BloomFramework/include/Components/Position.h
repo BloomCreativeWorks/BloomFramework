@@ -1,9 +1,6 @@
 #pragma once
+#include "Coord.h"
 
 namespace bloom::components {
-	struct Position {
-		Position(int x = 0, int y = 0) : x(x), y(y) {}
-
-		int x, y;
-	};
+	using Position = bloom::Coord;
 }

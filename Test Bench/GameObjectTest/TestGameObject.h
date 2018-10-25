@@ -13,9 +13,9 @@ class TestChar : public bloom::GameObject {
 public:
 	void init() override {}
 
-	void init(SDL_Rect pos_and_size = SDL_Rect{ 50,50, 256, 256 }, const std::string & texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
-		m_registry.replace<Position>(m_entity, pos_and_size.x, pos_and_size.y);
-		m_registry.assign<Size>(m_entity, pos_and_size.w, pos_and_size.h);
+	void init(Position pos, Size size, const std::string & texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
+		m_registry.replace<Position>(m_entity, pos);
+		m_registry.assign<Size>(m_entity, size);
 		auto tmp = m_gameInstance->textures.load(texturePath);
 		m_registry.assign<Sprite>(m_entity, tmp, srcRect);
 

@@ -15,12 +15,13 @@ namespace bloom {
 	*/
 	class BLOOMFRAMEWORK_API Screen {
 		using System = bloom::systems::System;
-
+		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Screen & screenObject);
 	public:
 		Screen(Game * gameInstance);
 		~Screen();
 		virtual void init() = 0;
 		void update();
+		SDL_Renderer * getGameRenderer();
 
 		//Game Object stuff
 		template <typename T, typename... TArgs>
@@ -37,7 +38,7 @@ namespace bloom {
 
 		SDL_Texture *& getScreenTexture();
 
-	private:
+	protected:
 		template<class T> using SysPtr = std::unique_ptr<T>;
 		std::vector<SysPtr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
@@ -70,7 +71,7 @@ namespace bloom {
 			[](auto & i) -> bool {if (typeid(*i).name() == typeid(T).name()) return true; return false; }); v == m_systems.end())
 		{
 
-			m_systems.emplace_back(std::unique_ptr<T>{new T(m_registry)});
+			m_systems.emplace_back(std::unique_ptr<T>{new T(*this)});
 			return (m_systems.size() - 1);
 		}
 		else {

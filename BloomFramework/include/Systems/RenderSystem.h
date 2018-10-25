@@ -15,14 +15,16 @@ namespace bloom::systems {
 		using System::DefaultSystem;
 
 	public:
+
 		void update(std::optional<double> deltaTime = std::nullopt) override {
 			std::vector<std::tuple<Sprite, SDL_Rect, LayerGroup>> renderQueue{};
 
 			m_registry.view<Position, Size, Sprite>().each(
 				[&](auto entity, Position & pos, Size& size, Sprite & spr) {
+				Coord actualPos = pos.getSDLPos(parentScreen.getGameRenderer(), size.w, size.h);
 				SDL_Rect destRect{
-					static_cast<int>(pos.x),
-					static_cast<int>(pos.y),
+					static_cast<int>(actualPos.x),
+					static_cast<int>(actualPos.y),
 					static_cast<int>(size.w),
 					static_cast<int>(size.h)
 				};
@@ -34,9 +36,9 @@ namespace bloom::systems {
 					layerNo = 0;
 
 				// Place sprites into queue for sorting later.
-				renderQueue.emplace_back(std::make_tuple(spr,destRect,layerNo));
+				renderQueue.emplace_back(std::make_tuple(spr, destRect, layerNo));
 			});
-			
+
 			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
 			std::sort(renderQueue.begin(), renderQueue.end(), [](const auto& lhs, const auto& rhs) {
 				return std::get<2>(lhs) < std::get<2>(rhs);
@@ -49,5 +51,8 @@ namespace bloom::systems {
 				spr.texture->render(spr.srcRect, destRect);
 			}
 		}
+
+	private:
+		SDL_Renderer * renderer;
 	};
-} 
+}

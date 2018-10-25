@@ -24,6 +24,9 @@ namespace bloom {
 			sys->update(dt);
 		std::cout << "Delta Time: " << dt << "ms" << std::endl;
 	}
+	SDL_Renderer * Screen::getGameRenderer(){
+		return m_gameInstance->getRenderer();
+	}
 	void Screen::destroyGameObject(std::string tag) {
 		m_gameObjects.erase(tag);
 	}
@@ -31,4 +34,5 @@ namespace bloom {
 	{
 		return m_screenTexture;
 	}
+
 }
