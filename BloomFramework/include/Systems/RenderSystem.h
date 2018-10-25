@@ -21,6 +21,12 @@ namespace bloom::systems {
 
 			m_registry.view<Position, Size, Sprite>().each(
 				[&](auto entity, Position & pos, Size& size, Sprite & spr) {
+				
+				if (size.w < 0)
+					size.w = 0;
+				if (size.h < 0)
+					size.h = 0;
+
 				Coord actualPos = pos.getSDLPos(parentScreen.getGameRenderer(), size.w, size.h);
 				SDL_Rect destRect{
 					static_cast<int>(actualPos.x),

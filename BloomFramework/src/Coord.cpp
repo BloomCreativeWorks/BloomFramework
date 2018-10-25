@@ -11,6 +11,11 @@ namespace bloom {
 		SDL_RenderGetLogicalSize(targetRenderer, &rendererWidth, &rendererHeight);
 		Coord result;
 
+		if (width < 0)
+			width = 0;
+		if (height < 0)
+			height = 0;
+
 		// Get SDL style X position, factoring object width as well.
 		if ((relativeTo & left) == left) 
 			result.x = x;
