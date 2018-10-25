@@ -103,6 +103,7 @@ namespace bloom {
 		else {
 			std::clog << "Renderer initialized." << std::endl;
 		}
+		SDL_RenderSetLogicalSize(m_renderer, m_screenWidth, m_screenHeight);
 
 		m_isRunning = true;
 		std::clog << "Game is now running!" << std::endl;

@@ -25,7 +25,7 @@ int main() {
 		exit(-1);
 	}
 
-	game = new Game(std::nothrow, 800, 600);
+	game = new Game(std::nothrow, 800, 600, SDL_WINDOW_RESIZABLE);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
@@ -43,7 +43,7 @@ int main() {
 	game->setColor(randColor);
 	game->clear();
 	game->render();
-	int testX = 0, testY = 0;
+	int x = 0;
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
