@@ -26,7 +26,7 @@ namespace bloom::audio {
 	}
 
 	void MusicTrack::play(int plays, int fadeIn) {
-		fadeIn = fadeIn < 0 ? fadeIn * -1 : fadeIn;
+		fadeIn = fadeIn < 0 ? -fadeIn : fadeIn;
 		if (m_track == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play track");
 		}
@@ -60,7 +60,7 @@ namespace bloom::audio {
 	}
 
 	void MusicTrack::stop(int fadeOut) {
-		fadeOut = fadeOut < 0 ? fadeOut * -1 : fadeOut;
+		fadeOut = fadeOut < 0 ? -fadeOut : fadeOut;
 		if (fadeOut > 0)
 			Mix_FadeOutMusic(fadeOut);
 		else

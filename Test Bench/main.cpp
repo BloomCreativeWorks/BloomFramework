@@ -16,6 +16,7 @@ const int WINDOW_HEIGHT = 800;
 
 
 int main() {
+	//MusicQueue q;
 	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
 
 	const int fps = 60;
@@ -46,6 +47,9 @@ int main() {
 	music.push("Audio/sample_6.mp3");
 	music.push("Audio/sample_7.mp3");
 	music.push("Audio/sample_6.mp3");
+	//q.add(music.store.find("Audio/sample_6.mp3"));
+	//q.add(music.store.find("Audio/sample_3.mp3"));
+
 
 	sounds.add("Audio/Sounds/Sound_04684.wav"); //0
 	sounds.add("Audio/Sounds/Sound_04685.wav"); //1
@@ -108,9 +112,21 @@ int main() {
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
 
-	music.queue.setVolume(100);
-	music.queue.setInfinitePlayback(true);
+	//music.queue.setVolume(100);
+	//music.queue.setInfinitePlayback(true);
+	//music.queue.play();
+
+	//q.setInfinitePlayback(true);
+	//q.activate();
+	//q.play();
+
+	//game->delay(50000);
+	//q.deactivate();
+	//q.skip();
+	////game->delay(5000);
+	music.queue.activate();
 	music.queue.play();
+	//q.eject();
 
 	// If manual control of entities is required, this is the method to do so.
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());

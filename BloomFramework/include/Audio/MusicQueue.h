@@ -11,7 +11,7 @@ namespace bloom::audio {
 		MusicQueue();
 		~MusicQueue();
 
-		void launch();
+		void activate();
 		void add(TrackPtr track, int plays = 1, bool bypassInfinitePlayback = false, int fadeInMs = 0, int fadeOutMs = 0);
 		void add(TrackExt track);
 		void play(bool bypassFade = false);
@@ -19,13 +19,16 @@ namespace bloom::audio {
 		void resume();
 		void rewind();
 		void skip(bool bypassFade = false);
-		void removeLast();
+		void eject(bool bypassFade = true);
 		void clear(bool bypassFade = false);
-		void exit();
-		void setRawVolume(int rawVolume);
+		void deactivate();
+
 		void setVolume(double volumePercent);
 		double getVolume();
+
+		void setRawVolume(int rawVolume);
 		int getRawVolume();
+
 		void setInfinitePlayback(bool value);
 		bool isInfinitePlayback();
 
@@ -35,6 +38,5 @@ namespace bloom::audio {
 
 		static void next_track();
 		static MusicQueue * m_thisObjectPtr;
-		static size_t obj_qnt;
 	};
 }

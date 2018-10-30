@@ -3,21 +3,17 @@
 
 namespace bloom::audio {
 	MusicQueue * MusicQueue::m_thisObjectPtr = nullptr;
-	size_t MusicQueue::obj_qnt = 0;
 
 	MusicQueue::MusicQueue() {
-		if (obj_qnt > 0)
-			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
-		obj_qnt++;
+		Mix_HookMusicFinished(MusicQueue::next_track);
 	}
 
 	MusicQueue::~MusicQueue() {
 		clear();
 	}
 
-	void MusicQueue::launch() {
+	void MusicQueue::activate() {
 		m_thisObjectPtr = this;
-		Mix_HookMusicFinished(MusicQueue::next_track);
 	}
 
 	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs, int fadeOutMs) {
@@ -32,7 +28,7 @@ namespace bloom::audio {
 		if (m_queue.empty())
 			throw Exception("[MusicStore] store is empty");
 		if (m_thisObjectPtr != this)
-			launch();
+			activate();
 		auto track = m_queue.front();
 
 		if (track.fadeIn > 0 and !bypassFade)
@@ -54,22 +50,21 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::skip(bool bypassFade) {
-		if(m_queue.front().fadeOut > 0 && !bypassFade)
+		if (m_queue.front().fadeOut > 0 && !bypassFade)
 			m_queue.front().track->stop(m_queue.front().fadeOut);
 		else
 			m_queue.front().track->stop();
-		
 	}
 
-	void MusicQueue::removeLast() {
-		if (m_queue.size() > 1)
-			m_queue.pop();
-		else
-			skip();
+	void MusicQueue::eject(bool bypassFade) {
+		if (!m_queue.empty()) {
+			m_queue.front().bypassInfinitePlayback = true;
+			skip(bypassFade);
+		}
 	}
 
 	void MusicQueue::clear(bool bypassFade) {
-		exit();
+		deactivate();
 		if (!m_queue.empty()) {
 			if(m_queue.front().fadeOut > 0 && !bypassFade)
 				m_queue.front().track->stop(m_queue.front().fadeOut);
@@ -79,7 +74,7 @@ namespace bloom::audio {
 		}
 	}
 
-	void MusicQueue::exit() {
+	void MusicQueue::deactivate() {
 		Mix_HookMusicFinished(nullptr);
 	}
 
