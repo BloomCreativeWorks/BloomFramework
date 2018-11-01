@@ -19,7 +19,7 @@ namespace bloom {
 		using Position = bloom::components::Position;
 
 	public:
-		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
+		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);
 		~GameObject();
 
 		virtual void init() = 0;
@@ -28,7 +28,7 @@ namespace bloom {
 
 	protected:
 		entt::DefaultRegistry & m_registry;
-		Game *& m_gameInstance;
+		Game & m_gameInstance;
 		entt::DefaultRegistry::entity_type m_entity;
 	};
 }

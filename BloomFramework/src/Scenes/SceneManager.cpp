@@ -1,9 +1,10 @@
 #include "Scenes\SceneManager.h"
-#include "Scenes/Scene.h"
+#include "Scenes\Scene.h"
+#include "Game.h"
 
 namespace bloom {
 	inline SceneManager::SceneManager(Game & gameInstance) : m_gameInstance(gameInstance) {}
-	void SceneManager::changeScene(Scene * newScene) {
+	void SceneManager::changeScene(std::shared_ptr<Scene> newScene) {
 		if (m_currScene != nullptr) m_currScene->unload();
 		newScene->load();
 		m_currScene = newScene;
@@ -13,6 +14,7 @@ namespace bloom {
 		else std::cerr << "There is currently no active Scene" << std::endl;
 	}
 	void SceneManager::draw() {
-		// Might not need this.
+		if (m_currScene != nullptr) 
+			SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_currScene->getSceneTexture(), NULL, NULL, NULL, NULL, SDL_FLIP_NONE);
 	}
 }

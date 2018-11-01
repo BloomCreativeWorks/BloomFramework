@@ -117,8 +117,7 @@ namespace bloom {
 	}
 
 	void Game::update() {
-		if(m_activeScreen != nullptr)
-			m_activeScreen->update();
+		sceneManager.update();
 	}
 
 	void Game::clear() {
@@ -132,7 +131,7 @@ namespace bloom {
 
 	void Game::render() {
 		SDL_SetRenderTarget(m_renderer, NULL);
-		SDL_RenderCopyEx(m_renderer, m_activeScreen->getScreenTexture(),NULL,NULL, NULL,NULL, SDL_FLIP_NONE);
+		sceneManager.draw();
 		SDL_RenderPresent(m_renderer);
 	}
 
@@ -179,15 +178,5 @@ namespace bloom {
 	}
 	SDL_Renderer * Game::getRenderer(){
 		return m_renderer;
-	}
-	void Game::unregisterScreen(const std::string & tag) {
-		m_screens.erase(tag);
-	}
-	void Game::setActiveScreen(const std::string & tag) {
-		auto tmp = m_screens.find(tag);
-		if (tmp != m_screens.end())
-			m_activeScreen = tmp->second;
-		else
-			throw Exception("Can't set Screen with tag " + tag + " as active screen. It is not registered.");
 	}
 }

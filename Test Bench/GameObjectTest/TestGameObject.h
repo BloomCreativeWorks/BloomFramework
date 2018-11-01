@@ -16,7 +16,7 @@ public:
 	void init(Position pos, Size size, const std::string & texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
 		m_registry.replace<Position>(m_entity, pos);
 		m_registry.assign<Size>(m_entity, size);
-		auto tmp = m_gameInstance->textures.load(texturePath);
+		auto tmp = m_gameInstance.textures.load(texturePath);
 		m_registry.assign<Sprite>(m_entity, tmp, srcRect);
 
 		if (priority != std::nullopt)

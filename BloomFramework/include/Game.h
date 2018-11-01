@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "Screen.h"
 #include "Exception.h"
+#include "Scenes/SceneManager.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
@@ -41,15 +42,10 @@ namespace bloom {
 
 		SDL_Renderer * getRenderer();
 
-		// Screen stuff
-		template <typename T>
-		void registerScreen(const std::string & tag);
-
-		void unregisterScreen(const std::string & tag);
-		void setActiveScreen(const std::string & tag);
-
 		TextureStore	textures = TextureStore(m_renderer);
 		Timer			timer;
+		
+		SceneManager sceneManager = SceneManager(*this);
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
@@ -60,22 +56,5 @@ namespace bloom {
 		SDL_Event		m_event;
 		bool			m_isRunning;
 		std::unordered_map<std::string, ScrPtr> m_screens;
-		ScrPtr m_activeScreen;
 	};
-
-	template <typename T>
-	void Game::registerScreen(const std::string & tag) {
-		static_assert (std::is_base_of<Screen, T>::value, "Type T passed in is not a Screen");
-		if (m_screens.find(tag) == m_screens.end()) {
-			m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
-			m_screens[tag]->init();
-		}
-		else {
-			std::clog << "Tag has already been registered, overwriting..." << std::endl;
-			m_screens.erase(tag);
-			m_screens.emplace(tag, std::shared_ptr<T>(new T(this)));
-			m_screens[tag]->init();
-
-		}
-	}
 }

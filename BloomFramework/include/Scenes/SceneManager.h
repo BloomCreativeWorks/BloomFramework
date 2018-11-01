@@ -11,12 +11,14 @@ namespace bloom {
 		friend Scene::Scene(SceneManager & sceneManager);
 	public:
 		SceneManager(Game& gameInstance);
-		void changeScene(Scene * newScene);
+		void changeScene(std::shared_ptr<Scene> newScene);
 		void update();
 		void draw();
+		
+		const SceneManager * thisPtr = this;
 
 	private:
-		Scene * m_currScene;
+		std::shared_ptr<Scene> m_currScene;
 		Game & m_gameInstance;
 	};
 }

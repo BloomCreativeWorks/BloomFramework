@@ -34,8 +34,7 @@ int main() {
 	}
 	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	game->registerScreen<TestScreen>("Test");
-	game->setActiveScreen("Test");
+	game->sceneManager.changeScene(std::shared_ptr<bloom::Scene>(new TestScreen(game->sceneManager)));
 
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
