@@ -1,10 +1,12 @@
 #pragma once
-#include "stdIncludes.h"
-#include "Systems/Systems.h"
-#include "GameObject.h"
+
 #include <unordered_map>
 #include <algorithm>
 #include <typeinfo>
+#include "stdIncludes.h"
+#include "Systems/Systems.h"
+#include "GameObject.h"
+
 namespace bloom {
 
 	class Game;
@@ -15,32 +17,31 @@ namespace bloom {
 	*/
 	class BLOOMFRAMEWORK_API Screen {
 		using System = bloom::systems::System;
-		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Screen & screenObject);
+		//friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Screen & screenObject);
+
 	public:
 		Screen(Game * gameInstance);
 		~Screen();
 		virtual void init() = 0;
 		void update();
 		SDL_Renderer * getGameRenderer();
+		SDL_Texture * getScreenTexture();
 
 		//Game Object stuff
-		template <typename T, typename... TArgs>
-		void addGameObject(std::string tag, TArgs&&... initArgs);
+		template <typename GO, typename... TArgs>
+		void addGameObject(const std::string & tag, TArgs&&... initArgs);
 
-		void destroyGameObject(std::string tag);
+		void destroyGameObject(const std::string & tag);
 
 		// System stuff
-		template <typename T>
+		template <typename S>
 		size_t registerSystem();
 
-		template <typename T>
+		template <typename S>
 		void unregisterSystem();
 
-		SDL_Texture *& getScreenTexture();
-
 	protected:
-		template<class T> using SysPtr = std::unique_ptr<T>;
-		std::vector<SysPtr<System>> m_systems;
+		std::vector<std::unique_ptr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		entt::DefaultRegistry m_registry;
 		Game * m_gameInstance;
@@ -51,27 +52,31 @@ namespace bloom {
 
 	//Game Object stuff
 
-	template<typename T, typename ...TArgs>
-	void Screen::addGameObject(std::string tag, TArgs && ...initArgs) {
-		static_assert (std::is_base_of<GameObject, T>::value, "Type T passed in is not a GameObject.");
-		m_gameObjects.emplace(tag, new T(m_registry, m_gameInstance));
+	template<typename GO, typename ...TArgs>
+	void Screen::addGameObject(const std::string & tag, TArgs && ...initArgs) {
+		static_assert (std::is_base_of_v<GameObject, GO>, "Type GO passed in is not a GameObject.");
 
-		auto & tmp = m_gameObjects[tag];
-		T* derived = dynamic_cast<T*>(tmp.get());
-		if (derived != nullptr)
-			derived->init(std::forward<TArgs>(initArgs)...);
+		GO* obj = new GO(m_registry, m_gameInstance);
+		obj->init(std::forward<TArgs>(initArgs)...);;
+
+		m_gameObjects.emplace(tag, std::unique_ptr(obj));
+
+		//auto & tmp = m_gameObjects[tag];
+		//GO* derived = dynamic_cast<GO*>(tmp.get());
+		////if (derived != nullptr)
+		//	derived->init(std::forward<TArgs>(initArgs)...);
 	}
 
 	// System stuff
 
-	template<typename T>
+	template<typename S>
 	size_t Screen::registerSystem() {
-		static_assert (std::is_base_of<System, T>::value, "Type T passed in is not a System.");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System.");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool {if (typeid(*i).name() == typeid(T).name()) return true; return false; }); v == m_systems.end())
+			[](auto & i) -> bool {if (typeid(*i).name() == typeid(S).name()) return true; return false; }); v == m_systems.end())
 		{
 
-			m_systems.emplace_back(std::unique_ptr<T>{new T(*this)});
+			m_systems.emplace_back(std::unique_ptr<S>{new S(*this)});
 			return (m_systems.size() - 1);
 		}
 		else {
@@ -79,11 +84,11 @@ namespace bloom {
 			return (v - m_systems.begin());
 		}
 	}
-	template<typename T>
+	template<typename S>
 	void Screen::unregisterSystem() {
-		static_assert (std::is_base_of<System, T>::value, "Type T passed in is not a System.");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System.");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool {if (typeid(*i).name() == typeid(T).name()) return true; return false; }); v != m_systems.end())
+			[](auto & i) -> bool {if (typeid(*i).name() == typeid(S).name()) return true; return false; }); v != m_systems.end())
 		{
 			m_systems.erase(v);
 		}

@@ -2,10 +2,12 @@
 
 namespace bloom {
 	Coord::Coord() : x(0), y(0), relativeTo(middle | center) {}
+
 	Coord::Coord(int x, int y, CoordType type, int direction) : x(x), y(y), relativeTo(direction) {
 		if (type == absolute) 
 			this->relativeTo = (middle | center);
 	}
+
 	Coord Coord::getSDLPos(SDL_Renderer * targetRenderer, int width, int height) {
 		int rendererWidth, rendererHeight;
 		SDL_RenderGetLogicalSize(targetRenderer, &rendererWidth, &rendererHeight);
