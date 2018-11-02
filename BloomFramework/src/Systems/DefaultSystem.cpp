@@ -2,5 +2,5 @@
 #include "Scenes/Scene.h"
 
 namespace bloom::systems {
-	DefaultSystem::DefaultSystem(bloom::Scene & screenObject) : parentScreen(screenObject), m_registry(screenObject.m_registry) {}
+	DefaultSystem::DefaultSystem(bloom::Scene & sceneObject) : parentScene(sceneObject), m_registry(sceneObject.m_registry) {}
 }

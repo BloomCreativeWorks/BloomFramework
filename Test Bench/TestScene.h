@@ -2,7 +2,7 @@
 #include "Scenes/Scene.h"
 #include "GameObjectTest/TestGameObject.h"
 
-class TestScreen : public bloom::Scene {
+class TestScene : public bloom::Scene {
 	using RenderSystem = bloom::systems::RenderSystem;
 	using Position = bloom::components::Position;
 	using Size = bloom::components::Size;

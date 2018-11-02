@@ -8,12 +8,12 @@ namespace bloom {
 	namespace systems {
 		class BLOOMFRAMEWORK_API DefaultSystem {
 		public:
-			DefaultSystem(bloom::Scene & screenObject);;
+			DefaultSystem(bloom::Scene & sceneObject);;
 
 			virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
 
 		protected:
-			bloom::Scene & parentScreen;
+			bloom::Scene & parentScene;
 			entt::DefaultRegistry & m_registry;
 		};
 

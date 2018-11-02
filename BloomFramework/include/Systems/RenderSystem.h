@@ -27,7 +27,7 @@ namespace bloom::systems {
 				if (size.h < 0)
 					size.h = 0;
 
-				Coord actualPos = pos.getSDLPos(parentScreen.getGameInstance().getRenderer(), size.w, size.h);
+				Coord actualPos = pos.getSDLPos(parentScene.getGameInstance().getRenderer(), size.w, size.h);
 				SDL_Rect destRect{
 					static_cast<int>(actualPos.x),
 					static_cast<int>(actualPos.y),

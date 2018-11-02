@@ -9,7 +9,7 @@ namespace bloom {
 
 	class BLOOMFRAMEWORK_API Scene {
 		using System = bloom::systems::System;
-		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Scene & screenObject);
+		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Scene & sceneObject);
 		
 	public:
 		Scene(SceneManager & sceneManager);
