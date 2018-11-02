@@ -19,5 +19,9 @@ namespace bloom {
 			sys->update(dt);
 		std::clog << "Delta Time: " << dt << "ms" << std::endl;
 	}
+
+	void Scene::destroyGameObject(const std::string & tag) {
+		m_gameObjects.erase(tag);
+	}
 }
 
