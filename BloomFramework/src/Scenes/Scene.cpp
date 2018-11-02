@@ -11,13 +11,11 @@ namespace bloom {
 		SDL_SetTextureBlendMode(m_sceneTexture, SDL_BLENDMODE_BLEND);
 	}
 
-	void Scene::update() {
+	void Scene::update(double deltaTime) {
 		SDL_SetRenderTarget(m_gameInstance.getRenderer(), m_sceneTexture);
 		SDL_RenderClear(m_gameInstance.getRenderer());
-		double dt = m_gameInstance.timer.lap();
 		for (auto & sys : m_systems)
-			sys->update(dt);
-		std::clog << "Delta Time: " << dt << "ms" << std::endl;
+			sys->update(deltaTime);
 	}
 
 	void Scene::draw() {

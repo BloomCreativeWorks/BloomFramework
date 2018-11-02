@@ -12,9 +12,9 @@ namespace bloom {
 		m_currScene = newScene;
 	}
 
-	void SceneManager::update() {
+	void SceneManager::update(double deltaTime) {
 		if (m_currScene != nullptr)
-			m_currScene->update();
+			m_currScene->update(deltaTime);
 		else
 			std::cerr << "There is no currently active Scene" << std::endl;
 	}

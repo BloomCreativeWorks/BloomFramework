@@ -117,7 +117,9 @@ namespace bloom {
 	}
 
 	void Game::update() {
-		sceneManager.update();
+		double dt = timer.lap();
+		sceneManager.update(dt);
+		std::clog << "Delta Time: " << dt << "ms" << std::endl;
 	}
 
 	void Game::clear() {

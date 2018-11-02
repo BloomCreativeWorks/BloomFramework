@@ -13,7 +13,7 @@ namespace bloom {
 		SceneManager(Game& gameInstance);
 
 		void changeScene(std::shared_ptr<Scene> newScene);
-		void update();
+		void update(double deltaTime);
 		void draw();
 		
 		const SceneManager * thisPtr = this;

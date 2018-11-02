@@ -11,10 +11,11 @@ namespace bloom {
 		using System = bloom::systems::System;
 		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Scene & sceneObject);
 		
+		
 	public:
 		Scene(SceneManager & sceneManager);
 
-		void update();
+		void update(double deltaTime);
 		void draw();
 		virtual void load() = 0;
 		virtual void unload() = 0;
