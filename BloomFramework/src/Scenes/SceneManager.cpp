@@ -20,7 +20,7 @@ namespace bloom {
 	}
 
 	void SceneManager::draw() {
-		if (m_currScene != nullptr) 
-			SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_currScene->getSceneTexture(), nullptr, nullptr, 0.0, nullptr, SDL_FLIP_NONE);
+		if (m_currScene != nullptr)
+			m_currScene->draw();
 	}
 }

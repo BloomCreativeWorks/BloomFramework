@@ -15,17 +15,16 @@ namespace bloom {
 		Scene(SceneManager & sceneManager);
 
 		void update();
-		virtual void draw() = 0; // May not need this since we use a render system on a Texture.
+		void draw();
 		virtual void load() = 0;
 		virtual void unload() = 0;
-		SDL_Texture * getSceneTexture() { return m_sceneTexture; }
 		Game & getGameInstance() { return m_gameInstance; }
 
 		//Game Object stuff
 		template<typename GO, typename... TArgs> 
 		void addGameObject(const std::string & tag, TArgs &&... initArgs);
 
-		//void destroyGameObject(const std::string & tag);
+		void destroyGameObject(const std::string & tag);
 		
 		// System stuff
 		template<typename S> 

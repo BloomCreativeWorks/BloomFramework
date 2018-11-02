@@ -9,8 +9,6 @@ class TestScene : public bloom::Scene {
 public:
 	using bloom::Scene::Scene;
 
-	void draw() override {}
-
 	void load() override {
 		addGameObject<TestChar>("testSprite", Position( 10,10 ), Size( 128,128 ), "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
 		addGameObject<TestChar>("testSprite2", Position(0, 0, relative), Size(128, 128), "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 }, 2);

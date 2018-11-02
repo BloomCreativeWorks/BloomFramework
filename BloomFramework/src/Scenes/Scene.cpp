@@ -20,6 +20,10 @@ namespace bloom {
 		std::clog << "Delta Time: " << dt << "ms" << std::endl;
 	}
 
+	void Scene::draw() {
+		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, 0.0, nullptr, SDL_FLIP_NONE);
+	}
+
 	void Scene::destroyGameObject(const std::string & tag) {
 		m_gameObjects.erase(tag);
 	}
