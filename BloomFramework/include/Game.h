@@ -3,7 +3,6 @@
 #include "stdIncludes.h"
 #include "Graphics/TextureStore.h"
 #include "Timer.h"
-#include "Screen.h"
 #include "Exception.h"
 #include "Scenes/SceneManager.h"
 
@@ -55,6 +54,5 @@ namespace bloom {
 		SDL_Color		m_color;
 		SDL_Event		m_event;
 		bool			m_isRunning;
-		std::unordered_map<std::string, ScrPtr> m_screens;
 	};
 }

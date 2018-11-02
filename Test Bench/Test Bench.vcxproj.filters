@@ -40,7 +40,7 @@
     <ClInclude Include="GameObjectTest\NoRandomComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestScreen.h">
+    <ClInclude Include="TestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

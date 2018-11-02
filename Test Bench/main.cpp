@@ -1,7 +1,6 @@
 #include "Framework.h"
 #include <ctime>
 
-#include "Screen.h"
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
 #include "TestScene.h"
