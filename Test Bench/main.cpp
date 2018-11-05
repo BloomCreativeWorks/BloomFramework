@@ -67,23 +67,27 @@ int main() {
 	game->clear();
 	game->render();
 
-	sounds.players[0]->play();
-	//sounds.players[1]->play();
-	//sounds.players[2]->play();
-	//sounds.players[3]->play();
-	//sounds.players[4]->play();
-	//sounds.players[5]->play();
+	//sounds.players.erase(sounds.players.begin() + 4);
+	//sounds.optimize(); // now last chunk on 4th channel!
+	//sounds[5]->play(); // it works
 
-	auto testPtr = sounds.players[0]->chunk();
-
-	std::clog << testPtr.use_count() << std::endl;
-
-	std::clog << sounds.players[0]->chunk().use_count() << std::endl;
-
-	std::clog << testPtr.use_count() << std::endl;
-	sounds.players[0]->play();
-	sounds.players[0]->play();
+	sounds[0]->play();
+	//sounds[1]->play();
 	//sounds[2]->play();
+	//sounds[3]->play();
+	//sounds[4]->play();
+	//sounds[5]->play();
+	//sounds[6]->play();
+
+	auto testPtr = sounds[0]->chunk();
+
+	std::clog << testPtr.use_count() << std::endl;
+
+	std::clog << sounds[0]->chunk().use_count() << std::endl;
+
+	std::clog << testPtr.use_count() << std::endl;
+	//sounds[0]->play();
+	//sounds[0]->play();
 
 	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 
@@ -173,7 +177,7 @@ int main() {
 	}
 	music.clear();
 	game->destroy();
-	sounds.players[1]->play();
+	sounds[1]->play();
 	game->delay(2500);
 	sounds.clear();
 	std::clog << testPtr.use_count() << std::endl;
@@ -188,7 +192,7 @@ int main() {
 
 	//game->delay(2500);
 
-	//sounds.players[2]->play();
+	//sounds[2]->play();
 
 	//game->delay(2500);
 

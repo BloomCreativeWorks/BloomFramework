@@ -63,6 +63,9 @@
     <ClCompile Include="src\Audio\MusicTrack.cpp">
       <Filter>Source Files\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="src\Audio\SoundChannel.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Framework.h">
@@ -132,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Audio\MusicTrack.h">
+      <Filter>Header Files\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Audio\SoundChannel.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
   </ItemGroup>

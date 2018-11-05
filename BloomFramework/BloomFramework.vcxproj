@@ -165,6 +165,7 @@
   <ItemGroup>
     <ClInclude Include="include\Audio\Audio.h" />
     <ClInclude Include="include\Audio\AudioDefine.h" />
+    <ClInclude Include="include\Audio\SoundChannel.h" />
     <ClInclude Include="include\Audio\SoundPlayer.h" />
     <ClInclude Include="include\Audio\SoundStore.h" />
     <ClInclude Include="include\Audio\MusicTrack.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="include\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Audio\SoundChannel.cpp" />
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Audio\SoundPlayer.cpp" />
     <ClCompile Include="src\Audio\SoundStore.cpp" />

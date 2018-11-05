@@ -6,6 +6,7 @@
 #include "SoundChunk.h"
 #include "SoundStore.h"
 #include "SoundPlayer.h"
+#include "SoundChannel.h"
 #include "AudioDefine.h"
 
 namespace bloom::audio {
@@ -68,13 +69,15 @@ namespace bloom::audio {
 		void clear() {
 			players.clear();
 			store.unloadAll();
-			SoundPlayer::channels.clear();
-			while (!SoundPlayer::freeChannels.empty()) SoundPlayer::freeChannels.pop();
-			Mix_AllocateChannels(0);
+			SoundChannel::optimize();
 		}
 
 		void optimize() {
-			SoundPlayer::optimizeChannels();
+			SoundChannel::optimize();
+		}
+
+		SoundPlayerPtr & operator[](size_t off) {
+			return players[off];
 		}
 
 		SoundStore store;
