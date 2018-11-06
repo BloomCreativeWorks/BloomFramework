@@ -1,25 +1,9 @@
 #include "Framework.h"
 #include <ctime>
-#include <Windows.h>
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
-
-std::string getExePathA() {
-	std::string path(MAX_PATH, '\0');
-	GetModuleFileNameA(NULL, path.data(), MAX_PATH);
-	path.resize(path.rfind('\\'));
-	path.shrink_to_fit();
-	return path;
-}
-
-std::wstring getExePathW() {
-	std::wstring path(MAX_PATH, '\0');
-	GetModuleFileNameW(NULL, path.data(), MAX_PATH);
-	path.resize(path.rfind('\\'));
-	path.shrink_to_fit();
-	return path;
-}
+#include "getExePath.h"
 
 using namespace bloom;
 using bloom::components::Position;
@@ -56,7 +40,7 @@ int main() {
 
 	namespace fs = std::filesystem;
 
-	fs::path workingDir = fs::path(getExePathW());
+	fs::path workingDir = fs::path(getExePath());
 	fs::path assetsDir = L"data\\Assets";
 
 	if (!std::filesystem::exists(workingDir / assetsDir))

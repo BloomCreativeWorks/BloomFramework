@@ -172,6 +172,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="getExePath.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +196,7 @@
     <ClInclude Include="GameObjectTest\NoRandomComponent.h" />
     <ClInclude Include="GameObjectTest\RandomizerSystem.h" />
     <ClInclude Include="GameObjectTest\TestGameObject.h" />
+    <ClInclude Include="getExePath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
