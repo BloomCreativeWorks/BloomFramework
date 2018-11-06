@@ -27,7 +27,7 @@ namespace bloom::graphics {
 		if (texIterator != m_store.end())
 			return texIterator->second;
 		else {
-			throw Exception("[Texture Store] Can't get texture \"" + filePath.string() + "\".\nIs it loaded?");
+			throw Exception("[Texture Store::find] Can't get texture \"" + filePath.u8string() + "\".\nIs it loaded?");
 		}
 	}
 
