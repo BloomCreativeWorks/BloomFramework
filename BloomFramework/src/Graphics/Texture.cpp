@@ -26,6 +26,7 @@ namespace bloom::graphics {
 			throw Exception("[Texture::render] destcRect.w is <= 0.\nIs that intentional?");
 		if (destRect.h <= 0)
 			throw Exception("[Texture::render] destRect.h is <= 0.\nIs that intentional?");
+
 		if (srcRect.has_value()) {
 			if (srcRect->w <= 0)
 				throw Exception("[Texture::render] srcRect.w is <= 0.\nIs that intentional?");
