@@ -58,7 +58,7 @@ int main() {
 
 	fs::path workingDir = fs::path(getExePathW());
 	fs::path assetsDir = L"data\\Assets";
-	
+
 	if (!std::filesystem::exists(workingDir / assetsDir))
 		throw bloom::Exception("Required assets can't be found.");
 

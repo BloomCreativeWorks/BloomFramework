@@ -16,7 +16,7 @@ namespace bloom::graphics {
 		auto textureIt = m_store.find(filePath.u8string());
 		if (textureIt != m_store.end())
 			return textureIt->second;
-    
+
 		TexturePtr ptr = std::make_shared<Texture>(m_renderer, filePath, colorKey);
 		m_store.emplace(filePath.u8string(), ptr);
 		return ptr;
@@ -27,7 +27,7 @@ namespace bloom::graphics {
 		if (texIterator != m_store.end())
 			return texIterator->second;
 		else {
-			throw Exception("[Texture Store] Can't get texture \"" + filePath.string() +"\".\nIs it loaded?");
+			throw Exception("[Texture Store] Can't get texture \"" + filePath.string() + "\".\nIs it loaded?");
 		}
 	}
 
