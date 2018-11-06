@@ -23,9 +23,9 @@ namespace bloom::audio {
 	}
 
 	void SoundChannel::optimize() {
-		int cs = static_cast<int>(channels.size()), fc;
+		int cs = static_cast<int>(channels.size());
 		while (!freeChannels.empty()) {
-			fc = freeChannels.top();
+			int fc = freeChannels.top();
 			if (fc >= cs) {
 				freeChannels.pop();
 			}
