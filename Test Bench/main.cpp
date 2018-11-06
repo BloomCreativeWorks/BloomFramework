@@ -1,5 +1,6 @@
 #include "Framework.h"
 #include <ctime>
+#include <Windows.h>
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
@@ -11,6 +12,8 @@ using bloom::components::Position;
 Game* game = nullptr;
 
 int main() {
+	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
+
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
