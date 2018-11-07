@@ -31,13 +31,12 @@ namespace bloom::graphics {
 		}
 	}
 
-	TexturePtr TextureStore::find(std::nothrow_t, const std::filesystem::path & filePath) {
+	TexturePtr TextureStore::find(std::nothrow_t, const std::filesystem::path & filePath) noexcept {
 		auto textureIt = m_store.find(filePath.u8string());
 		if (textureIt != m_store.end())
 			return textureIt->second;
-		else {
+		else
 			return nullptr;
-		}
 	}
 
 	void TextureStore::unload(const std::filesystem::path & filePath) {

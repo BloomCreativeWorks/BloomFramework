@@ -16,7 +16,7 @@ namespace bloom {
 
 			TexturePtr load(const std::filesystem::path & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
 			TexturePtr find(const std::filesystem::path & filePath);
-			TexturePtr find(std::nothrow_t, const std::filesystem::path & filePath);
+			TexturePtr find(std::nothrow_t, const std::filesystem::path & filePath) noexcept;
 			void unload(const std::filesystem::path & filePath);
 
 		private:

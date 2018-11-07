@@ -9,9 +9,8 @@ namespace bloom::graphics {
 			throw Exception("[Texture -> SDL_IMG] " + std::string(SDL_GetError()));
 		}
 		else {
-			if (colorKey.has_value()) {
+			if (colorKey.has_value())
 				SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
-			}
 			//Create texture from surface pixels
 			m_texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
 			if (m_texture == nullptr) {
@@ -39,10 +38,9 @@ namespace bloom::graphics {
 			//Render to screen
 			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, 0.0, nullptr, flip);
 		}
-		else {
+		else
 			//Render to screen
 			SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &destRect, 0.0, nullptr, flip);
-		}
 	}
 
 	Texture::~Texture() {

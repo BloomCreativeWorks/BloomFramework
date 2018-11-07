@@ -99,7 +99,7 @@
     </ClCompile>
     <PostBuildEvent>
       <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
-      <Message>Copying required assets to output directory.</Message>
+      <Message>Copying required data to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -120,7 +120,7 @@
     </Link>
     <PostBuildEvent>
       <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
-      <Message>Copying required assets to output directory.</Message>
+      <Message>Copying required data to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,7 +144,7 @@
     </Link>
     <PostBuildEvent>
       <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
-      <Message>Copying required assets to output directory.</Message>
+      <Message>Copying required data to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -168,7 +168,7 @@
     </Link>
     <PostBuildEvent>
       <Command>(robocopy "$(ProjectDir)data\\" "$(OutDir)data\\" /S /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %ERRORLEVEL% LSS 8 SET ERRORLEVEL = 0</Command>
-      <Message>Copying required assets to output directory.</Message>
+      <Message>Copying required data to output directory.</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
