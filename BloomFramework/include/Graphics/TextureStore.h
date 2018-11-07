@@ -15,9 +15,11 @@ namespace bloom {
 			TextureStore(Game & renderer);
 
 			TexturePtr load(const std::filesystem::path & filePath, std::optional<SDL_Color> colorKey = std::nullopt);
-			TexturePtr find(const std::filesystem::path & filePath);
-			TexturePtr find(std::nothrow_t, const std::filesystem::path & filePath) noexcept;
+			TexturePtr at(const std::filesystem::path & filePath) const;
+			TexturePtr find(const std::filesystem::path & filePath) const noexcept;
 			void unload(const std::filesystem::path & filePath);
+
+			TexturePtr operator[](const std::filesystem::path & key) const noexcept;
 
 		private:
 			SDL_Renderer *&	m_renderer;

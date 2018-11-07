@@ -13,8 +13,7 @@ namespace bloom::graphics {
 		}
 
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
-		auto textureIt = m_store.find(filePath.u8string());
-		if (textureIt != m_store.end())
+		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
 			return textureIt->second;
 
 		TexturePtr ptr = std::make_shared<Texture>(m_renderer, filePath, colorKey);
@@ -22,26 +21,27 @@ namespace bloom::graphics {
 		return ptr;
 	}
 
-	TexturePtr TextureStore::find(const std::filesystem::path & filePath) {
-		auto textureIt = m_store.find(filePath.u8string());
-		if (textureIt != m_store.end())
+	TexturePtr TextureStore::at(const std::filesystem::path & filePath) const {
+		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
 			return textureIt->second;
 		else {
-			throw Exception("[Texture Store::find] Can't get texture \"" + filePath.u8string() + "\".\nIs it loaded?");
+			throw Exception("[Texture Store::at] Can't get texture \"" + filePath.u8string() + "\".\nIs it loaded?");
 		}
 	}
 
-	TexturePtr TextureStore::find(std::nothrow_t, const std::filesystem::path & filePath) noexcept {
-		auto textureIt = m_store.find(filePath.u8string());
-		if (textureIt != m_store.end())
+	TexturePtr TextureStore::find(const std::filesystem::path & filePath) const noexcept {
+		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
 			return textureIt->second;
 		else
 			return nullptr;
 	}
 
 	void TextureStore::unload(const std::filesystem::path & filePath) {
-		auto textureIt = m_store.find(filePath.u8string());
-		if (textureIt != m_store.end())
+		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
 			m_store.erase(textureIt); // We can't dispose the actual Texture since other's may still be using it.
+	}
+
+	TexturePtr TextureStore::operator[](const std::filesystem::path & key) const noexcept {
+		return find(key);
 	}
 }
