@@ -1,8 +1,10 @@
 #include "Framework.h"
 #include <ctime>
+#include <Windows.h>
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
+#include "getExePath.h"
 
 using namespace bloom;
 using bloom::components::Position;
@@ -10,6 +12,8 @@ using bloom::components::Position;
 Game* game = nullptr;
 
 int main() {
+	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
+
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
@@ -37,23 +41,34 @@ int main() {
 	game->clear();
 	game->render();
 
+	namespace fs = std::filesystem;
+
+	fs::path workingDir = fs::path(getExePath());
+	fs::path assetsDir = L"data\\Assets";
+
+	if (!std::filesystem::exists(workingDir / assetsDir))
+		throw bloom::Exception("Required assets can't be found.");
+
+	fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
+
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
+	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
+	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0,0,128,128 }, "Assets/OverworldTestSpritesheet.png", SDL_Rect{ 0,0,32,32 });
+	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128,0,128,128 }, "Assets/TestChar.png", SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, "Assets/TestChar.png", SDL_Rect{ 64, 96, 32, 32 });
+	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
