@@ -1,8 +1,10 @@
 #include "Framework.h"
 #include <ctime>
+#include <Windows.h>
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
+#include "getExePath.h"
 #include "TestScene.h"
 
 using namespace bloom;
@@ -11,6 +13,8 @@ using bloom::components::Position;
 Game* game = nullptr;
 
 int main() {
+	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
+
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
@@ -31,9 +35,7 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	game->textures.load("Assets/OverworldTestSpritesheet.png", SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load("Assets/TestChar.png", SDL_Color{ 144,168,0,0 });
-	game->sceneManager.changeScene(std::make_shared<TestScene>(game->sceneManager));
+
 
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
@@ -41,7 +43,21 @@ int main() {
 	game->setColor(randColor);
 	game->clear();
 	game->render();
-	int x = 0;
+
+	namespace fs = std::filesystem;
+
+	fs::path workingDir = fs::path(getExePath());
+	fs::path assetsDir = L"data\\Assets";
+
+	if (!std::filesystem::exists(workingDir / assetsDir))
+		throw bloom::Exception("Required assets can't be found.");
+
+	fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
+	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
+	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	game->sceneManager.changeScene(std::make_shared<TestScene>(game->sceneManager));
+
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();

@@ -13,7 +13,7 @@ class TestChar : public bloom::GameObject {
 public:
 	void init() override {}
 
-	void init(Position pos, Size size, const std::string & texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
+	void init(Position pos, Size size, const std::filesystem::path texturePath, std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
 		m_registry.replace<Position>(m_entity, pos);
 		m_registry.assign<Size>(m_entity, size);
 		auto tmp = m_gameInstance.textures.load(texturePath);
