@@ -7,7 +7,10 @@ class SceneRotateSystem : public bloom::systems::System {
 
 public:
 	void update(std::optional<double> deltaTime = std::nullopt) override {
-		auto adjustValue = 60.0 * (deltaTime.value() / 1000);
+		auto adjustValue = rotateSpeed * (deltaTime.value() / 1000);
 		parentScene.adjustSceneRotation(adjustValue);
 	}
+
+private:
+	double rotateSpeed = static_cast<double>(rand() % 360);
 };
