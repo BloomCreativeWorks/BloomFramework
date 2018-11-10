@@ -15,7 +15,7 @@ namespace bloom {
 			initialize();
 
 		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (windowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
-			throw Exception("Exclusive fullscreen is not recommended due to graphic oddities when using hardware acceleration.");
+			throw Exception("[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead.");
 		}
 
 		m_runningInstancesQnt++;
@@ -31,7 +31,8 @@ namespace bloom {
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		std::clog << "[Game] the use of this ctor may be unsafe" << std::endl;
+		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN)
+			std::clog << "[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration!" << std::endl;
 	}
 
 	Game::~Game() {

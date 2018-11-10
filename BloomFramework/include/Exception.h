@@ -10,8 +10,8 @@ namespace bloom {
 	class BLOOMFRAMEWORK_API Exception : public std::exception {
 	public:
 		Exception(std::string && message) noexcept;
-		Exception(std::string && message, int errr_no) noexcept;
+		Exception(std::string && message, int err_no) noexcept;
 		Exception(char const * const message) noexcept;
-		Exception(char const * const message, int errr_no) noexcept;
+		Exception(char const * const message, int err_no) noexcept;
 	};
 }
