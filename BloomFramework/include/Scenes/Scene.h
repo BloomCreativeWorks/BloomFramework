@@ -11,8 +11,8 @@ namespace bloom {
 	class BLOOMFRAMEWORK_API Scene {
 		using System = bloom::systems::System;
 		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Scene & sceneObject);
-		
-		
+
+
 	public:
 		Scene(SceneManager & sceneManager);
 
@@ -23,17 +23,20 @@ namespace bloom {
 		Game & getGameInstance() { return m_gameInstance; }
 
 		//Game Object stuff
-		template<typename GO, typename... TArgs> 
+		template<typename GO, typename... TArgs>
 		void addGameObject(const std::string & tag, TArgs &&... initArgs);
 
 		void destroyGameObject(const std::string & tag);
-		
+
 		// System stuff
-		template<typename S> 
+		template<typename S>
 		size_t registerSystem();
 
-		template<typename S> 
+		template<typename S>
 		void unregisterSystem();
+
+		void setSceneRotation(double angle);
+		void adjustSceneRotation(double adjustment);
 
 	protected:
 		SceneManager & m_sceneManager;
@@ -42,6 +45,8 @@ namespace bloom {
 		std::vector<std::unique_ptr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		SDL_Texture * m_sceneTexture;
+
+		double m_sceneRotateAngle = 0.0;
 	};
 
 	template<typename GO, typename... TArgs> void Scene::addGameObject(const std::string & tag, TArgs &&... initArgs) {

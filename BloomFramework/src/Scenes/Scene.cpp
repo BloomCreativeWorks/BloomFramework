@@ -19,11 +19,20 @@ namespace bloom {
 	}
 
 	void Scene::draw() {
-		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, 0.0, nullptr, SDL_FLIP_NONE);
+//		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, 0.0, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, m_sceneRotateAngle, nullptr, SDL_FLIP_NONE);
 	}
 
 	void Scene::destroyGameObject(const std::string & tag) {
 		m_gameObjects.erase(tag);
 	}
+	void Scene::setSceneRotation(double angle){
+		m_sceneRotateAngle = fmod(angle, 360.0);
+	}
+
+	void Scene::adjustSceneRotation(double adjustment){
+		m_sceneRotateAngle = fmod((m_sceneRotateAngle + adjustment), 360.0);
+	}
+
 }
 

@@ -195,6 +195,7 @@
   <ItemGroup>
     <ClInclude Include="GameObjectTest\NoRandomComponent.h" />
     <ClInclude Include="GameObjectTest\RandomizerSystem.h" />
+    <ClInclude Include="GameObjectTest\SceneRotateSystem.h" />
     <ClInclude Include="GameObjectTest\TestGameObject.h" />
     <ClInclude Include="getExePath.h" />
     <ClInclude Include="TestScene.h" />

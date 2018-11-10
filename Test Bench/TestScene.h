@@ -1,6 +1,7 @@
 #pragma once
 #include "Scenes/Scene.h"
 #include "GameObjectTest/TestGameObject.h"
+#include "GameObjectTest/SceneRotateSystem.h"
 
 class TestScene : public bloom::Scene {
 	using RenderSystem = bloom::systems::RenderSystem;
@@ -22,6 +23,7 @@ public:
 
 		//registerSystem<RandomPositionSystem>();
 		registerSystem<RenderSystem>();
+		registerSystem<SceneRotateSystem>();
 	}
 
 	void unload() override {}
