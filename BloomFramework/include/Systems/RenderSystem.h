@@ -54,7 +54,7 @@ namespace bloom::systems {
 			for (auto i : renderQueue) {
 				auto & spr = std::get<0>(i);
 				auto & destRect = std::get<1>(i);
-				spr.texture->render(spr.srcRect, destRect);
+				spr.texture->render(spr.srcRect, destRect, spr.rotation);
 			}
 		}
 

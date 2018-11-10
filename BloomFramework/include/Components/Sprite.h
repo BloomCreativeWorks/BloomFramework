@@ -11,5 +11,6 @@ namespace bloom::components {
 
 		TexturePtr texture;
 		std::optional<SDL_Rect> srcRect;
+		double rotation = 0.0;
 	};
 }
