@@ -11,11 +11,14 @@ namespace bloom::audio {
 			throw Exception("[SoundStore::load] " + filePath.u8string() + " not exists");
 		}
 
+		if (filePath.extension() != std::filesystem::path(L".wav"))
+			throw Exception("[SoundStore::load] non-wav file provided, use wav files only");
+
 		auto SoundFXIt = m_store.find(filePath.u8string());
 		if (SoundFXIt != m_store.end())
 			return SoundFXIt->second;
 
-		SoundChunkPtr ptr = std::make_shared<SoundChunk>(filePath.u8string());
+		SoundChunkPtr ptr = std::make_shared<SoundChunk>(filePath.u8string(), true);
 		m_store.emplace(filePath.u8string(), ptr);
 
 		return ptr;

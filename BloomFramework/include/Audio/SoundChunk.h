@@ -5,10 +5,11 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundPlayer;
 
-	class SoundChunk {
+	class BLOOMFRAMEWORK_API SoundChunk {
 		friend class SoundPlayer;
+
 	public:
-		SoundChunk(const std::filesystem::path & filePath);
+		SoundChunk(const std::filesystem::path & filePath, bool ignoreChecks = false);
 		~SoundChunk();
 
 	private:

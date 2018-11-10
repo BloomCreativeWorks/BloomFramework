@@ -49,9 +49,6 @@ int main() {
 	music.push("Audio/sample_6.mp3");
 	music.push("Audio/sample_7.mp3");
 	music.push("Audio/sample_6.mp3");
-	//q.add(music.store.find("Audio/sample_6.mp3"));
-	//q.add(music.store.find("Audio/sample_3.mp3"));
-
 
 	sounds.add("Audio/Sounds/Sound_04684.wav"); //0
 	sounds.add("Audio/Sounds/Sound_04685.wav"); //1
@@ -61,7 +58,6 @@ int main() {
 	sounds.add("Audio/Sounds/Sound_12011.wav"); //5
 	sounds.add("Audio/Sounds/Sound_12020.wav"); //6
 
-	//game->music.load("Audio/sample_2-full.mp3");
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
@@ -87,6 +83,8 @@ int main() {
 	//sounds[5]->play(); // it works
 
 	sounds[0]->play();
+	//sounds[0]->stop(1000);
+	//sounds[0]->cancelDelayedStop();
 	//sounds[1]->play();
 	//sounds[2]->play();
 	//sounds[3]->play();
@@ -94,17 +92,7 @@ int main() {
 	//sounds[5]->play();
 	//sounds[6]->play();
 
-	auto testPtr = sounds[0]->chunk();
-
-	std::clog << testPtr.use_count() << std::endl;
-
-	std::clog << sounds[0]->chunk().use_count() << std::endl;
-
-	std::clog << testPtr.use_count() << std::endl;
-	//sounds[0]->play();
-	//sounds[0]->play();
-
-	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
+	//std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
@@ -131,21 +119,8 @@ int main() {
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
 
-	//music.queue.setVolume(100);
-	//music.queue.setInfinitePlayback(true);
-	//music.queue.play();
-
-	//q.setInfinitePlayback(true);
-	//q.activate();
-	//q.play();
-
-	//game->delay(50000);
-	//q.deactivate();
-	//q.skip();
-	////game->delay(5000);
 	music.queue.activate();
 	music.queue.play();
-	//q.eject();
 
 	// If manual control of entities is required, this is the method to do so.
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
@@ -167,23 +142,6 @@ int main() {
 		game->render();
 		game->update();
 
-		//sounds[0]->play();
-		//sounds[1]->play();
-		//sounds[2]->play();
-		//sounds[3]->play();
-		//sounds[4]->play();
-		//sounds[5]->play();
-		//sounds[6]->play();
-
-		//if (testX % 5 == 0) {
-		//	try {
-		//		sounds[3]->play();
-		//		std::clog << Mix_AllocateChannels(-1) << std::endl;
-		//	}
-		//	catch (Exception & e) {
-		//		std::cerr << e.what() << std::endl;
-		//	}
-		//}
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime) {
@@ -195,23 +153,6 @@ int main() {
 	sounds[1]->play();
 	game->delay(2500);
 	sounds.clear();
-	std::clog << testPtr.use_count() << std::endl;
-	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 
-	sounds.add("Audio/Sounds/Sound_12000.wav"); //4
-	sounds.add("Audio/Sounds/Sound_12011.wav"); //5
-	sounds.add("Audio/Sounds/Sound_12020.wav"); //6
-
-	sounds.optimize();
-
-
-	//game->delay(2500);
-
-	//sounds[2]->play();
-
-	//game->delay(2500);
-
-	std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
-	//Game::exit();
 	return 0;
 }

@@ -12,11 +12,12 @@ namespace bloom::audio {
 		SoundPlayer(SoundChunkPtr chunk);
 		~SoundPlayer() = default;
 
-		void play(int plays = 1);
+		void play(int plays = 1, int limitTimeMs = -1);
 		void replay(int plays = 1) { stop(); play(plays); }
 		void pause();
 		void resume();
-		void stop();
+		void stop(int delayTimeMs = 0);
+		void cancelDelayedStop();
 
 		void setVolume(double volumePercent);
 		double getVolume();
@@ -26,14 +27,8 @@ namespace bloom::audio {
 
 		SoundChunkPtr chunk();
 
-		//static void optimizeChannels();
-
 	private:
 		SoundChunkPtr m_chunk;
-		//int m_channel;
-
-		//static std::vector<SoundPlayer*> channels;
-		//static std::stack<int> freeChannels;
 	};
 
 	using SoundPlayerPtr = std::unique_ptr<SoundPlayer>;

@@ -3,38 +3,16 @@
 #include "Audio/AudioDefine.h"
 
 namespace bloom::audio {
-	//std::vector<SoundPlayer*> SoundPlayer::channels;
-	//std::stack<int> SoundPlayer::freeChannels;
-
-	//void SoundPlayer::optimizeChannels() {
-	//	int fc;
-	//	while (!freeChannels.empty()) {
-	//		fc = freeChannels.top();
-	//		if (fc > static_cast<int>(channels.size())) {
-	//			freeChannels.pop();
-	//			continue;
-	//		}
-
-	//		channels.back()->stop();
-	//		channels[fc] = channels.back();
-	//		channels.pop_back();
-	//		channels[fc]->m_channel = fc;
-	//		freeChannels.pop();
-	//	}
-
-	//	Mix_AllocateChannels(static_cast<int>(channels.size()));
-	//}
-
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : SoundChannel(static_cast<SoundChannel*>(this)), m_chunk(chunk) {}
 
-	void SoundPlayer::play(int plays) {
+	void SoundPlayer::play(int plays, int limitTimeMs) {
 		if (Mix_Playing(m_channel) != 0)
 			return;
 
 		if (plays != BLOOM_AUDIO_INFINITE_REPEAT)
 			--plays;
 
-		if (Mix_PlayChannel(m_channel, m_chunk->m_chunk, plays) == -1)
+		if (Mix_PlayChannelTimed(m_channel, m_chunk->m_chunk, plays, limitTimeMs) == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
@@ -52,28 +30,35 @@ namespace bloom::audio {
 			Mix_Pause(m_channel);
 	}
 
-	void SoundPlayer::stop() {
-		Mix_HaltChannel(m_channel);
+	void SoundPlayer::stop(int delayTimeMs) {
+		if (delayTimeMs <= 0)
+			Mix_HaltChannel(m_channel);
+		else 
+			Mix_ExpireChannel(m_channel, delayTimeMs);
+	}
+
+	void SoundPlayer::cancelDelayedStop() {
+		Mix_ExpireChannel(m_channel, -1);
 	}
 
 	void SoundPlayer::setRawVolume(int rawVolume) {
 		if (rawVolume < 0) rawVolume = 0;
-		if (rawVolume > MIX_MAX_VOLUME) rawVolume = MIX_MAX_VOLUME;
-		Mix_VolumeMusic(rawVolume);
+		else if (rawVolume > MIX_MAX_VOLUME) rawVolume = MIX_MAX_VOLUME;
+		Mix_VolumeChunk(m_chunk->m_chunk, rawVolume);
 	}
 
 	void SoundPlayer::setVolume(double volumePercent) {
 		if (volumePercent < std::numeric_limits<double>::epsilon()) volumePercent = 0.0;
-		if (volumePercent > 100.0) volumePercent = 100.0;
+		else if (volumePercent > 100.0) volumePercent = 100.0;
 		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
 
 	double SoundPlayer::getVolume() {
-		return (static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) / MIX_MAX_VOLUME) * 100.0;
+		return (static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) * 100.0) / static_cast<double>(MIX_MAX_VOLUME);
 	}
 
 	int SoundPlayer::getRawVolume() {
-		return Mix_VolumeMusic(-1);
+		return Mix_VolumeChunk(m_chunk->m_chunk, -1);
 	}
 
 	SoundChunkPtr SoundPlayer::chunk() {
