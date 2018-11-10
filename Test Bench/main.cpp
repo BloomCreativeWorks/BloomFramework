@@ -1,4 +1,4 @@
-#include "Framework.h"
+﻿#include "Framework.h"
 #include <ctime>
 #include <Windows.h>
 
@@ -53,9 +53,10 @@ int main() {
 	music.push(musicPath / L"sample_3.mp3", 1, false, 100, 100);
 	music.push(musicPath / L"sample_4.mp3", 1, false, 50, 50);
 	music.push(musicPath / L"sample_5.mp3");
-	music.push(musicPath / L"sample_6.mp3");
-	music.push(musicPath / L"sample_7.mp3");
+	music.push(musicPath / L"sample_6.mp3", 1, true);
+	music.push(musicPath / L"sample_7.mp3", 1, true);
 	//music.push(musicPath / L"sample_6.mp3");
+	music.push(musicPath / L"sample_8.mp3");
 
 
 	sounds.add(soundsPath / L"Sound_04684.wav"); //0
