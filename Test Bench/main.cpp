@@ -81,6 +81,8 @@ int main() {
 	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 
 	//sounds.players.erase(sounds.players.begin() + 4);
+	//sounds[5]->play();
+	//game->delay(50);
 	//sounds.optimize(); // now last chunk on 4th channel!
 	//sounds[5]->play(); // it works
 

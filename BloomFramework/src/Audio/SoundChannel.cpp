@@ -36,6 +36,7 @@ namespace bloom::audio {
 				}
 				else {
 					channels[fc] = channels.back();
+					Mix_HaltChannel(channels[fc]->m_channel);
 					channels[fc]->m_channel = fc;
 					channels.pop_back();
 					--cs;
