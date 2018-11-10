@@ -6,6 +6,7 @@
 
 namespace bloom {
 	class SceneManager;
+	struct Coord;
 
 	class BLOOMFRAMEWORK_API Scene {
 		using System = bloom::systems::System;
