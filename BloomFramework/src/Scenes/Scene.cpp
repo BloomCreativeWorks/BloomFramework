@@ -3,7 +3,11 @@
 #include "Game.h"
 
 namespace bloom {
-	Scene::Scene(SceneManager & sceneManager) : m_sceneManager(sceneManager), m_gameInstance(sceneManager.m_gameInstance) {
+	Scene::Scene(SceneManager & sceneManager) :
+		m_sceneManager(sceneManager),
+		m_gameInstance(sceneManager.m_gameInstance),
+		m_sceneRotateCenter(Coord().toSDLPoint(m_gameInstance.getRenderer()))
+	{
 		m_sceneTexture = SDL_CreateTexture(m_gameInstance.getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
 			m_gameInstance.getScreenWidth(),
 			m_gameInstance.getScreenHeight());
@@ -19,19 +23,26 @@ namespace bloom {
 	}
 
 	void Scene::draw() {
-//		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, 0.0, nullptr, SDL_FLIP_NONE);
-		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, m_sceneRotateAngle, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, m_sceneRotateAngle, &m_sceneRotateCenter, SDL_FLIP_NONE);
 	}
 
 	void Scene::destroyGameObject(const std::string & tag) {
 		m_gameObjects.erase(tag);
 	}
-	void Scene::setSceneRotation(double angle){
+	void Scene::setSceneRotation(double angle) {
 		m_sceneRotateAngle = fmod(angle, 360.0);
 	}
 
-	void Scene::adjustSceneRotation(double adjustment){
+	void Scene::adjustSceneRotation(double adjustment) {
 		m_sceneRotateAngle = fmod((m_sceneRotateAngle + adjustment), 360.0);
+	}
+
+	void Scene::setSceneRotationCenter(Coord center) {
+		m_sceneRotateCenter = center.toSDLPoint(m_gameInstance.getRenderer());
+	}
+
+	void Scene::setSceneRotationCenter(SDL_Point center) {
+		m_sceneRotateCenter = center;
 	}
 
 }

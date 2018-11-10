@@ -31,5 +31,6 @@ namespace bloom {
 		Coord(int x, int y, CoordType type = absolute, int direction = top | left);
 
 		Coord getSDLPos(SDL_Renderer * targetRenderer, int width, int height);
+		SDL_Point toSDLPoint(SDL_Renderer * targetRenderer);
 	};
 }

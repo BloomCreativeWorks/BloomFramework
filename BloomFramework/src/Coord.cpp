@@ -40,4 +40,8 @@ namespace bloom {
 
 		return result;
 	}
+	SDL_Point Coord::toSDLPoint(SDL_Renderer * targetRenderer){
+		auto tmp = getSDLPos(targetRenderer, 0, 0);
+		return SDL_Point{ tmp.x, tmp.y };
+	}
 }

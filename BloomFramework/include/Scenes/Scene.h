@@ -35,8 +35,11 @@ namespace bloom {
 		template<typename S>
 		void unregisterSystem();
 
+		// Rotation stuff
 		void setSceneRotation(double angle);
 		void adjustSceneRotation(double adjustment);
+		void setSceneRotationCenter(Coord center);
+		void setSceneRotationCenter(SDL_Point center);
 
 	protected:
 		SceneManager & m_sceneManager;
@@ -47,6 +50,7 @@ namespace bloom {
 		SDL_Texture * m_sceneTexture;
 
 		double m_sceneRotateAngle = 0.0;
+		SDL_Point m_sceneRotateCenter;
 	};
 
 	template<typename GO, typename... TArgs> void Scene::addGameObject(const std::string & tag, TArgs &&... initArgs) {

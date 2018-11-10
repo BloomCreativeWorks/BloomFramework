@@ -23,7 +23,7 @@ public:
 
 		registerSystem<RandomPositionSystem>();
 		registerSystem<RenderSystem>();
-		registerSystem<SceneRotateSystem>();
+		registerSystem<SceneRotateSystem>(); // Do barrel rolls!!!
 	}
 
 	void unload() override {}
