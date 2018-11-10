@@ -33,7 +33,7 @@ namespace bloom::audio {
 	void SoundPlayer::stop(int delayTimeMs) {
 		if (delayTimeMs <= 0)
 			Mix_HaltChannel(m_channel);
-		else 
+		else
 			Mix_ExpireChannel(m_channel, delayTimeMs);
 	}
 

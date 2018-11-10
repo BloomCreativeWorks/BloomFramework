@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 #include <ctime>
 #include <Windows.h>
 
@@ -43,20 +43,28 @@ int main() {
 	}
 	//music.push("Audio/sample_1.mp3", 1, true, 3000, 3000);
 	//music.push("Audio/sample_2.mp3", 2);
-	music.push("Audio/sample_3.mp3", 1, false, 100, 100);
-	music.push("Audio/sample_4.mp3", 1, false, 50, 50);
-	music.push("Audio/sample_5.mp3");
-	music.push("Audio/sample_6.mp3");
-	music.push("Audio/sample_7.mp3");
-	music.push("Audio/sample_6.mp3");
 
-	sounds.add("Audio/Sounds/Sound_04684.wav"); //0
-	sounds.add("Audio/Sounds/Sound_04685.wav"); //1
-	sounds.add("Audio/Sounds/Sound_11989.wav"); //2
-	sounds.add("Audio/Sounds/Sound_11998.wav"); //3
-	sounds.add("Audio/Sounds/Sound_12000.wav"); //4
-	sounds.add("Audio/Sounds/Sound_12011.wav"); //5
-	sounds.add("Audio/Sounds/Sound_12020.wav"); //6
+	namespace fs = std::filesystem;
+
+	fs::path dataPath = L"data";
+	fs::path musicPath = dataPath / L"Music";
+	fs::path soundsPath = dataPath / L"Sounds";
+
+	music.push(musicPath / L"sample_3.mp3", 1, false, 100, 100);
+	music.push(musicPath / L"sample_4.mp3", 1, false, 50, 50);
+	music.push(musicPath / L"sample_5.mp3");
+	music.push(musicPath / L"sample_6.mp3");
+	music.push(musicPath / L"sample_7.mp3");
+	//music.push(musicPath / L"sample_6.mp3");
+
+
+	sounds.add(soundsPath / L"Sound_04684.wav"); //0
+	sounds.add(soundsPath / L"Sound_04685.wav"); //1
+	//sounds.add(soundsPath / L"Sound_11989.wav"); //2
+	//sounds.add(soundsPath / L"Sound_11998.wav"); //3
+	//sounds.add(soundsPath / L"Sound_12000.wav"); //4
+	//sounds.add(soundsPath / L"Sound_12011.wav"); //5
+	//sounds.add(soundsPath / L"Sound_12020.wav"); //6
 
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
@@ -65,16 +73,14 @@ int main() {
 	game->clear();
 	game->render();
 
-	namespace fs = std::filesystem;
-
 	fs::path workingDir = fs::path(getExePath());
-	fs::path assetsDir = L"data\\Assets";
+	fs::path assetsDir = dataPath / L"Assets";
 
 	if (!std::filesystem::exists(workingDir / assetsDir))
 		throw bloom::Exception("Required assets can't be found.");
 
-	fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
-	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
+	fs::path spriteSheetPath = workingDir / assetsDir / L"OverworldTestSpritesheet.png";
+	fs::path testCharPath = workingDir / assetsDir / L"TestChar.png";
 
 	//sounds.players.erase(sounds.players.begin() + 4);
 	//sounds[5]->play();

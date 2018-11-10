@@ -67,7 +67,7 @@ namespace bloom::audio {
 	void MusicQueue::clear(bool bypassFade) {
 		deactivate();
 		if (!m_queue.empty()) {
-			if(m_queue.front().fadeOut > 0 && !bypassFade)
+			if (m_queue.front().fadeOut > 0 && !bypassFade)
 				m_queue.front().track->stop(m_queue.front().fadeOut);
 			else
 				m_queue.front().track->stop();

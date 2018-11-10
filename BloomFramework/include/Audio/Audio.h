@@ -17,7 +17,7 @@ namespace bloom::audio {
 		MusicStore	store;
 		MusicQueue	queue;
 
-		void push(const std::string & filePath, int plays = 1, bool ignoreInfinitePlayback = false, int fadeInMs = 0, int fadeOutMs = 0) {
+		void push(const std::filesystem::path & filePath, int plays = 1, bool ignoreInfinitePlayback = false, int fadeInMs = 0, int fadeOutMs = 0) {
 			queue.add(store.load(filePath), plays, ignoreInfinitePlayback, fadeInMs, fadeOutMs);
 		}
 
@@ -43,7 +43,7 @@ namespace bloom::audio {
 	public:
 		SoundFull();
 
-		int add(const std::string & filePath) {
+		int add(const std::filesystem::path & filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
 			return (static_cast<int>(players.size()) - 1);
 		}
