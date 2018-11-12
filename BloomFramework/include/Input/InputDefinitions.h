@@ -2,7 +2,6 @@
 
 #include "stdIncludes.h"
 
-const int KEYBOARD_SIZE = 282;
 namespace bloom {
 	enum KeyboardKey{
 		KEY_UNKNOWN = SDL_SCANCODE_UNKNOWN,
@@ -243,7 +242,9 @@ namespace bloom {
 		KEY_KBDILLUMDOWN = SDL_SCANCODE_KBDILLUMDOWN,
 		KEY_KBDILLUMUP = SDL_SCANCODE_KBDILLUMUP,
 		KEY_EJECT = SDL_SCANCODE_EJECT,
-		KEY_SLEEP = SDL_SCANCODE_SLEEP
+		KEY_SLEEP = SDL_SCANCODE_SLEEP,
+
+		KEYBOARD_SIZE // This defines the keyboard size
 	};
 
 	enum MouseButton{

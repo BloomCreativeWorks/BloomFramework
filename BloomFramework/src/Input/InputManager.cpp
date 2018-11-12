@@ -26,58 +26,55 @@ namespace bloom {
 		SDL_Event event;
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
-			case SDL_QUIT:
+			case SDL_QUIT: {
 				m_will_quit = true;
 				break;
-
+			}
 			case SDL_KEYDOWN: {
 				m_keyboard = SDL_GetKeyboardState(nullptr);
+				SDL_Keysym pressedKey = event.key.keysym;
 
-				int index = event.key.keysym.scancode;
+				m_keyDown[pressedKey.scancode] = true;
 
-				m_keyDown[index] = true;
-
-				if (InputManager::isPrintable(event.key.keysym.sym))
-					m_curPrintableKey = event.key.keysym.sym;
-				break; 
-			}
-
-			case SDL_KEYUP: {
-				m_keyboard = SDL_GetKeyboardState(nullptr);
-
-				int index = event.key.keysym.scancode;
-				m_keyUp[index] = true;
+				if (InputManager::isPrintable(pressedKey.sym))
+					m_curPrintableKey = pressedKey.sym;
 
 				break;
 			}
+			case SDL_KEYUP: {
+				m_keyboard = SDL_GetKeyboardState(nullptr);
+				SDL_Keysym releasedKey = event.key.keysym;
 
-			case SDL_MOUSEMOTION:
+				m_keyUp[releasedKey.scancode] = true;
+
+				break;
+			}
+			case SDL_MOUSEMOTION: {
 				m_mouseX = event.motion.x;
 				m_mouseY = event.motion.y;
 				m_mouseMoveX = event.motion.xrel;
 				m_mouseMoveY = event.motion.yrel;
 				break;
-
-			case SDL_MOUSEBUTTONDOWN:
+			}
+			case SDL_MOUSEBUTTONDOWN: {
 				m_mouse = SDL_GetMouseState(&(m_mouseX),
 					&(m_mouseY));
 
 				m_mouseDown[event.button.button] = true;
 				break;
-
-			case SDL_MOUSEBUTTONUP:
+			}
+			case SDL_MOUSEBUTTONUP: {
 				m_mouse = SDL_GetMouseState(&(m_mouseX),
 					&(m_mouseY));
 
 				m_mouseDown[event.button.button] = true;
 				break;
-
-				// Brand new SDL2 event.
-			case SDL_MOUSEWHEEL:
+			}
+			case SDL_MOUSEWHEEL: {
 				m_scrollX = event.wheel.x;
 				m_scrollY = event.wheel.y;
 				break;
-
+			}
 			default:
 				break;
 			}
@@ -108,27 +105,22 @@ namespace bloom {
 		if (!(m_keyboard))
 			return false;
 
-		int sdl_key = static_cast<int>(key);
-
-		if (m_keyboard[sdl_key])
+		if (m_keyboard[key])
 			return true;
 
 		return false;
 	}
 
 	bool InputManager::shift() {
-		return (isKeyPressed(KEY_LEFT_SHIFT) ||
-			isKeyPressed(KEY_RIGHT_SHIFT));
+		return (isKeyPressed(KEY_LEFT_SHIFT) || isKeyPressed(KEY_RIGHT_SHIFT));
 	}
 
 	bool InputManager::ctrl() {
-		return (isKeyPressed(KEY_LEFT_CTRL) ||
-			isKeyPressed(KEY_RIGHT_CTRL));
+		return (isKeyPressed(KEY_LEFT_CTRL) || isKeyPressed(KEY_RIGHT_CTRL));
 	}
 
 	bool InputManager::alt() {
-		return (isKeyPressed(KEY_LEFT_ALT) ||
-			isKeyPressed(KEY_RIGHT_ALT));
+		return (isKeyPressed(KEY_LEFT_ALT) || isKeyPressed(KEY_RIGHT_ALT));
 	}
 
 	bool InputManager::isMouseDown(MouseButton button) {
@@ -158,10 +150,12 @@ namespace bloom {
 			if (m_mouse & SDL_BUTTON(1))
 				return true;
 			break;
+
 		case MOUSE_MIDDLE:
 			if (m_mouse & SDL_BUTTON(2))
 				return true;
 			break;
+
 		case MOUSE_RIGHT:
 			if (m_mouse & SDL_BUTTON(3))
 				return true;
@@ -189,11 +183,10 @@ namespace bloom {
 	}
 
 	bool InputManager::isMouseInside(SDL_Rect rectangle) {
-		if ((m_mouseX >= rectangle.x) &&
-			(m_mouseX <= rectangle.x + rectangle.w)
-			&&
-			(m_mouseY >= rectangle.y) &&
-			(m_mouseY <= rectangle.y + rectangle.h))
+		if ((m_mouseX >= rectangle.x) 
+			&& (m_mouseX <= rectangle.x + rectangle.w)
+			&& (m_mouseY >= rectangle.y) 
+			&& (m_mouseY <= rectangle.y + rectangle.h))
 			return true;
 
 		return false;
