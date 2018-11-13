@@ -20,7 +20,7 @@ namespace bloom::graphics {
 		}
 	}
 
-	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, double rotation, SDL_RendererFlip flip) {
+	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, double rotationAngle, SDL_RendererFlip flip) {
 		if (destRect.w <= 0)
 			throw Exception("[Texture::render] destcRect.w is <= 0.\nIs that intentional?");
 		if (destRect.h <= 0)
@@ -36,7 +36,7 @@ namespace bloom::graphics {
 			//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
 
 			//Render to screen
-			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, rotation, nullptr, flip);
+			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, rotationAngle, nullptr, flip);
 		}
 		else
 			//Render to screen

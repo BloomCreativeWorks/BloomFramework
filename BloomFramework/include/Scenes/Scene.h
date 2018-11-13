@@ -9,12 +9,12 @@ namespace bloom {
 	struct Coord;
 
 	class BLOOMFRAMEWORK_API Scene {
-		using System = bloom::systems::System;
-		friend bloom::systems::DefaultSystem::DefaultSystem(bloom::Scene & sceneObject);
-
+		using System = bloom::systems::DefaultSystem;
+		friend bloom::systems::System::System(bloom::Scene & sceneObject);
 
 	public:
 		Scene(SceneManager & sceneManager);
+		virtual ~Scene() = default;
 
 		void update(double deltaTime);
 		void draw();
@@ -54,7 +54,7 @@ namespace bloom {
 	};
 
 	template<typename GO, typename... TArgs> void Scene::addGameObject(const std::string & tag, TArgs &&... initArgs) {
-		static_assert(std::is_base_of_v<GameObject, GO>, "Type GO passed in is not a GameObject.");
+		static_assert(std::is_base_of_v<GameObject, GO>, "Type GO passed in is not a GameObject based");
 
 		GO* obj = new GO(m_registry, m_gameInstance);
 		obj->init(std::forward<TArgs>(initArgs)...);
@@ -69,9 +69,9 @@ namespace bloom {
 
 	// System stuff
 	template<typename S> size_t Scene::registerSystem() {
-		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System.");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool {if (typeid(*i).name() == typeid(S).name()) return true; return false; });
+			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
 			v == m_systems.end())
 		{
 			m_systems.emplace_back(std::unique_ptr<S>(new S(*this)));
@@ -82,10 +82,11 @@ namespace bloom {
 			return (v - m_systems.begin());
 		}
 	}
+
 	template<typename S> void Scene::unregisterSystem() {
-		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System.");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool {if (typeid(*i).name() == typeid(S).name()) return true; return false; });
+			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
 			v != m_systems.end())
 		{
 			m_systems.erase(v);

@@ -69,6 +69,7 @@ int main() {
 		if (framedelay > frametime)
 			game->delay(framedelay - frametime);
 	}
+
 	game->destroy();
 	Game::exit();
 	return 0;

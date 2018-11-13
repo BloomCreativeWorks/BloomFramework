@@ -1,27 +1,28 @@
 #pragma once
 
+#include <utility>
 #include "stdIncludes.h"
 #include "Components/Components.h"
 #include "DefaultSystem.h"
 #include "Components/Components.h"
-#include <utility>
 
 namespace bloom::systems {
-	class RenderSystem : public System {
+	class RenderSystem : public DefaultSystem {
 		using Position = bloom::components::Position;
 		using Size = bloom::components::Size;
 		using Sprite = bloom::components::Sprite;
 		using LayerGroup = bloom::components::LayerGroup;
-		using System::DefaultSystem;
+		using DefaultSystem::System;
 
 	public:
+		~RenderSystem() = default;
 
 		void update(std::optional<double> deltaTime = std::nullopt) override {
 			std::vector<std::tuple<Sprite, SDL_Rect, LayerGroup>> renderQueue{};
 
 			m_registry.view<Position, Size, Sprite>().each(
 				[&](auto entity, Position & pos, Size& size, Sprite & spr) {
-				
+
 				if (size.w < 0)
 					size.w = 0;
 				if (size.h < 0)
@@ -54,7 +55,7 @@ namespace bloom::systems {
 			for (auto i : renderQueue) {
 				auto & spr = std::get<0>(i);
 				auto & destRect = std::get<1>(i);
-				spr.texture->render(spr.srcRect, destRect, spr.rotation);
+				spr.texture->render(spr.srcRect, destRect, spr.rotationAngle);
 			}
 		}
 

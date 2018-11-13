@@ -5,13 +5,6 @@
 namespace bloom {
 	inline SceneManager::SceneManager(Game & gameInstance) : m_gameInstance(gameInstance) {}
 
-	void SceneManager::changeScene(std::shared_ptr<Scene> newScene) {
-		if (m_currScene != nullptr)
-			m_currScene->unload();
-		newScene->load();
-		m_currScene = newScene;
-	}
-
 	void SceneManager::update(double deltaTime) {
 		if (m_currScene != nullptr)
 			m_currScene->update(deltaTime);

@@ -6,9 +6,10 @@
 namespace bloom {
 	class Scene;
 	namespace systems {
-		class BLOOMFRAMEWORK_API DefaultSystem {
+		class BLOOMFRAMEWORK_API System {
 		public:
-			DefaultSystem(bloom::Scene & sceneObject);;
+			System(bloom::Scene & sceneObject);
+			virtual ~System() = default;
 
 			virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
 
@@ -17,6 +18,6 @@ namespace bloom {
 			entt::DefaultRegistry & m_registry;
 		};
 
-		using System = DefaultSystem;
+		using DefaultSystem = System;
 	}
 }

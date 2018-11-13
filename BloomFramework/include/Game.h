@@ -43,7 +43,7 @@ namespace bloom {
 
 		TextureStore	textures = TextureStore(m_renderer);
 		Timer			timer;
-		
+
 		SceneManager sceneManager = SceneManager(*this);
 
 	protected:
