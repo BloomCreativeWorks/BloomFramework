@@ -5,8 +5,8 @@
 #include "GameObject.h"
 
 namespace bloom {
-	class SceneManager;
-	struct Coord;
+	class BLOOMFRAMEWORK_API SceneManager;
+	struct BLOOMFRAMEWORK_API Coord;
 
 	class BLOOMFRAMEWORK_API Scene {
 		using System = bloom::systems::DefaultSystem;
@@ -96,4 +96,3 @@ namespace bloom {
 		}
 	}
 }
-

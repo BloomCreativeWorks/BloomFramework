@@ -29,6 +29,7 @@ namespace bloom {
 	void Scene::destroyGameObject(const std::string & tag) {
 		m_gameObjects.erase(tag);
 	}
+
 	void Scene::setSceneRotation(double angle) {
 		m_sceneRotateAngle = fmod(angle, 360.0);
 	}
@@ -44,6 +45,5 @@ namespace bloom {
 	void Scene::setSceneRotationCenter(SDL_Point center) {
 		m_sceneRotateCenter = center;
 	}
-
 }
 

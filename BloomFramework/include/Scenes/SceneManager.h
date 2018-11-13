@@ -4,7 +4,7 @@
 #include "Scene.h"
 
 namespace bloom {
-	class Game;
+	class BLOOMFRAMEWORK_API Game;
 
 	class BLOOMFRAMEWORK_API SceneManager {
 		friend Scene::Scene(SceneManager & sceneManager);
