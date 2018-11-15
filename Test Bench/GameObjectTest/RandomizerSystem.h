@@ -11,12 +11,16 @@ public:
 	~RandomPositionSystem() = default;
 
 	void update(std::optional<double> deltaTime = std::nullopt) override {
-		m_registry.view<Position>().each(
-			[this](auto entity, Position & pos) {
-			if (!m_registry.has<NoRandomPos>(entity)) {
-				pos.x = rand() % 672;
-				pos.y = rand() % 472;
-			}
-		});
+		if (enabled) {
+			m_registry.view<Position>().each(
+				[this](auto entity, Position & pos) {
+				if (!m_registry.has<NoRandomPos>(entity)) {
+					pos.x = rand() % 672;
+					pos.y = rand() % 472;
+				}
+			});
+		}
 	}
+
+	bool enabled = false;
 };

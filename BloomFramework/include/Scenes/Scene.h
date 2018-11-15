@@ -3,6 +3,7 @@
 #include "stdIncludes.h"
 #include "Systems/DefaultSystem.h"
 #include "GameObject.h"
+#include "Exception.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API SceneManager;
@@ -34,10 +35,14 @@ namespace bloom {
 
 		template<typename S>
 		void unregisterSystem();
+		
+		template<typename S>
+		std::shared_ptr<S> getSystemPtr();
 
 		// Rotation stuff
 		void setSceneRotation(double angle);
 		void adjustSceneRotation(double adjustment);
+		double getSceneRotation();
 		void setSceneRotationCenter(Coord center);
 		void setSceneRotationCenter(SDL_Point center);
 
@@ -45,7 +50,7 @@ namespace bloom {
 		SceneManager & m_sceneManager;
 		Game & m_gameInstance;
 		entt::DefaultRegistry m_registry;
-		std::vector<std::unique_ptr<System>> m_systems;
+		std::vector<std::shared_ptr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		SDL_Texture * m_sceneTexture;
 
@@ -95,4 +100,20 @@ namespace bloom {
 			std::clog << "Can't unregister system that isn't registered." << std::endl;
 		}
 	}
+
+	template<typename S>
+	std::shared_ptr<S> Scene::getSystemPtr()
+	{
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
+		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
+			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
+			v != m_systems.end())
+		{
+			return std::dynamic_pointer_cast<S>(*v);
+		}
+		else {
+			throw Exception("[Scene getSystemPtr] Unable to get System, it is not registered.");
+		}
+	}
+
 }

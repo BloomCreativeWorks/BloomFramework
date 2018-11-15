@@ -38,6 +38,10 @@ namespace bloom {
 		m_sceneRotateAngle = fmod((m_sceneRotateAngle + adjustment), 360.0);
 	}
 
+	double Scene::getSceneRotation(){
+		return m_sceneRotateAngle;
+	}
+
 	void Scene::setSceneRotationCenter(Coord center) {
 		m_sceneRotateCenter = center.toSDLPoint(m_gameInstance.getRenderer());
 	}
