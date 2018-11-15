@@ -79,7 +79,7 @@ namespace bloom {
 			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
 			v == m_systems.end())
 		{
-			m_systems.emplace_back(std::unique_ptr<S>(new S(*this)));
+			m_systems.emplace_back(std::make_shared<S>(*this));
 			return (m_systems.size() - 1);
 		}
 		else {
