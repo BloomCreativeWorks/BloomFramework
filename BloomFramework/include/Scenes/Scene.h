@@ -31,7 +31,7 @@ namespace bloom {
 
 		// System stuff
 		template<typename S>
-		size_t registerSystem();
+		std::shared_ptr<S> registerSystem();
 
 		template<typename S>
 		void unregisterSystem();
@@ -73,18 +73,17 @@ namespace bloom {
 	}
 
 	// System stuff
-	template<typename S> size_t Scene::registerSystem() {
+	template<typename S> std::shared_ptr<S> Scene::registerSystem() {
 		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
 			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
 			v == m_systems.end())
 		{
-			m_systems.emplace_back(std::make_shared<S>(*this));
-			return (m_systems.size() - 1);
+			return std::dynamic_pointer_cast<S>(m_systems.emplace_back(std::make_shared<S>(*this)));
 		}
 		else {
 			std::clog << "This system is already registered." << std::endl;
-			return (v - m_systems.begin());
+			return std::dynamic_pointer_cast<S>(*v);
 		}
 	}
 
