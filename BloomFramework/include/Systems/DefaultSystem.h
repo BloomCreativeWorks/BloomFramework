@@ -13,6 +13,7 @@ namespace bloom {
 
 			virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
 
+			bool enabled = true;
 		protected:
 			bloom::Scene & parentScene;
 			entt::DefaultRegistry & m_registry;

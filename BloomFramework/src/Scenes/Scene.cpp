@@ -19,7 +19,8 @@ namespace bloom {
 		SDL_SetRenderTarget(m_gameInstance.getRenderer(), m_sceneTexture);
 		SDL_RenderClear(m_gameInstance.getRenderer());
 		for (auto & sys : m_systems)
-			sys->update(deltaTime);
+			if (sys->enabled)
+				sys->update(deltaTime);
 	}
 
 	void Scene::draw() {
@@ -38,7 +39,7 @@ namespace bloom {
 		m_sceneRotateAngle = fmod((m_sceneRotateAngle + adjustment), 360.0);
 	}
 
-	double Scene::getSceneRotation(){
+	double Scene::getSceneRotation() {
 		return m_sceneRotateAngle;
 	}
 

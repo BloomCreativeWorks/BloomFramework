@@ -32,6 +32,8 @@ public:
 		registerSystem<RenderSystem>();
 		registerSystem<SceneRotateSystem>(); // Do barrel rolls!!!
 		registerSystem<SpriteRotatorSystem>();
+
+		getSystemPtr<RandomPositionSystem>()->enabled = false; // We want to start this after the rotations.
 	}
 
 	void unload() override {
