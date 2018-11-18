@@ -175,6 +175,7 @@
     <ClInclude Include="include\Framework.h" />
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Graphics\SpriteText.h" />
     <ClInclude Include="include\Systems\DefaultSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Systems\Systems.h" />

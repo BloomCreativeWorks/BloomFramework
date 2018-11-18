@@ -45,12 +45,20 @@ int main() {
 
 	fs::path workingDir = fs::path(getExePath());
 	fs::path assetsDir = L"data\\Assets";
+	fs::path fontsDir = L"data\\Fonts";
 
 	if (!std::filesystem::exists(workingDir / assetsDir))
 		throw bloom::Exception("Required assets can't be found.");
 
 	fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
 	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
+	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
+
+	// Test SpriteText(NFont)
+	bloom::graphics::SpriteText testText(game->getRenderer(), fontPath.u8string().c_str(), 20); // Must be freed or destroyed before TTF_Quit().
+	testText.draw(game->getRenderer(), 0, 0, "Hello world!");
+	game->render();
+	game->delay(500);
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
@@ -77,6 +85,9 @@ int main() {
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
 
+	// Test SpriteText2
+	std::string deltaTimeText = "Delta time: 0ms";
+
 	int testX = 0, testY = 0;
 	while (game->isRunning()) {
 		// If manual control of entities is required, this is the method to do so.
@@ -89,13 +100,16 @@ int main() {
 		game->clear();
 		randomizer.update();
 		renderSysTest.update(); // Test again.
+		testText.draw(game->getRenderer(), 0, 0, deltaTimeText.c_str());
 		game->render();
+		deltaTimeText = "Delta time: " + std::to_string(game->timer.split()) + "ms";
 		game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)
 			game->delay(framedelay - frametime);
 	}
+	testText.free();
 	game->destroy();
 	Game::exit();
 	return 0;
