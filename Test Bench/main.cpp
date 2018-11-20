@@ -55,7 +55,7 @@ int main() {
 	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
 
-	std::shared_ptr<Font> testFont = std::make_shared<Font>(fontPath, 20);
+	std::shared_ptr<Font> testFont = std::make_shared<Font>(fontPath, 20,0);
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, testFont); // Must be freed or destroyed before TTF_Quit().
