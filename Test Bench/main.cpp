@@ -8,6 +8,7 @@
 
 using namespace bloom;
 using bloom::components::Position;
+using Font = bloom::graphics::Font;
 
 Game* game = nullptr;
 
@@ -54,9 +55,11 @@ int main() {
 	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
 
+	std::shared_ptr<Font> testFont = std::make_shared<Font>(fontPath, 20);
+	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
-	bloom::graphics::SpriteText testText(game->getRenderer(), fontPath.u8string().c_str(), 20); // Must be freed or destroyed before TTF_Quit().
-	testText.draw(game->getRenderer(), 0, 0, "Hello world!");
+	bloom::graphics::SpriteText testText(renderer, testFont); // Must be freed or destroyed before TTF_Quit().
+	testText.render(std::nullopt, SDL_Rect{ 0,0 });
 	game->render();
 	game->delay(500);
 
@@ -100,7 +103,8 @@ int main() {
 		game->clear();
 		randomizer.update();
 		renderSysTest.update(); // Test again.
-		testText.draw(game->getRenderer(), 0, 0, deltaTimeText.c_str());
+		testText.text = deltaTimeText;
+		testText.render(std::nullopt, SDL_Rect{ 0,0 });
 		game->render();
 		deltaTimeText = "Delta time: " + std::to_string(game->timer.split()) + "ms";
 		game->update();
@@ -109,7 +113,6 @@ int main() {
 		if (framedelay > frametime)
 			game->delay(framedelay - frametime);
 	}
-	testText.free();
 	game->destroy();
 	Game::exit();
 	return 0;
