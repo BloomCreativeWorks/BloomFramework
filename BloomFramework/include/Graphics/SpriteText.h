@@ -11,6 +11,8 @@ namespace bloom::graphics {
 		SpriteText(SDL_Renderer *& targetRenderer,	std::shared_ptr<Font> fontPtr);
 		void update();
 
+		void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
+
 		std::string text = "Unitialized";
 		TextStyle style;
 		

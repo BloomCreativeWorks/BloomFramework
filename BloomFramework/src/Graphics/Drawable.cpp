@@ -1,7 +1,7 @@
 #include "Graphics/Drawable.h"
 
 namespace bloom::graphics {
-	Drawable::Drawable(SDL_Renderer *& targetRenderer) : m_renderer(targetRenderer){}
+	Drawable::Drawable(SDL_Renderer *& targetRenderer) : m_renderer(targetRenderer) {}
 	Drawable::~Drawable() {
 		SDL_DestroyTexture(m_texture);
 	}

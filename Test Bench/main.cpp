@@ -59,7 +59,7 @@ int main() {
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, testFont); // Must be freed or destroyed before TTF_Quit().
-	testText.render(std::nullopt, SDL_Rect{ 0,0 });
+	testText.render(std::nullopt, SDL_Rect{ 0,0, 600, 200 });
 	game->render();
 	game->delay(500);
 
@@ -104,7 +104,7 @@ int main() {
 		randomizer.update();
 		renderSysTest.update(); // Test again.
 		testText.text = deltaTimeText;
-		testText.render(std::nullopt, SDL_Rect{ 0,0 });
+		testText.render(std::nullopt, SDL_Rect{ 0,0, 600, 200 });
 		game->render();
 		deltaTimeText = "Delta time: " + std::to_string(game->timer.split()) + "ms";
 		game->update();
