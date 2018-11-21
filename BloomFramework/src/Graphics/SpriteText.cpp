@@ -7,6 +7,7 @@ namespace bloom::graphics {
 	}
 
 	void SpriteText::update() {
+		SDL_DestroyTexture(m_texture);
 		m_texture = m_loadedFontPtr->createTexture(m_renderer, text, style);
 		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
 	}
