@@ -3,6 +3,7 @@
 namespace bloom::graphics {
 	SpriteText::SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr) : Drawable(targetRenderer) {
 		m_loadedFontPtr = fontPtr;
+		update();
 	}
 
 	void SpriteText::update() {
