@@ -8,15 +8,19 @@
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API SpriteText : public Drawable {
 	public:
-		SpriteText(SDL_Renderer *& targetRenderer,	std::shared_ptr<Font> fontPtr);
+		SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr);
 		void update();
 
-		void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		int getTextHeight() { return m_height; }
+		int getTextWidth() { return m_width; }
+		void changeText(std::string newText) { text = newText; update(); }
 
 		std::string text = "Unitialized";
 		TextStyle style;
-		
+
 	private:
 		std::shared_ptr<Font> m_loadedFontPtr;
+		int m_height = 0;
+		int m_width = 0;
 	};
 }

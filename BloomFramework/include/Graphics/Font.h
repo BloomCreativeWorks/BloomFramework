@@ -1,5 +1,6 @@
 #pragma once
 #include "stdIncludes.h"
+#include "Exception.h"
 
 namespace bloom::graphics {
 	struct TextStyle {
@@ -12,7 +13,7 @@ namespace bloom::graphics {
 		int fontStyle = TTF_STYLE_NORMAL;
 		int outlineWidth = 0;
 		bool allowKerning = true;
-		int hinting = TTF_HINTING_NONE;
+		int hinting = TTF_HINTING_NORMAL;
 		SDL_Color foregroundColor = { 255, 255, 255, 0 };
 		SDL_Color backGroundColor = { 0, 0, 0, 0 };
 		BlendingMode blendingMode = normal;
