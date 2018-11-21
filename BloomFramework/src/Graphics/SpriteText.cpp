@@ -1,14 +1,33 @@
 #include "Graphics/SpriteText.h"
 
 namespace bloom::graphics {
-	SpriteText::SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr) : Drawable(targetRenderer) {
-		m_loadedFontPtr = fontPtr;
-		update();
+	SpriteText::SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text, TextStyle style) :
+		Drawable(targetRenderer),
+		text(text),
+		style(style)
+	{
+		m_fontPtr = fontPtr;
+		m_texture = m_fontPtr->createTexture(m_renderer, this->text, this->style);
+		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
 	}
 
-	void SpriteText::update() {
+	void SpriteText::refresh() {
 		SDL_DestroyTexture(m_texture);
-		m_texture = m_loadedFontPtr->createTexture(m_renderer, text, style);
+		if (text.empty()) {
+			std::cerr << "[SpriteText] the use of an empty string is not allowed" << std::endl;
+			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
+			text += ' ';
+		}
+		m_texture = m_fontPtr->createTexture(m_renderer, text, style);
 		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
+	}
+
+	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
+		Drawable::render(srcRect, destRect, flip);
+	}
+
+	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
+		SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
+		Drawable::render(srcRect, destRect, flip);
 	}
 }

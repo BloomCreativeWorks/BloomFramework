@@ -1,25 +1,28 @@
 #pragma once
 
 #include "stdIncludes.h"
-#include "Texture.h"
 #include "Exception.h"
+#include "Drawable.h"
 #include "Font.h"
 
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API SpriteText : public Drawable {
 	public:
-		SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr);
-		void update();
+		SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text = " ", TextStyle style = defaultTextStyle);
 
-		int getTextHeight() { return m_height; }
-		int getTextWidth() { return m_width; }
-		void changeText(std::string newText) { text = newText; update(); }
+		virtual void refresh();
+		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
+		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-		std::string text = "Unitialized";
+		int getTextHeight() const { return m_height; }
+		int getTextWidth() const { return m_width; }
+		void changeText(const std::string & newText) { text = newText; refresh(); }
+
+		std::string text;
 		TextStyle style;
 
 	private:
-		std::shared_ptr<Font> m_loadedFontPtr;
+		std::shared_ptr<Font> m_fontPtr;
 		int m_height = 0;
 		int m_width = 0;
 	};

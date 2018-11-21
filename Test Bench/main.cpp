@@ -55,33 +55,33 @@ int main() {
 	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
 
-	std::shared_ptr<Font> testFont = std::make_shared<Font>(fontPath, 20, 0);
+	std::shared_ptr<Font> testFont = std::make_shared<Font>(fontPath, 25, 0);
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
-	bloom::graphics::SpriteText testText(renderer, testFont); 
+	bloom::graphics::SpriteText testText(renderer, testFont, "Hello, World!");
 	testText.style.blendingMode = testText.style.blended;
-	testText.update();
-	testText.render(std::nullopt, SDL_Rect{ 0,0, testText.getTextWidth(), testText.getTextHeight()});
+	testText.refresh();
+	testText.render(std::nullopt, SDL_Point{ 300, 250 });
 	game->render();
 	game->delay(500);
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	//game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
+	//game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
+	testSprite.init(game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 }), SDL_Rect{ 0,0,128,128 }, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.init(game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 }), SDL_Rect{ 128,0,128,128 }, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
 	game->delay(500);
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
+	testGO.init(game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 }), SDL_Rect{ 50,50,256,256 }, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
@@ -91,7 +91,16 @@ int main() {
 	RandomPositionSystem randomizer(testRegistry);
 
 	// Test SpriteText2
-	std::string deltaTimeText = "Delta time: 0ms";
+	std::string deltaTimeText;
+	SDL_Color col, curcol = game->getColor();
+	std::clog << "current_color: r: " << +curcol.r << ", g: " << +curcol.g << ", b: " << +curcol.b << std::endl;
+	if (curcol.r + curcol.g + curcol.b >= 384) {
+		col = { 0, 0, 0, 0 };
+	}
+	else {
+		col = { 255, 255, 255, 0 };
+	}
+	testText.style.foregroundColor = col;
 
 	int testX = 0, testY = 0;
 	while (game->isRunning()) {
@@ -105,11 +114,11 @@ int main() {
 		game->clear();
 		randomizer.update();
 		renderSysTest.update(); // Test again.
+		deltaTimeText = "fps: " + std::to_string(1000.0 / game->timer.lap());
 		testText.changeText(deltaTimeText);
-		testText.render(std::nullopt, SDL_Rect{ 0,0, testText.getTextWidth(), testText.getTextHeight() });
+		testText.render(std::nullopt, SDL_Point{ 0, 0 });
 		game->render();
-		deltaTimeText = "Delta time: " + std::to_string(game->timer.split()) + "ms";
-		game->update();
+		//game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)

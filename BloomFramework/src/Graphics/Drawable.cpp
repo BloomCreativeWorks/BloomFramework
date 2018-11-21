@@ -2,8 +2,10 @@
 
 namespace bloom::graphics {
 	Drawable::Drawable(SDL_Renderer *& targetRenderer) : m_renderer(targetRenderer) {}
+
 	Drawable::~Drawable() {
-		SDL_DestroyTexture(m_texture);
+		if (m_texture)
+			SDL_DestroyTexture(m_texture);
 	}
 
 	void Drawable::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {

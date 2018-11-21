@@ -1,46 +1,52 @@
 #include "Graphics/Font.h"
+
 namespace bloom::graphics {
-	Font::Font(const std::filesystem::path &  fontPath, int pointSize) {
+	Font::Font(const std::filesystem::path & fontPath, int pointSize) {
+		if (!std::filesystem::exists(fontPath)) {
+			throw Exception("[Font] font file not exists");
+		}
+
 		m_font = TTF_OpenFont(fontPath.u8string().c_str(), pointSize);
 		m_pointSize = pointSize;
 	}
 
-	Font::Font(const std::filesystem::path &  fontPath, int pointSize, long fontFaceIndex) {
+	Font::Font(const std::filesystem::path & fontPath, int pointSize, long fontFaceIndex) {
+		if (!std::filesystem::exists(fontPath)) {
+			throw Exception("[Font] font file not exists");
+		}
+
 		m_font = TTF_OpenFontIndex(fontPath.u8string().c_str(), pointSize, fontFaceIndex);
 		m_pointSize = pointSize;
 	}
 
 	Font::~Font() {
-		if (m_font != nullptr) {
+		if (m_font) {
 			TTF_CloseFont(m_font);
 			m_font = nullptr;
 		}
 	}
 
-	std::string Font::getFontName() {
+	std::string Font::getFamilyName() const {
 		char * fontName = TTF_FontFaceFamilyName(m_font);
-		if (fontName == nullptr) {
-			return "Unavailable";
+		if (fontName) {
+			return std::string(fontName);
 		}
 		else {
-			return fontName;
-		}
-	}
-	std::string Font::getFontStyle() {
-		char * fontStyle = TTF_FontFaceFamilyName(m_font);
-		if (fontStyle == nullptr) {
-			return "Unavailable";
-		}
-		else {
-			return fontStyle;
+			return "";
 		}
 	}
 
-	int Font::getPointSize() {
-		return m_pointSize;
+	std::string Font::getStyle() const {
+		char * fontStyle = TTF_FontFaceStyleName(m_font);
+		if (fontStyle) {
+			return std::string(fontStyle);
+		}
+		else {
+			return "";
+		}
 	}
 
-	SDL_Texture * Font::createTexture(SDL_Renderer *& renderer, std::string text, TextStyle style) {
+	SDL_Texture * Font::createTexture(SDL_Renderer * renderer, const std::string & text, const TextStyle & style) {
 		SDL_Surface * textSurface = nullptr;
 
 		TTF_SetFontStyle(m_font, style.fontStyle);
@@ -66,7 +72,7 @@ namespace bloom::graphics {
 		else {
 			SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, textSurface);
 			SDL_FreeSurface(textSurface);
-			if (texture == nullptr) {
+			if (!texture) {
 				throw Exception("[Font -> SDL_Texture] " + std::string(SDL_GetError()));
 			}
 			else {

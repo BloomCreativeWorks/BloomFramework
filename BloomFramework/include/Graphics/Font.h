@@ -1,4 +1,5 @@
 #pragma once
+
 #include "stdIncludes.h"
 #include "Exception.h"
 
@@ -19,18 +20,24 @@ namespace bloom::graphics {
 		BlendingMode blendingMode = normal;
 	};
 
+	static TextStyle defaultTextStyle = TextStyle();
+
 	class BLOOMFRAMEWORK_API Font {
 	public:
 		Font(const std::filesystem::path & fontPath, int pointSize);
 		Font(const std::filesystem::path & fontPath, int pointSize, long fontFaceIndex);
 		~Font();
 
-		std::string getFontName();
-		std::string getFontStyle();
-		int getPointSize();
-		bool isFixedWidth() { return TTF_FontFaceIsFixedWidth(m_font); }
+		std::string getFamilyName() const;
+		std::string getStyle() const;
+		int getPointSize() const { return m_pointSize; }
+		bool isFixedWidth() const { return TTF_FontFaceIsFixedWidth(m_font); }
 
-		SDL_Texture * createTexture(SDL_Renderer *& renderer, std::string text, TextStyle style = TextStyle());
+		SDL_Texture * createTexture(SDL_Renderer * renderer, const std::string & text, const TextStyle & style = defaultTextStyle);
+
+		//SDL_Texture * operator()(SDL_Renderer *& renderer, std::string text, TextStyle style = TextStyle()) {
+		//	return createTexture(renderer, text, style);
+		//}
 
 	private:
 		TTF_Font * m_font = nullptr;
