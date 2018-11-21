@@ -11,7 +11,10 @@ namespace bloom::graphics {
 	}
 
 	Font::~Font() {
-		TTF_CloseFont(m_font);
+		if (m_font != nullptr) {
+			TTF_CloseFont(m_font);
+			m_font = nullptr;
+		}
 	}
 
 	std::string Font::getFontName() {

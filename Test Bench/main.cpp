@@ -114,6 +114,7 @@ int main() {
 			game->delay(framedelay - frametime);
 	}
 	game->destroy();
+	testFont->~Font();
 	Game::exit();
 	return 0;
 }
