@@ -48,12 +48,14 @@ namespace bloom::graphics {
 
 	SDL_Texture * Font::createTexture(SDL_Renderer * renderer, const std::string & text, const TextStyle & style) {
 		SDL_Surface * textSurface = nullptr;
-
-		TTF_SetFontStyle(m_font, style.fontStyle);
+		if (TTF_GetFontStyle(m_font) != style.fontStyle)
+			TTF_SetFontStyle(m_font, style.fontStyle);
 		if (TTF_GetFontHinting(m_font) != style.hinting)
 			TTF_SetFontHinting(m_font, style.hinting);
-		TTF_SetFontKerning(m_font, static_cast<int>(style.allowKerning));
-		TTF_SetFontOutline(m_font, style.outlineWidth);
+		if (TTF_GetFontKerning(m_font) != static_cast<int>(style.allowKerning))
+			TTF_SetFontKerning(m_font, static_cast<int>(style.allowKerning));
+		if (TTF_GetFontOutline(m_font) != style.outlineWidth)
+			TTF_SetFontOutline(m_font, style.outlineWidth);
 
 		switch (style.blendingMode) {
 		case style.normal:
