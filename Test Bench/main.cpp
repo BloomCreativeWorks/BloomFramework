@@ -8,7 +8,7 @@
 
 using namespace bloom;
 using bloom::components::Position;
-using Font = bloom::graphics::Font;
+using namespace bloom::graphics;
 
 Game* game = nullptr;
 
@@ -55,10 +55,12 @@ int main() {
 	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
 
-	std::shared_ptr<Font> testFont = std::make_shared<Font>(fontPath, 25, 0);
+	FontStore fonts;
+	fonts.load(fontPath, "UI", defaultFontStyle);
+
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
-	bloom::graphics::SpriteText testText(renderer, testFont, "Hello, World!");
+	bloom::graphics::SpriteText testText(renderer, fonts["UI"], "Hello, World!");
 	testText.style.blendingMode = testText.style.blended;
 	testText.refresh();
 	testText.render(std::nullopt, SDL_Point{ 300, 250 });
@@ -125,7 +127,8 @@ int main() {
 			game->delay(framedelay - frametime);
 	}
 	game->destroy();
-	testFont->~Font();
+	fonts.unload("UI");
+	testText.~SpriteText();
 	Game::exit();
 	return 0;
 }

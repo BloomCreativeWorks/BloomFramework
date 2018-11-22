@@ -6,9 +6,23 @@
 #include "Font.h"
 
 namespace bloom::graphics {
+	struct TextStyle {
+		enum BlendingMode {
+			normal = 0,
+			shaded = 1,
+			blended = 2
+		};
+		SDL_Color foregroundColor = { 255, 255, 255, 0 };
+		SDL_Color backGroundColor = { 0, 0, 0, 0 };
+		BlendingMode blendingMode = normal;
+	};
+
+	static TextStyle defaultTextStyle = TextStyle();
+
 	class BLOOMFRAMEWORK_API SpriteText : public Drawable {
 	public:
 		SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text = " ", TextStyle style = defaultTextStyle);
+		~SpriteText() = default;
 
 		virtual void refresh();
 		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
@@ -22,7 +36,7 @@ namespace bloom::graphics {
 		TextStyle style;
 
 	private:
-		std::shared_ptr<Font> m_fontPtr;
+		FontPtr m_fontPtr;
 		int m_height = 0;
 		int m_width = 0;
 	};

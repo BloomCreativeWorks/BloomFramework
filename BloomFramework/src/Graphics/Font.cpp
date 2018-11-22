@@ -1,4 +1,5 @@
 #include "Graphics/Font.h"
+#include "Graphics/SpriteText.h"
 
 namespace bloom::graphics {
 	Font::Font(const std::filesystem::path & fontPath, int pointSize) {
@@ -7,7 +8,11 @@ namespace bloom::graphics {
 		}
 
 		m_font = TTF_OpenFont(fontPath.u8string().c_str(), pointSize);
-		m_pointSize = pointSize;
+		m_style.pointSize = pointSize;
+		TTF_SetFontStyle(m_font, m_style.fontStyle);
+		TTF_SetFontHinting(m_font, m_style.hinting);
+		TTF_SetFontKerning(m_font, static_cast<int>(m_style.allowKerning));
+		TTF_SetFontOutline(m_font, m_style.outlineWidth);
 	}
 
 	Font::Font(const std::filesystem::path & fontPath, int pointSize, long fontFaceIndex) {
@@ -16,7 +21,23 @@ namespace bloom::graphics {
 		}
 
 		m_font = TTF_OpenFontIndex(fontPath.u8string().c_str(), pointSize, fontFaceIndex);
-		m_pointSize = pointSize;
+		m_style.pointSize = pointSize;
+		TTF_SetFontStyle(m_font, m_style.fontStyle);
+		TTF_SetFontHinting(m_font, m_style.hinting);
+		TTF_SetFontKerning(m_font, static_cast<int>(m_style.allowKerning));
+		TTF_SetFontOutline(m_font, m_style.outlineWidth);
+	}
+
+	Font::Font(const std::filesystem::path & fontPath, FontStyle style) : m_style(style) {
+		if (!std::filesystem::exists(fontPath)) {
+			throw Exception("[Font] font file not exists");
+		}
+
+		m_font = TTF_OpenFont(fontPath.u8string().c_str(), m_style.pointSize);
+		TTF_SetFontStyle(m_font, m_style.fontStyle);
+		TTF_SetFontHinting(m_font, m_style.hinting);
+		TTF_SetFontKerning(m_font, static_cast<int>(m_style.allowKerning));
+		TTF_SetFontOutline(m_font, m_style.outlineWidth);
 	}
 
 	Font::~Font() {
@@ -46,25 +67,17 @@ namespace bloom::graphics {
 		}
 	}
 
-	SDL_Texture * Font::createTexture(SDL_Renderer * renderer, const std::string & text, const TextStyle & style) {
+	SDL_Texture * Font::createTexture(SDL_Renderer * renderer, const std::string & text, TextStyle style) {
 		SDL_Surface * textSurface = nullptr;
-		if (TTF_GetFontStyle(m_font) != style.fontStyle)
-			TTF_SetFontStyle(m_font, style.fontStyle);
-		if (TTF_GetFontHinting(m_font) != style.hinting)
-			TTF_SetFontHinting(m_font, style.hinting);
-		if (TTF_GetFontKerning(m_font) != static_cast<int>(style.allowKerning))
-			TTF_SetFontKerning(m_font, static_cast<int>(style.allowKerning));
-		if (TTF_GetFontOutline(m_font) != style.outlineWidth)
-			TTF_SetFontOutline(m_font, style.outlineWidth);
 
 		switch (style.blendingMode) {
-		case style.normal:
+		case TextStyle::normal:
 			textSurface = TTF_RenderUTF8_Solid(m_font, text.c_str(), style.foregroundColor);
 			break;
-		case style.shaded:
+		case TextStyle::shaded:
 			textSurface = TTF_RenderUTF8_Shaded(m_font, text.c_str(), style.foregroundColor, style.backGroundColor);
 			break;
-		case style.blended:
+		case TextStyle::blended:
 			textSurface = TTF_RenderUTF8_Blended(m_font, text.c_str(), style.foregroundColor);
 			break;
 		}
