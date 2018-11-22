@@ -7,7 +7,12 @@ namespace bloom::graphics {
 		style(style)
 	{
 		m_fontPtr = fontPtr;
-		m_texture = m_fontPtr->createTexture(m_renderer, this->text, this->style);
+		if (text.empty()) {
+			std::cerr << "[SpriteText] the use of an empty string is not allowed" << std::endl;
+			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
+			text += ' ';
+		}
+		m_texture = m_fontPtr->createTexture(m_renderer, text, style);
 		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
 	}
 
