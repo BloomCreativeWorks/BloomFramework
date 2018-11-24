@@ -3,10 +3,10 @@
 namespace bloom::graphics {
 	SpriteText::SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text, TextStyle style) :
 		Drawable(targetRenderer),
+		m_fontPtr(fontPtr),
 		text(text),
 		style(style)
 	{
-		m_fontPtr = fontPtr;
 		if (text.empty()) {
 			std::cerr << "[SpriteText] the use of an empty string is not allowed" << std::endl;
 			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
