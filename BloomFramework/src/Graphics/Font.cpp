@@ -68,6 +68,9 @@ namespace bloom::graphics {
 	}
 
 	SDL_Texture * Font::createTexture(SDL_Renderer * renderer, const std::string & text, TextStyle style) {
+		if (!renderer)
+			throw Exception("[Font] `renderer` pointer can not be nullptr");
+
 		SDL_Surface * textSurface = nullptr;
 
 		switch (style.blendingMode) {
