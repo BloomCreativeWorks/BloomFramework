@@ -5,6 +5,7 @@
 
 namespace bloom::graphics {
 	struct TextStyle;
+
 	struct FontStyle {
 		int pointSize = 20;
 		int fontStyle = TTF_STYLE_NORMAL;
@@ -28,7 +29,6 @@ namespace bloom::graphics {
 		bool isFixedWidth() const { return TTF_FontFaceIsFixedWidth(m_font); }
 
 		SDL_Texture * createTexture(SDL_Renderer * renderer, const std::string & text, TextStyle style);
-
 
 	private:
 		TTF_Font * m_font = nullptr;

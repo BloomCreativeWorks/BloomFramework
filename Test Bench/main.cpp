@@ -105,6 +105,7 @@ int main() {
 	testText.style.foregroundColor = col;
 
 	int testX = 0, testY = 0;
+	int frametime;
 	while (game->isRunning()) {
 		// If manual control of entities is required, this is the method to do so.
 		auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
@@ -121,7 +122,7 @@ int main() {
 		testText.render(std::nullopt, SDL_Point{ 0, 0 });
 		game->render();
 		//game->update();
-		int frametime = SDL_GetTicks() - framestart;
+		frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime)
 			game->delay(framedelay - frametime);
