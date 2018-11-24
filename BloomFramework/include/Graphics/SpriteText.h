@@ -11,10 +11,9 @@ namespace bloom::graphics {
 			normal = 0,
 			shaded = 1,
 			blended = 2
-		};
+		} blendingMode = normal;
 		SDL_Color foregroundColor = { 255, 255, 255, 0 };
 		SDL_Color backGroundColor = { 0, 0, 0, 0 };
-		BlendingMode blendingMode = normal;
 	};
 
 	static TextStyle defaultTextStyle = TextStyle();
