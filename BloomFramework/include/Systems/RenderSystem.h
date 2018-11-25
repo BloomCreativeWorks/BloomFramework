@@ -8,8 +8,8 @@
 
 namespace bloom::systems {
 	class RenderSystem : public DefaultSystem {
-		using Position = bloom::components::Position;
-		using Size = bloom::components::Size;
+		using Transform = bloom::components::Transform;
+		using Rotation = double;
 		using Sprite = bloom::components::Sprite;
 		using LayerGroup = bloom::components::LayerGroup;
 		using DefaultSystem::System;
@@ -18,22 +18,22 @@ namespace bloom::systems {
 		~RenderSystem() = default;
 
 		void update(std::optional<double> deltaTime = std::nullopt) override {
-			std::vector<std::tuple<Sprite, SDL_Rect, LayerGroup>> renderQueue{};
+			std::vector<std::tuple<Sprite,Rotation, SDL_Rect, LayerGroup>> renderQueue{};
 
-			m_registry.view<Position, Size, Sprite>().each(
-				[&](auto entity, Position & pos, Size& size, Sprite & spr) {
+			m_registry.view<Transform, Sprite>().each(
+				[&](auto entity, Transform & trans, Sprite & spr) {
 
-				if (size.w < 0)
-					size.w = 0;
-				if (size.h < 0)
-					size.h = 0;
+				if (trans.size.w < 0)
+					trans.size.w = 0;
+				if (trans.size.h < 0)
+					trans.size.h = 0;
 
-				Coord actualPos = pos.getSDLPos(parentScene.getGameInstance().getRenderer(), size.w, size.h);
+				Coord actualPos = trans.position.getSDLPos(parentScene.getGameInstance().getRenderer(), trans.size.w, trans.size.h);
 				SDL_Rect destRect{
 					static_cast<int>(actualPos.x),
 					static_cast<int>(actualPos.y),
-					static_cast<int>(size.w),
-					static_cast<int>(size.h)
+					static_cast<int>(trans.size.w),
+					static_cast<int>(trans.size.h)
 				};
 
 				LayerGroup layerNo;
@@ -43,19 +43,20 @@ namespace bloom::systems {
 					layerNo = 0;
 
 				// Place sprites into queue for sorting later.
-				renderQueue.emplace_back(std::make_tuple(spr, destRect, layerNo));
+				renderQueue.emplace_back(std::make_tuple(spr, trans.rotation, destRect, layerNo));
 			});
 
 			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
 			std::sort(renderQueue.begin(), renderQueue.end(), [](const auto& lhs, const auto& rhs) {
-				return std::get<2>(lhs) < std::get<2>(rhs);
+				return std::get<3>(lhs) < std::get<3>(rhs);
 			});
 
 			// Render
 			for (auto i : renderQueue) {
 				auto & spr = std::get<0>(i);
-				auto & destRect = std::get<1>(i);
-				spr.texture->render(spr.srcRect, destRect, spr.rotationAngle);
+				auto & rot = std::get<1>(i);
+				auto & destRect = std::get<2>(i);
+				spr.texture->render(spr.srcRect, destRect, rot);
 			}
 		}
 

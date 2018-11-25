@@ -163,12 +163,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Components\Sprite.h" />
+    <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\Coord.h" />
     <ClInclude Include="include\Components\Components.h" />
-    <ClInclude Include="include\Components\Position.h" />
     <ClInclude Include="include\Components\LayerGroup.h" />
-    <ClInclude Include="include\Components\Size.h" />
-    <ClInclude Include="include\Components\Sprite.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Framework.h" />
     <ClInclude Include="include\Game.h" />

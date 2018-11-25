@@ -16,7 +16,7 @@ namespace bloom {
 	* The destructor will automatically destroy the entity from the registry when GameObject gets out of scope.
 	*/
 	class BLOOMFRAMEWORK_API GameObject {
-		using Position = bloom::components::Position;
+		using Transform = bloom::components::Transform;
 
 	public:
 		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);

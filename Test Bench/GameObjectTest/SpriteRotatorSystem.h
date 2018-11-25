@@ -3,7 +3,7 @@
 #include "SceneRotateSystem.h"
 
 class SpriteRotatorSystem : public bloom::systems::DefaultSystem {
-	using Sprite = bloom::components::Sprite;
+	using Transform = bloom::components::Transform;
 	using bloom::systems::DefaultSystem::System;
 
 public:
@@ -18,9 +18,9 @@ public:
 				m_currentAngle = 0.0;
 				parentScene.getSystemPtr<SceneRotateSystem>()->rotateAmount = 5;
 			}
-			m_registry.view<Sprite>().each(
-				[&](auto entity, Sprite & spr) {
-				spr.rotationAngle = fmod(m_currentAngle, 360);
+			m_registry.view<Transform>().each(
+				[&](auto entity, Transform & trans) {
+				trans.rotation = fmod(m_currentAngle, 360);
 			});
 		}
 	}

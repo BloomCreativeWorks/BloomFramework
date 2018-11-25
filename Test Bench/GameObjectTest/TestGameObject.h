@@ -4,18 +4,20 @@
 #include "NoRandomComponent.h"
 
 class TestChar : public bloom::GameObject {
-	using Position = bloom::components::Position;
+	using Transform = bloom::components::Transform;
+	using Position = bloom::Coord;
 	using Size = bloom::components::Size;
-	using Sprite = bloom::components::Sprite;
 	using LayerGroup = bloom::components::LayerGroup;
+	using Sprite = bloom::components::Sprite;
 	using bloom::GameObject::GameObject;
 
 public:
 	void init() override {}
 
 	void init(Position pos, Size size, const std::filesystem::path texturePath, std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
-		m_registry.replace<Position>(m_entity, pos);
-		m_registry.assign<Size>(m_entity, size);
+		
+		Transform trans = { pos, 0.0f, size };
+		m_registry.assign<Transform>(m_entity, trans);
 		auto tmp = m_gameInstance.textures.load(texturePath);
 		m_registry.assign<Sprite>(m_entity, tmp, srcRect);
 

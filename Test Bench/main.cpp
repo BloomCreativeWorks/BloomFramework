@@ -8,7 +8,6 @@
 #include "TestScene.h"
 
 using namespace bloom;
-using bloom::components::Position;
 
 Game* game = nullptr;
 

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Position.h"
-#include "Size.h"
-#include "Sprite.h"
+#include "Transform.h"
 #include "LayerGroup.h"
+#include "Sprite.h"

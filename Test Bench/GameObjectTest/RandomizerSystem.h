@@ -4,18 +4,18 @@
 #include "NoRandomComponent.h"
 
 class RandomPositionSystem : public bloom::systems::DefaultSystem {
-	using Position = bloom::components::Position;
+	using Transform = bloom::components::Transform;
 	using bloom::systems::DefaultSystem::System;
 
 public:
 	~RandomPositionSystem() = default;
 
 	void update(std::optional<double> deltaTime = std::nullopt) override {
-		m_registry.view<Position>().each(
-			[this](auto entity, Position & pos) {
+		m_registry.view<Transform>().each(
+			[this](auto entity, Transform & trans) {
 			if (!m_registry.has<NoRandomPos>(entity)) {
-				pos.x = rand() % 672;
-				pos.y = rand() % 472;
+				trans.position.x = rand() % 672;
+				trans.position.y = rand() % 472;
 			}
 		});
 	}
