@@ -12,19 +12,7 @@ namespace bloom::graphics {
 			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
 			text += ' ';
 		}
-		m_texture = m_fontPtr->createTexture(m_renderer, text, style);
-		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
-	}
-
-	void SpriteText::refresh() {
-		SDL_DestroyTexture(m_texture);
-		if (text.empty()) {
-			std::cerr << "[SpriteText] the use of an empty string is not allowed" << std::endl;
-			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
-			text += ' ';
-		}
-		m_texture = m_fontPtr->createTexture(m_renderer, text, style);
-		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
+		refreshTexture();
 	}
 
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
@@ -34,5 +22,39 @@ namespace bloom::graphics {
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
 		SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
 		Drawable::render(srcRect, destRect, flip);
+	}
+
+	void SpriteText::refreshTexture() {
+		if (!m_renderer)
+			throw Exception("[SpriteText::refreshTexture] `renderer` pointer can not be nullptr");
+
+		SDL_DestroyTexture(m_texture);
+		m_texture = nullptr;
+
+		SDL_Surface * textSurface = nullptr;
+
+		switch (style.blendingMode) {
+		case TextStyle::normal:
+			textSurface = TTF_RenderUTF8_Solid(m_fontPtr->getFont(), text.c_str(), style.foregroundColor);
+			break;
+		case TextStyle::shaded:
+			textSurface = TTF_RenderUTF8_Shaded(m_fontPtr->getFont(), text.c_str(), style.foregroundColor, style.backGroundColor);
+			break;
+		case TextStyle::blended:
+			textSurface = TTF_RenderUTF8_Blended(m_fontPtr->getFont(), text.c_str(), style.foregroundColor);
+			break;
+		}
+		if (textSurface == nullptr) {
+			throw Exception("[Font -> TTF_RenderUTF8] " + std::string(SDL_GetError()));
+		}
+		else {
+			m_texture = SDL_CreateTextureFromSurface(m_renderer, textSurface);
+			SDL_FreeSurface(textSurface);
+			if (!m_texture) {
+				throw Exception("[Font -> SDL_Texture] " + std::string(SDL_GetError()));
+			}
+
+			SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
+		}
 	}
 }

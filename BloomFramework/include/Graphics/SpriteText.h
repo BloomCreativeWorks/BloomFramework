@@ -23,13 +23,13 @@ namespace bloom::graphics {
 		SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text = " ", TextStyle style = defaultTextStyle);
 		~SpriteText() = default;
 
-		virtual void refresh();
+		void refreshTexture();
 		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
 		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 		int getTextHeight() const { return m_height; }
 		int getTextWidth() const { return m_width; }
-		void changeText(const std::string & newText) { text = newText; refresh(); }
+		void changeText(const std::string & newText) { text = newText; refreshTexture(); }
 
 		std::string text;
 		TextStyle style;

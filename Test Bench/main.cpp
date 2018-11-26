@@ -62,7 +62,7 @@ int main() {
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, fonts["UI"], "Hello, World!");
 	testText.style.blendingMode = testText.style.blended;
-	testText.refresh();
+	testText.refreshTexture();
 	testText.render(std::nullopt, SDL_Point{ 300, 250 });
 	game->render();
 	game->delay(500);

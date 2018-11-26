@@ -66,36 +66,4 @@ namespace bloom::graphics {
 			return "";
 		}
 	}
-
-	SDL_Texture * Font::createTexture(SDL_Renderer * renderer, const std::string & text, TextStyle style) {
-		if (!renderer)
-			throw Exception("[Font] `renderer` pointer can not be nullptr");
-
-		SDL_Surface * textSurface = nullptr;
-
-		switch (style.blendingMode) {
-		case TextStyle::normal:
-			textSurface = TTF_RenderUTF8_Solid(m_font, text.c_str(), style.foregroundColor);
-			break;
-		case TextStyle::shaded:
-			textSurface = TTF_RenderUTF8_Shaded(m_font, text.c_str(), style.foregroundColor, style.backGroundColor);
-			break;
-		case TextStyle::blended:
-			textSurface = TTF_RenderUTF8_Blended(m_font, text.c_str(), style.foregroundColor);
-			break;
-		}
-		if (textSurface == nullptr) {
-			throw Exception("[Font -> TTF_RenderUTF8] " + std::string(SDL_GetError()));
-		}
-		else {
-			SDL_Texture * texture = SDL_CreateTextureFromSurface(renderer, textSurface);
-			SDL_FreeSurface(textSurface);
-			if (!texture) {
-				throw Exception("[Font -> SDL_Texture] " + std::string(SDL_GetError()));
-			}
-			else {
-				return texture;
-			}
-		}
-	}
 }
