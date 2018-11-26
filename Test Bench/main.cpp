@@ -56,11 +56,12 @@ int main() {
 	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
 
 	FontStore fonts;
-	fonts.load(fontPath, "UI", defaultFontStyle);
+	constexpr size_t UI_font = 0;
+	fonts.load(fontPath, UI_font, defaultFontStyle);
 
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
-	bloom::graphics::SpriteText testText(renderer, fonts["UI"], "Hello, World!");
+	bloom::graphics::SpriteText testText(renderer, fonts[UI_font], "Hello, World!");
 	testText.style.blendingMode = testText.style.blended;
 	testText.refreshTexture();
 	testText.render(std::nullopt, SDL_Point{ 300, 250 });
@@ -128,7 +129,7 @@ int main() {
 			game->delay(framedelay - frametime);
 	}
 	game->destroy();
-	fonts.unload("UI");
+	fonts.unload(UI_font);
 	testText.~SpriteText();
 	Game::exit();
 	return 0;

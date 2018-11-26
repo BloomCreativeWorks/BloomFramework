@@ -7,14 +7,14 @@ namespace bloom::graphics {
 	public:
 		FontStore() = default;
 
-		FontPtr load(const std::filesystem::path & filePath, const std::string & presetName, FontStyle style = defaultFontStyle);
-		FontPtr find(const std::string & presetName) const noexcept;
-		void unload(const std::string & presetName);
+		FontPtr load(const std::filesystem::path & filePath, size_t presetNumber, FontStyle style = defaultFontStyle);
+		FontPtr find(size_t presetNumber) const noexcept;
+		void unload(size_t presetNumber);
 
-		FontPtr operator[](const std::string & key) const noexcept;
+		FontPtr operator[](size_t key) const noexcept;
 
 	private:
-		std::unordered_map<std::string, FontPtr>	m_store;
+		std::unordered_map<size_t, FontPtr>	m_store;
 	};
 }
 
