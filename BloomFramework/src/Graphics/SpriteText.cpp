@@ -32,13 +32,13 @@ namespace bloom::graphics {
 
 		switch (style.blendingMode) {
 		case TextStyle::normal:
-			textSurface = TTF_RenderUTF8_Solid(m_fontPtr->getFont(), text.c_str(), style.foregroundColor);
+			textSurface = TTF_RenderUTF8_Solid(m_fontPtr->m_font, text.c_str(), style.foregroundColor);
 			break;
 		case TextStyle::shaded:
-			textSurface = TTF_RenderUTF8_Shaded(m_fontPtr->getFont(), text.c_str(), style.foregroundColor, style.backGroundColor);
+			textSurface = TTF_RenderUTF8_Shaded(m_fontPtr->m_font, text.c_str(), style.foregroundColor, style.backGroundColor);
 			break;
 		case TextStyle::blended:
-			textSurface = TTF_RenderUTF8_Blended(m_fontPtr->getFont(), text.c_str(), style.foregroundColor);
+			textSurface = TTF_RenderUTF8_Blended(m_fontPtr->m_font, text.c_str(), style.foregroundColor);
 			break;
 		}
 		if (textSurface == nullptr) {
