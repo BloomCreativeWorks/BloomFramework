@@ -164,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Components\Sprite.h" />
+    <ClInclude Include="include\Components\Tag.h" />
     <ClInclude Include="include\Components\Transform.h" />
     <ClInclude Include="include\Coord.h" />
     <ClInclude Include="include\Components\Components.h" />

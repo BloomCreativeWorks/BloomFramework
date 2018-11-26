@@ -119,6 +119,9 @@
     <ClInclude Include="include\Components\Transform.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="include\Components\Tag.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

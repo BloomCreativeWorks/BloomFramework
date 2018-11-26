@@ -3,12 +3,17 @@
 #include "Framework.h"
 #include "NoRandomComponent.h"
 
+//using namespace entt;
+
 class TestChar : public bloom::GameObject {
 	using Transform = bloom::components::Transform;
 	using Position = bloom::Coord;
 	using Size = bloom::components::Size;
 	using LayerGroup = bloom::components::LayerGroup;
 	using Sprite = bloom::components::Sprite;
+	template <uint64_t V>
+	using Label = bloom::components::Label<V>;
+
 	using bloom::GameObject::GameObject;
 
 public:
@@ -23,6 +28,10 @@ public:
 
 		if (priority != std::nullopt)
 			m_registry.assign<LayerGroup>(m_entity, priority.value());
+
+
+		m_registry.assign<Label<"TestObject"_hs>>(m_entity);
+
 	}
 
 	void disableRandomPos() {
