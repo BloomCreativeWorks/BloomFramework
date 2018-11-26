@@ -25,9 +25,6 @@ namespace bloom::graphics {
 	}
 
 	void SpriteText::refreshTexture() {
-		if (!m_renderer)
-			throw Exception("[SpriteText::refreshTexture] `renderer` pointer can not be nullptr");
-
 		SDL_DestroyTexture(m_texture);
 		m_texture = nullptr;
 

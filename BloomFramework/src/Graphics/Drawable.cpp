@@ -1,7 +1,10 @@
 #include "Graphics/Drawable.h"
 
 namespace bloom::graphics {
-	Drawable::Drawable(SDL_Renderer *& targetRenderer) : m_renderer(targetRenderer) {}
+	Drawable::Drawable(SDL_Renderer *& targetRenderer) : m_renderer(targetRenderer) {
+		if (!m_renderer)
+			throw Exception("[Drawable] `renderer` pointer can not be nullptr");
+	}
 
 	Drawable::~Drawable() {
 		if (m_texture)
