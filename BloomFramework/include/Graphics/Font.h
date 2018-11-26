@@ -28,9 +28,7 @@ namespace bloom::graphics {
 		int getPointSize() const { return m_style.pointSize; }
 		bool isFixedWidth() const { return TTF_FontFaceIsFixedWidth(m_font); }
 
-		TTF_Font * getFont() const {
-			return m_font;
-		}
+		TTF_Font * getFont() const { return m_font; }
 
 	private:
 		TTF_Font * m_font = nullptr;
