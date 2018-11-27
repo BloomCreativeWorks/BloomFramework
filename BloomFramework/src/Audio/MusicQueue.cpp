@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	MusicQueue * MusicQueue::m_thisObjectPtr = nullptr;
+	MusicQueue * MusicQueue::s_currentQueuePtr = nullptr;
 
 	MusicQueue::MusicQueue() {
 		Mix_HookMusicFinished(MusicQueue::next_track);
@@ -13,7 +13,7 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::activate() {
-		m_thisObjectPtr = this;
+		s_currentQueuePtr = this;
 	}
 
 	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs, int fadeOutMs) {
@@ -28,7 +28,7 @@ namespace bloom::audio {
 		if (m_queue.empty())
 			throw Exception("[MusicStore] store is empty");
 
-		if (m_thisObjectPtr != this)
+		if (s_currentQueuePtr != this)
 			activate();
 
 		auto track = m_queue.front();
@@ -108,14 +108,14 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::next_track() {
-		if (m_thisObjectPtr) {
-			if (!m_thisObjectPtr->m_queue.front().bypassInfinitePlayback && m_thisObjectPtr->m_infinitePlayback) {
-				m_thisObjectPtr->m_queue.push(m_thisObjectPtr->m_queue.front());
+		if (s_currentQueuePtr) {
+			if (!s_currentQueuePtr->m_queue.front().bypassInfinitePlayback && s_currentQueuePtr->m_infinitePlayback) {
+				s_currentQueuePtr->m_queue.push(s_currentQueuePtr->m_queue.front());
 			}
-			m_thisObjectPtr->m_queue.pop();
+			s_currentQueuePtr->m_queue.pop();
 
-			if (!m_thisObjectPtr->m_queue.empty())
-				m_thisObjectPtr->play();
+			if (!s_currentQueuePtr->m_queue.empty())
+				s_currentQueuePtr->play();
 		}
 	}
 }
