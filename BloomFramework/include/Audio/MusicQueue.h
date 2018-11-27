@@ -9,6 +9,7 @@ namespace bloom::audio {
 		MusicQueue();
 		~MusicQueue();
 
+		bool tryActivate();
 		void activate();
 		void add(TrackPtr track, int plays = 1, bool bypassInfinitePlayback = false, int fadeInMs = 0);
 		void add(TrackExt track);

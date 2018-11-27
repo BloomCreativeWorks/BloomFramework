@@ -12,8 +12,21 @@ namespace bloom::audio {
 		clear();
 	}
 
+	bool MusicQueue::tryActivate() {
+		if (Mix_PlayingMusic() && s_currentQueuePtr != this) {
+			return false;
+		}
+		else {
+			activate();
+			return true;
+		}
+	}
+
 	void MusicQueue::activate() {
-		s_currentQueuePtr = this;
+		if (s_currentQueuePtr != this) {
+			Mix_HaltMusic();
+			s_currentQueuePtr = this;
+		}
 	}
 
 	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs) {
