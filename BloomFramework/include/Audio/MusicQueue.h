@@ -5,8 +5,6 @@
 
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicQueue {
-		struct TrackExt { TrackPtr track; int plays; bool bypassInfinitePlayback; int fadeIn = 0; int fadeOut = 0; };
-
 	public:
 		MusicQueue();
 		~MusicQueue();
