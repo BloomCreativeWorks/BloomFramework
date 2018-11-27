@@ -17,8 +17,8 @@ namespace bloom::audio {
 		MusicStore	store;
 		MusicQueue	queue;
 
-		void push(const std::filesystem::path & filePath, int plays = 1, bool ignoreInfinitePlayback = false, int fadeInMs = 0, int fadeOutMs = 0) {
-			queue.add(store.load(filePath), plays, ignoreInfinitePlayback, fadeInMs, fadeOutMs);
+		void push(const std::filesystem::path & filePath, int plays = 1, bool ignoreInfinitePlayback = false, int fadeInMs = 0) {
+			queue.add(store.load(filePath), plays, ignoreInfinitePlayback, fadeInMs);
 		}
 
 		void clear() {

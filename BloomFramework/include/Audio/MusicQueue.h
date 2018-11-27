@@ -10,15 +10,15 @@ namespace bloom::audio {
 		~MusicQueue();
 
 		void activate();
-		void add(TrackPtr track, int plays = 1, bool bypassInfinitePlayback = false, int fadeInMs = 0, int fadeOutMs = 0);
+		void add(TrackPtr track, int plays = 1, bool bypassInfinitePlayback = false, int fadeInMs = 0);
 		void add(TrackExt track);
 		void play(bool bypassFade = false);
 		void pause();
 		void resume();
 		void rewind();
-		void skip(bool bypassFade = false);
-		void eject(bool bypassFade = true);
-		void clear(bool bypassFade = false);
+		void skip(int fadeOutMs = 0);
+		void eject(int fadeOutMs = 0);
+		void clear(int fadeOutMs = 0);
 		void deactivate();
 
 		void setVolume(double volumePercent);

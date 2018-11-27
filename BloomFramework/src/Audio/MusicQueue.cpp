@@ -16,8 +16,8 @@ namespace bloom::audio {
 		s_currentQueuePtr = this;
 	}
 
-	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs, int fadeOutMs) {
-		m_queue.push({ track, plays, bypassInfinitePlayback, fadeInMs, fadeOutMs });
+	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs) {
+		m_queue.push({ track, plays, bypassInfinitePlayback, fadeInMs });
 	}
 
 	void MusicQueue::add(TrackExt track) {
@@ -32,8 +32,8 @@ namespace bloom::audio {
 			activate();
 
 		auto track = m_queue.front();
-		if (track.fadeIn > 0 and !bypassFade)
-			track.track->play(track.plays, track.fadeIn);
+		if (track.fadeInMs > 0 and !bypassFade)
+			track.track->play(track.plays, track.fadeInMs);
 		else
 			track.track->play(track.plays);
 	}
@@ -50,25 +50,25 @@ namespace bloom::audio {
 		m_queue.front().track->rewind();
 	}
 
-	void MusicQueue::skip(bool bypassFade) {
-		if (m_queue.front().fadeOut > 0 && !bypassFade)
-			m_queue.front().track->stop(m_queue.front().fadeOut);
+	void MusicQueue::skip(int fadeOutMs) {
+		if (fadeOutMs > 0)
+			m_queue.front().track->stop(fadeOutMs);
 		else
 			m_queue.front().track->stop();
 	}
 
-	void MusicQueue::eject(bool bypassFade) {
+	void MusicQueue::eject(int fadeOutMs) {
 		if (!m_queue.empty()) {
 			m_queue.front().bypassInfinitePlayback = true;
-			skip(bypassFade);
+			skip(fadeOutMs);
 		}
 	}
 
-	void MusicQueue::clear(bool bypassFade) {
+	void MusicQueue::clear(int fadeOutMs) {
 		deactivate();
 		if (!m_queue.empty()) {
-			if (m_queue.front().fadeOut > 0 && !bypassFade)
-				m_queue.front().track->stop(m_queue.front().fadeOut);
+			if (fadeOutMs > 0)
+				m_queue.front().track->stop(fadeOutMs);
 			else
 				m_queue.front().track->stop();
 			m_queue = std::queue<TrackExt>();

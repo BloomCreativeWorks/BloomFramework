@@ -50,8 +50,8 @@ int main() {
 	fs::path musicPath = dataPath / L"Music";
 	fs::path soundsPath = dataPath / L"Sounds";
 
-	music.push(musicPath / L"sample_3.mp3", 1, false, 100, 100);
-	music.push(musicPath / L"sample_4.mp3", 1, false, 50, 50);
+	music.push(musicPath / L"sample_3.mp3", 1, false, 5000);
+	music.push(musicPath / L"sample_4.mp3", 1, false, 10000);
 	music.push(musicPath / L"sample_5.mp3");
 	music.push(musicPath / L"sample_6.mp3", 1, true);
 	music.push(musicPath / L"sample_7.mp3", 1, true);
@@ -147,7 +147,7 @@ int main() {
 		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
 		renderSysTest.update(); // Test again.
 		game->render();
-		game->update();
+		//game->update();
 
 		int frametime = SDL_GetTicks() - framestart;
 

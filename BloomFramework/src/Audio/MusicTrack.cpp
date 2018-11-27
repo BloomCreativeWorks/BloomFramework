@@ -9,7 +9,6 @@ namespace bloom::audio {
 	MusicTrack::~MusicTrack() {
 		stop();
 		Mix_FreeMusic(m_track);
-		m_track = nullptr;
 	}
 
 	void MusicTrack::load(const std::filesystem::path & filePath) {
