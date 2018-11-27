@@ -16,7 +16,7 @@ namespace bloom::audio {
 		int m_channel;
 
 	private:
-		static std::vector<SoundChannel*> channels;
-		static std::stack<int> freeChannels;
+		static std::vector<SoundChannel*> s_channels;
+		static std::stack<int> s_freeChannels;
 	};
 }

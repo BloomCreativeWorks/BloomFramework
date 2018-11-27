@@ -1,46 +1,46 @@
 #include "Audio/SoundChannel.h"
 
 namespace bloom::audio {
-	std::vector<SoundChannel*> SoundChannel::channels;
-	std::stack<int> SoundChannel::freeChannels;
+	std::vector<SoundChannel*> SoundChannel::s_channels;
+	std::stack<int> SoundChannel::s_freeChannels;
 
 	SoundChannel::SoundChannel(SoundChannel * objThisPtr) {
-		if (!freeChannels.empty()) {
-			m_channel = freeChannels.top();
-			channels[m_channel] = objThisPtr;
-			freeChannels.pop();
+		if (!s_freeChannels.empty()) {
+			m_channel = s_freeChannels.top();
+			s_channels[m_channel] = objThisPtr;
+			s_freeChannels.pop();
 		}
 		else {
-			m_channel = static_cast<int>(channels.size());
-			channels.push_back(objThisPtr);
+			m_channel = static_cast<int>(s_channels.size());
+			s_channels.push_back(objThisPtr);
 			Mix_AllocateChannels(m_channel + 1);
 		}
 	}
 
 	SoundChannel::~SoundChannel() {
-		freeChannels.push(m_channel);
-		channels[m_channel] = nullptr;
+		s_freeChannels.push(m_channel);
+		s_channels[m_channel] = nullptr;
 	}
 
 	void SoundChannel::optimize() {
-		int cs = static_cast<int>(channels.size());
-		while (!freeChannels.empty()) {
-			int fc = freeChannels.top();
+		int cs = static_cast<int>(s_channels.size());
+		while (!s_freeChannels.empty()) {
+			int fc = s_freeChannels.top();
 			if (fc >= cs) {
-				freeChannels.pop();
+				s_freeChannels.pop();
 			}
 			else {
-				if (channels.back() == nullptr) {
+				if (s_channels.back() == nullptr) {
 					--cs;
-					channels.pop_back();
+					s_channels.pop_back();
 				}
 				else {
-					channels[fc] = channels.back();
-					Mix_HaltChannel(channels[fc]->m_channel);
-					channels[fc]->m_channel = fc;
-					channels.pop_back();
+					s_channels[fc] = s_channels.back();
+					Mix_HaltChannel(s_channels[fc]->m_channel);
+					s_channels[fc]->m_channel = fc;
+					s_channels.pop_back();
 					--cs;
-					freeChannels.pop();
+					s_freeChannels.pop();
 				}
 			}
 		}
