@@ -10,9 +10,9 @@
 #include "AudioDefine.h"
 
 namespace bloom::audio {
-	class MusicFull {
+	class Music {
 	public:
-		MusicFull();
+		Music();
 
 		MusicStore	store;
 		MusicQueue	queue;
@@ -26,22 +26,30 @@ namespace bloom::audio {
 			store.unloadAll();
 		}
 
+		static bool isPlaying() {
+			return (MusicTrack::isPlaying());
+		}
+
+		static bool isPaused() {
+			return (MusicTrack::isPaused());
+		}
+
 	private:
 		static size_t obj_qnt;
 	};
 
-	MusicFull::MusicFull() {
+	Music::Music() {
 		if (obj_qnt > 0)
 			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
 		obj_qnt++;
 	}
 
-	size_t MusicFull::obj_qnt = 0;
+	size_t Music::obj_qnt = 0;
 
 
-	class SoundFull {
+	class Sounds {
 	public:
-		SoundFull();
+		Sounds();
 
 		int add(const std::filesystem::path & filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
@@ -87,15 +95,18 @@ namespace bloom::audio {
 		static size_t obj_qnt;
 	};
 
-	SoundFull::SoundFull() {
+	Sounds::Sounds() {
 		if (obj_qnt > 1)
-			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
+			throw Exception("Creating more than 1 object of a `SoundFull` class is forbidden!");
 		obj_qnt++;
 	}
 
-	size_t SoundFull::obj_qnt = 0;
+	size_t Sounds::obj_qnt = 0;
 
 
-	MusicFull music;
-	SoundFull sounds;
+	Music music;
+	Sounds sounds;
+
+	using MusicFull = Music;
+	using SoundFull = Sounds;
 }
