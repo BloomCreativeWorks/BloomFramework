@@ -7,7 +7,6 @@ namespace bloom::audio {
 	}
 
 	MusicTrack::~MusicTrack() {
-		stop();
 		Mix_FreeMusic(m_track);
 	}
 
@@ -25,33 +24,36 @@ namespace bloom::audio {
 	}
 
 	void MusicTrack::play(int plays, int fadeIn) {
-		fadeIn = fadeIn < 0 ? -fadeIn : fadeIn;
+		fadeIn = fadeIn < 0 ? 0 : fadeIn;
+
 		if (m_track == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play track");
 		}
 
-		if (fadeIn > 0) {
-			if (Mix_FadeInMusic(m_track, plays, fadeIn) == -1)
-				throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		if (Mix_FadeInMusic(m_track, plays, fadeIn) == -1)
+			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+	}
+
+	bool MusicTrack::tryPlay(int plays, int fadeIn) {
+		if (Mix_PlayingMusic()) {
+			return false;
 		}
 		else {
-			if (Mix_PlayMusic(m_track, plays) == -1)
-				throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+			play(plays, fadeIn);
+			return true;
 		}
 	}
 
 	void MusicTrack::pause() {
-		if (Mix_PausedMusic() == 0)
+		if (!Mix_PausedMusic())
 			Mix_PauseMusic();
 		else
 			Mix_ResumeMusic();
 	}
 
 	void MusicTrack::resume() {
-		if (Mix_PausedMusic() != 0)
+		if (Mix_PausedMusic())
 			Mix_ResumeMusic();
-		else
-			Mix_PauseMusic();
 	}
 
 	void MusicTrack::rewind() {
@@ -59,10 +61,15 @@ namespace bloom::audio {
 	}
 
 	void MusicTrack::stop(int fadeOut) {
-		fadeOut = fadeOut < 0 ? -fadeOut : fadeOut;
-		if (fadeOut > 0)
-			Mix_FadeOutMusic(fadeOut);
-		else
-			Mix_HaltMusic();
+		fadeOut = fadeOut < 0 ? 0 : fadeOut;
+		Mix_FadeOutMusic(fadeOut);
+	}
+
+	bool MusicTrack::isPlaying() {
+		return (Mix_PlayingMusic());
+	}
+
+	bool MusicTrack::isPaused() {
+		return (Mix_PausedMusic());
 	}
 }

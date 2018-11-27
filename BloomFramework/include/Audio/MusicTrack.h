@@ -11,10 +11,14 @@ namespace bloom::audio {
 
 		void load(const std::filesystem::path & filePath);
 		void play(int plays = 1, int fadeIn = 0);
+		bool tryPlay(int plays = 1, int fadeIn = 0);
 		void pause();
 		void resume();
 		void rewind();
 		void stop(int fadeOut = 0);
+
+		static bool isPlaying();
+		static bool isPaused();
 
 	private:
 		Mix_Music * m_track = nullptr;
