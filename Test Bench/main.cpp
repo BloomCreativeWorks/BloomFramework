@@ -2,6 +2,9 @@
 #include <ctime>
 #include <Windows.h>
 
+#include <thread>
+#include <chrono>
+
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
 #include "getExePath.h"
@@ -16,6 +19,36 @@ Game* game = nullptr;
 
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
+
+void player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
+
+	//MusicTrack track1{ musicPath / L"sample_1.mp3" };
+
+	//music.push("Audio/sample_1.mp3", 1, true, 3000, 3000);
+	//music.push("Audio/sample_2.mp3", 2);
+	music.push(musicPath / L"sample_3.mp3", 1, false, 5000);
+	music.push(musicPath / L"sample_4.mp3", 1, false, 10000);
+	music.push(musicPath / L"sample_5.mp3");
+	music.push(musicPath / L"sample_6.mp3", 1);
+	music.push(musicPath / L"sample_7.mp3", 1, true);
+	//music.push(musicPath / L"sample_6.mp3");
+	music.push(musicPath / L"sample_8.mp3");
+
+	sounds.add(soundsPath / L"Sound_04684.wav"); //0
+	sounds.add(soundsPath / L"Sound_04685.wav"); //1
+	//sounds.add(soundsPath / L"Sound_11989.wav"); //2
+	//sounds.add(soundsPath / L"Sound_11998.wav"); //3
+	//sounds.add(soundsPath / L"Sound_12000.wav"); //4
+	//sounds.add(soundsPath / L"Sound_12011.wav"); //5
+	//sounds.add(soundsPath / L"Sound_12020.wav"); //6
+
+	sounds[0]->play();
+	std::this_thread::sleep_for(std::chrono::milliseconds(2500));
+
+	while (!music.queue.tryActivate())
+		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+	music.queue.play();
+}
 
 
 int main() {
@@ -41,8 +74,6 @@ int main() {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	//music.push("Audio/sample_1.mp3", 1, true, 3000, 3000);
-	//music.push("Audio/sample_2.mp3", 2);
 
 	namespace fs = std::filesystem;
 
@@ -50,22 +81,7 @@ int main() {
 	fs::path musicPath = dataPath / L"Music";
 	fs::path soundsPath = dataPath / L"Sounds";
 
-	music.push(musicPath / L"sample_3.mp3", 1, false, 5000);
-	music.push(musicPath / L"sample_4.mp3", 1, false, 10000);
-	music.push(musicPath / L"sample_5.mp3");
-	music.push(musicPath / L"sample_6.mp3", 1, true);
-	music.push(musicPath / L"sample_7.mp3", 1, true);
-	//music.push(musicPath / L"sample_6.mp3");
-	music.push(musicPath / L"sample_8.mp3");
-
-
-	sounds.add(soundsPath / L"Sound_04684.wav"); //0
-	sounds.add(soundsPath / L"Sound_04685.wav"); //1
-	//sounds.add(soundsPath / L"Sound_11989.wav"); //2
-	//sounds.add(soundsPath / L"Sound_11998.wav"); //3
-	//sounds.add(soundsPath / L"Sound_12000.wav"); //4
-	//sounds.add(soundsPath / L"Sound_12011.wav"); //5
-	//sounds.add(soundsPath / L"Sound_12020.wav"); //6
+	std::thread player_thread{ player, musicPath, soundsPath };
 
 	srand(static_cast<uint32_t>(time(0)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
@@ -83,22 +99,6 @@ int main() {
 	fs::path spriteSheetPath = workingDir / assetsDir / L"OverworldTestSpritesheet.png";
 	fs::path testCharPath = workingDir / assetsDir / L"TestChar.png";
 
-	//sounds.players.erase(sounds.players.begin() + 4);
-	//sounds[5]->play();
-	//game->delay(50);
-	//sounds.optimize(); // now last chunk on 4th channel!
-	//sounds[5]->play(); // it works
-
-	sounds[0]->play();
-	//sounds[0]->stop(1000);
-	//sounds[0]->cancelDelayedStop();
-	//sounds[1]->play();
-	//sounds[2]->play();
-	//sounds[3]->play();
-	//sounds[4]->play();
-	//sounds[5]->play();
-	//sounds[6]->play();
-
 	//std::clog << "Channels " << Mix_AllocateChannels(-1) << std::endl;
 
 	// Test Game Object
@@ -110,24 +110,19 @@ int main() {
 	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
-	game->delay(750);
 	TestChar testSprite2 = TestChar(testRegistry, game);
 	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
-	game->delay(750);
 	TestChar testGO = TestChar(testRegistry, game);
 	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
-	game->delay(1000);
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
 
-	music.queue.activate();
-	music.queue.play();
 
 	// If manual control of entities is required, this is the method to do so.
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
@@ -155,8 +150,9 @@ int main() {
 			game->delay(framedelay - frametime);
 		}
 	}
-	music.clear();
 	game->destroy();
+	player_thread.join();
+	music.clear();
 	sounds[1]->play();
 	game->delay(2500);
 	sounds.clear();
