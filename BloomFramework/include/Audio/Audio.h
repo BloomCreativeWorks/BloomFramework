@@ -12,10 +12,7 @@
 namespace bloom::audio {
 	class Music {
 	public:
-		Music();
-
-		MusicStore	store;
-		MusicQueue	queue;
+		static Music & instance();
 
 		void push(const std::filesystem::path & filePath, int plays = 1, bool ignoreInfinitePlayback = false, int fadeInMs = 0) {
 			queue.add(store.load(filePath), plays, ignoreInfinitePlayback, fadeInMs);
@@ -34,22 +31,26 @@ namespace bloom::audio {
 			return (MusicTrack::isPaused());
 		}
 
+		MusicStore	store;
+		MusicQueue	queue;
+
 	private:
-		static size_t obj_qnt;
+		Music() = default;
+		~Music() = default;
+		Music(const Music &) = delete;
+		Music(Music &&) = delete;
+		Music& operator=(const Music &) = delete;
 	};
 
-	Music::Music() {
-		if (obj_qnt > 0)
-			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
-		obj_qnt++;
+	Music & Music::instance() {
+		static Music music_instance;
+		return music_instance;
 	}
-
-	size_t Music::obj_qnt = 0;
 
 
 	class Sounds {
 	public:
-		Sounds();
+		static Sounds & instance();
 
 		int add(const std::filesystem::path & filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
@@ -92,20 +93,20 @@ namespace bloom::audio {
 		std::vector<SoundPlayerPtr> players;
 
 	private:
-		static size_t obj_qnt;
+		Sounds() = default;
+		~Sounds() = default;
+		Sounds(const Sounds &) = delete;
+		Sounds(Sounds &&) = delete;
+		Sounds& operator=(const Sounds &) = delete;
 	};
 
-	Sounds::Sounds() {
-		if (obj_qnt > 1)
-			throw Exception("Creating more than 1 object of a `SoundFull` class is forbidden!");
-		obj_qnt++;
+	Sounds & Sounds::instance() {
+		static Sounds sounds_instance;
+		return sounds_instance;
 	}
 
-	size_t Sounds::obj_qnt = 0;
-
-
-	Music music;
-	Sounds sounds;
+	Music & music = Music::instance();
+	Sounds & sounds = Sounds::instance();
 
 	using MusicFull = Music;
 	using SoundFull = Sounds;
