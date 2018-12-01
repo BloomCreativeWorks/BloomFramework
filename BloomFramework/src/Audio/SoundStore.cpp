@@ -2,10 +2,6 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	SoundStore::~SoundStore() {
-		unloadAll();
-	}
-
 	SoundChunkPtr SoundStore::load(const std::filesystem::path & filePath) {
 		if (!std::filesystem::exists(filePath)) {
 			throw Exception("[SoundStore::load] " + filePath.u8string() + " not exists");

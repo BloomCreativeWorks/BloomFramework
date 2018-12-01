@@ -2,10 +2,6 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	MusicStore::~MusicStore() {
-		unloadAll();
-	}
-
 	TrackPtr MusicStore::load(const std::filesystem::path & filePath) {
 		if (!std::filesystem::exists(filePath)) {
 			throw Exception("[MusicStore::load] " + filePath.u8string() + " not exists");

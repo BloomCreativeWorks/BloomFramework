@@ -7,8 +7,6 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundStore {
 	public:
-		~SoundStore();
-
 		SoundChunkPtr load(const std::filesystem::path & filePath);
 		SoundChunkPtr find(const std::filesystem::path & filePath);
 		SoundChunkPtr find(std::nothrow_t, const std::filesystem::path & filePath) noexcept;
