@@ -21,7 +21,7 @@ Game* game = nullptr;
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
 
-void player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
+void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"sample_1.mp3" };
 
 	//music.push("Audio/sample_1.mp3", 1, true, 3000, 3000);
@@ -50,7 +50,7 @@ void player(const std::filesystem::path& musicPath, const std::filesystem::path&
 	music.queue.play();
 }
 
-void drawer(const std::filesystem::path& assetsPath) {
+void test_drawer(const std::filesystem::path& assetsPath) {
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
@@ -149,8 +149,8 @@ int main() {
 	fs::path musicPath = dataDir / L"Music";
 	fs::path soundsPath = dataDir / L"Sounds";
 
-	std::thread drawer_thread{ drawer, assetsPath };
-	std::thread player_thread{ player, musicPath, soundsPath };
+	std::thread drawer_thread{ test_drawer, assetsPath };
+	std::thread player_thread{ test_player, musicPath, soundsPath };
 
 	drawer_thread.join();
 	player_thread.join();

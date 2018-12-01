@@ -24,15 +24,15 @@ namespace bloom::audio {
 		}
 
 		static bool isPlaying() {
-			return (MusicTrack::isPlaying());
+			return MusicTrack::isPlaying();
 		}
 
 		static bool isPaused() {
-			return (MusicTrack::isPaused());
+			return MusicTrack::isPaused();
 		}
 
-		MusicStore	store;
-		MusicQueue	queue;
+		MusicStore store;
+		MusicQueue queue;
 
 	private:
 		Music() = default;
