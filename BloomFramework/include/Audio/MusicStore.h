@@ -7,7 +7,6 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicStore {
 	public:
-		MusicStore();
 		~MusicStore();
 
 		TrackPtr load(const std::filesystem::path & filePath);
@@ -18,7 +17,5 @@ namespace bloom::audio {
 
 	private:
 		std::unordered_map<std::string, TrackPtr> m_store;
-
-		static size_t obj_qnt;
 	};
 }

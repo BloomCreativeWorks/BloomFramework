@@ -2,14 +2,6 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	size_t MusicStore::obj_qnt = 0;
-
-	MusicStore::MusicStore() {
-		if (obj_qnt > 0)
-			throw Exception("Creating more than 1 object of a `MusicFull` class is forbidden!");
-		obj_qnt++;
-	}
-
 	MusicStore::~MusicStore() {
 		unloadAll();
 	}
