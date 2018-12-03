@@ -17,4 +17,15 @@ public:
 			}
 		});
 	}
+
+	void update(int frameWidth, int frameHeight, std::optional<double> dt = std::nullopt)
+	{
+		m_registry.view<Position>().each(
+			[this, frameWidth, frameHeight](auto entity, Position & pos) {
+			if (!m_registry.has<NoRandomPos>(entity)) {
+				pos.x = rand() % frameWidth;
+				pos.y = rand() % frameHeight;
+			}
+		});
+	}
 };
