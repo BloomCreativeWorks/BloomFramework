@@ -22,25 +22,19 @@ const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
-	//MusicTrack track1{ musicPath / L"sample_1.mp3" };
+	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 
-	//music.push("Audio/sample_1.mp3", 1, true, 3000, 3000);
-	//music.push("Audio/sample_2.mp3", 2);
-	music.push(musicPath / L"sample_3.mp3", 1, false, 5000);
-	music.push(musicPath / L"sample_4.mp3", 1, false, 10000);
-	music.push(musicPath / L"sample_5.mp3");
-	music.push(musicPath / L"sample_6.mp3", 1);
-	music.push(musicPath / L"sample_7.mp3", 1, true);
-	//music.push(musicPath / L"sample_6.mp3");
-	music.push(musicPath / L"sample_8.mp3");
+	music.push(musicPath / L"music_001.mp3");
+	music.push(musicPath / L"music_002.mp3");
+	music.push(musicPath / L"music_003.mp3");
+	music.push(musicPath / L"music_003.mp3", 1, true, 200);
+	music.push(musicPath / L"music_004.mp3");
+	music.push(musicPath / L"music_005.mp3");
+	//music.push(musicPath / L"music_006.mp3");
+	//music.push(musicPath / L"music_007.mp3");
 
-	sounds.add(soundsPath / L"Sound_04684.wav"); //0
-	sounds.add(soundsPath / L"Sound_04685.wav"); //1
-	//sounds.add(soundsPath / L"Sound_11989.wav"); //2
-	//sounds.add(soundsPath / L"Sound_11998.wav"); //3
-	//sounds.add(soundsPath / L"Sound_12000.wav"); //4
-	//sounds.add(soundsPath / L"Sound_12011.wav"); //5
-	//sounds.add(soundsPath / L"Sound_12020.wav"); //6
+	sounds.add(soundsPath / L"sound_001.wav"); //0
+	sounds.add(soundsPath / L"sound_002.wav"); //1
 
 	sounds[0]->play();
 	std::this_thread::sleep_for(3s);
