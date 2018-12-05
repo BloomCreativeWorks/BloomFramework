@@ -30,7 +30,7 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs) {
-		m_queue.push({ track, plays, bypassInfinitePlayback, fadeInMs });
+		m_queue.push({ track, plays, fadeInMs, bypassInfinitePlayback });
 	}
 
 	void MusicQueue::add(TrackExt track) {
@@ -84,7 +84,9 @@ namespace bloom::audio {
 				m_queue.front().track->stop(fadeOutMs);
 			else
 				m_queue.front().track->stop();
-			m_queue = std::queue<TrackExt>();
+
+			while (!m_queue.empty())
+				m_queue.pop();
 		}
 	}
 

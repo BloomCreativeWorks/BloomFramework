@@ -27,5 +27,5 @@ namespace bloom::audio {
 	using Track = MusicTrack;
 	using TrackPtr = std::shared_ptr<MusicTrack>;
 
-	struct TrackExt { int plays; int fadeInMs; TrackPtr track; bool bypassInfinitePlayback; };
+	struct TrackExt { TrackPtr track; int plays; int fadeInMs; bool bypassInfinitePlayback; };
 }
