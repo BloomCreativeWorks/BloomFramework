@@ -113,9 +113,6 @@
     <ClInclude Include="include\Audio\Audio.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="include\Audio\AudioDefine.h">
-      <Filter>Header Files\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="include\Audio\MusicQueue.h">
       <Filter>Header Files\Audio</Filter>
     </ClInclude>
@@ -148,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="include\Graphics\TextureStore.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\export.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

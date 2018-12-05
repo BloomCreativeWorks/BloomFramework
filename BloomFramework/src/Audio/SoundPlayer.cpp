@@ -1,6 +1,5 @@
 #include "Audio/SoundPlayer.h"
 #include "Exception.h"
-#include "Audio/AudioDefine.h"
 
 namespace bloom::audio {
 	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : SoundChannel(static_cast<SoundChannel*>(this)), m_chunk(chunk) {}
@@ -9,8 +8,7 @@ namespace bloom::audio {
 		if (Mix_Playing(m_channel) != 0)
 			return;
 
-		if (plays != BLOOM_AUDIO_INFINITE_REPEAT)
-			--plays;
+		plays = plays <= 0 ? -1 : (plays - 1);
 
 		if (Mix_PlayChannelTimed(m_channel, m_chunk->m_chunk, plays, limitTimeMs) == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));

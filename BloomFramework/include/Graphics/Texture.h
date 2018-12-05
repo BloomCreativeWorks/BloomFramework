@@ -1,6 +1,5 @@
 #pragma once
 
-#include <optional>
 #include "stdIncludes.h"
 
 namespace bloom::graphics {

@@ -1,7 +1,8 @@
 #pragma once
 
-#include <optional>
-#include "Graphics/TextureStore.h"
+#include "stdIncludes.h"
+
+#include "Graphics/Texture.h"
 
 namespace bloom::components {
 	struct Sprite {

@@ -1,8 +1,7 @@
 #pragma once
 
-#include <vector>
-#include <stack>
 #include "stdIncludes.h"
+
 #include "SoundChunk.h"
 #include "SoundChannel.h"
 

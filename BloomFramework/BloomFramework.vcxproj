@@ -164,13 +164,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Audio\Audio.h" />
-    <ClInclude Include="include\Audio\AudioDefine.h" />
     <ClInclude Include="include\Audio\SoundChannel.h" />
     <ClInclude Include="include\Audio\SoundPlayer.h" />
     <ClInclude Include="include\Audio\SoundStore.h" />
     <ClInclude Include="include\Audio\MusicTrack.h" />
     <ClInclude Include="include\Audio\MusicQueue.h" />
     <ClInclude Include="include\Audio\MusicStore.h" />
+    <ClInclude Include="include\export.h" />
     <ClInclude Include="include\Components\Components.h" />
     <ClInclude Include="include\Components\Position.h" />
     <ClInclude Include="include\Components\Size.h" />

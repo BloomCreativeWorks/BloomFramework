@@ -1,3 +1,5 @@
+#include "stdIncludes.h"
+
 #include "Timer.h"
 
 namespace bloom {

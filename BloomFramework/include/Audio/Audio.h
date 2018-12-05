@@ -7,7 +7,6 @@
 #include "SoundStore.h"
 #include "SoundPlayer.h"
 #include "SoundChannel.h"
-#include "AudioDefine.h"
 
 namespace bloom::audio {
 	class Music {

@@ -1,8 +1,9 @@
 #pragma once
 
+#include "stdIncludes.h"
+
 #include <vector>
 #include <stack>
-#include "stdIncludes.h"
 
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {

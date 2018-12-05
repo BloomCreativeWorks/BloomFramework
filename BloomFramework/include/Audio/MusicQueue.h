@@ -1,5 +1,7 @@
 #pragma once
 
+#include "stdIncludes.h"
+
 #include <queue>
 #include "MusicTrack.h"
 

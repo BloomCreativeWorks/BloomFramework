@@ -25,6 +25,7 @@ namespace bloom::audio {
 
 	void MusicTrack::play(int plays, int fadeIn) {
 		fadeIn = fadeIn < 0 ? 0 : fadeIn;
+		plays = plays <= 0 ? -1 : plays;
 
 		if (m_track == nullptr) {
 			throw Exception("[SDL_Mixer] there is no file to play track");

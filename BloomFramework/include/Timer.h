@@ -1,6 +1,6 @@
 #pragma once
 
-#include "stdIncludes.h"
+#include "export.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Timer {

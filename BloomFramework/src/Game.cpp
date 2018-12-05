@@ -1,8 +1,9 @@
+#include <iostream>
 #include "Game.h"
 #include "Exception.h"
 
 namespace bloom {
-	int Game::m_runningInstancesQnt = 0;
+	//int Game::m_runningInstancesQnt = 0;
 
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
@@ -18,7 +19,7 @@ namespace bloom {
 			throw Exception("[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead.");
 		}
 
-		m_runningInstancesQnt++;
+		//m_runningInstancesQnt++;
 	}
 
 	Game::Game(std::nothrow_t, int width, int height, int windowFlags, int rendererFlags) :
@@ -37,9 +38,9 @@ namespace bloom {
 
 	Game::~Game() {
 		destroy();
-		m_runningInstancesQnt--;
-		if (m_runningInstancesQnt <= 0)
-			exit();
+		//m_runningInstancesQnt--;
+		//if (m_runningInstancesQnt <= 0)
+		//	exit();
 	}
 
 	void Game::initialize(Uint32 initFlags,

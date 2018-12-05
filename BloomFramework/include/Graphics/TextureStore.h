@@ -1,8 +1,8 @@
 #pragma once
 
-#include <unordered_map>
-#include <optional>
 #include "stdIncludes.h"
+
+#include <unordered_map>
 #include "Texture.h"
 
 namespace bloom {

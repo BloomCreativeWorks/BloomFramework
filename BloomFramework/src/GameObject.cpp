@@ -1,8 +1,19 @@
 #include "GameObject.h"
 
 namespace bloom {
-	GameObject::GameObject(entt::DefaultRegistry & registry, Game *& gameInstance) : m_registry(registry), m_gameInstance(gameInstance) {
-		m_entity = m_registry.create();
+	GameObject::GameObject(entt::DefaultRegistry & registry, Game & gameInstance) :
+		m_registry(registry),
+		m_gameInstance(gameInstance),
+		m_entity(m_registry.create())
+	{
+		m_registry.assign<Position>(m_entity, 0, 0);
+	}
+
+	GameObject::GameObject(entt::DefaultRegistry & registry, Game *& gameInstance) :
+		m_registry(registry), 
+		m_gameInstance(*gameInstance),
+		m_entity(m_registry.create())
+	{
 		m_registry.assign<Position>(m_entity, 0, 0);
 	}
 

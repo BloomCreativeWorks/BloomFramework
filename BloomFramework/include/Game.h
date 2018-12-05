@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdIncludes.h"
+
 #include "Graphics/TextureStore.h"
 #include "Timer.h"
 
@@ -54,6 +55,6 @@ namespace bloom {
 
 	private:
 		static void exit();
-		static int m_runningInstancesQnt;
+		//static int m_runningInstancesQnt;
 	};
 }

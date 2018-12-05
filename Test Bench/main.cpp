@@ -1,9 +1,12 @@
-﻿#include "Framework.h"
+﻿#include <iostream>
 #include <ctime>
 #include <Windows.h>
-
 #include <thread>
 #include <chrono>
+#undef min
+#undef max
+
+#include "Framework.h"
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"

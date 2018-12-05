@@ -1,6 +1,7 @@
 #pragma once
 
 #include "stdIncludes.h"
+
 #include "Components/Components.h"
 #include "Game.h"
 
@@ -19,6 +20,7 @@ namespace bloom {
 		using Position = bloom::components::Position;
 
 	public:
+		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);
 		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
 		~GameObject();
 
@@ -28,7 +30,7 @@ namespace bloom {
 
 	protected:
 		entt::DefaultRegistry & m_registry;
-		Game *& m_gameInstance;
+		Game & m_gameInstance;
 		uint32_t m_entity;
 	};
 }
