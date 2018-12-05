@@ -29,9 +29,7 @@ public:
 		if (priority != std::nullopt)
 			m_registry.assign<LayerGroup>(m_entity, priority.value());
 
-
 		m_registry.assign<Label<"TestObject"_hs>>(m_entity);
-
 	}
 
 	void disableRandomPos() {

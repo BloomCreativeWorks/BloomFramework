@@ -19,4 +19,15 @@ public:
 			}
 		});
 	}
+
+	void update(int frameWidth, int frameHeight, std::optional<double> dt = std::nullopt)
+	{
+		m_registry.view<Transform>().each(
+			[this, frameWidth, frameHeight](auto entity, Transform & transform) {
+			if (!m_registry.has<NoRandomPos>(entity)) {
+				transform.position.x = rand() % frameWidth;
+				transform.position.y = rand() % frameHeight;
+			}
+		});
+	}
 };

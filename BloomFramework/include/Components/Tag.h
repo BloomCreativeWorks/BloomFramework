@@ -3,7 +3,7 @@
 #include "entt/entt.hpp"
 
 namespace bloom::components {
-	template<uint64_t Value>
+	template<entt::HashedString::hash_type Value>
 	using Label = entt::label<Value>;
 
 }
