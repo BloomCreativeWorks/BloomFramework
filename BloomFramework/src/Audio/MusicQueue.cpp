@@ -13,13 +13,12 @@ namespace bloom::audio {
 	}
 
 	bool MusicQueue::tryActivate() {
-		if (Mix_PlayingMusic() && s_currentQueuePtr != this) {
-			return false;
-		}
-		else {
-			activate();
+		if (s_currentQueuePtr == this)
 			return true;
-		}
+		if (Mix_PlayingMusic())
+			return false;
+		activate();
+		return true;
 	}
 
 	void MusicQueue::activate() {
@@ -29,7 +28,7 @@ namespace bloom::audio {
 		}
 	}
 
-	void MusicQueue::add(TrackPtr track, int plays, bool bypassInfinitePlayback, int fadeInMs) {
+	void MusicQueue::add(TrackPtr track, int plays, int fadeInMs, bool bypassInfinitePlayback) {
 		m_queue.push({ track, plays, fadeInMs, bypassInfinitePlayback });
 	}
 
@@ -44,7 +43,7 @@ namespace bloom::audio {
 		if (s_currentQueuePtr != this)
 			activate();
 
-		auto track = m_queue.front();
+		auto track{ m_queue.front() };
 		if (track.fadeInMs > 0 and !bypassFade)
 			track.track->play(track.plays, track.fadeInMs);
 		else
@@ -95,14 +94,18 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::setRawVolume(int rawVolume) {
-		if (rawVolume < 0) rawVolume = 0;
-		if (rawVolume > MIX_MAX_VOLUME) rawVolume = MIX_MAX_VOLUME;
+		if (rawVolume < 0)
+			rawVolume = 0;
+		if (rawVolume > MIX_MAX_VOLUME)
+			rawVolume = MIX_MAX_VOLUME;
 		Mix_VolumeMusic(rawVolume);
 	}
 
 	void MusicQueue::setVolume(double volumePercent) {
-		if (volumePercent < std::numeric_limits<double>::epsilon()) volumePercent = 0.0;
-		if (volumePercent > 100.0) volumePercent = 100.0;
+		if (volumePercent < std::numeric_limits<double>::epsilon())
+			volumePercent = 0.0;
+		if (volumePercent > 100.0)
+			volumePercent = 100.0;
 		Mix_VolumeMusic(static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
 
@@ -114,11 +117,11 @@ namespace bloom::audio {
 		return Mix_VolumeMusic(-1);
 	}
 
-	void MusicQueue::setInfinitePlayback(bool value) {
+	void MusicQueue::setInfinitePlayback(bool value) noexcept {
 		m_infinitePlayback = value;
 	}
 
-	bool MusicQueue::isInfinitePlayback() {
+	bool MusicQueue::isInfinitePlayback() const noexcept {
 		return m_infinitePlayback;
 	}
 

@@ -18,6 +18,7 @@ namespace bloom {
 			TexturePtr at(const std::filesystem::path & filePath) const;
 			TexturePtr find(const std::filesystem::path & filePath) const noexcept;
 			void unload(const std::filesystem::path & filePath);
+			void unloadAll();
 
 			TexturePtr operator[](const std::filesystem::path & key) const noexcept;
 

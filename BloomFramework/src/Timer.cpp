@@ -17,7 +17,7 @@ namespace bloom {
 		start();
 	}
 
-	double Timer::split() {
+	double Timer::split() const {
 		return (static_cast<double>(SDL_GetPerformanceCounter() - m_timerTicks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
 	}
 
@@ -27,7 +27,7 @@ namespace bloom {
 		return (static_cast<double>(m_timerTicks - oldTicks) * 1000.0 / static_cast<double>(SDL_GetPerformanceFrequency()));
 	}
 
-	double Timer::objectLifetime() {
+	double Timer::objectLifetime() const {
 		return (static_cast<double>(SDL_GetPerformanceCounter() - m_startTicks) * 1000.0 / SDL_GetPerformanceFrequency());
 	}
 }

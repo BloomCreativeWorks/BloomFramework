@@ -2,11 +2,11 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	SoundPlayer::SoundPlayer(SoundChunkPtr chunk) : SoundChannel(static_cast<SoundChannel*>(this)), m_chunk(chunk) {}
+	SoundPlayer::SoundPlayer(ChunkPtr chunk) : SoundChannel(static_cast<SoundChannel*>(this)), m_chunk(chunk) {}
 
 	void SoundPlayer::play(int plays, int limitTimeMs) {
-		if (Mix_Playing(m_channel) != 0)
-			return;
+		if (Mix_Playing(m_channel))
+			stop();
 
 		plays = plays <= 0 ? -1 : (plays - 1);
 
@@ -14,15 +14,26 @@ namespace bloom::audio {
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
+	bool SoundPlayer::tryPlay(int plays, int limitTimeMs) {
+		if (Mix_Playing(m_channel))
+			return false;
+
+		plays = plays <= 0 ? -1 : (plays - 1);
+
+		if (Mix_PlayChannelTimed(m_channel, m_chunk->m_chunk, plays, limitTimeMs) == -1)
+			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		return true;
+	}
+
 	void SoundPlayer::pause() {
-		if (Mix_Paused(m_channel) == 0)
+		if (!Mix_Paused(m_channel))
 			Mix_Pause(m_channel);
 		else
 			Mix_Resume(m_channel);
 	}
 
 	void SoundPlayer::resume() {
-		if (Mix_Paused(m_channel) != 0)
+		if (Mix_Paused(m_channel))
 			Mix_Resume(m_channel);
 		else
 			Mix_Pause(m_channel);
@@ -40,14 +51,18 @@ namespace bloom::audio {
 	}
 
 	void SoundPlayer::setRawVolume(int rawVolume) {
-		if (rawVolume < 0) rawVolume = 0;
-		else if (rawVolume > MIX_MAX_VOLUME) rawVolume = MIX_MAX_VOLUME;
+		if (rawVolume < 0)
+			rawVolume = 0;
+		else if (rawVolume > MIX_MAX_VOLUME)
+			rawVolume = MIX_MAX_VOLUME;
 		Mix_VolumeChunk(m_chunk->m_chunk, rawVolume);
 	}
 
 	void SoundPlayer::setVolume(double volumePercent) {
-		if (volumePercent < std::numeric_limits<double>::epsilon()) volumePercent = 0.0;
-		else if (volumePercent > 100.0) volumePercent = 100.0;
+		if (volumePercent < std::numeric_limits<double>::epsilon())
+			volumePercent = 0.0;
+		else if (volumePercent > 100.0)
+			volumePercent = 100.0;
 		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
 
@@ -59,7 +74,7 @@ namespace bloom::audio {
 		return Mix_VolumeChunk(m_chunk->m_chunk, -1);
 	}
 
-	SoundChunkPtr SoundPlayer::chunk() {
+	ChunkPtr SoundPlayer::chunk() {
 		return m_chunk;
 	}
 }

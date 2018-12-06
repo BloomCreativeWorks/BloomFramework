@@ -11,6 +11,8 @@ namespace bloom::audio {
 		SoundChannel(SoundChannel * objThisPtr);
 		~SoundChannel();
 
+		int get() const noexcept;
+
 		static void optimize();
 
 	protected:

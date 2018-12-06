@@ -15,7 +15,7 @@ namespace bloom::systems {
 	public:
 		void update(std::optional<double> deltaTime = std::nullopt) override {
 			m_registry.view<Position, Size, Sprite>().each(
-				[](auto entity, Position & pos, Size& size, Sprite & spr) {
+				[](auto entity, Position & pos, Size & size, Sprite & spr) {
 				SDL_Rect destRect{
 					static_cast<int>(pos.x),
 					static_cast<int>(pos.y),

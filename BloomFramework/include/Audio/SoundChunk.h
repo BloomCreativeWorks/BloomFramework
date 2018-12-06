@@ -16,5 +16,5 @@ namespace bloom::audio {
 		Mix_Chunk * m_chunk = nullptr;
 	};
 
-	using SoundChunkPtr = std::shared_ptr<SoundChunk>;
+	using ChunkPtr = std::shared_ptr<SoundChunk>;
 }

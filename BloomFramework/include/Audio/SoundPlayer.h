@@ -8,10 +8,11 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundPlayer : public SoundChannel {
 	public:
-		SoundPlayer(SoundChunkPtr chunk);
+		SoundPlayer(ChunkPtr chunk);
 		~SoundPlayer() = default;
 
 		void play(int plays = 1, int limitTimeMs = -1);
+		bool tryPlay(int plays = 1, int limitTimeMs = -1);
 		void replay(int plays = 1) { stop(); play(plays); }
 		void pause();
 		void resume();
@@ -24,10 +25,10 @@ namespace bloom::audio {
 		void setRawVolume(int rawVolume);
 		int getRawVolume();
 
-		SoundChunkPtr chunk();
+		ChunkPtr chunk();
 
 	private:
-		SoundChunkPtr m_chunk;
+		ChunkPtr m_chunk;
 	};
 
 	using SoundPlayerPtr = std::unique_ptr<SoundPlayer>;

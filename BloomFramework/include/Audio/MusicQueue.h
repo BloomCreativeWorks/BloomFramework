@@ -13,7 +13,7 @@ namespace bloom::audio {
 
 		bool tryActivate();
 		void activate();
-		void add(TrackPtr track, int plays = 1, bool bypassInfinitePlayback = false, int fadeInMs = 0);
+		void add(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
 		void add(TrackExt track);
 		void play(bool bypassFade = false);
 		void pause();
@@ -30,8 +30,8 @@ namespace bloom::audio {
 		void setRawVolume(int rawVolume);
 		int getRawVolume();
 
-		void setInfinitePlayback(bool value);
-		bool isInfinitePlayback();
+		void setInfinitePlayback(bool value) noexcept;
+		bool isInfinitePlayback() const noexcept;
 
 	private:
 		std::queue<TrackExt> m_queue;

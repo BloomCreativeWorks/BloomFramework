@@ -11,15 +11,14 @@ namespace bloom::audio {
 	}
 
 	void MusicTrack::load(const std::filesystem::path & filePath) {
-		if (!std::filesystem::exists(filePath)) {
+		if (!std::filesystem::exists(filePath))
 			throw Exception("[MusicTrack::load] " + filePath.u8string() + " not exists");
-		}
 
 		if (m_track)
 			Mix_FreeMusic(m_track);
 		m_track = Mix_LoadMUS(filePath.u8string().c_str());
 
-		if (m_track == nullptr)
+		if (!m_track)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
@@ -27,18 +26,16 @@ namespace bloom::audio {
 		fadeIn = fadeIn < 0 ? 0 : fadeIn;
 		plays = plays <= 0 ? -1 : plays;
 
-		if (m_track == nullptr) {
+		if (!m_track)
 			throw Exception("[SDL_Mixer] there is no file to play track");
-		}
 
 		if (Mix_FadeInMusic(m_track, plays, fadeIn) == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
 	bool MusicTrack::tryPlay(int plays, int fadeIn) {
-		if (Mix_PlayingMusic()) {
+		if (Mix_PlayingMusic())
 			return false;
-		}
 		else {
 			play(plays, fadeIn);
 			return true;

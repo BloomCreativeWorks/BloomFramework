@@ -4,6 +4,10 @@ namespace bloom::audio {
 	std::vector<SoundChannel*> SoundChannel::s_channels;
 	std::stack<int> SoundChannel::s_freeChannels;
 
+	int SoundChannel::get() const noexcept {
+		return m_channel;
+	}
+
 	SoundChannel::SoundChannel(SoundChannel * objThisPtr) {
 		if (!s_freeChannels.empty()) {
 			m_channel = s_freeChannels.top();
@@ -26,11 +30,10 @@ namespace bloom::audio {
 		int cs = static_cast<int>(s_channels.size());
 		while (!s_freeChannels.empty()) {
 			int fc = s_freeChannels.top();
-			if (fc >= cs) {
+			if (fc >= cs)
 				s_freeChannels.pop();
-			}
 			else {
-				if (s_channels.back() == nullptr) {
+				if (!s_channels.back()) {
 					--cs;
 					s_channels.pop_back();
 				}

@@ -7,13 +7,15 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundStore {
 	public:
-		SoundChunkPtr load(const std::filesystem::path & filePath);
-		SoundChunkPtr find(const std::filesystem::path & filePath);
-		SoundChunkPtr find(std::nothrow_t, const std::filesystem::path & filePath) noexcept;
+		ChunkPtr load(const std::filesystem::path & filePath);
+		ChunkPtr at(const std::filesystem::path & filePath) const;
+		ChunkPtr find(const std::filesystem::path & filePath) const noexcept;
 		void unload(const std::filesystem::path & filePath);
 		void unloadAll();
 
+		ChunkPtr operator[](const std::filesystem::path & key) const noexcept;
+
 	private:
-		std::unordered_map<std::string, SoundChunkPtr> m_store;
+		std::unordered_map<std::string, ChunkPtr> m_store;
 	};
 }

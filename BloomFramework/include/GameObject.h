@@ -21,12 +21,11 @@ namespace bloom {
 
 	public:
 		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);
-		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
 		~GameObject();
 
 		virtual void init() = 0;
 
-		uint32_t getEntityID();
+		uint32_t getEntityID() const noexcept;
 
 	protected:
 		entt::DefaultRegistry & m_registry;

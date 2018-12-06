@@ -11,9 +11,9 @@ namespace bloom {
 
 		void start();
 		void restart();
-		double split();
+		double split() const;
 		double lap();
-		double objectLifetime();
+		double objectLifetime() const;
 
 	private:
 		Uint64	m_startTicks, m_timerTicks;

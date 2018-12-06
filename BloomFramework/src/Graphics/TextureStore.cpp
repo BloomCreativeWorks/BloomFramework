@@ -8,9 +8,8 @@ namespace bloom::graphics {
 	TextureStore::TextureStore(Game & object) : m_renderer(object.m_renderer) {}
 
 	TexturePtr TextureStore::load(const std::filesystem::path & filePath, std::optional<SDL_Color> colorKey) {
-		if (!std::filesystem::exists(filePath)) {
+		if (!std::filesystem::exists(filePath))
 			throw Exception("[TextureStore::load] texture file not exists");
-		}
 
 		// Check if texture of the same path is loaded. If so, return shared_ptr of texture.
 		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
@@ -24,9 +23,8 @@ namespace bloom::graphics {
 	TexturePtr TextureStore::at(const std::filesystem::path & filePath) const {
 		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
 			return textureIt->second;
-		else {
+		else
 			throw Exception("[Texture Store::at] Can't get texture \"" + filePath.u8string() + "\".\nIs it loaded?");
-		}
 	}
 
 	TexturePtr TextureStore::find(const std::filesystem::path & filePath) const noexcept {
@@ -39,6 +37,10 @@ namespace bloom::graphics {
 	void TextureStore::unload(const std::filesystem::path & filePath) {
 		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
 			m_store.erase(textureIt); // We can't dispose the actual Texture since other's may still be using it.
+	}
+
+	void TextureStore::unloadAll() {
+		m_store.clear();
 	}
 
 	TexturePtr TextureStore::operator[](const std::filesystem::path & key) const noexcept {

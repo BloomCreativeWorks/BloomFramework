@@ -13,8 +13,8 @@ namespace bloom::audio {
 	public:
 		static Music & instance();
 
-		void push(const std::filesystem::path & filePath, int plays = 1, bool ignoreInfinitePlayback = false, int fadeInMs = 0) {
-			queue.add(store.load(filePath), plays, ignoreInfinitePlayback, fadeInMs);
+		void push(const std::filesystem::path & filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
+			queue.add(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
 		}
 
 		void clear() {
@@ -104,9 +104,6 @@ namespace bloom::audio {
 		return sounds_instance;
 	}
 
-	Music & music = Music::instance();
-	Sounds & sounds = Sounds::instance();
-
-	using MusicFull = Music;
-	using SoundFull = Sounds;
+	Music & music{ Music::instance() };
+	Sounds & sounds{ Sounds::instance() };
 }
