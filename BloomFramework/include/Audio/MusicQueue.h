@@ -8,11 +8,15 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicQueue {
 	public:
-		MusicQueue();
+		MusicQueue() noexcept;
+		MusicQueue(const MusicQueue& other);
+		MusicQueue(MusicQueue&& other) noexcept;
+		MusicQueue& operator=(const MusicQueue& other);
+		MusicQueue& operator=(MusicQueue&& other) noexcept;
 		~MusicQueue();
 
-		bool tryActivate();
-		void activate();
+		bool tryActivate() noexcept;
+		void activate() noexcept;
 		void add(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
 		void add(TrackExt track);
 		void play(bool bypassFade = false);
@@ -22,13 +26,13 @@ namespace bloom::audio {
 		void skip(int fadeOutMs = 0);
 		void eject(int fadeOutMs = 0);
 		void clear(int fadeOutMs = 0);
-		void deactivate();
+		void deactivate() noexcept;
 
-		void setVolume(double volumePercent);
-		double getVolume();
+		void setVolume(double volumePercent) noexcept;
+		double getVolume() noexcept;
 
-		void setRawVolume(int rawVolume);
-		int getRawVolume();
+		void setRawVolume(int rawVolume) noexcept;
+		int getRawVolume() noexcept;
 
 		void setInfinitePlayback(bool value) noexcept;
 		bool isInfinitePlayback() const noexcept;

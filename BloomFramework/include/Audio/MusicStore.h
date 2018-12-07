@@ -10,9 +10,9 @@ namespace bloom::audio {
 	public:
 		TrackPtr load(const std::filesystem::path & filePath);
 		TrackPtr at(const std::filesystem::path & filePath) const;
-		TrackPtr find(const std::filesystem::path & filePath) const noexcept;
+		TrackPtr find(const std::filesystem::path & filePath) const;
 		void unload(const std::filesystem::path & filePath);
-		void unloadAll();
+		void unloadAll() noexcept;
 
 		TrackPtr operator[](const std::filesystem::path & key) const noexcept;
 

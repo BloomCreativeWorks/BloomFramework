@@ -5,7 +5,9 @@
 namespace bloom::systems {
 	class DefaultSystem {
 	public:
-		DefaultSystem(entt::DefaultRegistry & registry) : m_registry(registry) {};
+		DefaultSystem(entt::DefaultRegistry & registry) noexcept :
+			m_registry(registry) 
+		{}
 
 		virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
 

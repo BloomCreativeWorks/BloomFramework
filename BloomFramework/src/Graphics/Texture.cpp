@@ -18,6 +18,21 @@ namespace bloom::graphics {
 		}
 	}
 
+	Texture::Texture(Texture&& other) noexcept : m_renderer(other.m_renderer), m_texture(other.m_texture) {
+		other.m_texture = nullptr;
+		other.m_renderer = nullptr;
+	}
+
+	Texture& Texture::operator=(Texture&& other) noexcept {
+		if (m_texture)
+			SDL_DestroyTexture(m_texture);
+		m_renderer = other.m_renderer;
+		m_texture = other.m_texture;
+		other.m_texture = nullptr;
+		other.m_renderer = nullptr;
+		return *this;
+	}
+
 	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
 		if (destRect.w <= 0)
 			throw Exception("[Texture::render] destcRect.w is <= 0.\nIs that intentional?");

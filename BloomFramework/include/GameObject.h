@@ -21,6 +21,10 @@ namespace bloom {
 
 	public:
 		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);
+		GameObject(const GameObject&) = delete;
+		GameObject(GameObject&& other) = delete;
+		GameObject& operator=(const GameObject&) = delete;
+		GameObject& operator=(GameObject&& other) = delete;
 		~GameObject();
 
 		virtual void init() = 0;

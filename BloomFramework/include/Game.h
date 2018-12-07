@@ -13,26 +13,30 @@ namespace bloom {
 	public:
 		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(const Game&) = delete;
+		Game(Game&&) = delete;
+		Game& operator=(const Game&) = delete;
+		Game& operator=(Game&&) = delete;
 		~Game();
 
 		static void init(Uint32 initFlags = SDL_INIT_EVERYTHING,
 			int mixerFrequency = 44100, Uint16 mixerformat = MIX_DEFAULT_FORMAT, int mixerChannels = 2, int mixerChunksize = 2048,
 			int imageFlags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
-		static void delay(int intervalMs);
+		static void delay(int intervalMs) noexcept;
 
 		void create(const std::string & title, int xpos, int ypos);
 		void update();
-		void clear();
-		void render();
+		void clear() noexcept;
+		void render() noexcept;
 		void destroy();
-		void handleEvents();
+		void handleEvents() noexcept;
 		bool isRunning() const noexcept;
 
-		void hideWindow();
-		void showWindow();
+		void hideWindow() noexcept;
+		void showWindow() noexcept;
 
-		void setColor(const SDL_Color & color);
-		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+		void setColor(const SDL_Color & color) noexcept;
+		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) noexcept;
 
 		SDL_Color getColor() const noexcept;
 		void getColor(Uint8 & r, Uint8 & g, Uint8 & b, Uint8 & a) const noexcept;
@@ -53,7 +57,7 @@ namespace bloom {
 		bool			m_isRunning;
 
 	private:
-		static void exit();
+		static void exit() noexcept;
 		//static int m_runningInstancesQnt;
 	};
 }

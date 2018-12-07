@@ -39,7 +39,7 @@ namespace bloom::graphics {
 			m_store.erase(textureIt); // We can't dispose the actual Texture since other's may still be using it.
 	}
 
-	void TextureStore::unloadAll() {
+	void TextureStore::unloadAll() noexcept {
 		m_store.clear();
 	}
 

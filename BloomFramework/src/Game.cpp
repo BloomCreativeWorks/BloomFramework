@@ -59,7 +59,7 @@ namespace bloom {
 			std::clog << "SDL_mixer initialized." << std::endl;
 
 		const int isCapture = 0;
-		int n = SDL_GetNumAudioDevices(isCapture);
+		const int n = SDL_GetNumAudioDevices(isCapture);
 		std::clog << "Audio devices: " << n << std::endl;
 		for (int i = 0; i < n; i++)
 			std::clog << "Audio: " << SDL_GetAudioDeviceName(i, isCapture) << std::endl;
@@ -77,7 +77,7 @@ namespace bloom {
 			std::clog << "SDL_image initialized." << std::endl;
 	}
 
-	void Game::exit() {
+	void Game::exit() noexcept {
 		IMG_Quit();
 		TTF_Quit();
 		Mix_Quit();
@@ -101,7 +101,7 @@ namespace bloom {
 		std::clog << "Game is now running!" << std::endl;
 	}
 
-	void Game::handleEvents() {
+	void Game::handleEvents() noexcept {
 		SDL_PollEvent(&m_event);
 
 		if (m_event.type == SDL_QUIT)
@@ -112,15 +112,15 @@ namespace bloom {
 		std::clog << "Delta time: " << timer.lap() << std::endl;
 	}
 
-	void Game::clear() {
+	void Game::clear() noexcept {
 		SDL_RenderClear(m_renderer);
 	}
 
-	void Game::delay(int intervalMs) {
+	void Game::delay(int intervalMs) noexcept {
 		SDL_Delay(intervalMs);
 	}
 
-	void Game::render() {
+	void Game::render() noexcept {
 		SDL_RenderPresent(m_renderer);
 	}
 
@@ -136,20 +136,20 @@ namespace bloom {
 		return m_isRunning;
 	}
 
-	void Game::hideWindow() {
+	void Game::hideWindow() noexcept {
 		SDL_HideWindow(m_window);
 	}
 
-	void Game::showWindow() {
+	void Game::showWindow() noexcept {
 		SDL_ShowWindow(m_window);
 	}
 
-	void Game::setColor(const SDL_Color & color) {
+	void Game::setColor(const SDL_Color & color) noexcept {
 		m_color = color;
 		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
 	}
 
-	void Game::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
+	void Game::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) noexcept {
 		m_color = { r, g, b, a };
 		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
 	}

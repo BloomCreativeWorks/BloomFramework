@@ -10,6 +10,19 @@ namespace bloom::audio {
 		Mix_FreeMusic(m_track);
 	}
 
+	MusicTrack::MusicTrack(MusicTrack&& other) noexcept {
+		m_track = other.m_track;
+		other.m_track = nullptr;
+	}
+
+	MusicTrack& MusicTrack::operator=(MusicTrack&& other) noexcept {
+		if (m_track)
+			Mix_FreeMusic(m_track);
+		m_track = other.m_track;
+		other.m_track = nullptr;
+		return *this;
+	}
+
 	void MusicTrack::load(const std::filesystem::path & filePath) {
 		if (!std::filesystem::exists(filePath))
 			throw Exception("[MusicTrack::load] " + filePath.u8string() + " not exists");
@@ -42,32 +55,40 @@ namespace bloom::audio {
 		}
 	}
 
-	void MusicTrack::pause() {
+	bool MusicTrack::operator==(const MusicTrack& other) const noexcept {
+		return (m_track == other.m_track);
+	}
+
+	bool MusicTrack::operator!=(const MusicTrack& other) const noexcept {
+		return (m_track != other.m_track);
+	}
+
+	void MusicTrack::pause() noexcept {
 		if (!Mix_PausedMusic())
 			Mix_PauseMusic();
 		else
 			Mix_ResumeMusic();
 	}
 
-	void MusicTrack::resume() {
+	void MusicTrack::resume() noexcept {
 		if (Mix_PausedMusic())
 			Mix_ResumeMusic();
 	}
 
-	void MusicTrack::rewind() {
+	void MusicTrack::rewind() noexcept {
 		Mix_RewindMusic();
 	}
 
-	void MusicTrack::stop(int fadeOut) {
+	void MusicTrack::stop(int fadeOut) noexcept {
 		fadeOut = fadeOut < 0 ? 0 : fadeOut;
 		Mix_FadeOutMusic(fadeOut);
 	}
 
-	bool MusicTrack::isPlaying() {
+	bool MusicTrack::isPlaying() noexcept {
 		return (Mix_PlayingMusic());
 	}
 
-	bool MusicTrack::isPaused() {
+	bool MusicTrack::isPaused() noexcept {
 		return (Mix_PausedMusic());
 	}
 }

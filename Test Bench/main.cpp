@@ -26,6 +26,7 @@ const int WINDOW_HEIGHT = 800;
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
+	//track1.stop();
 
 	music.push(musicPath / L"music_001.mp3");
 	music.push(musicPath / L"music_002.mp3");

@@ -10,10 +10,17 @@ namespace bloom::audio {
 
 	public:
 		SoundChunk(const std::filesystem::path & filePath, bool ignoreChecks = false);
+		SoundChunk(const SoundChunk&) = delete;
+		SoundChunk(SoundChunk&& other) noexcept;
+		SoundChunk& operator=(const SoundChunk&) = delete;
+		SoundChunk& operator=(SoundChunk&& other) noexcept;
 		~SoundChunk();
 
+		bool operator==(const SoundChunk& other) const noexcept;
+		bool operator!=(const SoundChunk& other) const noexcept;
+
 	private:
-		Mix_Chunk * m_chunk = nullptr;
+		Mix_Chunk* m_chunk = nullptr;
 	};
 
 	using ChunkPtr = std::shared_ptr<SoundChunk>;

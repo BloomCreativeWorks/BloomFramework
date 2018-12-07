@@ -4,15 +4,38 @@
 namespace bloom::audio {
 	MusicQueue * MusicQueue::s_currentQueuePtr = nullptr;
 
-	MusicQueue::MusicQueue() {
+	MusicQueue::MusicQueue() noexcept {
 		Mix_HookMusicFinished(MusicQueue::next_track);
+	}
+
+	MusicQueue::MusicQueue(const MusicQueue& other) :
+		m_queue(other.m_queue),
+		m_infinitePlayback(other.m_infinitePlayback)
+	{}
+
+	MusicQueue::MusicQueue(MusicQueue&& other) noexcept : m_infinitePlayback(other.m_infinitePlayback) {
+		m_queue.swap(other.m_queue);
+		other.m_infinitePlayback = true;
+	}
+
+	MusicQueue& MusicQueue::operator=(const MusicQueue& other) {
+		m_queue = other.m_queue;
+		m_infinitePlayback = other.m_infinitePlayback;
+		return *this;
+	}
+
+	MusicQueue& MusicQueue::operator=(MusicQueue&& other) noexcept {
+		m_queue.swap(other.m_queue);
+		m_infinitePlayback = other.m_infinitePlayback;
+		other.m_infinitePlayback = true;
+		return *this;
 	}
 
 	MusicQueue::~MusicQueue() {
 		clear();
 	}
 
-	bool MusicQueue::tryActivate() {
+	bool MusicQueue::tryActivate() noexcept {
 		if (s_currentQueuePtr == this)
 			return true;
 		if (Mix_PlayingMusic())
@@ -21,7 +44,7 @@ namespace bloom::audio {
 		return true;
 	}
 
-	void MusicQueue::activate() {
+	void MusicQueue::activate() noexcept {
 		if (s_currentQueuePtr != this) {
 			Mix_HaltMusic();
 			s_currentQueuePtr = this;
@@ -89,11 +112,11 @@ namespace bloom::audio {
 		}
 	}
 
-	void MusicQueue::deactivate() {
+	void MusicQueue::deactivate() noexcept {
 		Mix_HookMusicFinished(nullptr);
 	}
 
-	void MusicQueue::setRawVolume(int rawVolume) {
+	void MusicQueue::setRawVolume(int rawVolume) noexcept {
 		if (rawVolume < 0)
 			rawVolume = 0;
 		if (rawVolume > MIX_MAX_VOLUME)
@@ -101,7 +124,7 @@ namespace bloom::audio {
 		Mix_VolumeMusic(rawVolume);
 	}
 
-	void MusicQueue::setVolume(double volumePercent) {
+	void MusicQueue::setVolume(double volumePercent) noexcept {
 		if (volumePercent < std::numeric_limits<double>::epsilon())
 			volumePercent = 0.0;
 		if (volumePercent > 100.0)
@@ -109,11 +132,11 @@ namespace bloom::audio {
 		Mix_VolumeMusic(static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
 
-	double MusicQueue::getVolume() {
+	double MusicQueue::getVolume() noexcept {
 		return (static_cast<double>(Mix_VolumeMusic(-1)) / MIX_MAX_VOLUME) * 100.0;
 	}
 
-	int MusicQueue::getRawVolume() {
+	int MusicQueue::getRawVolume() noexcept {
 		return Mix_VolumeMusic(-1);
 	}
 

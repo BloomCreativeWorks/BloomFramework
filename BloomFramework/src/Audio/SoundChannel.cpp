@@ -4,19 +4,15 @@ namespace bloom::audio {
 	std::vector<SoundChannel*> SoundChannel::s_channels;
 	std::stack<int> SoundChannel::s_freeChannels;
 
-	int SoundChannel::get() const noexcept {
-		return m_channel;
-	}
-
-	SoundChannel::SoundChannel(SoundChannel * objThisPtr) {
+	SoundChannel::SoundChannel(SoundChannel * objectPtr) {
 		if (!s_freeChannels.empty()) {
 			m_channel = s_freeChannels.top();
-			s_channels[m_channel] = objThisPtr;
+			s_channels[m_channel] = objectPtr;
 			s_freeChannels.pop();
 		}
 		else {
 			m_channel = static_cast<int>(s_channels.size());
-			s_channels.push_back(objThisPtr);
+			s_channels.push_back(objectPtr);
 			Mix_AllocateChannels(m_channel + 1);
 		}
 	}
@@ -26,10 +22,14 @@ namespace bloom::audio {
 		s_channels[m_channel] = nullptr;
 	}
 
+	int SoundChannel::get() const noexcept {
+		return m_channel;
+	}
+
 	void SoundChannel::optimize() {
 		int cs = static_cast<int>(s_channels.size());
 		while (!s_freeChannels.empty()) {
-			int fc = s_freeChannels.top();
+			const int fc = s_freeChannels.top();
 			if (fc >= cs)
 				s_freeChannels.pop();
 			else {

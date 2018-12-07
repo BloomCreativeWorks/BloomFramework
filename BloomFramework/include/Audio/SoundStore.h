@@ -11,7 +11,7 @@ namespace bloom::audio {
 		ChunkPtr at(const std::filesystem::path & filePath) const;
 		ChunkPtr find(const std::filesystem::path & filePath) const noexcept;
 		void unload(const std::filesystem::path & filePath);
-		void unloadAll();
+		void unloadAll() noexcept;
 
 		ChunkPtr operator[](const std::filesystem::path & key) const noexcept;
 

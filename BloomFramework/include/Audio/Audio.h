@@ -22,11 +22,11 @@ namespace bloom::audio {
 			store.unloadAll();
 		}
 
-		static bool isPlaying() {
+		static bool isPlaying() noexcept {
 			return MusicTrack::isPlaying();
 		}
 
-		static bool isPaused() {
+		static bool isPaused() noexcept {
 			return MusicTrack::isPaused();
 		}
 
@@ -39,6 +39,7 @@ namespace bloom::audio {
 		Music(const Music &) = delete;
 		Music(Music &&) = delete;
 		Music& operator=(const Music &) = delete;
+		Music& operator=(Music&&) = delete;
 	};
 
 	Music & Music::instance() {
@@ -97,6 +98,7 @@ namespace bloom::audio {
 		Sounds(const Sounds &) = delete;
 		Sounds(Sounds &&) = delete;
 		Sounds& operator=(const Sounds &) = delete;
+		Sounds& operator=(Sounds&&) = delete;
 	};
 
 	Sounds & Sounds::instance() {

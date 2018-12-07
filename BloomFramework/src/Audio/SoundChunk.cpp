@@ -16,7 +16,28 @@ namespace bloom::audio {
 			throw Exception("[SoundChunk -> SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
+	SoundChunk::SoundChunk(SoundChunk&& other) noexcept {
+		m_chunk = other.m_chunk;
+		other.m_chunk = nullptr;
+	}
+
+	SoundChunk& SoundChunk::operator=(SoundChunk&& other) noexcept {
+		if (m_chunk)
+			Mix_FreeChunk(m_chunk);
+		m_chunk = other.m_chunk;
+		other.m_chunk = nullptr;
+		return *this;
+	}
+
 	SoundChunk::~SoundChunk() {
 		Mix_FreeChunk(m_chunk);
+	}
+
+	bool SoundChunk::operator==(const SoundChunk& other) const noexcept {
+		return (m_chunk == other.m_chunk);
+	}
+
+	bool SoundChunk::operator!=(const SoundChunk& other) const noexcept {
+		return (m_chunk != other.m_chunk);
 	}
 }

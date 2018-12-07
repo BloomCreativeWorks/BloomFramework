@@ -8,8 +8,12 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
 	public:
-		SoundChannel(SoundChannel * objThisPtr);
+		SoundChannel(SoundChannel* objectPtr);
 		~SoundChannel();
+		SoundChannel(const SoundChannel& other) = delete;
+		SoundChannel(SoundChannel&& other) = delete;
+		SoundChannel& operator=(const SoundChannel& other) = delete;
+		SoundChannel& operator=(SoundChannel&& other) = delete;
 
 		int get() const noexcept;
 

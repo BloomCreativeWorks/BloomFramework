@@ -41,7 +41,7 @@ namespace bloom::audio {
 			m_store.erase(SoundChunkIt);
 	}
 
-	void SoundStore::unloadAll() {
+	void SoundStore::unloadAll() noexcept {
 		m_store.clear();
 	}
 
