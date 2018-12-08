@@ -7,6 +7,7 @@
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
+#include "GameObjectTest/TestAnimatedGameObject.h"
 #include "getExePath.h"
 
 using namespace bloom;
@@ -18,8 +19,8 @@ using bloom::components::Size;
 
 Game* game = nullptr;
 
-const int WINDOW_WIDTH = 1000;
-const int WINDOW_HEIGHT = 800;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
@@ -74,6 +75,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
+	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
@@ -93,6 +95,8 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
+	TestAnimChar testAnim(testRegistry, game);
+	testAnim.init(testCharPath);
 
 
 	// If manual control of entities is required, this is the method to do so.
@@ -110,6 +114,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
+		animSysTest.update(game->timer.lap());
 		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
 		renderSysTest.update(); // Test again.
 		game->render();
