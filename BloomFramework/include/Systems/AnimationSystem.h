@@ -13,7 +13,7 @@ namespace bloom::systems {
 	public:
 		void update(std::optional<double> deltaTime = 0.0f) {
 			m_registry.view<Animation>().each(
-				[&](auto entity, Animation anim) {
+				[&](auto entity, Animation& anim) { // TODO: use reference instead of creating copy of object
 					m_registry.replace<Sprite>(entity, anim.update(deltaTime.value()));
 				}
 			);

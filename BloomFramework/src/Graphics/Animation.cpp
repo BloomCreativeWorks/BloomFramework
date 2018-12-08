@@ -18,11 +18,11 @@ namespace bloom::graphics {
 	
 	void Animation::stop() {
 		m_currentFrame = 0;
-		m_lastUpdateTime = 0.0;
+		m_lastUpdateTime = 0.0; // TODO: use 0.0 instead of 0
 	}
 	
 	void Animation::setFPS(double fps) {
-		m_frameTime = (1000 / fps);
+		m_frameTime = (1000.0 / fps); // TODO: use 1000.0 instead of 1000
 	}
 	
 	void Animation::setFrameTime(double miliseconds) {
