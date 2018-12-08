@@ -4,7 +4,7 @@ namespace bloom::audio {
 	std::vector<SoundChannel*> SoundChannel::s_channels;
 	std::stack<int> SoundChannel::s_freeChannels;
 
-	SoundChannel::SoundChannel(SoundChannel * objectPtr) {
+	SoundChannel::SoundChannel(SoundChannel* objectPtr) {
 		if (!s_freeChannels.empty()) {
 			m_channel = s_freeChannels.top();
 			s_channels[m_channel] = objectPtr;

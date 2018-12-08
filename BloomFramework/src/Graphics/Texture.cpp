@@ -2,9 +2,9 @@
 #include "Exception.h"
 
 namespace bloom::graphics {
-	Texture::Texture(SDL_Renderer *& targetRenderer, const std::filesystem::path & filePath, std::optional<SDL_Color> colorKey) : m_renderer(targetRenderer) {
+	Texture::Texture(SDL_Renderer*& targetRenderer, const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey) : m_renderer(targetRenderer) {
 		//Load image at specified path
-		SDL_Surface * loadedSurface = IMG_Load(filePath.u8string().c_str());
+		SDL_Surface* loadedSurface = IMG_Load(filePath.u8string().c_str());
 		if (!loadedSurface)
 			throw Exception("[Texture -> SDL_IMG] " + std::string(SDL_GetError()));
 		else {

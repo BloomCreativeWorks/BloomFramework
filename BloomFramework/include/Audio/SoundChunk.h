@@ -9,7 +9,7 @@ namespace bloom::audio {
 		friend class SoundPlayer;
 
 	public:
-		SoundChunk(const std::filesystem::path & filePath, bool ignoreChecks = false);
+		SoundChunk(const std::filesystem::path& filePath, bool ignoreChecks = false);
 		SoundChunk(const SoundChunk&) = delete;
 		SoundChunk(SoundChunk&& other) noexcept;
 		SoundChunk& operator=(const SoundChunk&) = delete;

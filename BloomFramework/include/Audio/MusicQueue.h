@@ -42,6 +42,6 @@ namespace bloom::audio {
 		bool m_infinitePlayback = true;
 
 		static void next_track();
-		static MusicQueue * s_currentQueuePtr;
+		static MusicQueue* s_currentQueuePtr;
 	};
 }

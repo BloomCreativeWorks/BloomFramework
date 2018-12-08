@@ -20,7 +20,7 @@ namespace bloom {
 		using Position = bloom::components::Position;
 
 	public:
-		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);
+		GameObject(entt::DefaultRegistry& registry, Game& gameInstance);
 		GameObject(const GameObject&) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject&) = delete;
@@ -32,8 +32,8 @@ namespace bloom {
 		uint32_t getEntityID() const noexcept;
 
 	protected:
-		entt::DefaultRegistry & m_registry;
-		Game & m_gameInstance;
+		entt::DefaultRegistry& m_registry;
+		Game& m_gameInstance;
 		uint32_t m_entity;
 	};
 }

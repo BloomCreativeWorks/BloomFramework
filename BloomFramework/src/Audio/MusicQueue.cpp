@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	MusicQueue * MusicQueue::s_currentQueuePtr = nullptr;
+	MusicQueue* MusicQueue::s_currentQueuePtr = nullptr;
 
 	MusicQueue::MusicQueue() noexcept {
 		Mix_HookMusicFinished(MusicQueue::next_track);

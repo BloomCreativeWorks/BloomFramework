@@ -6,14 +6,14 @@ namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicTrack {
 	public:
 		MusicTrack() = default;
-		MusicTrack(const std::filesystem::path & filePath);
+		MusicTrack(const std::filesystem::path& filePath);
 		MusicTrack(const MusicTrack&) = delete;
 		MusicTrack(MusicTrack&& other) noexcept;
 		MusicTrack& operator=(const MusicTrack&) = delete;
 		MusicTrack& operator=(MusicTrack&& other) noexcept;
 		~MusicTrack();
 
-		void load(const std::filesystem::path & filePath);
+		void load(const std::filesystem::path& filePath);
 		void play(int plays = 1, int fadeIn = 0);
 		bool tryPlay(int plays = 1, int fadeIn = 0);
 

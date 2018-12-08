@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	MusicTrack::MusicTrack(const std::filesystem::path & filePath) {
+	MusicTrack::MusicTrack(const std::filesystem::path& filePath) {
 		load(filePath);
 	}
 
@@ -23,7 +23,7 @@ namespace bloom::audio {
 		return *this;
 	}
 
-	void MusicTrack::load(const std::filesystem::path & filePath) {
+	void MusicTrack::load(const std::filesystem::path& filePath) {
 		if (!std::filesystem::exists(filePath))
 			throw Exception("[MusicTrack::load] " + filePath.u8string() + " not exists");
 

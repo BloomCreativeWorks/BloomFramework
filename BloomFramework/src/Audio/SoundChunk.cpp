@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	SoundChunk::SoundChunk(const std::filesystem::path & filePath, bool ignoreChecks) {
+	SoundChunk::SoundChunk(const std::filesystem::path& filePath, bool ignoreChecks) {
 		if (!ignoreChecks) {
 			if (!std::filesystem::exists(filePath))
 				throw Exception("[SoundChunk] " + filePath.u8string() + " not exists");

@@ -144,7 +144,7 @@ namespace bloom {
 		SDL_ShowWindow(m_window);
 	}
 
-	void Game::setColor(const SDL_Color & color) noexcept {
+	void Game::setColor(const SDL_Color& color) noexcept {
 		m_color = color;
 		SDL_SetRenderDrawColor(m_renderer, m_color.a, m_color.g, m_color.b, m_color.a);
 	}
@@ -158,7 +158,7 @@ namespace bloom {
 		return m_color;
 	}
 
-	void Game::getColor(Uint8 & r, Uint8 & g, Uint8 & b, Uint8 & a) const noexcept {
+	void Game::getColor(Uint8& r, Uint8& g, Uint8& b, Uint8& a) const noexcept {
 		r = m_color.r; g = m_color.g; b = m_color.b; a = m_color.a;
 	}
 

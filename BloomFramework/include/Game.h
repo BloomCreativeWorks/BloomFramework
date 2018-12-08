@@ -8,7 +8,7 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 		using TextureStore = bloom::graphics::TextureStore;
-		friend TextureStore::TextureStore(Game & object);
+		friend TextureStore::TextureStore(Game& object);
 
 	public:
 		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -24,7 +24,7 @@ namespace bloom {
 			int imageFlags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
 		static void delay(int intervalMs) noexcept;
 
-		void create(const std::string & title, int xpos, int ypos);
+		void create(const std::string& title, int xpos, int ypos);
 		void update();
 		void clear() noexcept;
 		void render() noexcept;
@@ -35,11 +35,11 @@ namespace bloom {
 		void hideWindow() noexcept;
 		void showWindow() noexcept;
 
-		void setColor(const SDL_Color & color) noexcept;
+		void setColor(const SDL_Color& color) noexcept;
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) noexcept;
 
 		SDL_Color getColor() const noexcept;
-		void getColor(Uint8 & r, Uint8 & g, Uint8 & b, Uint8 & a) const noexcept;
+		void getColor(Uint8& r, Uint8& g, Uint8& b, Uint8& a) const noexcept;
 		int getScreenWidth() const noexcept;
 		int getScreenHeight() const noexcept;
 		SDL_Event getEvent() const noexcept;
@@ -48,8 +48,8 @@ namespace bloom {
 		Timer			timer;
 
 	protected:
-		SDL_Renderer *	m_renderer = nullptr;
-		SDL_Window *	m_window = nullptr;
+		SDL_Renderer*	m_renderer = nullptr;
+		SDL_Window*	m_window = nullptr;
 		int				m_screenWidth, m_screenHeight;
 		const int		m_windowFlags, m_rendererFlags;
 		SDL_Color		m_color{ 0, 0, 0, 0 };

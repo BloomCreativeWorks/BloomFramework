@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	ChunkPtr SoundStore::load(const std::filesystem::path & filePath) {
+	ChunkPtr SoundStore::load(const std::filesystem::path& filePath) {
 		if (!std::filesystem::exists(filePath))
 			throw Exception("[SoundStore::load] " + filePath.u8string() + " not exists");
 
@@ -19,7 +19,7 @@ namespace bloom::audio {
 		return ptr;
 	}
 
-	ChunkPtr SoundStore::at(const std::filesystem::path & filePath) const {
+	ChunkPtr SoundStore::at(const std::filesystem::path& filePath) const {
 		auto SoundChunkIt{ m_store.find(filePath.u8string()) };
 		if (SoundChunkIt != m_store.end())
 			return SoundChunkIt->second;
@@ -27,7 +27,7 @@ namespace bloom::audio {
 			throw Exception("[Sound Store] Can't get SoundFX \"" + filePath.u8string() + "\".\nIs it loaded?");
 	}
 
-	ChunkPtr SoundStore::find(const std::filesystem::path & filePath) const noexcept {
+	ChunkPtr SoundStore::find(const std::filesystem::path& filePath) const noexcept {
 		auto SoundChunkIt{ m_store.find(filePath.u8string()) };
 		if (SoundChunkIt != m_store.end())
 			return SoundChunkIt->second;
@@ -35,7 +35,7 @@ namespace bloom::audio {
 			return nullptr;
 	}
 
-	void SoundStore::unload(const std::filesystem::path & filePath) {
+	void SoundStore::unload(const std::filesystem::path& filePath) {
 		auto SoundChunkIt = m_store.find(filePath.u8string());
 		if (SoundChunkIt != m_store.end())
 			m_store.erase(SoundChunkIt);
@@ -45,7 +45,7 @@ namespace bloom::audio {
 		m_store.clear();
 	}
 
-	ChunkPtr SoundStore::operator[](const std::filesystem::path & key) const noexcept {
+	ChunkPtr SoundStore::operator[](const std::filesystem::path& key) const noexcept {
 		return find(key);
 	}
 }

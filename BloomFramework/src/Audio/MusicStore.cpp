@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	TrackPtr MusicStore::load(const std::filesystem::path & filePath) {
+	TrackPtr MusicStore::load(const std::filesystem::path& filePath) {
 		if (!std::filesystem::exists(filePath))
 			throw Exception("[MusicStore::load] " + filePath.u8string() + " not exists");
 
@@ -15,7 +15,7 @@ namespace bloom::audio {
 		return ptr;
 	}
 
-	TrackPtr MusicStore::at(const std::filesystem::path & filePath) const {
+	TrackPtr MusicStore::at(const std::filesystem::path& filePath) const {
 		auto trackIt{ m_store.find(filePath.u8string()) };
 		if (trackIt != m_store.end())
 			return trackIt->second;
@@ -23,7 +23,7 @@ namespace bloom::audio {
 			throw Exception("[Music Store] Can't get track \"" + filePath.u8string() + "\".\nIs it loaded?");
 	}
 
-	TrackPtr MusicStore::find(const std::filesystem::path & filePath) const {
+	TrackPtr MusicStore::find(const std::filesystem::path& filePath) const {
 		auto trackIt{ m_store.find(filePath.u8string()) };
 		if (trackIt != m_store.end())
 			return trackIt->second;
@@ -31,7 +31,7 @@ namespace bloom::audio {
 			return nullptr;
 	}
 
-	void MusicStore::unload(const std::filesystem::path & filePath) {
+	void MusicStore::unload(const std::filesystem::path& filePath) {
 		auto trackIt = m_store.find(filePath.u8string());
 		if (trackIt != m_store.end())
 			m_store.erase(trackIt);
@@ -41,7 +41,7 @@ namespace bloom::audio {
 		m_store.clear();
 	}
 
-	TrackPtr MusicStore::operator[](const std::filesystem::path & key) const noexcept {
+	TrackPtr MusicStore::operator[](const std::filesystem::path& key) const noexcept {
 		return find(key);
 	}
 }

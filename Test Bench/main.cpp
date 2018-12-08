@@ -59,7 +59,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
-	catch (Exception & e) {
+	catch (Exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
 
@@ -100,9 +100,9 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 
 	// If manual control of entities is required, this is the method to do so.
-	auto & testGOpos{ testRegistry.get<Position>(testGO.getEntityID()) };
+	auto& testGOpos{ testRegistry.get<Position>(testGO.getEntityID()) };
 
-	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
+	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = -testGOsize.w, testY = -testGOsize.h;
 
 	while (game->isRunning()) {
@@ -135,7 +135,7 @@ int main() {
 	try {
 		Game::init();
 	}
-	catch (Exception & e) {
+	catch (Exception& e) {
 		std::cerr << e.what() << std::endl;
 		system("pause");
 		exit(-1);
