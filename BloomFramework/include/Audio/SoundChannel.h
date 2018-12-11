@@ -15,7 +15,7 @@ namespace bloom::audio {
 		SoundChannel& operator=(const SoundChannel& other) = delete;
 		SoundChannel& operator=(SoundChannel&& other) = delete;
 
-		int get() const noexcept;
+		[[nodiscard]] int get() const noexcept;
 
 		static void optimize();
 

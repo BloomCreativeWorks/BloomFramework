@@ -138,8 +138,7 @@ int main() {
 	}
 	catch (Exception& e) {
 		std::cerr << e.what() << std::endl;
-		system("pause");
-		exit(-1);
+		abort();
 	}
 	
 	namespace fs = std::filesystem;
@@ -148,11 +147,11 @@ int main() {
 	fs::path musicPath{ dataDir / L"Music" };
 	fs::path soundsPath{ dataDir / L"Sounds" };
 
-	std::thread drawer_thread{ test_drawer, assetsPath };
 	std::thread player_thread{ test_player, musicPath, soundsPath };
+	std::thread drawer_thread{ test_drawer, assetsPath };
 
-	drawer_thread.join();
 	player_thread.join();
+	drawer_thread.join();
 	music.clear();
 	sounds[1]->play();
 	std::this_thread::sleep_for(3s);

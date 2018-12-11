@@ -29,7 +29,7 @@ namespace bloom {
 
 		virtual void init() = 0;
 
-		uint32_t getEntityID() const noexcept;
+		[[nodiscard]] uint32_t getEntityID() const noexcept;
 
 	protected:
 		entt::DefaultRegistry& m_registry;
