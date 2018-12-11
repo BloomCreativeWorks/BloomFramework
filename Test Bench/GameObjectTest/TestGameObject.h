@@ -7,7 +7,6 @@ class TestChar : public bloom::GameObject {
 	using Position = bloom::components::Position;
 	using Size = bloom::components::Size;
 	using Sprite = bloom::components::Sprite;
-	using Animation = bloom::components::Animation;
 	using bloom::GameObject::GameObject;
 
 public:

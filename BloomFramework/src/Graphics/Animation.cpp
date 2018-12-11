@@ -22,10 +22,4 @@ namespace bloom::graphics {
 	void Animation::setFrameTime(double miliseconds) {
 		m_frameTime = miliseconds;
 	}
-	
-	AnimationPtr AnimationSet::changeAnimation(const std::string & setName) {
-		if (currentAnimation)
-			currentAnimation->stop();
-		return currentAnimation = animSet[setName];
-	}
 }

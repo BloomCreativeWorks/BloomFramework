@@ -49,5 +49,11 @@
     <ClInclude Include="GameObjectTest\TestAnimatedGameObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectTest\AnimationDirectorSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTest\AnimationChangerSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -172,10 +172,12 @@
     <ClInclude Include="include\Audio\MusicQueue.h" />
     <ClInclude Include="include\Audio\MusicStore.h" />
     <ClInclude Include="include\Components\Animation.h" />
+    <ClInclude Include="include\Components\AnimationSet.h" />
     <ClInclude Include="include\Components\Components.h" />
     <ClInclude Include="include\Components\Position.h" />
     <ClInclude Include="include\Components\Size.h" />
     <ClInclude Include="include\Components\Sprite.h" />
+    <ClInclude Include="include\Graphics\AnimationSet.h" />
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Exception.h" />
     <ClInclude Include="include\Framework.h" />
@@ -204,6 +206,7 @@
     <ClCompile Include="src\Audio\SoundChunk.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Graphics\Animation.cpp" />
+    <ClCompile Include="src\Graphics\AnimationSet.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\TextureStore.cpp" />
     <ClCompile Include="src\Timer.cpp" />

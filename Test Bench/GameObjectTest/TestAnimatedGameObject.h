@@ -7,7 +7,9 @@ class TestAnimChar : public bloom::GameObject {
 	using Position = bloom::components::Position;
 	using Size = bloom::components::Size;
 	using Sprite = bloom::components::Sprite;
+	using AnimationPtr = bloom::components::AnimationPtr;
 	using Animation = bloom::components::Animation;
+	using AnimationSet = bloom::components::AnimationSet;
 	using bloom::GameObject::GameObject;
 
 public:
@@ -20,17 +22,56 @@ public:
 
 		m_registry.assign<Sprite>(m_entity, tmp, SDL_Rect{ 0,32,32,32 });
 
-		Animation anim;
-		anim.animationFrames = {
+
+		// Seriously not the best way to initialize object animation.
+		AnimationPtr down = std::make_shared<Animation>();
+		down->animationFrames = {
 			Sprite(tmp, SDL_Rect{ 0,32,32,32 }),
 			Sprite(tmp, SDL_Rect{ 32,32,32,32 }),
 			Sprite(tmp, SDL_Rect{ 0,32,32,32 }),
 			Sprite(tmp, SDL_Rect{ 64,32,32,32 })
 		};
 
-		anim.setFrameTime(250);
 
-		m_registry.assign<Animation>(m_entity, anim);
+		AnimationPtr up = std::make_shared<Animation>();
+		up->animationFrames = {
+			Sprite(tmp, SDL_Rect{ 0,0,32,32 }),
+			Sprite(tmp, SDL_Rect{ 32,0,32,32 }),
+			Sprite(tmp, SDL_Rect{ 0,0,32,32 }),
+			Sprite(tmp, SDL_Rect{ 64,0,32,32 })
+		};
+
+		AnimationPtr left = std::make_shared<Animation>();
+		left->animationFrames = {
+			Sprite(tmp, SDL_Rect{ 0,64,32,32 }),
+			Sprite(tmp, SDL_Rect{ 32,64,32,32 }),
+			Sprite(tmp, SDL_Rect{ 0,64,32,32 }),
+			Sprite(tmp, SDL_Rect{ 64,64,32,32 })
+		};
+
+		AnimationPtr right = std::make_shared<Animation>();
+		right->animationFrames = {
+			Sprite(tmp, SDL_Rect{ 0,96,32,32 }),
+			Sprite(tmp, SDL_Rect{ 32,96,32,32 }),
+			Sprite(tmp, SDL_Rect{ 0,96,32,32 }),
+			Sprite(tmp, SDL_Rect{ 64,96,32,32 })
+		};
+
+
+
+		up->setFrameTime(250);
+		down->setFrameTime(250);
+		left->setFrameTime(250);
+		right->setFrameTime(250);
+
+		AnimationSet animSet;
+		animSet.addAnimation("up", up);
+		animSet.addAnimation("down", down);
+		animSet.addAnimation("left", left);
+		animSet.addAnimation("right", right);
+
+		m_registry.assign<AnimationSet>(m_entity, animSet);
+		m_registry.assign<AnimationPtr>(m_entity, up);
 		m_registry.assign<NoRandomPos>(m_entity);
 
 	}

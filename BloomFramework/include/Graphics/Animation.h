@@ -22,13 +22,4 @@ namespace bloom::graphics {
 	};
 
 	using AnimationPtr = std::shared_ptr<Animation>;
-
-	class AnimationSet {
-		AnimationPtr changeAnimation(const std::string & setName);
-
-		std::unordered_map<std::string, AnimationPtr> animSet;
-
-	private:
-		AnimationPtr currentAnimation = nullptr;
-	};
 }
