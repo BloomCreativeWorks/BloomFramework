@@ -21,11 +21,12 @@ public:
 		m_registry.assign<Sprite>(m_entity, tmp, SDL_Rect{ 0,32,32,32 });
 
 		Animation anim;
-		
-		anim.animationFrames.emplace_back(Sprite(tmp, SDL_Rect{ 0,32,32,32 }));
-		anim.animationFrames.emplace_back(Sprite(tmp, SDL_Rect{ 32,32,32,32 }));
-		anim.animationFrames.emplace_back(Sprite(tmp, SDL_Rect{ 0,32,32,32 }));
-		anim.animationFrames.emplace_back(Sprite(tmp, SDL_Rect{ 64,32,32,32 }));
+		anim.animationFrames = {
+			Sprite(tmp, SDL_Rect{ 0,32,32,32 }),
+			Sprite(tmp, SDL_Rect{ 32,32,32,32 }),
+			Sprite(tmp, SDL_Rect{ 0,32,32,32 }),
+			Sprite(tmp, SDL_Rect{ 64,32,32,32 })
+		};
 
 		anim.setFrameTime(250);
 
