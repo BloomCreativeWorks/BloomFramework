@@ -18,13 +18,12 @@ public:
 		});
 	}
 
-	void update(int frameWidth, int frameHeight, std::optional<double> dt = std::nullopt)
-	{
+	void update(const SDL_Rect& frame, std::optional<double> dt = std::nullopt) {
 		m_registry.view<Position>().each(
-			[this, frameWidth, frameHeight](auto entity, Position& pos) {
+			[this, frame](auto entity, Position& pos) {
 			if (!m_registry.has<NoRandomPos>(entity)) {
-				pos.x = rand() % frameWidth;
-				pos.y = rand() % frameHeight;
+				pos.x = rand() % frame.w + frame.x;
+				pos.y = rand() % frame.h + frame.y;
 			}
 		});
 	}

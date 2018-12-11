@@ -104,6 +104,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = -testGOsize.w, testY = -testGOsize.h;
+	const SDL_Rect randomizer_frame{ WINDOW_WIDTH / 2 - 128 - 64, WINDOW_HEIGHT / 2 - 128 - 64, 256, 256 };
 
 	while (game->isRunning()) {
 		testGOpos.x = testX += 3;
@@ -114,7 +115,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
-		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
+		randomizer.update(randomizer_frame);
 		renderSysTest.update(); // Test again.
 		game->render();
 		//game->update();
