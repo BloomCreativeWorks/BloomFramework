@@ -9,7 +9,6 @@
 #include "GameObjectTest/RandomizerSystem.h"
 #include "GameObjectTest/TestAnimatedGameObject.h"
 #include "GameObjectTest/AnimationChangerSystem.h"
-#include "GameObjectTest/AnimationDirectorSystem.h"
 #include "getExePath.h"
 
 using namespace bloom;
@@ -78,7 +77,6 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	AnimationChangerSystem animChangerTest(testRegistry);
-	AnimationDirectorSystem animDirectorTest(testRegistry);
 	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
@@ -119,7 +117,6 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		game->handleEvents();
 		game->clear();
 		animChangerTest.update();
-		animDirectorTest.update();
 		animSysTest.update(game->timer.lap());
 		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
 		renderSysTest.update(); // Test again.

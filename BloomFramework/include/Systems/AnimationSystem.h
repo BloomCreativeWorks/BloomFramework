@@ -7,13 +7,19 @@
 namespace bloom::systems {
 	class AnimationSystem : public System {
 		using AnimationPtr = bloom::components::AnimationPtr;
+		using AnimationSet = bloom::components::AnimationSet;
 		using Sprite = bloom::components::Sprite;
 		using System::DefaultSystem;
 
 	public:
-		void update(std::optional<double> deltaTime = 0.0f) {
+		void update(std::optional<double> deltaTime = 0.0) {
 			m_registry.view<AnimationPtr>().each(
-				[&](auto entity, AnimationPtr& anim) { // TODO: use reference instead of creating copy of object
+				[&](auto entity, AnimationPtr& anim) { 
+					if (m_registry.has<AnimationSet>(entity)) {
+						AnimationPtr newAnim = m_registry.get<AnimationSet>(entity).getCurrentAnimation();
+						if (newAnim && newAnim != anim) 
+							anim = newAnim;
+					}
 					m_registry.replace<Sprite>(entity, anim->update(deltaTime.value()));
 				}
 			);

@@ -194,7 +194,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameObjectTest\AnimationChangerSystem.h" />
-    <ClInclude Include="GameObjectTest\AnimationDirectorSystem.h" />
     <ClInclude Include="GameObjectTest\NoRandomComponent.h" />
     <ClInclude Include="GameObjectTest\RandomizerSystem.h" />
     <ClInclude Include="GameObjectTest\TestGameObject.h" />
