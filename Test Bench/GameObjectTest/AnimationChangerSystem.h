@@ -16,17 +16,15 @@ public:
 	void update(std::optional<double> deltaTime = std::nullopt) override {
 		counter = (counter + 1) % 100;
 		if (counter == 0) {
-			currentAnimation = (currentAnimation + 1) % animations.size();
 			m_registry.view<AnimationSet>().each(
 				[&](auto entity, AnimationSet& animSet) {
-					animSet.changeAnimation(animations[currentAnimation]);
+					animSet.changeAnimation(animations[static_cast<Uint8>(rand() % 4)]);
 				}
 			);
 		}
 	}
 private:
 	int counter = 99;
-	int currentAnimation = -1;
 	std::vector<std::string> animations{
 		"up",
 		"down",
