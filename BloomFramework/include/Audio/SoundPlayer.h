@@ -16,7 +16,7 @@ namespace bloom::audio {
 		~SoundPlayer() = default;
 
 		void play(int plays = 1, int limitTimeMs = -1);
-		[[nodiscard]] bool tryPlay(int plays = 1, int limitTimeMs = -1);
+		bool tryPlay(int plays = 1, int limitTimeMs = -1);
 		void replay(int plays = 1) { stop(); play(plays); }
 		void pause() noexcept;
 		void resume() noexcept;
@@ -24,10 +24,10 @@ namespace bloom::audio {
 		void cancelDelayedStop() noexcept;
 
 		void setVolume(double volumePercent) noexcept;
-		[[nodiscard]] double getVolume() noexcept;
+		double getVolume() noexcept;
 
 		void setRawVolume(int rawVolume) noexcept;
-		[[nodiscard]] int getRawVolume() noexcept;
+		int getRawVolume() noexcept;
 
 		ChunkPtr chunk() noexcept;
 

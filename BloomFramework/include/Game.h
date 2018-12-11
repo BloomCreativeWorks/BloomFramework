@@ -30,7 +30,7 @@ namespace bloom {
 		void render() noexcept;
 		void destroy();
 		void handleEvents() noexcept;
-		[[nodiscard]] bool isRunning() const noexcept;
+		bool isRunning() const noexcept;
 
 		void hideWindow() noexcept;
 		void showWindow() noexcept;
@@ -38,11 +38,11 @@ namespace bloom {
 		void setColor(const SDL_Color& color) noexcept;
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) noexcept;
 
-		[[nodiscard]] SDL_Color getColor() const noexcept;
+		SDL_Color getColor() const noexcept;
 		void getColor(Uint8& r, Uint8& g, Uint8& b, Uint8& a) const noexcept;
-		[[nodiscard]] int getScreenWidth() const noexcept;
-		[[nodiscard]] int getScreenHeight() const noexcept;
-		[[nodiscard]] SDL_Event getEvent() const noexcept;
+		int getScreenWidth() const noexcept;
+		int getScreenHeight() const noexcept;
+		SDL_Event getEvent() const noexcept;
 
 		TextureStore	textures{ m_renderer };
 		Timer			timer;

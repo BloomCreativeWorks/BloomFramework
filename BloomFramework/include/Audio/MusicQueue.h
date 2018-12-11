@@ -15,7 +15,7 @@ namespace bloom::audio {
 		MusicQueue& operator=(MusicQueue&& other) noexcept;
 		~MusicQueue();
 
-		[[nodiscard]] bool tryActivate() noexcept;
+		bool tryActivate() noexcept;
 		void activate() noexcept;
 		void add(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
 		void add(TrackExt track);
@@ -29,13 +29,13 @@ namespace bloom::audio {
 		void deactivate() noexcept;
 
 		void setVolume(double volumePercent) noexcept;
-		[[nodiscard]] double getVolume() noexcept;
+		double getVolume() noexcept;
 
 		void setRawVolume(int rawVolume) noexcept;
-		[[nodiscard]] int getRawVolume() noexcept;
+		int getRawVolume() noexcept;
 
 		void setInfinitePlayback(bool value) noexcept;
-		[[nodiscard]] bool isInfinitePlayback() const noexcept;
+		bool isInfinitePlayback() const noexcept;
 
 	private:
 		std::queue<TrackExt> m_queue;
