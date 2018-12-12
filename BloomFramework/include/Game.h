@@ -11,8 +11,8 @@ namespace bloom {
 		friend TextureStore::TextureStore(Game& object);
 
 	public:
-		Game(int width, int height, int windowFlags = 0, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		Game(std::nothrow_t, int width, int height, int windowFlags = 0, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		Game(const Game&) = delete;
 		Game(Game&&) = delete;
 		Game& operator=(const Game&) = delete;
@@ -30,7 +30,7 @@ namespace bloom {
 		void render() noexcept;
 		void destroy();
 		void handleEvents() noexcept;
-		bool isRunning() const noexcept;
+		[[nodiscard]] bool isRunning() const noexcept;
 
 		void hideWindow() noexcept;
 		void showWindow() noexcept;
@@ -38,18 +38,18 @@ namespace bloom {
 		void setColor(const SDL_Color& color) noexcept;
 		void setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) noexcept;
 
-		SDL_Color getColor() const noexcept;
+		[[nodiscard]] SDL_Color getColor() const noexcept;
 		void getColor(Uint8& r, Uint8& g, Uint8& b, Uint8& a) const noexcept;
-		int getScreenWidth() const noexcept;
-		int getScreenHeight() const noexcept;
-		SDL_Event getEvent() const noexcept;
+		[[nodiscard]] int getScreenWidth() const noexcept;
+		[[nodiscard]] int getScreenHeight() const noexcept;
+		[[nodiscard]] SDL_Event getEvent() const noexcept;
 
 		TextureStore	textures{ m_renderer };
 		Timer			timer;
 
 	protected:
 		SDL_Renderer*	m_renderer = nullptr;
-		SDL_Window*		m_window = nullptr;
+		SDL_Window*	m_window = nullptr;
 		int				m_screenWidth, m_screenHeight;
 		const int		m_windowFlags, m_rendererFlags;
 		SDL_Color		m_color{ 0, 0, 0, 0 };
