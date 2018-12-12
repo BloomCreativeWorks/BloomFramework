@@ -3,20 +3,8 @@
 
 namespace bloom::audio {
 	ChunkPtr SoundStore::load(const std::filesystem::path& filePath) {
-		if (!std::filesystem::exists(filePath))
-			throw Exception("[SoundStore::load] " + filePath.u8string() + " not exists");
-
-		if (filePath.extension() != std::filesystem::path(L".wav"))
-			throw Exception("[SoundStore::load] non-wav file provided, use wav files only");
-
-		auto SoundChunkIt = m_store.find(filePath.u8string());
-		if (SoundChunkIt != m_store.end())
-			return SoundChunkIt->second;
-
-		ChunkPtr ptr = std::make_shared<SoundChunk>(filePath.u8string(), true);
-		m_store.emplace(filePath.u8string(), ptr);
-
-		return ptr;
+		auto res = m_store.try_emplace(filePath.u8string(), std::make_shared<SoundChunk>(filePath));
+		return res.first->second;
 	}
 
 	ChunkPtr SoundStore::at(const std::filesystem::path& filePath) const {
@@ -24,7 +12,7 @@ namespace bloom::audio {
 		if (SoundChunkIt != m_store.end())
 			return SoundChunkIt->second;
 		else
-			throw Exception("[Sound Store] Can't get SoundFX \"" + filePath.u8string() + "\".\nIs it loaded?");
+			throw Exception("[SoundStore] Can't get chunk \"" + filePath.u8string() + "\".\nIs it loaded?");
 	}
 
 	ChunkPtr SoundStore::find(const std::filesystem::path& filePath) const noexcept {

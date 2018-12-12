@@ -3,6 +3,9 @@
 
 namespace bloom::graphics {
 	Texture::Texture(SDL_Renderer*& targetRenderer, const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey) : m_renderer(targetRenderer) {
+		if (!std::filesystem::exists(filePath))
+			throw Exception("[Texture] texture file not exists");
+
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(filePath.u8string().c_str());
 		if (!loadedSurface)
