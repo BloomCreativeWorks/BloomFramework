@@ -57,19 +57,19 @@ namespace bloom::audio {
 			return (static_cast<int>(players.size()) - 1);
 		}
 
-		void stopAll() {
+		void stopAll() noexcept {
 			for (auto& p : players) {
 				p->stop();
 			}
 		}
 
-		void pauseAll() {
+		void pauseAll() noexcept {
 			for (auto& p : players) {
 				p->pause();
 			}
 		}
 
-		void resumeAll() {
+		void resumeAll() noexcept {
 			for (auto& p : players) {
 				p->resume();
 			}

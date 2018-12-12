@@ -7,14 +7,14 @@ namespace bloom::audio {
 		m_chunk(chunk)
 	{}
 
-	SoundPlayer::SoundPlayer(SoundPlayer&& other) noexcept :
+	SoundPlayer::SoundPlayer(SoundPlayer&& other) :
 		SoundChannel(this)
 	{
 		m_chunk.swap(other.m_chunk);
 		other.m_chunk = nullptr;
 	}
 
-	SoundPlayer& SoundPlayer::operator=(SoundPlayer&& other) noexcept {
+	SoundPlayer& SoundPlayer::operator=(SoundPlayer&& other) {
 		m_chunk.swap(other.m_chunk);
 		other.m_chunk = nullptr;
 		return *this;

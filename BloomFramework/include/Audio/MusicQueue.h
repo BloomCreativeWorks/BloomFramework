@@ -10,9 +10,9 @@ namespace bloom::audio {
 	public:
 		MusicQueue() noexcept;
 		MusicQueue(const MusicQueue& other);
-		MusicQueue(MusicQueue&& other) noexcept;
+		MusicQueue(MusicQueue&& other);
 		MusicQueue& operator=(const MusicQueue& other);
-		MusicQueue& operator=(MusicQueue&& other) noexcept;
+		MusicQueue& operator=(MusicQueue&& other);
 		~MusicQueue();
 
 		bool tryActivate() noexcept;

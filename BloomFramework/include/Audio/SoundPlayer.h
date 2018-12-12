@@ -10,9 +10,9 @@ namespace bloom::audio {
 	public:
 		SoundPlayer(ChunkPtr chunk);
 		SoundPlayer(const SoundPlayer&) = delete;
-		SoundPlayer(SoundPlayer&& other) noexcept;
+		SoundPlayer(SoundPlayer&& other);
 		SoundPlayer& operator=(const SoundPlayer&) = delete;
-		SoundPlayer& operator=(SoundPlayer&& other) noexcept;
+		SoundPlayer& operator=(SoundPlayer&& other);
 		~SoundPlayer() = default;
 
 		void play(int plays = 1, int limitTimeMs = -1);

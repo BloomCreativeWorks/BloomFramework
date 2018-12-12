@@ -13,7 +13,7 @@ namespace bloom::audio {
 		m_infinitePlayback(other.m_infinitePlayback)
 	{}
 
-	MusicQueue::MusicQueue(MusicQueue&& other) noexcept : m_infinitePlayback(other.m_infinitePlayback) {
+	MusicQueue::MusicQueue(MusicQueue&& other) : m_infinitePlayback(other.m_infinitePlayback) {
 		m_queue.swap(other.m_queue);
 		other.m_infinitePlayback = true;
 	}
@@ -24,7 +24,7 @@ namespace bloom::audio {
 		return *this;
 	}
 
-	MusicQueue& MusicQueue::operator=(MusicQueue&& other) noexcept {
+	MusicQueue& MusicQueue::operator=(MusicQueue&& other) {
 		m_queue.swap(other.m_queue);
 		m_infinitePlayback = other.m_infinitePlayback;
 		other.m_infinitePlayback = true;

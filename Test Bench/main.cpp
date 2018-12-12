@@ -52,18 +52,17 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
-	//Uint32 framestart;
 	Uint32 framestart;
 
 	game = std::make_unique<Game>(WINDOW_WIDTH, WINDOW_HEIGHT);
 	try {
 		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
-	catch (Exception& e) {
+	catch (const Exception& e) {
 		std::cerr << e.what() << std::endl;
 	}
 
-	srand(static_cast<uint32_t>(time(0)));
+	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor{ static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
@@ -136,7 +135,7 @@ int main() {
 	try {
 		Game::init();
 	}
-	catch (Exception& e) {
+	catch (const Exception& e) {
 		std::cerr << e.what() << std::endl;
 		system("pause");
 		exit(-1);

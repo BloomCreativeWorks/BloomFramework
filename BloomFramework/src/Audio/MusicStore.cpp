@@ -15,7 +15,7 @@ namespace bloom::audio {
 			throw Exception("[MusicStore] Can't get track \"" + filePath.u8string() + "\".\nIs it loaded?");
 	}
 
-	TrackPtr MusicStore::find(const std::filesystem::path& filePath) const {
+	TrackPtr MusicStore::find(const std::filesystem::path& filePath) const noexcept {
 		auto trackIt{ m_store.find(filePath.u8string()) };
 		if (trackIt != m_store.end())
 			return trackIt->second;
