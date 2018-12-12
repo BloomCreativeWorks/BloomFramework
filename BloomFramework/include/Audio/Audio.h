@@ -52,8 +52,8 @@ namespace bloom::audio {
 	public:
 		static Sounds& instance();
 
-		int add(const std::filesystem::path& filePath) {
-			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
+		[[nodiscard]] int add(const std::filesystem::path& filePath) {
+			players.push_back(std::make_unique<SoundPlayer>(store.load(filePath)));
 			return (static_cast<int>(players.size()) - 1);
 		}
 

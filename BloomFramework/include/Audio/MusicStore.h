@@ -9,8 +9,8 @@ namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicStore {
 	public:
 		TrackPtr load(const std::filesystem::path& filePath);
-		[[nodiscard]] TrackPtr at(const std::filesystem::path& filePath) const;
-		[[nodiscard]] TrackPtr find(const std::filesystem::path& filePath) const;
+		TrackPtr at(const std::filesystem::path& filePath) const;
+		TrackPtr find(const std::filesystem::path& filePath) const;
 		void unload(const std::filesystem::path& filePath);
 		void unloadAll() noexcept;
 
