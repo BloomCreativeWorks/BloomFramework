@@ -17,10 +17,10 @@ namespace bloom::graphics {
 	}
 
 	void AnimationSet::addAnimation(const std::string & setName, Animation animation) {
-		animSet.emplace(std::hash_value(setName), std::make_shared<Animation>(animation));
+		animSet.try_emplace(std::hash_value(setName), std::make_shared<Animation>(animation));
 	}
 
 	void AnimationSet::addAnimation(const std::string & setName, AnimationPtr animationPtr) {
-		animSet.emplace(std::hash_value(setName), animationPtr);
+		animSet.try_emplace(std::hash_value(setName), animationPtr);
 	}
 }
