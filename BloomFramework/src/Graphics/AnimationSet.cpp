@@ -23,4 +23,10 @@ namespace bloom::graphics {
 	void AnimationSet::addAnimation(const std::string & setName, AnimationPtr animationPtr) {
 		animSet.try_emplace(std::hash_value(setName), animationPtr);
 	}
+	
+	void AnimationSet::removeAnimation(const std::string & setName) {
+		animSet.erase(std::hash_value(setName));
+	}
+	
+	void AnimationSet::clearAnimations() { animSet.clear(); }
 }

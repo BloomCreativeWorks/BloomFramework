@@ -12,6 +12,10 @@ namespace bloom::graphics {
 		void addAnimation(const std::string & setName, Animation animation);
 		void addAnimation(const std::string & setName, AnimationPtr animation);
 
+		void removeAnimation(const std::string & setName);
+
+		void clearAnimations();
+
 		std::unordered_map<size_t, AnimationPtr> animSet;
 
 		AnimationPtr getCurrentAnimation() { return currentAnimation; }
