@@ -24,9 +24,7 @@ namespace bloom::audio {
 	}
 
 	void MusicStore::unload(const std::filesystem::path& filePath) {
-		auto trackIt = m_store.find(filePath);
-		if (trackIt != m_store.end())
-			m_store.erase(trackIt);
+		m_store.erase(filePath);
 	}
 
 	void MusicStore::unloadAll() noexcept {

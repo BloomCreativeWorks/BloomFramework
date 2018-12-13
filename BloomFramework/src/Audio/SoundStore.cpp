@@ -24,9 +24,7 @@ namespace bloom::audio {
 	}
 
 	void SoundStore::unload(const std::filesystem::path& filePath) {
-		auto SoundChunkIt = m_store.find(filePath);
-		if (SoundChunkIt != m_store.end())
-			m_store.erase(SoundChunkIt);
+		m_store.erase(filePath);
 	}
 
 	void SoundStore::unloadAll() noexcept {
