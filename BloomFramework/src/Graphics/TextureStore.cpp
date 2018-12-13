@@ -27,8 +27,7 @@ namespace bloom::graphics {
 	}
 
 	void TextureStore::unload(const std::filesystem::path& filePath) {
-		if (auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
-			m_store.erase(textureIt); // We can't dispose the actual Texture since other's may still be using it.
+		m_store.erase(filePath.u8string());
 	}
 
 	void TextureStore::unloadAll() noexcept {
