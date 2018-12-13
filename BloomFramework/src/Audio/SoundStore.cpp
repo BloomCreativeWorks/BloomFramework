@@ -3,12 +3,12 @@
 
 namespace bloom::audio {
 	ChunkPtr SoundStore::load(const std::filesystem::path& filePath) {
-		auto res = m_store.try_emplace(filePath.u8string(), std::make_shared<SoundChunk>(filePath));
+		auto res = m_store.try_emplace(filePath, std::make_shared<SoundChunk>(filePath));
 		return res.first->second;
 	}
 
 	ChunkPtr SoundStore::at(const std::filesystem::path& filePath) const {
-		auto SoundChunkIt{ m_store.find(filePath.u8string()) };
+		auto SoundChunkIt{ m_store.find(filePath) };
 		if (SoundChunkIt != m_store.end())
 			return SoundChunkIt->second;
 		else
@@ -16,7 +16,7 @@ namespace bloom::audio {
 	}
 
 	ChunkPtr SoundStore::find(const std::filesystem::path& filePath) const noexcept {
-		auto SoundChunkIt{ m_store.find(filePath.u8string()) };
+		auto SoundChunkIt{ m_store.find(filePath) };
 		if (SoundChunkIt != m_store.end())
 			return SoundChunkIt->second;
 		else
@@ -24,7 +24,7 @@ namespace bloom::audio {
 	}
 
 	void SoundStore::unload(const std::filesystem::path& filePath) {
-		auto SoundChunkIt = m_store.find(filePath.u8string());
+		auto SoundChunkIt = m_store.find(filePath);
 		if (SoundChunkIt != m_store.end())
 			m_store.erase(SoundChunkIt);
 	}

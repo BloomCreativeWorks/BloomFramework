@@ -17,6 +17,6 @@ namespace bloom::audio {
 		TrackPtr operator[](const std::filesystem::path& key) const noexcept;
 
 	private:
-		std::unordered_map<std::string, TrackPtr> m_store;
+		std::unordered_map<std::filesystem::path, TrackPtr> m_store;
 	};
 }

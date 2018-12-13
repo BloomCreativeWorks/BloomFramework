@@ -3,12 +3,12 @@
 
 namespace bloom::audio {
 	TrackPtr MusicStore::load(const std::filesystem::path& filePath) {
-		auto res = m_store.try_emplace(filePath.u8string(), std::make_shared<MusicTrack>(filePath));
+		auto res = m_store.try_emplace(filePath, std::make_shared<MusicTrack>(filePath));
 		return res.first->second;
 	}
 
 	TrackPtr MusicStore::at(const std::filesystem::path& filePath) const {
-		auto trackIt{ m_store.find(filePath.u8string()) };
+		auto trackIt{ m_store.find(filePath) };
 		if (trackIt != m_store.end())
 			return trackIt->second;
 		else
@@ -16,7 +16,7 @@ namespace bloom::audio {
 	}
 
 	TrackPtr MusicStore::find(const std::filesystem::path& filePath) const noexcept {
-		auto trackIt{ m_store.find(filePath.u8string()) };
+		auto trackIt{ m_store.find(filePath) };
 		if (trackIt != m_store.end())
 			return trackIt->second;
 		else
@@ -24,7 +24,7 @@ namespace bloom::audio {
 	}
 
 	void MusicStore::unload(const std::filesystem::path& filePath) {
-		auto trackIt = m_store.find(filePath.u8string());
+		auto trackIt = m_store.find(filePath);
 		if (trackIt != m_store.end())
 			m_store.erase(trackIt);
 	}

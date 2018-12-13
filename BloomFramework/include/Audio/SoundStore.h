@@ -16,6 +16,6 @@ namespace bloom::audio {
 		ChunkPtr operator[](const std::filesystem::path& key) const noexcept;
 
 	private:
-		std::unordered_map<std::string, ChunkPtr> m_store;
+		std::unordered_map<std::filesystem::path, ChunkPtr> m_store;
 	};
 }

@@ -24,7 +24,7 @@ namespace bloom {
 
 		private:
 			SDL_Renderer*&	m_renderer;
-			std::unordered_map<std::string, TexturePtr>	m_store;
+			std::unordered_map<std::filesystem::path, TexturePtr>	m_store;
 		};
 	}
 }
