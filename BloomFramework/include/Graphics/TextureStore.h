@@ -3,6 +3,7 @@
 #include "stdIncludes.h"
 
 #include <unordered_map>
+#include "HashPath.h"
 #include "Texture.h"
 
 namespace bloom {
@@ -24,7 +25,7 @@ namespace bloom {
 
 		private:
 			SDL_Renderer*&	m_renderer;
-			std::unordered_map<std::filesystem::path, TexturePtr>	m_store;
+			std::unordered_map<std::filesystem::path, TexturePtr, HashPath> m_store;
 		};
 	}
 }

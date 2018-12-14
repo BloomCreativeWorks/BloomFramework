@@ -180,6 +180,7 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Audio\SoundChunk.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\HashPath.h" />
     <ClInclude Include="include\Systems\DefaultSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Systems\Systems.h" />

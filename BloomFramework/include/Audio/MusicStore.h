@@ -3,6 +3,7 @@
 #include "stdIncludes.h"
 
 #include <unordered_map>
+#include "HashPath.h"
 #include "MusicTrack.h"
 
 namespace bloom::audio {
@@ -17,6 +18,6 @@ namespace bloom::audio {
 		TrackPtr operator[](const std::filesystem::path& key) const noexcept;
 
 	private:
-		std::unordered_map<std::filesystem::path, TrackPtr> m_store;
+		std::unordered_map<std::filesystem::path, TrackPtr, HashPath> m_store;
 	};
 }
