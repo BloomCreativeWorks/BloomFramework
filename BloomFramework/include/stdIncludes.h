@@ -13,13 +13,3 @@
 #include "entt/entt.hpp"
 
 #include "export.h"
-
-template<>
-struct std::hash<std::filesystem::path> {
-	// hash functor for std::filesystem::path
-	_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef std::filesystem::path argument_type;
-	_CXX17_DEPRECATE_ADAPTOR_TYPEDEFS typedef size_t result_type;
-	[[nodiscard]] size_t operator()(const std::filesystem::path& _Keyval) const noexcept {
-		return (std::filesystem::hash_value(_Keyval));
-	}
-};
