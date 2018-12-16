@@ -17,7 +17,7 @@ namespace bloom::systems {
 				[&](auto entity, AnimationPtr& anim) { 
 					if (m_registry.has<AnimationSet>(entity)) {
 						AnimationPtr newAnim = m_registry.get<AnimationSet>(entity).getCurrentAnimation();
-						if (newAnim && newAnim != anim) 
+						if (newAnim) 
 							anim = newAnim;
 					}
 					m_registry.replace<Sprite>(entity, anim->update(deltaTime.value()));

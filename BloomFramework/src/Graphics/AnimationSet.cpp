@@ -2,16 +2,14 @@
 
 namespace bloom::graphics {
 	AnimationPtr AnimationSet::changeAnimation(const std::string & setName) {
-		AnimationPtr newAnim;
-		if (auto it = animSet.find(std::hash_value(setName)); it != animSet.end())
-			newAnim = it->second;
-		else
+		auto it = animSet.find(std::hash_value(setName));
+		if (it == animSet.end())
 			throw Exception("[AnimationSet::changeAnimation] Set doesn't exist");
 
-		if (currentAnimation != newAnim) {
+		if (currentAnimation != it->second) {
 			if(currentAnimation)
 				currentAnimation->stop();
-			currentAnimation = newAnim;
+			currentAnimation = it->second;
 		}
 		return currentAnimation;
 	}
