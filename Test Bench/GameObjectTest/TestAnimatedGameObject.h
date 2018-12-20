@@ -57,8 +57,6 @@ public:
 			Sprite(tmp, SDL_Rect{ 64,96,32,32 })
 		};
 
-
-
 		up->setFrameTime(250);
 		down->setFrameTime(250);
 		left->setFrameTime(250);
@@ -73,6 +71,5 @@ public:
 		m_registry.assign<AnimationSet>(m_entity, animSet);
 		m_registry.assign<AnimationPtr>(m_entity, up);
 		m_registry.assign<NoRandomPos>(m_entity);
-
 	}
 };
