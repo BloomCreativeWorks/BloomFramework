@@ -76,7 +76,7 @@ namespace bloom {
 	template<typename S> std::shared_ptr<S> Scene::registerSystem() {
 		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
+			[](auto & i) -> bool { return typeid(*i) == typeid(S); });
 			v == m_systems.end())
 		{
 			return std::dynamic_pointer_cast<S>(m_systems.emplace_back(std::make_shared<S>(*this)));
@@ -90,7 +90,7 @@ namespace bloom {
 	template<typename S> void Scene::unregisterSystem() {
 		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
+			[](auto & i) -> bool { return typeid(*i) == typeid(S); });
 			v != m_systems.end())
 		{
 			m_systems.erase(v);
@@ -105,7 +105,7 @@ namespace bloom {
 	{
 		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
-			[](auto & i) -> bool { return (std::strcmp(typeid(*i).name(), typeid(S).name()) == 0); });
+			[](auto & i) -> bool { return typeid(*i) == typeid(S); });
 			v != m_systems.end())
 		{
 			return std::dynamic_pointer_cast<S>(*v);
