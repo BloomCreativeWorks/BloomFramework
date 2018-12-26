@@ -15,10 +15,6 @@ namespace bloom::graphics {
 		refreshTexture();
 	}
 
-	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
-		Drawable::render(srcRect, destRect, flip);
-	}
-
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
 		SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
 		Drawable::render(srcRect, destRect, flip);

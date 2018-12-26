@@ -24,7 +24,6 @@ namespace bloom::graphics {
 		~SpriteText() = default;
 
 		void refreshTexture();
-		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE) override;
 		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 		int getTextHeight() const { return m_height; }
