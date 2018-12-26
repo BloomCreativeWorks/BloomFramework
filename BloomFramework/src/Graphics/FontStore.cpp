@@ -23,6 +23,10 @@ namespace bloom::graphics {
 			m_store.erase(presetNumber);
 	}
 
+	void FontStore::clear(){
+		m_store.clear();
+	}
+
 	FontPtr FontStore::operator[](size_t key) const noexcept {
 		return find(key);
 	}

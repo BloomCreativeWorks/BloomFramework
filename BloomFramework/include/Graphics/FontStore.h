@@ -10,6 +10,7 @@ namespace bloom::graphics {
 		FontPtr load(const std::filesystem::path & filePath, size_t presetNumber, FontStyle style = defaultFontStyle);
 		FontPtr find(size_t presetNumber) const noexcept;
 		void unload(size_t presetNumber);
+		void clear();
 
 		FontPtr operator[](size_t key) const noexcept;
 
