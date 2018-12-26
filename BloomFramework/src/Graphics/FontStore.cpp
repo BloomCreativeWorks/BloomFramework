@@ -20,8 +20,7 @@ namespace bloom::graphics {
 	}
 
 	void FontStore::unload(size_t presetNumber) {
-		if (auto fontIt = m_store.find(presetNumber); fontIt != m_store.end())
-			m_store.erase(fontIt);
+			m_store.erase(presetNumber);
 	}
 
 	FontPtr FontStore::operator[](size_t key) const noexcept {
