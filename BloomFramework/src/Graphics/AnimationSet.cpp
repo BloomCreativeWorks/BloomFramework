@@ -14,17 +14,11 @@ namespace bloom::graphics {
 		return m_current;
 	}
 
-	void AnimationSet::add(const std::string & setName, const Animation & animation) {
+	inline void AnimationSet::add(const std::string & setName, const Animation & animation) {
 		set.try_emplace(setName, std::make_shared<Animation>(animation));
 	}
 
-	void AnimationSet::add(const std::string & setName, AnimationPtr animationPtr) {
+	inline void AnimationSet::add(const std::string & setName, AnimationPtr animationPtr) {
 		set.try_emplace(setName, animationPtr);
 	}
-	
-	void AnimationSet::remove(const std::string & setName) {
-		set.erase(setName);
-	}
-	
-	void AnimationSet::clear() { set.clear(); }
 }
