@@ -16,7 +16,7 @@ namespace bloom::systems {
 			m_registry.view<AnimationPtr>().each(
 				[&](auto entity, AnimationPtr& anim) { 
 					if (m_registry.has<AnimationSet>(entity)) {
-						AnimationPtr newAnim = m_registry.get<AnimationSet>(entity).getCurrentAnimation();
+						AnimationPtr newAnim = m_registry.get<AnimationSet>(entity).getCurrent();
 						if (newAnim) 
 							anim = newAnim;
 					}

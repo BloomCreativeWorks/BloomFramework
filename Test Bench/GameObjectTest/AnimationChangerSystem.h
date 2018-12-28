@@ -18,7 +18,7 @@ public:
 		if (counter == 0) {
 			m_registry.view<AnimationSet>().each(
 				[&](auto entity, AnimationSet& animSet) {
-					animSet.changeAnimation(animations[static_cast<Uint8>(rand() % 4)]);
+					animSet.changeCurrent(animations[static_cast<Uint8>(rand() % 4)]);
 				}
 			);
 		}

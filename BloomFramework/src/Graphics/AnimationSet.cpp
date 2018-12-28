@@ -1,30 +1,30 @@
 #include "Graphics/AnimationSet.h"
 
 namespace bloom::graphics {
-	AnimationPtr AnimationSet::changeAnimation(const std::string & setName) {
-		auto it = animSet.find(std::hash_value(setName));
-		if (it == animSet.end())
+	AnimationPtr AnimationSet::changeCurrent(const std::string & setName) {
+		auto it = set.find(setName);
+		if (it == set.end())
 			throw Exception("[AnimationSet::changeAnimation] Set doesn't exist");
 
-		if (currentAnimation != it->second) {
-			if(currentAnimation)
-				currentAnimation->stop();
-			currentAnimation = it->second;
+		if (m_current != it->second) {
+			if (m_current)
+				m_current->stop();
+			m_current = it->second;
 		}
-		return currentAnimation;
+		return m_current;
 	}
 
-	void AnimationSet::addAnimation(const std::string & setName, Animation animation) {
-		animSet.try_emplace(std::hash_value(setName), std::make_shared<Animation>(animation));
+	void AnimationSet::add(const std::string & setName, const Animation & animation) {
+		set.try_emplace(setName, std::make_shared<Animation>(animation));
 	}
 
-	void AnimationSet::addAnimation(const std::string & setName, AnimationPtr animationPtr) {
-		animSet.try_emplace(std::hash_value(setName), animationPtr);
+	void AnimationSet::add(const std::string & setName, AnimationPtr animationPtr) {
+		set.try_emplace(setName, animationPtr);
 	}
 	
-	void AnimationSet::removeAnimation(const std::string & setName) {
-		animSet.erase(std::hash_value(setName));
+	void AnimationSet::remove(const std::string & setName) {
+		set.erase(setName);
 	}
 	
-	void AnimationSet::clearAnimations() { animSet.clear(); }
+	void AnimationSet::clear() { set.clear(); }
 }
