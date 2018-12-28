@@ -6,6 +6,14 @@
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API Animation {
 	public:
+		Animation() = default;
+		Animation(const std::initializer_list<Sprite> & initList) : animationFrames{ initList } {}
+		Animation(const Animation & other) = default;
+		Animation(Animation && other) = default;
+		Animation& operator=(const Animation & other) = default;
+		Animation& operator=(Animation && other) = default;
+		~Animation() = default;
+
 		Sprite update(double deltaTime);
 
 		void stop();

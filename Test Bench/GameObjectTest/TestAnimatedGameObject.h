@@ -49,8 +49,7 @@ public:
 			Sprite(tmp, SDL_Rect{ 64,64,32,32 })
 		};
 
-		AnimationPtr right = std::make_shared<Animation>();
-		right->animationFrames = {
+		Animation right{
 			Sprite(tmp, SDL_Rect{ 0,96,32,32 }),
 			Sprite(tmp, SDL_Rect{ 32,96,32,32 }),
 			Sprite(tmp, SDL_Rect{ 0,96,32,32 }),
@@ -60,13 +59,13 @@ public:
 		up->setFrameTime(250);
 		down->setFrameTime(250);
 		left->setFrameTime(250);
-		right->setFrameTime(250);
+		right.setFrameTime(250);
 
 		AnimationSet animSet;
-		animSet.addAnimation("up", up);
-		animSet.addAnimation("down", down);
-		animSet.addAnimation("left", left);
-		animSet.addAnimation("right", right);
+		animSet.add("up", up);
+		animSet.add("down", down);
+		animSet.add("left", left);
+		animSet.add("right", right);
 
 		m_registry.assign<AnimationSet>(m_entity, animSet);
 		m_registry.assign<AnimationPtr>(m_entity, up);
