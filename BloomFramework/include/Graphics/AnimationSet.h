@@ -12,15 +12,14 @@ namespace bloom::graphics {
 		inline void add(const std::string & setName, const Animation & animation);
 		inline void add(const std::string & setName, AnimationPtr animation);
 
-		void remove(const std::string & setName) { set.erase(setName); }
+		void remove(const std::string & setName) { m_sets.erase(setName); }
 
-		void clear() { set.clear(); }
-
-		std::unordered_map<std::string, AnimationPtr> set; // hm, do we need public set and add/remove/clear funcs?
+		void clear() { m_sets.clear(); }
 
 		AnimationPtr getCurrent() const { return m_current; }
 
 	private:
+		std::unordered_map<std::string, AnimationPtr> m_sets; 
 		AnimationPtr m_current = nullptr;
 	};
 }

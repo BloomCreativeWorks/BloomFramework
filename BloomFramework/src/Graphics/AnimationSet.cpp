@@ -2,8 +2,8 @@
 
 namespace bloom::graphics {
 	AnimationPtr AnimationSet::changeCurrent(const std::string & setName) {
-		auto it = set.find(setName);
-		if (it == set.end())
+		auto it = m_sets.find(setName);
+		if (it == m_sets.end())
 			throw Exception("[AnimationSet::changeAnimation] Set doesn't exist");
 
 		if (m_current != it->second) {
@@ -15,10 +15,10 @@ namespace bloom::graphics {
 	}
 
 	inline void AnimationSet::add(const std::string & setName, const Animation & animation) {
-		set.try_emplace(setName, std::make_shared<Animation>(animation));
+		m_sets.try_emplace(setName, std::make_shared<Animation>(animation));
 	}
 
 	inline void AnimationSet::add(const std::string & setName, AnimationPtr animationPtr) {
-		set.try_emplace(setName, animationPtr);
+		m_sets.try_emplace(setName, animationPtr);
 	}
 }
