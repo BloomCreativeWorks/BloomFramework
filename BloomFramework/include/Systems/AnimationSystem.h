@@ -14,10 +14,10 @@ namespace bloom::systems {
 	public:
 		void update(std::optional<double> deltaTime = 0.0) override {
 			m_registry.view<AnimationPtr>().each(
-				[&](auto entity, AnimationPtr& anim) { 
+				[&](auto entity, AnimationPtr& anim) {
 					if (m_registry.has<AnimationSet>(entity)) {
 						AnimationPtr newAnim = m_registry.get<AnimationSet>(entity).getCurrent();
-						if (newAnim) 
+						if (newAnim)
 							anim = newAnim;
 					}
 					m_registry.replace<Sprite>(entity, anim->update(deltaTime.value()));

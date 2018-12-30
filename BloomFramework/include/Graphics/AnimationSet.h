@@ -19,7 +19,7 @@ namespace bloom::graphics {
 		AnimationPtr getCurrent() const { return m_current; }
 
 	private:
-		std::unordered_map<std::string, AnimationPtr> m_sets; 
-		AnimationPtr m_current = nullptr;
+		std::unordered_map<std::string, AnimationPtr> m_sets;
+		AnimationPtr m_current{ nullptr };
 	};
 }
