@@ -25,7 +25,7 @@ namespace bloom::graphics {
 		// std::unordered_map<int, Sprite> animationFrames; // Frames can be inserted in any order as long as the correct number is given.
 	private:
 		double m_lastUpdateTime = 0.0;
-		int m_currentFrame = 0;
+		size_t m_currentFrame = 0;
 		double m_frameTime = 0.0; 
 	};
 
