@@ -24,7 +24,7 @@ public:
 
 
 		// Seriously not the best way to initialize object animation.
-		AnimationPtr down = std::make_shared<Animation>();
+		AnimationPtr down{ std::make_shared<Animation>() };
 		down->animationFrames = {
 			Sprite(tmp, SDL_Rect{ 0,32,32,32 }),
 			Sprite(tmp, SDL_Rect{ 32,32,32,32 }),
@@ -33,7 +33,7 @@ public:
 		};
 
 
-		AnimationPtr up = std::make_shared<Animation>();
+		AnimationPtr up{ std::make_shared<Animation>() };
 		up->animationFrames = {
 			Sprite(tmp, SDL_Rect{ 0,0,32,32 }),
 			Sprite(tmp, SDL_Rect{ 32,0,32,32 }),
@@ -41,7 +41,7 @@ public:
 			Sprite(tmp, SDL_Rect{ 64,0,32,32 })
 		};
 
-		AnimationPtr left = std::make_shared<Animation>();
+		AnimationPtr left{ std::make_shared<Animation>() };
 		left->animationFrames = {
 			Sprite(tmp, SDL_Rect{ 0,64,32,32 }),
 			Sprite(tmp, SDL_Rect{ 32,64,32,32 }),
@@ -49,7 +49,8 @@ public:
 			Sprite(tmp, SDL_Rect{ 64,64,32,32 })
 		};
 
-		Animation right{
+		AnimationPtr right{ std::make_shared<Animation>() };
+		right->animationFrames = {
 			Sprite(tmp, SDL_Rect{ 0,96,32,32 }),
 			Sprite(tmp, SDL_Rect{ 32,96,32,32 }),
 			Sprite(tmp, SDL_Rect{ 0,96,32,32 }),
@@ -59,7 +60,7 @@ public:
 		up->setFrameTime(250);
 		down->setFrameTime(250);
 		left->setFrameTime(250);
-		right.setFrameTime(250);
+		right->setFrameTime(250);
 
 		AnimationSet animSet;
 		animSet.add("up", up);
