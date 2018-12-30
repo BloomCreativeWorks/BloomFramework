@@ -23,6 +23,10 @@ Game* game = nullptr;
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
+inline int rstep(int n) {
+	return (rand() % n + 1);
+}
+
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 
@@ -82,15 +86,15 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
+	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
 	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.init(SDL_Rect{ 128, 0, 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
+	testGO.init(SDL_Rect{ 50, 50, 192, 192 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
@@ -105,13 +109,18 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
 	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
-	int testX = -testGOsize.w, testY = -testGOsize.h;
+	int testX = rstep(10), testY = rstep(10);
+
 
 	while (game->isRunning()) {
-		testGOpos.x = testX += 3;
-		testGOpos.y = testY += 3;
-		if (testX >= WINDOW_WIDTH)	testX = -testGOsize.w;
-		if (testY >= WINDOW_HEIGHT)	testY = -testGOsize.h;
+		testGOpos.x += testX;
+		testGOpos.y += testY;
+		if (testGOpos.x >= WINDOW_WIDTH) {
+			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
+		}
+		if (testGOpos.y >= WINDOW_HEIGHT) {
+			testGOpos.y = -testGOsize.h; testX = rstep(10); testY = rstep(10);
+		}
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
@@ -144,7 +153,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	namespace fs = std::filesystem;
 	fs::path dataDir = fs::path(getExePath()) / L"data";
 	fs::path assetsPath = dataDir / L"Assets";
