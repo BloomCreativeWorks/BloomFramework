@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 #include <ctime>
 #include <Windows.h>
 
@@ -7,6 +7,8 @@
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
+#include "GameObjectTest/TestAnimatedGameObject.h"
+#include "GameObjectTest/AnimationChangerSystem.h"
 #include "getExePath.h"
 
 using namespace bloom;
@@ -18,8 +20,12 @@ using bloom::components::Size;
 
 Game* game = nullptr;
 
-const int WINDOW_WIDTH = 1000;
-const int WINDOW_HEIGHT = 800;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
+
+inline int rstep(int n) {
+	return (rand() % n + 1);
+}
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
@@ -74,42 +80,53 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
+	AnimationChangerSystem animChangerTest(testRegistry);
+	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
+	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
 	game->render();
 	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.init(SDL_Rect{ 128, 0, 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
 	game->render();
 	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
+	testGO.init(SDL_Rect{ 50, 50, 192, 192 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
+	TestAnimChar testAnim(testRegistry, game);
+	testAnim.init(testCharPath);
 
 
 	// If manual control of entities is required, this is the method to do so.
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
 	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
-	int testX = -testGOsize.w, testY = -testGOsize.h;
+	int testX = rstep(10), testY = rstep(10);
+
 
 	while (game->isRunning()) {
-		testGOpos.x = testX += 3;
-		testGOpos.y = testY += 3;
-		if (testX >= WINDOW_WIDTH)	testX = -testGOsize.w;
-		if (testY >= WINDOW_HEIGHT)	testY = -testGOsize.h;
+		testGOpos.x += testX;
+		testGOpos.y += testY;
+		if (testGOpos.x >= WINDOW_WIDTH) {
+			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
+		}
+		if (testGOpos.y >= WINDOW_HEIGHT) {
+			testGOpos.y = -testGOsize.h; testX = rstep(10); testY = rstep(10);
+		}
 		// Demo ends here.
 		framestart = SDL_GetTicks();
 		game->handleEvents();
 		game->clear();
+		animChangerTest.update();
+		animSysTest.update(game->timer.lap());
 		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
 		renderSysTest.update(); // Test again.
 		game->render();
@@ -136,7 +153,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	namespace fs = std::filesystem;
 	fs::path dataDir = fs::path(getExePath()) / L"data";
 	fs::path assetsPath = dataDir / L"Assets";
