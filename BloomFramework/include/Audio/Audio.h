@@ -11,8 +11,6 @@
 namespace bloom::audio {
 	class Music {
 	public:
-		static Music& instance();
-
 		void push(const std::filesystem::path& filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
 			queue.add(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
 		}
@@ -22,36 +20,28 @@ namespace bloom::audio {
 			store.unloadAll();
 		}
 
-		static bool isPlaying() noexcept {
+		bool isPlaying() const noexcept {
+			return queue.isPlaying();
+		}
+
+		bool isPaused() const noexcept {
+			return queue.isPaused();
+		}
+
+		static bool isAnyPlaying() noexcept {
 			return MusicTrack::isPlaying();
 		}
 
-		static bool isPaused() noexcept {
+		static bool isAnyPaused() noexcept {
 			return MusicTrack::isPaused();
 		}
 
-		MusicStore store;
+		MusicStore& store{ MusicStore::store() };
 		MusicQueue queue;
-
-	private:
-		Music() = default;
-		~Music() = default;
-		Music(const Music&) = delete;
-		Music(Music&&) = delete;
-		Music& operator=(const Music&) = delete;
-		Music& operator=(Music&&) = delete;
 	};
-
-	Music& Music::instance() {
-		static Music music_instance;
-		return music_instance;
-	}
-
 
 	class Sounds {
 	public:
-		static Sounds& instance();
-
 		int add(const std::filesystem::path& filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
 			return (static_cast<int>(players.size()) - 1);
@@ -89,23 +79,12 @@ namespace bloom::audio {
 			return players[off];
 		}
 
-		SoundStore store;
+		SoundStore& store{ SoundStore::store() };
 		std::vector<SoundPlayerPtr> players;
-
-	private:
-		Sounds() = default;
-		~Sounds() = default;
-		Sounds(const Sounds&) = delete;
-		Sounds(Sounds&&) = delete;
-		Sounds& operator=(const Sounds&) = delete;
-		Sounds& operator=(Sounds&&) = delete;
 	};
 
-	Sounds& Sounds::instance() {
-		static Sounds sounds_instance;
-		return sounds_instance;
-	}
-
-	Music& music{ Music::instance() };
-	Sounds& sounds{ Sounds::instance() };
+#ifndef BLOOM_NO_PREBUILT_AUDIO_OBJECTS
+	static Music music{};
+	static Sounds sounds{};
+#endif
 }

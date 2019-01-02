@@ -140,7 +140,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	namespace fs = std::filesystem;
 	fs::path dataDir{ fs::path(getExePath()) / L"data" };
 	fs::path assetsPath{ dataDir / L"Assets" };

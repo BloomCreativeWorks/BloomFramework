@@ -6,13 +6,13 @@
 #include "SoundChannel.h"
 
 namespace bloom::audio {
-	class BLOOMFRAMEWORK_API SoundPlayer : public SoundChannel {
+	class BLOOMFRAMEWORK_API SoundPlayer : SoundChannel {
 	public:
 		SoundPlayer(ChunkPtr chunk);
 		SoundPlayer(const SoundPlayer&) = delete;
-		SoundPlayer(SoundPlayer&& other);
+		SoundPlayer(SoundPlayer&&) = delete;
 		SoundPlayer& operator=(const SoundPlayer&) = delete;
-		SoundPlayer& operator=(SoundPlayer&& other);
+		SoundPlayer& operator=(SoundPlayer&&) = delete;
 		~SoundPlayer() = default;
 
 		void play(int plays = 1, int limitTimeMs = -1);

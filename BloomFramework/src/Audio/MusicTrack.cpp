@@ -3,44 +3,24 @@
 
 namespace bloom::audio {
 	MusicTrack::MusicTrack(const std::filesystem::path& filePath) {
-		load(filePath);
-	}
-
-	MusicTrack::~MusicTrack() {
-		Mix_FreeMusic(m_track);
-	}
-
-	MusicTrack::MusicTrack(MusicTrack&& other) noexcept {
-		m_track = other.m_track;
-		other.m_track = nullptr;
-	}
-
-	MusicTrack& MusicTrack::operator=(MusicTrack&& other) noexcept {
-		if (m_track)
-			Mix_FreeMusic(m_track);
-		m_track = other.m_track;
-		other.m_track = nullptr;
-		return *this;
-	}
-
-	void MusicTrack::load(const std::filesystem::path& filePath) {
 		if (!std::filesystem::exists(filePath))
 			throw Exception("[MusicTrack::load] " + filePath.u8string() + " not exists");
 
-		if (m_track)
-			Mix_FreeMusic(m_track);
 		m_track = Mix_LoadMUS(filePath.u8string().c_str());
 
 		if (!m_track)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 	}
 
-	void MusicTrack::play(int plays, int fadeIn) {
-		fadeIn = fadeIn < 0 ? 0 : fadeIn;
-		plays = plays <= 0 ? -1 : plays;
+	MusicTrack::~MusicTrack() {
+		Mix_FreeMusic(m_track);
+	}
 
-		if (!m_track)
-			throw Exception("[SDL_Mixer] there is no file to play track");
+	void MusicTrack::play(int plays, int fadeIn) {
+		if (fadeIn < 0)
+			fadeIn = 0;
+		if (plays <= 0)
+			plays = 0;
 
 		if (Mix_FadeInMusic(m_track, plays, fadeIn) == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
@@ -71,8 +51,7 @@ namespace bloom::audio {
 	}
 
 	void MusicTrack::resume() noexcept {
-		if (Mix_PausedMusic())
-			Mix_ResumeMusic();
+		Mix_ResumeMusic();
 	}
 
 	void MusicTrack::rewind() noexcept {
@@ -90,5 +69,9 @@ namespace bloom::audio {
 
 	bool MusicTrack::isPaused() noexcept {
 		return (Mix_PausedMusic());
+	}
+
+	Mix_Fading MusicTrack::isFading() noexcept {
+		return (Mix_FadingMusic());
 	}
 }

@@ -8,8 +8,7 @@ namespace bloom::graphics {
 	TextureStore::TextureStore(Game& object) : m_renderer(object.m_renderer) {}
 
 	TexturePtr TextureStore::load(const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey) {
-		auto res = m_store.try_emplace(filePath, std::make_shared<Texture>(m_renderer, filePath, colorKey));
-		return res.first->second;
+		return m_store.try_emplace(filePath, std::make_shared<Texture>(m_renderer, filePath, colorKey)).first->second;
 	}
 
 	TexturePtr TextureStore::at(const std::filesystem::path& filePath) const {

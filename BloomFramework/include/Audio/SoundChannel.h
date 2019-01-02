@@ -8,21 +8,23 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
 	public:
-		SoundChannel(SoundChannel* objectPtr);
+		SoundChannel() = delete;
+		SoundChannel(const SoundChannel&) = delete;
+		SoundChannel(SoundChannel&&) = delete;
+		SoundChannel& operator=(const SoundChannel&) = delete;
+		SoundChannel& operator=(SoundChannel&&) = delete;
 		~SoundChannel();
-		SoundChannel(const SoundChannel& other) = delete;
-		SoundChannel(SoundChannel&& other) = delete;
-		SoundChannel& operator=(const SoundChannel& other) = delete;
-		SoundChannel& operator=(SoundChannel&& other) = delete;
 
-		int get() const noexcept;
+		int channel() const noexcept;
 
 		static void optimize();
 
 	protected:
-		int m_channel;
+		SoundChannel(SoundChannel* objectPtr);
 
 	private:
+		int m_channel;
+
 		static std::vector<SoundChannel*> s_channels;
 		static std::stack<int> s_freeChannels;
 	};

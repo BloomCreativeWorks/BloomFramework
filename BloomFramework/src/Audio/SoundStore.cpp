@@ -2,9 +2,13 @@
 #include "Exception.h"
 
 namespace bloom::audio {
+	SoundStore& SoundStore::store() {
+		static SoundStore store_instance;
+		return store_instance;
+	}
+
 	ChunkPtr SoundStore::load(const std::filesystem::path& filePath) {
-		auto res = m_store.try_emplace(filePath, std::make_shared<SoundChunk>(filePath));
-		return res.first->second;
+		return m_store.try_emplace(filePath, std::make_shared<SoundChunk>(filePath)).first->second;
 	}
 
 	ChunkPtr SoundStore::at(const std::filesystem::path& filePath) const {

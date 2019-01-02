@@ -2,38 +2,11 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	MusicQueue* MusicQueue::s_currentQueuePtr = nullptr;
-
-	MusicQueue::MusicQueue() noexcept {
-		Mix_HookMusicFinished(MusicQueue::next_track);
-	}
-
-	MusicQueue::MusicQueue(const MusicQueue& other) :
-		m_queue(other.m_queue),
-		m_infinitePlayback(other.m_infinitePlayback)
-	{}
-
-	MusicQueue::MusicQueue(MusicQueue&& other) : m_infinitePlayback(other.m_infinitePlayback) {
-		m_queue.swap(other.m_queue);
-		other.m_infinitePlayback = true;
-	}
-
-	MusicQueue& MusicQueue::operator=(const MusicQueue& other) {
-		m_queue = other.m_queue;
-		m_infinitePlayback = other.m_infinitePlayback;
-		return *this;
-	}
-
-	MusicQueue& MusicQueue::operator=(MusicQueue&& other) {
-		m_queue.swap(other.m_queue);
-		m_infinitePlayback = other.m_infinitePlayback;
-		other.m_infinitePlayback = true;
-		return *this;
-	}
-
 	MusicQueue::~MusicQueue() {
 		clear();
 	}
+
+	MusicQueue* MusicQueue::s_currentQueuePtr = nullptr;
 
 	bool MusicQueue::tryActivate() noexcept {
 		if (s_currentQueuePtr == this)
@@ -46,8 +19,10 @@ namespace bloom::audio {
 
 	void MusicQueue::activate() noexcept {
 		if (s_currentQueuePtr != this) {
-			Mix_HaltMusic();
+			if (s_currentQueuePtr)
+				s_currentQueuePtr->deactivate(true);
 			s_currentQueuePtr = this;
+			Mix_HookMusicFinished(MusicQueue::_next_track);
 		}
 	}
 
@@ -61,31 +36,42 @@ namespace bloom::audio {
 
 	void MusicQueue::play(bool bypassFade) {
 		if (m_queue.empty())
-			throw Exception("[MusicStore] store is empty");
+			throw Exception("[MusicQueue] queue is empty");
 
 		if (s_currentQueuePtr != this)
 			activate();
 
 		auto track{ m_queue.front() };
-		if (track.fadeInMs > 0 and !bypassFade)
+		if (!bypassFade)
 			track.track->play(track.plays, track.fadeInMs);
 		else
 			track.track->play(track.plays);
+		m_playbackState = true;
 	}
 
 	void MusicQueue::pause() {
-		m_queue.front().track->pause();
+		if (s_currentQueuePtr == this) {
+			m_queue.front().track->pause();
+			m_playbackState = false;
+			m_pauseState = true;
+		}
 	}
 
 	void MusicQueue::resume() {
-		m_queue.front().track->resume();
+		if (s_currentQueuePtr == this) {
+			m_queue.front().track->resume();
+			m_playbackState = true;
+			m_pauseState = false;
+		}
 	}
 
 	void MusicQueue::rewind() {
 		m_queue.front().track->rewind();
 	}
 
-	void MusicQueue::skip(int fadeOutMs) {
+	void MusicQueue::skip(int fadeOutMs, bool allowUnpause) {
+		if (allowUnpause && m_pauseState)
+			resume();
 		if (fadeOutMs > 0)
 			m_queue.front().track->stop(fadeOutMs);
 		else
@@ -100,7 +86,7 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::clear(int fadeOutMs) {
-		deactivate();
+		deactivate(false);
 		if (!m_queue.empty()) {
 			if (fadeOutMs > 0)
 				m_queue.front().track->stop(fadeOutMs);
@@ -112,8 +98,16 @@ namespace bloom::audio {
 		}
 	}
 
-	void MusicQueue::deactivate() noexcept {
-		Mix_HookMusicFinished(nullptr);
+	void MusicQueue::deactivate(bool forced) noexcept {
+		if (forced) {
+			Mix_HookMusicFinished(nullptr);
+			Mix_HaltMusic();
+			m_playbackState = false;
+			m_pauseState = false;
+			s_currentQueuePtr = nullptr;
+		}
+		else
+			Mix_HookMusicFinished(MusicQueue::_finalize);
 	}
 
 	void MusicQueue::setRawVolume(int rawVolume) noexcept {
@@ -124,8 +118,12 @@ namespace bloom::audio {
 		Mix_VolumeMusic(rawVolume);
 	}
 
+	int MusicQueue::getRawVolume() noexcept {
+		return Mix_VolumeMusic(-1);
+	}
+
 	void MusicQueue::setVolume(double volumePercent) noexcept {
-		if (volumePercent < std::numeric_limits<double>::epsilon())
+		if (volumePercent < 0.0)
 			volumePercent = 0.0;
 		if (volumePercent > 100.0)
 			volumePercent = 100.0;
@@ -136,27 +134,47 @@ namespace bloom::audio {
 		return (static_cast<double>(Mix_VolumeMusic(-1)) / MIX_MAX_VOLUME) * 100.0;
 	}
 
-	int MusicQueue::getRawVolume() noexcept {
-		return Mix_VolumeMusic(-1);
-	}
-
-	void MusicQueue::setInfinitePlayback(bool value) noexcept {
-		m_infinitePlayback = value;
+	void MusicQueue::setInfinitePlayback(bool state) noexcept {
+		m_infinitePlayback = state;
 	}
 
 	bool MusicQueue::isInfinitePlayback() const noexcept {
 		return m_infinitePlayback;
 	}
 
-	void MusicQueue::next_track() {
+	bool MusicQueue::isActive() const noexcept {
+		return s_currentQueuePtr == this;
+	}
+
+	bool MusicQueue::isPlaying() const noexcept {
+		return m_playbackState;
+	}
+
+	bool MusicQueue::isPaused() const noexcept {
+		return m_pauseState;
+	}
+
+	void MusicQueue::_next_track() {
 		if (s_currentQueuePtr) {
 			if (!s_currentQueuePtr->m_queue.front().bypassInfinitePlayback && s_currentQueuePtr->m_infinitePlayback) {
 				s_currentQueuePtr->m_queue.push(s_currentQueuePtr->m_queue.front());
 			}
 			s_currentQueuePtr->m_queue.pop();
 
-			if (!s_currentQueuePtr->m_queue.empty())
+			s_currentQueuePtr->m_pauseState = false;
+			if (s_currentQueuePtr->m_queue.empty())
+				s_currentQueuePtr->m_playbackState = false;
+			else
 				s_currentQueuePtr->play();
+		}
+	}
+
+	void MusicQueue::_finalize() {
+		if (s_currentQueuePtr) {
+			s_currentQueuePtr->m_playbackState = false;
+			s_currentQueuePtr->m_pauseState = false;
+			Mix_HookMusicFinished(nullptr);
+			s_currentQueuePtr = nullptr;
 		}
 	}
 }

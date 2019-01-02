@@ -22,7 +22,7 @@ namespace bloom::audio {
 		s_channels[m_channel] = nullptr;
 	}
 
-	int SoundChannel::get() const noexcept {
+	int SoundChannel::channel() const noexcept {
 		return m_channel;
 	}
 

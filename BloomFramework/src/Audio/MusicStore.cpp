@@ -2,9 +2,13 @@
 #include "Exception.h"
 
 namespace bloom::audio {
+	MusicStore& MusicStore::store() {
+		static MusicStore store_instance;
+		return store_instance;
+	}
+
 	TrackPtr MusicStore::load(const std::filesystem::path& filePath) {
-		auto res = m_store.try_emplace(filePath, std::make_shared<MusicTrack>(filePath));
-		return res.first->second;
+		return m_store.try_emplace(filePath, std::make_shared<MusicTrack>(filePath)).first->second;
 	}
 
 	TrackPtr MusicStore::at(const std::filesystem::path& filePath) const {

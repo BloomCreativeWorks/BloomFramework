@@ -8,11 +8,11 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicQueue {
 	public:
-		MusicQueue() noexcept;
-		MusicQueue(const MusicQueue& other);
-		MusicQueue(MusicQueue&& other);
-		MusicQueue& operator=(const MusicQueue& other);
-		MusicQueue& operator=(MusicQueue&& other);
+		MusicQueue() = default;
+		MusicQueue(const MusicQueue&) = delete;
+		MusicQueue(MusicQueue&&) = delete;
+		MusicQueue& operator=(const MusicQueue&) = delete;
+		MusicQueue& operator=(MusicQueue&&) = delete;
 		~MusicQueue();
 
 		bool tryActivate() noexcept;
@@ -23,25 +23,32 @@ namespace bloom::audio {
 		void pause();
 		void resume();
 		void rewind();
-		void skip(int fadeOutMs = 0);
+		void skip(int fadeOutMs = 0, bool allowUnpause = true);
 		void eject(int fadeOutMs = 0);
 		void clear(int fadeOutMs = 0);
-		void deactivate() noexcept;
+		void deactivate(bool forced = false) noexcept;
 
-		void setVolume(double volumePercent) noexcept;
-		double getVolume() noexcept;
+		static void setVolume(double volumePercent) noexcept;
+		static double getVolume() noexcept;
 
-		void setRawVolume(int rawVolume) noexcept;
-		int getRawVolume() noexcept;
+		static void setRawVolume(int rawVolume) noexcept;
+		static int getRawVolume() noexcept;
 
-		void setInfinitePlayback(bool value) noexcept;
+		void setInfinitePlayback(bool state) noexcept;
 		bool isInfinitePlayback() const noexcept;
+
+		bool isActive() const noexcept;
+		bool isPlaying() const noexcept;
+		bool isPaused() const noexcept;
 
 	private:
 		std::queue<TrackExt> m_queue;
 		bool m_infinitePlayback = true;
+		bool m_playbackState = false;
+		bool m_pauseState = false;
 
-		static void next_track();
+		static void _next_track();
+		static void _finalize();
 		static MusicQueue* s_currentQueuePtr;
 	};
 }
