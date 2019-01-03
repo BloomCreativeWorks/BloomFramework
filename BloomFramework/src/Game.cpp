@@ -36,7 +36,8 @@ namespace bloom {
 	}
 
 	Game::~Game() {
-		destroy();
+		if (m_window)
+			destroy();
 		//m_runningInstancesQnt--;
 		//if (m_runningInstancesQnt <= 0)
 		//	exit();
@@ -125,8 +126,10 @@ namespace bloom {
 	}
 
 	void Game::destroy() {
-		SDL_DestroyRenderer(m_renderer);
-		SDL_DestroyWindow(m_window);
+		if (m_renderer)
+			SDL_DestroyRenderer(m_renderer);
+		if (m_window)
+			SDL_DestroyWindow(m_window);
 		m_renderer = nullptr;
 		m_window = nullptr;
 		std::clog << "Window destroyed!" << std::endl;
