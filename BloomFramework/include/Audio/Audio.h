@@ -17,7 +17,6 @@ namespace bloom::audio {
 
 		void clear() {
 			queue.clear();
-			store.unloadAll();
 		}
 
 		bool isPlaying() const noexcept {
@@ -67,7 +66,6 @@ namespace bloom::audio {
 
 		void clear() {
 			players.clear();
-			store.unloadAll();
 			SoundChannel::optimize();
 		}
 
