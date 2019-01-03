@@ -154,10 +154,8 @@ int main() {
 
 	drawer_thread.join();
 	player_thread.join();
-	::music.clear();
 	::sounds[1]->play();
 	std::this_thread::sleep_for(3s);
-	::sounds.clear();
 
 	return 0;
 }
