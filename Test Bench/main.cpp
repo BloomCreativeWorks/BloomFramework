@@ -154,6 +154,7 @@ int main() {
 
 	drawer_thread.join();
 	player_thread.join();
+	::music.queue.deactivate(true);
 	::sounds[1]->play();
 	std::this_thread::sleep_for(3s);
 
