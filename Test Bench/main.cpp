@@ -20,6 +20,8 @@ using bloom::components::Size;
 
 
 std::shared_ptr<Game> game{ nullptr };
+Music music;
+Sounds sounds;
 
 const int WINDOW_WIDTH = 1000;
 const int WINDOW_HEIGHT = 800;
@@ -28,24 +30,24 @@ void test_player(const std::filesystem::path& musicPath, const std::filesystem::
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 	//track1.stop();
 
-	music.push(musicPath / L"music_001.mp3");
-	music.push(musicPath / L"music_002.mp3");
-	music.push(musicPath / L"music_003.mp3");
-	music.push(musicPath / L"music_003.mp3", 1, 200, true);
-	music.push(musicPath / L"music_004.mp3");
-	music.push(musicPath / L"music_005.mp3");
+	::music.push(musicPath / L"music_001.mp3");
+	::music.push(musicPath / L"music_002.mp3");
+	::music.push(musicPath / L"music_003.mp3");
+	::music.push(musicPath / L"music_003.mp3", 1, 200, true);
+	::music.push(musicPath / L"music_004.mp3");
+	::music.push(musicPath / L"music_005.mp3");
 	//music.push(musicPath / L"music_006.mp3");
 	//music.push(musicPath / L"music_007.mp3");
 
-	sounds.add(soundsPath / L"sound_001.wav"); //0
-	sounds.add(soundsPath / L"sound_002.wav"); //1
+	::sounds.add(soundsPath / L"sound_001.wav"); //0
+	::sounds.add(soundsPath / L"sound_002.wav"); //1
 
-	sounds[0]->play();
+	::sounds[0]->play();
 	std::this_thread::sleep_for(3s);
 
-	while (!music.queue.tryActivate())
+	while (!::music.queue.tryActivate())
 		std::this_thread::sleep_for(1s);
-	music.queue.play();
+	::music.queue.play();
 }
 
 void test_drawer(const std::filesystem::path& assetsPath) {
@@ -54,9 +56,9 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 	Uint32 framestart;
 
-	game = std::make_unique<Game>(WINDOW_WIDTH, WINDOW_HEIGHT);
+	::game = std::make_unique<Game>(WINDOW_WIDTH, WINDOW_HEIGHT);
 	try {
-		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		::game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 	}
 	catch (const Exception& e) {
 		std::cerr << e.what() << std::endl;
@@ -65,9 +67,9 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor{ static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
-	game->setColor(randColor);
-	game->clear();
-	game->render();
+	::game->setColor(randColor);
+	::game->clear();
+	::game->render();
 
 	if (!std::filesystem::exists(assetsPath))
 		throw bloom::Exception("Required assets can't be found.");
@@ -78,21 +80,21 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
 	bloom::systems::RenderSystem renderSysTest{ testRegistry };
-	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
-	TestChar testSprite{ testRegistry, *game };
+	::game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
+	::game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	TestChar testSprite{ testRegistry, *::game };
 	testSprite.init(SDL_Rect{ 0,0,128,128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
-	game->render();
-	TestChar testSprite2{ testRegistry, *game };
+	::game->render();
+	TestChar testSprite2{ testRegistry, *::game };
 	testSprite2.init(SDL_Rect{ 128,0,128,128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	renderSysTest.update();
-	game->render();
-	TestChar testGO{ testRegistry, *game };
+	::game->render();
+	TestChar testGO{ testRegistry, *::game };
 	testGO.init(SDL_Rect{ 50,50,256,256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	testGO.disableRandomPos();
 	renderSysTest.update();
-	game->render();
+	::game->render();
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer{ testRegistry };
@@ -105,27 +107,27 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	int testX = -testGOsize.w, testY = -testGOsize.h;
 	const SDL_Rect randomizer_frame{ WINDOW_WIDTH / 2 - 128 - 64, WINDOW_HEIGHT / 2 - 128 - 64, 256, 256 };
 
-	while (game->isRunning()) {
+	while (::game->isRunning()) {
 		testGOpos.x = testX += 3;
 		testGOpos.y = testY += 3;
 		if (testX >= WINDOW_WIDTH)	testX = -testGOsize.w;
 		if (testY >= WINDOW_HEIGHT)	testY = -testGOsize.h;
 		// Demo ends here.
 		framestart = SDL_GetTicks();
-		game->handleEvents();
-		game->clear();
+		::game->handleEvents();
+		::game->clear();
 		randomizer.update(randomizer_frame);
 		renderSysTest.update(); // Test again.
-		game->render();
-		//game->update();
+		::game->render();
+		//::game->update();
 
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime) {
-			game->delay(framedelay - frametime);
+			::game->delay(framedelay - frametime);
 		}
 	}
-	game->destroy();
+	::game->destroy();
 }
 
 
@@ -152,10 +154,10 @@ int main() {
 
 	drawer_thread.join();
 	player_thread.join();
-	music.clear();
-	sounds[1]->play();
+	::music.clear();
+	::sounds[1]->play();
 	std::this_thread::sleep_for(3s);
-	sounds.clear();
+	::sounds.clear();
 
 	return 0;
 }

@@ -82,9 +82,4 @@ namespace bloom::audio {
 		SoundStore& store{ SoundStore::store() };
 		std::vector<SoundPlayerPtr> players;
 	};
-
-#ifndef BLOOM_NO_PREBUILT_AUDIO_OBJECTS
-	static Music music{};
-	static Sounds sounds{};
-#endif
 }
