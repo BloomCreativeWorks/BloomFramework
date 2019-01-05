@@ -35,5 +35,5 @@ namespace bloom::audio {
 		ChunkPtr m_chunk;
 	};
 
-	using SoundPlayerPtr = std::unique_ptr<SoundPlayer>;
+	using SoundPlayerPtr = std::shared_ptr<SoundPlayer>;
 }
