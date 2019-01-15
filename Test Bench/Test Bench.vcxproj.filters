@@ -46,6 +46,12 @@
     <ClInclude Include="getExePath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectTest\TestAnimatedGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTest\AnimationChangerSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="TestScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>

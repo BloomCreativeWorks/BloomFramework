@@ -2,3 +2,4 @@
 
 #include "DefaultSystem.h"
 #include "RenderSystem.h"
+#include "AnimationSystem.h"

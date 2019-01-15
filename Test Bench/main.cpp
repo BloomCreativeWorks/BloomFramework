@@ -1,4 +1,4 @@
-﻿#include "Framework.h"
+#include "Framework.h"
 #include <ctime>
 #include <Windows.h>
 
@@ -7,6 +7,8 @@
 
 #include "GameObjectTest/TestGameObject.h"
 #include "GameObjectTest/RandomizerSystem.h"
+#include "GameObjectTest/TestAnimatedGameObject.h"
+#include "GameObjectTest/AnimationChangerSystem.h"
 #include "getExePath.h"
 #include "TestScene.h"
 
@@ -18,6 +20,10 @@ Game* game = nullptr;
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
+
+inline int rstep(int n) {
+	return (rand() % n + 1);
+}
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
@@ -100,7 +106,7 @@ int main() {
 		system("pause");
 		exit(-1);
 	}
-	
+
 	namespace fs = std::filesystem;
 	fs::path dataDir = fs::path(getExePath()) / L"data";
 	fs::path assetsPath = dataDir / L"Assets";
