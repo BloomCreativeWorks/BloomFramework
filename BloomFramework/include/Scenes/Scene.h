@@ -15,7 +15,7 @@ namespace bloom {
 
 	public:
 		Scene(SceneManager & sceneManager);
-		virtual ~Scene() = default;
+		~Scene();
 
 		void update(double deltaTime);
 		void draw();
@@ -64,11 +64,6 @@ namespace bloom {
 		obj->init(std::forward<TArgs>(initArgs)...);
 
 		m_gameObjects.emplace(tag, std::unique_ptr<GO>(obj));
-
-		//auto & tmp = m_gameObjects[tag];
-		//GO* derived = dynamic_cast<GO*>(tmp.get());
-		////if (derived != nullptr) // we just already emplaced object, nullptr will never be returned
-		//	derived->init(std::forward<TArgs>(initArgs)...);
 	}
 
 	// System stuff

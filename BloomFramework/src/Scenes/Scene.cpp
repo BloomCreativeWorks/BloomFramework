@@ -15,6 +15,10 @@ namespace bloom {
 		SDL_SetTextureBlendMode(m_sceneTexture, SDL_BLENDMODE_BLEND);
 	}
 
+	Scene::~Scene() {
+		SDL_DestroyTexture(m_sceneTexture);
+	}
+
 	void Scene::update(double deltaTime) {
 		SDL_SetRenderTarget(m_gameInstance.getRenderer(), m_sceneTexture);
 		SDL_RenderClear(m_gameInstance.getRenderer());
