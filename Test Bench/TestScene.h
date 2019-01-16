@@ -39,18 +39,4 @@ public:
 		registerSystem<AnimationChangerSystem>();
 		registerSystem<AnimationSystem>();
 	}
-
-	void unload() override {
-		destroyGameObject("testSprite");
-		destroyGameObject("testSprite2");
-		destroyGameObject("testGO");
-		destroyGameObject("testAnimatedSprite");
-
-		unregisterSystem<RenderSystem>();
-		unregisterSystem<SceneRotateSystem>();
-		unregisterSystem<RandomPositionSystem>();
-		unregisterSystem<SpriteRotatorSystem>();
-		unregisterSystem<AnimationSystem>();
-		unregisterSystem<AnimationChangerSystem>();
-	}
 };

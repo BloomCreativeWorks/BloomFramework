@@ -20,7 +20,6 @@ namespace bloom {
 		void update(double deltaTime);
 		void draw();
 		virtual void load() = 0;
-		virtual void unload() = 0;
 		Game & getGameInstance() { return m_gameInstance; }
 
 		//Game Object stuff
