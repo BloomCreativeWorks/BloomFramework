@@ -58,7 +58,7 @@ namespace bloom {
 	};
 
 	template<typename GO, typename... TArgs> void Scene::addGameObject(const std::string & tag, TArgs &&... initArgs) {
-		static_assert(std::is_base_of_v<GameObject, GO>, "Type GO passed in is not a GameObject based");
+		static_assert(std::is_base_of_v<GameObject, GO>, "Type GO passed in is not GameObject based");
 
 		GO* obj = new GO(m_registry, m_gameInstance);
 		obj->init(std::forward<TArgs>(initArgs)...);
@@ -68,7 +68,7 @@ namespace bloom {
 
 	// System stuff
 	template<typename S> std::shared_ptr<S> Scene::registerSystem() {
-		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
 			[](auto & i) -> bool { return typeid(*i) == typeid(S); });
 			v == m_systems.end())
@@ -82,7 +82,7 @@ namespace bloom {
 	}
 
 	template<typename S> void Scene::unregisterSystem() {
-		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
 			[](auto & i) -> bool { return typeid(*i) == typeid(S); });
 			v != m_systems.end())
@@ -97,7 +97,7 @@ namespace bloom {
 	template<typename S>
 	std::shared_ptr<S> Scene::getSystemPtr()
 	{
-		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not a System based");
+		static_assert (std::is_base_of_v<System, S>, "Type S passed in is not System based");
 		if (auto v = std::find_if(m_systems.begin(), m_systems.end(),
 			[](auto & i) -> bool { return typeid(*i) == typeid(S); });
 			v != m_systems.end())
