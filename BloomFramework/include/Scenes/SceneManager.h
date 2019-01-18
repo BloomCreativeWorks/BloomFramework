@@ -29,5 +29,8 @@ namespace bloom {
 
 		newScene->load();
 		m_currScene = newScene;
+		
+		if (!m_currScene->isLoaded())
+			m_currScene->start();
 	}
 }
