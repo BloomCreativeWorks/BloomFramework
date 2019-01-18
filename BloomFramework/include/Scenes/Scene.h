@@ -8,7 +8,7 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API SceneManager;
 	struct BLOOMFRAMEWORK_API Coord;
-
+	
 	class BLOOMFRAMEWORK_API Scene {
 		using System = bloom::systems::DefaultSystem;
 		friend bloom::systems::System::System(bloom::Scene & sceneObject);
@@ -28,12 +28,16 @@ namespace bloom {
 
 		void destroyGameObject(const std::string & tag);
 
+		void destroyAllGameObjects();
+
 		// System stuff
 		template<typename S>
 		std::shared_ptr<S> registerSystem();
 
 		template<typename S>
 		void unregisterSystem();
+
+		void unregisterAllSystems();
 		
 		template<typename S>
 		std::shared_ptr<S> getSystemPtr();

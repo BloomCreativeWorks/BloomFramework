@@ -16,10 +16,6 @@ class TestScene : public bloom::Scene {
 public:
 	using bloom::Scene::Scene;
 
-	~TestScene() {
-		unload();
-	}
-
 	void load() override {
 		namespace fs = std::filesystem;
 		fs::path workingDir = fs::path(getExePath());

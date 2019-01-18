@@ -35,6 +35,14 @@ namespace bloom {
 		m_gameObjects.erase(tag);
 	}
 
+	void Scene::destroyAllGameObjects() {
+		m_gameObjects.clear();
+	}
+
+	void Scene::unregisterAllSystems() {
+		m_systems.clear();
+	}
+
 	void Scene::setSceneRotation(double angle) {
 		m_sceneRotateAngle = fmod(angle, 360.0);
 	}

@@ -25,10 +25,8 @@ namespace bloom {
 
 	template<class Scn>
 	void SceneManager::changeScene(std::shared_ptr<Scn> newScene) {
-		static_assert(std::is_base_of_v<Scene, Scn>, "Type Scn passed in is not a Scene based");
+		static_assert(std::is_base_of_v<Scene, Scn>, "Type Scn passed in is not Scene based");
 
-		if (m_currScene != nullptr)
-			m_currScene->unload();
 		newScene->load();
 		m_currScene = newScene;
 	}
