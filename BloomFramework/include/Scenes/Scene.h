@@ -19,7 +19,10 @@ namespace bloom {
 
 		void update(double deltaTime);
 		void draw();
+		void start();
+		void restart();
 		virtual void load() = 0;
+
 		Game & getGameInstance() { return m_gameInstance; }
 
 		//Game Object stuff
@@ -49,6 +52,8 @@ namespace bloom {
 		void setSceneRotationCenter(Coord center);
 		void setSceneRotationCenter(SDL_Point center);
 
+		bool isLoaded() { return m_sceneLoaded; }
+
 	protected:
 		SceneManager & m_sceneManager;
 		Game & m_gameInstance;
@@ -59,6 +64,8 @@ namespace bloom {
 
 		double m_sceneRotateAngle = 0.0;
 		SDL_Point m_sceneRotateCenter;
+
+		bool m_sceneLoaded = false;
 	};
 
 	template<typename GO, typename... TArgs> void Scene::addGameObject(const std::string & tag, TArgs &&... initArgs) {

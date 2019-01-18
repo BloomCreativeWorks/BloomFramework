@@ -31,6 +31,18 @@ namespace bloom {
 		SDL_RenderCopyEx(m_gameInstance.getRenderer(), m_sceneTexture, nullptr, nullptr, m_sceneRotateAngle, &m_sceneRotateCenter, SDL_FLIP_NONE);
 	}
 
+	void Scene::start() {
+		load();
+		m_sceneLoaded = true;
+	}
+
+	void Scene::restart() {
+		unregisterAllSystems();
+		destroyAllGameObjects();
+		load();
+		m_sceneLoaded = true;
+	}
+
 	void Scene::destroyGameObject(const std::string & tag) {
 		m_gameObjects.erase(tag);
 	}
