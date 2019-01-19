@@ -18,9 +18,11 @@ namespace bloom::systems {
 		~RenderSystem() = default;
 
 		void update(std::optional<double> deltaTime = std::nullopt) override {
-			std::list<std::tuple<Sprite, Rotation, SDL_Rect, LayerGroup>> renderQueue;
+			std::vector<std::tuple<Sprite, Rotation, SDL_Rect, LayerGroup>> renderQueue;
+			auto view = m_registry.view<Transform, Sprite>();
+			renderQueue.reserve(view.size());
 
-			m_registry.view<Transform, Sprite>().each(
+			view.each(
 				[&](auto entity, Transform& trans, Sprite& spr) {
 
 				if (trans.size.w < 0)
@@ -43,9 +45,11 @@ namespace bloom::systems {
 			});
 
 			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
-			renderQueue.sort([](const auto& lhs, const auto& rhs) {
-				return std::get<3>(lhs) < std::get<3>(rhs);
-			});
+			std::stable_sort(renderQueue.begin(), renderQueue.end(),
+				[](const auto& lhs, const auto& rhs) {
+					return std::get<3>(lhs) < std::get<3>(rhs);
+				}
+			);
 
 			// Render
 			for (auto& [spr, rot, destRect, lg] : renderQueue)
