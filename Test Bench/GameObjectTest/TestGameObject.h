@@ -11,7 +11,7 @@ class TestChar : public bloom::GameObject {
 	using Size = bloom::components::Size;
 	using LayerGroup = bloom::components::LayerGroup;
 	using Sprite = bloom::components::Sprite;
-	template <uint64_t V>
+	template <size_t V>
 	using Label = bloom::components::Label<V>;
 
 	using bloom::GameObject::GameObject;
@@ -27,9 +27,12 @@ public:
 		m_registry.assign<Sprite>(m_entity, tmp, srcRect);
 
 		if (priority != std::nullopt)
-			m_registry.assign<LayerGroup>(m_entity, priority.value());
+			m_registry.assign<LayerGroup>(m_entity, priority.value_or(0));
 
-		m_registry.assign<Label<"TestObject"_hs>>(m_entity);
+#pragma warning(push)
+#pragma warning(disable: 4307)
+		m_registry.assign<Label<static_cast<size_t>("TestObject"_hs)>>(m_entity);
+#pragma warning(pop)
 	}
 
 	void disableRandomPos() {
