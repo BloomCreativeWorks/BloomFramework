@@ -43,7 +43,7 @@ namespace bloom::systems {
 			});
 
 			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
-			std::stable_sort(renderQueue.begin(), renderQueue.end(), [](const auto& lhs, const auto& rhs) {
+			renderQueue.sort([](const auto& lhs, const auto& rhs) {
 				return std::get<3>(lhs) < std::get<3>(rhs);
 			});
 
