@@ -11,7 +11,7 @@ public:
 
 	void update(std::optional<double> deltaTime = std::nullopt) override {
 		if (currentRotate != rotateAmount) {
-			m_currentAngle += rotateSpeed * (deltaTime.value() / 1000);
+			m_currentAngle += rotateSpeed * (deltaTime.value_or(0.0) / 1000);
 			currentRotate = static_cast<int>(m_currentAngle / 360.0);
 			currentRotate = static_cast<int>(m_currentAngle / 360.0);
 			if (currentRotate == rotateAmount) {
