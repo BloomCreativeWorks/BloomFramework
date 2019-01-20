@@ -3,7 +3,7 @@
 #include "stdIncludes.h"
 
 #include <vector>
-#include <stack>
+#include <queue>
 
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
@@ -26,6 +26,6 @@ namespace bloom::audio {
 		int m_channel;
 
 		static std::vector<SoundChannel*> s_channels;
-		static std::stack<int> s_freeChannels;
+		static std::priority_queue<int, std::vector<int>, std::greater<int>> s_freeChannels;
 	};
 }

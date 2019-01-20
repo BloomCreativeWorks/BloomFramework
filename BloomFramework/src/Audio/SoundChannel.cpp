@@ -2,7 +2,7 @@
 
 namespace bloom::audio {
 	std::vector<SoundChannel*> SoundChannel::s_channels;
-	std::stack<int> SoundChannel::s_freeChannels;
+	std::priority_queue<int, std::vector<int>, std::greater<int>> SoundChannel::s_freeChannels;
 
 	SoundChannel::SoundChannel(SoundChannel* objectPtr) {
 		if (!s_freeChannels.empty()) {
