@@ -11,6 +11,9 @@
 namespace bloom::audio {
 	class Music {
 	public:
+		Music() : m_intlStore{ new MusicStore }, store{ *m_intlStore } {}
+		Music(MusicStore& existingStore) : m_intlStore{ nullptr }, store { existingStore } {}
+
 		void push(const std::filesystem::path& filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
 			queue.add(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
 		}
@@ -35,12 +38,19 @@ namespace bloom::audio {
 			return MusicTrack::isPaused();
 		}
 
-		MusicStore& store{ MusicStore::store() };
+	private:
+		std::shared_ptr<MusicStore> m_intlStore;
+
+	public:
+		MusicStore& store;
 		MusicQueue queue;
 	};
 
 	class Sounds {
 	public:
+		Sounds() : m_intlStore{ new SoundStore }, store{ *m_intlStore } {}
+		Sounds(SoundStore& existingStore) : m_intlStore{ nullptr }, store{ existingStore } {}
+
 		int add(const std::filesystem::path& filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
 			return (static_cast<int>(players.size()) - 1);
@@ -77,7 +87,11 @@ namespace bloom::audio {
 			return players[off];
 		}
 
-		SoundStore& store{ SoundStore::store() };
+	private:
+		std::shared_ptr<SoundStore> m_intlStore;
+
+	public:
+		SoundStore& store;
 		std::vector<SoundPlayerPtr> players;
 	};
 }
