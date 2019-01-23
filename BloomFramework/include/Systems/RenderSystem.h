@@ -18,11 +18,7 @@ namespace bloom::systems {
 		~RenderSystem() = default;
 
 		void update(std::optional<double> deltaTime = std::nullopt) override {
-			std::vector<std::tuple<Sprite, Rotation, SDL_Rect, LayerGroup>> renderQueue;
-			auto view = m_registry.view<Transform, Sprite>();
-			renderQueue.reserve(view.size());
-
-			view.each(
+			m_registry.view<Transform, Sprite>().each(
 				[&](auto entity, Transform& trans, Sprite& spr) {
 
 				if (trans.size.w < 0)
@@ -38,22 +34,9 @@ namespace bloom::systems {
 					trans.size.h
 				};
 
-				LayerGroup layerNo = (m_registry.has<LayerGroup>(entity) ? m_registry.get<LayerGroup>(entity) : 0);
-
-				// Place sprites into queue for sorting later.
-				renderQueue.emplace_back(std::make_tuple(spr, trans.rotation, destRect, layerNo));
+				// Draw sprite to scene texture
+				spr.texture->render(spr.srcRect, destRect, trans.rotation);
 			});
-
-			// Sort the sprites based on priority, higher number means rendered later. Same layer may fight 
-			std::stable_sort(renderQueue.begin(), renderQueue.end(),
-				[](const auto& lhs, const auto& rhs) {
-					return std::get<3>(lhs) < std::get<3>(rhs);
-				}
-			);
-
-			// Render
-			for (auto& [spr, rot, destRect, lg] : renderQueue)
-				spr.texture->render(spr.srcRect, destRect, rot);
 		}
 
 	private:
