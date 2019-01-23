@@ -76,11 +76,6 @@ namespace bloom::audio {
 
 		void clear() {
 			players.clear();
-			SoundChannel::optimize();
-		}
-
-		void optimize() {
-			SoundChannel::optimize();
 		}
 
 		SoundPlayerPtr& operator[](size_t off) {

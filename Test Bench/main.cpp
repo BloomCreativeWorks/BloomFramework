@@ -29,7 +29,6 @@ const int WINDOW_HEIGHT = 800;
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 	//track1.stop();
-
 	::music.push(musicPath / L"music_001.mp3");
 	::music.push(musicPath / L"music_002.mp3");
 	::music.push(musicPath / L"music_003.mp3");
@@ -43,7 +42,7 @@ void test_player(const std::filesystem::path& musicPath, const std::filesystem::
 	::sounds.add(soundsPath / L"sound_002.wav"); //1
 
 	::sounds[0]->play();
-	std::this_thread::sleep_for(3s);
+	std::this_thread::sleep_for(3.5s);
 
 	while (!::music.queue.tryActivate())
 		std::this_thread::sleep_for(1s);

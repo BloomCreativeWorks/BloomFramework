@@ -6,7 +6,7 @@
 #include "SoundChannel.h"
 
 namespace bloom::audio {
-	class BLOOMFRAMEWORK_API SoundPlayer : SoundChannel {
+	class BLOOMFRAMEWORK_API SoundPlayer {
 	public:
 		SoundPlayer(ChunkPtr chunk);
 		SoundPlayer(const SoundPlayer&) = delete;
@@ -23,6 +23,9 @@ namespace bloom::audio {
 		void stop(int delayTimeMs = 0) noexcept;
 		void cancelDelayedStop() noexcept;
 
+		bool isPlaying() const noexcept { return (!m_channel.isNull() && !m_pauseFlag); }
+		bool isPaused() const noexcept { return (m_pauseFlag && !m_channel.isNull()); }
+
 		void setVolume(double volumePercent) noexcept;
 		double getVolume() noexcept;
 
@@ -33,6 +36,8 @@ namespace bloom::audio {
 
 	private:
 		ChunkPtr m_chunk;
+		SoundChannel m_channel;
+		bool m_pauseFlag = false;
 	};
 
 	using SoundPlayerPtr = std::shared_ptr<SoundPlayer>;

@@ -3,29 +3,51 @@
 #include "stdIncludes.h"
 
 #include <vector>
-#include <queue>
 
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
 	public:
-		SoundChannel() = delete;
+		enum class Mode {
+			Auto,
+			Manual
+		};
+
+		SoundChannel();
 		SoundChannel(const SoundChannel&) = delete;
 		SoundChannel(SoundChannel&&) = delete;
 		SoundChannel& operator=(const SoundChannel&) = delete;
 		SoundChannel& operator=(SoundChannel&&) = delete;
 		~SoundChannel();
 
-		int channel() const noexcept;
+		bool isNull() const noexcept { return m_channel < 0; }
+		void assign(int channel);
 
-		static void optimize();
+		static void activate();
+		static bool deactivate();
 
-	protected:
-		SoundChannel(SoundChannel* objectPtr);
+		static void reallocate(int newQuantity);
+		static int allocated();
+		static void setMode(Mode mode);
+		static Mode mode() noexcept { return s_mode; }
+		static bool reserve();
+		static void adjust();
+
+		static bool isActive() noexcept { return s_state; }
+
+		int operator()() const noexcept { return m_channel; };
 
 	private:
-		int m_channel;
+		int m_channel = NULL_CHANNEL;
 
+		static void _reallocate_intl(int newQnt);
+		static void _playback_finished(int channel);
+
+		static bool s_state;
+		static int s_adjustment;
 		static std::vector<SoundChannel*> s_channels;
-		static std::priority_queue<int, std::vector<int>, std::greater<int>> s_freeChannels;
+		static unsigned s_playingCounter;
+		static Mode s_mode;
+
+		static constexpr int NULL_CHANNEL = -1;
 	};
 }

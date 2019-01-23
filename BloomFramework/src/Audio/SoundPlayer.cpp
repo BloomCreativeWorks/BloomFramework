@@ -3,48 +3,63 @@
 
 namespace bloom::audio {
 	SoundPlayer::SoundPlayer(ChunkPtr chunk) :
-		SoundChannel(this),
 		m_chunk(chunk)
 	{}
 
 	void SoundPlayer::play(int plays, int limitTimeMs) {
-		if (Mix_Playing(channel()))
+		if (!m_channel.isNull())
 			stop();
 
 		plays = (plays <= 0 ? -1 : (plays - 1));
 
-		if (Mix_PlayChannelTimed(channel(), m_chunk->m_chunk, plays, limitTimeMs) == -1)
+		m_channel.reserve();
+		if (auto channel = Mix_PlayChannelTimed(-1, m_chunk->m_chunk, plays, limitTimeMs); channel == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		else
+			m_channel.assign(channel);
 	}
 
 	bool SoundPlayer::tryPlay(int plays, int limitTimeMs) {
-		if (Mix_Playing(channel()))
+		if (!m_channel.isNull())
 			return false;
 
 		plays = (plays <= 0 ? -1 : (plays - 1));
 
-		if (Mix_PlayChannelTimed(channel(), m_chunk->m_chunk, plays, limitTimeMs) == -1)
+		m_channel.reserve();
+		if (auto channel = Mix_PlayChannelTimed(-1, m_chunk->m_chunk, plays, limitTimeMs); channel == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+		else
+			m_channel.assign(channel);
 		return true;
 	}
 
 	void SoundPlayer::pause() noexcept {
-		Mix_Pause(channel());
+		if (!m_channel.isNull())
+			return;
+		Mix_Pause(m_channel());
+		m_pauseFlag = true;
 	}
 
 	void SoundPlayer::resume() noexcept {
-		Mix_Resume(channel());
+		if (!m_channel.isNull())
+			return;
+		Mix_Resume(m_channel());
+		m_pauseFlag = false;
 	}
 
 	void SoundPlayer::stop(int delayTimeMs) noexcept {
+		if (!m_channel.isNull())
+			return;
 		if (delayTimeMs <= 0)
-			Mix_HaltChannel(channel());
+			Mix_HaltChannel(m_channel());
 		else
-			Mix_ExpireChannel(channel(), delayTimeMs);
+			Mix_ExpireChannel(m_channel(), delayTimeMs);
 	}
 
 	void SoundPlayer::cancelDelayedStop() noexcept {
-		Mix_ExpireChannel(channel(), -1);
+		if (!m_channel.isNull())
+			return;
+		Mix_ExpireChannel(m_channel(), -1);
 	}
 
 	void SoundPlayer::setRawVolume(int rawVolume) noexcept {
