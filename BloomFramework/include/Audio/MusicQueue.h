@@ -18,7 +18,7 @@ namespace bloom::audio {
 		bool tryActivate() noexcept;
 		void activate() noexcept;
 		void add(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
-		void add(TrackExt track);
+		void add(TrackExt&& track);
 		void play(bool bypassFade = false);
 		void pause();
 		void resume();

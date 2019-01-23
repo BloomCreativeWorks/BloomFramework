@@ -30,8 +30,8 @@ namespace bloom::audio {
 		m_queue.push({ track, plays, fadeInMs, bypassInfinitePlayback });
 	}
 
-	void MusicQueue::add(TrackExt track) {
-		m_queue.push(track);
+	void MusicQueue::add(TrackExt&& track) {
+		m_queue.push(std::forward<TrackExt>(track));
 	}
 
 	void MusicQueue::play(bool bypassFade) {
