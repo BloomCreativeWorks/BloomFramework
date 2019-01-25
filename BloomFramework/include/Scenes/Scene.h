@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "Exception.h"
 #include "Components/LayerGroup.h"
+#include "StdStableSort.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API SceneManager;
@@ -77,7 +78,7 @@ namespace bloom {
 
 		m_gameObjects.emplace(tag, std::unique_ptr<GO>(obj));
 
-		m_registry.sort<components::LayerGroup>([](auto& lhs, auto& rhs) {return lhs < rhs; });
+		m_registry.sort<components::LayerGroup, std::less<components::LayerGroup>, misc::StdStableSort>(std::less<components::LayerGroup>{});
 	}
 
 	// System stuff

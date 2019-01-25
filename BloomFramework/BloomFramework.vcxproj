@@ -191,6 +191,7 @@
     <ClInclude Include="include\Scenes\Scene.h" />
     <ClInclude Include="include\Scenes\SceneManager.h" />
     <ClInclude Include="include\Graphics\Animation.h" />
+    <ClInclude Include="include\StdStableSort.h" />
     <ClInclude Include="include\Systems\AnimationSystem.h" />
     <ClInclude Include="include\Systems\DefaultSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
