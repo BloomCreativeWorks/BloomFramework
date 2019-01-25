@@ -26,8 +26,7 @@ public:
 		auto tmp = m_gameInstance.textures.load(texturePath);
 		m_registry.assign<Sprite>(m_entity, tmp, srcRect);
 
-		if (priority != std::nullopt)
-			m_registry.assign<LayerGroup>(m_entity, priority.value_or(0));
+		m_registry.assign<LayerGroup>(m_entity, priority.value_or(0));
 
 #pragma warning(push)
 #pragma warning(disable: 4307)
