@@ -11,7 +11,7 @@ class TestChar : public bloom::GameObject {
 	using Size = bloom::components::Size;
 	using LayerGroup = bloom::components::LayerGroup;
 	using Sprite = bloom::components::Sprite;
-	template <size_t V>
+	template <uint64_t V>
 	using Label = bloom::components::Label<V>;
 
 	using bloom::GameObject::GameObject;
@@ -30,7 +30,7 @@ public:
 
 #pragma warning(push)
 #pragma warning(disable: 4307)
-		m_registry.assign<Label<static_cast<size_t>("TestObject"_hs)>>(m_entity);
+		m_registry.assign<Label<"TestObject"_hs>>(m_entity);
 #pragma warning(pop)
 	}
 

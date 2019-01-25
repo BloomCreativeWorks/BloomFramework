@@ -19,16 +19,16 @@ namespace bloom {
 		using Transform = bloom::components::Transform;
 
 	public:
-		GameObject(entt::Registry<size_t> & registry, Game & gameInstance);
+		GameObject(entt::DefaultRegistry & registry, Game & gameInstance);
 		~GameObject();
 
 		virtual void init() = 0;
 
-		size_t getEntityID();
+		uint32_t getEntityID();
 
 	protected:
-		entt::Registry<size_t> & m_registry;
+		entt::DefaultRegistry & m_registry;
 		Game & m_gameInstance;
-		entt::Registry<size_t>::entity_type m_entity;
+		entt::DefaultRegistry::entity_type m_entity;
 	};
 }

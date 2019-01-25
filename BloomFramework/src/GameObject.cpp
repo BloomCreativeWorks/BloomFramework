@@ -1,7 +1,7 @@
 #include "GameObject.h"
 
 namespace bloom {
-	GameObject::GameObject(entt::Registry<size_t> & registry, Game & gameInstance) : m_registry(registry), m_gameInstance(gameInstance) {
+	GameObject::GameObject(entt::DefaultRegistry & registry, Game & gameInstance) : m_registry(registry), m_gameInstance(gameInstance) {
 		m_entity = m_registry.create();
 	}
 
@@ -10,7 +10,7 @@ namespace bloom {
 			m_registry.destroy(m_entity);
 	}
 
-	size_t GameObject::getEntityID() {
+	uint32_t GameObject::getEntityID() {
 		return m_entity;
 	}
 }

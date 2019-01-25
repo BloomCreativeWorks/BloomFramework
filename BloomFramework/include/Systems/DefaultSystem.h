@@ -16,7 +16,7 @@ namespace bloom {
 			bool enabled = true;
 		protected:
 			bloom::Scene & parentScene;
-			entt::Registry<size_t> & m_registry;
+			entt::DefaultRegistry & m_registry;
 		};
 
 		using DefaultSystem = System;

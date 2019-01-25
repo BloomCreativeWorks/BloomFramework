@@ -59,7 +59,7 @@ namespace bloom {
 	protected:
 		SceneManager & m_sceneManager;
 		Game & m_gameInstance;
-		entt::Registry<size_t> m_registry;
+		entt::DefaultRegistry m_registry;
 		std::vector<std::shared_ptr<System>> m_systems;
 		std::unordered_map<std::string, std::unique_ptr<GameObject>> m_gameObjects;
 		SDL_Texture * m_sceneTexture;
