@@ -64,11 +64,15 @@ namespace bloom::audio {
 	}
 
 	bool MusicTrack::isPlaying() noexcept {
-		return (Mix_PlayingMusic());
+		return (Mix_PlayingMusic() && !isPaused());
 	}
 
 	bool MusicTrack::isPaused() noexcept {
 		return (Mix_PausedMusic());
+	}
+
+	bool MusicTrack::isPlayingOrPaused() noexcept {
+		return (Mix_PlayingMusic());
 	}
 
 	Mix_Fading MusicTrack::isFading() noexcept {
