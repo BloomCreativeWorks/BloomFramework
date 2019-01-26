@@ -42,6 +42,7 @@ void test_player(const std::filesystem::path& musicPath, const std::filesystem::
 	::sounds.add(soundsPath / L"sound_002.wav"); //1
 
 	::sounds[0]->play();
+
 	std::this_thread::sleep_for(3.5s);
 
 	while (!::music.queue.tryActivate())

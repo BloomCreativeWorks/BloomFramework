@@ -23,8 +23,9 @@ namespace bloom::audio {
 		void stop(int delayTimeMs = 0) noexcept;
 		void cancelDelayedStop() noexcept;
 
-		bool isPlaying() const noexcept { return (!m_channel.isNull() && !m_pauseFlag); }
-		bool isPaused() const noexcept { return (m_pauseFlag && !m_channel.isNull()); }
+		bool isPlaying() const noexcept { return (m_channel.isValid() && !m_pauseFlag); }
+		bool isPaused() const noexcept { return (m_pauseFlag && m_channel.isValid()); }
+		bool isPlayingOrPaused() const noexcept { return m_channel.isValid(); }
 
 		void setVolume(double volumePercent) noexcept;
 		double getVolume() noexcept;

@@ -1,23 +1,22 @@
 #include "Audio/SoundChannel.h"
 #include "Exception.h"
 
+#define allocated()	Mix_AllocateChannels(-1)
+#define playing()	Mix_Playing(-1)
+
 namespace bloom::audio {
 	bool SoundChannel::s_state = false;
 	int SoundChannel::s_adjustment = 0;
-	unsigned SoundChannel::s_playingCounter = 0;
 	std::vector<SoundChannel*> SoundChannel::s_channels{ MIX_CHANNELS, nullptr};
-	SoundChannel::Mode SoundChannel::s_mode{ SoundChannel::Mode::Auto };
 
 	SoundChannel::SoundChannel() {
-		if (s_mode == Mode::Auto)
-			++s_adjustment;
+		++s_adjustment;
 	}
 
 	SoundChannel::~SoundChannel() {
-		if (!isNull())
+		if (isValid())
 			s_channels[m_channel] = nullptr;
-		if (s_mode == Mode::Auto)
-			--s_adjustment;
+		--s_adjustment;
 	}
 
 	void SoundChannel::assign(int channel) {
@@ -28,7 +27,6 @@ namespace bloom::audio {
 				activate();
 			m_channel = channel;
 			s_channels[m_channel] = this;
-			++s_playingCounter;
 		}
 	}
 
@@ -38,7 +36,7 @@ namespace bloom::audio {
 	}
 
 	bool SoundChannel::deactivate() {
-		if (s_playingCounter)
+		if (playing())
 			return false;
 		Mix_ChannelFinished(nullptr);
 		s_state = false;
@@ -46,53 +44,36 @@ namespace bloom::audio {
 	}
 
 	void SoundChannel::reallocate(int newQuantity) {
-		if (s_mode == Mode::Manual)
-			_reallocate_intl(newQuantity);
-	}
-
-	void SoundChannel::_reallocate_intl(int newQnt) {
-		if (newQnt < 0)
-			newQnt = 0;
-		Mix_AllocateChannels(newQnt);
-		s_channels.resize(newQnt);
-	}
-
-	int SoundChannel::allocated() {
-		return Mix_AllocateChannels(-1);
-	}
-
-	void SoundChannel::setMode(Mode mode) {
-		if (mode != s_mode)
-			s_adjustment = 0;
-		s_mode = mode;
+		if (newQuantity < 0)
+			newQuantity = 0;
+		Mix_AllocateChannels(newQuantity);
+		s_channels.resize(newQuantity);
 	}
 
 	bool SoundChannel::reserve() {
-		if (s_mode == Mode::Manual)
-			return false;
-		if (auto allocChannels = allocated(); allocChannels == s_playingCounter && s_adjustment <= 0) {
+		if (auto allocatedChannels = allocated(); allocatedChannels == playing() && s_adjustment <= 0) {
 			if (s_adjustment > 0) {
-				_reallocate_intl(allocChannels + s_adjustment + 1);
+				reallocate(allocatedChannels + s_adjustment + 1);
 				s_adjustment = -1;
 			}
 			else {
-				_reallocate_intl(allocChannels + 1);
+				reallocate(allocatedChannels + 1);
 				--s_adjustment;
 			}
 			return true;
 		}
 		else {
-			if (s_adjustment && allocChannels + s_adjustment > static_cast<int>(s_playingCounter))
+			if (s_adjustment && allocatedChannels + s_adjustment > playing())
 				adjust();
 			return false;
 		}
 	}
 
 	void SoundChannel::adjust() {
-		if (s_mode == Mode::Manual || !s_adjustment)
+		if (!s_adjustment)
 			return;
 		if (s_adjustment > 0) {
-			_reallocate_intl(allocated() + s_adjustment);
+			reallocate(allocated() + s_adjustment);
 			s_adjustment = 0;
 		}
 		else {
@@ -100,12 +81,14 @@ namespace bloom::audio {
 			if (s_adjustment < -allocChannels)
 				s_adjustment = -allocChannels;
 			auto oldAdjustment = s_adjustment;
-			auto cIt = s_channels.crbegin(), cBegIt = s_channels.crend();
-			while (cIt != cBegIt && !(*cIt) && s_adjustment < 0) {
+			auto cIt = s_channels.crbegin(), cEndIt = s_channels.crend();
+			while (cIt != cEndIt && !(*cIt) && s_adjustment < 0) {
 				++s_adjustment;
 				++cIt;
 			}
-			_reallocate_intl(allocChannels - (s_adjustment - oldAdjustment));
+			reallocate(allocChannels - (s_adjustment - oldAdjustment));
+			if (cIt == cEndIt)
+				s_adjustment = 0;
 		}
 	}
 
@@ -113,8 +96,6 @@ namespace bloom::audio {
 		if (static_cast<size_t>(channel) >= s_channels.size())
 			return;
 		if (s_channels[channel]) {
-			if (s_playingCounter)
-				--s_playingCounter;
 			s_channels[channel]->m_channel = NULL_CHANNEL;
 			s_channels[channel] = nullptr;
 		}

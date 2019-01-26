@@ -7,7 +7,7 @@ namespace bloom::audio {
 	{}
 
 	void SoundPlayer::play(int plays, int limitTimeMs) {
-		if (!m_channel.isNull())
+		if (m_channel.isValid())
 			stop();
 
 		plays = (plays <= 0 ? -1 : (plays - 1));
@@ -20,7 +20,7 @@ namespace bloom::audio {
 	}
 
 	bool SoundPlayer::tryPlay(int plays, int limitTimeMs) {
-		if (!m_channel.isNull())
+		if (m_channel.isValid())
 			return false;
 
 		plays = (plays <= 0 ? -1 : (plays - 1));
@@ -34,32 +34,32 @@ namespace bloom::audio {
 	}
 
 	void SoundPlayer::pause() noexcept {
-		if (!m_channel.isNull())
+		if (!m_channel.isValid())
 			return;
-		Mix_Pause(m_channel());
+		Mix_Pause(m_channel);
 		m_pauseFlag = true;
 	}
 
 	void SoundPlayer::resume() noexcept {
-		if (!m_channel.isNull())
+		if (!m_channel.isValid())
 			return;
-		Mix_Resume(m_channel());
+		Mix_Resume(m_channel);
 		m_pauseFlag = false;
 	}
 
 	void SoundPlayer::stop(int delayTimeMs) noexcept {
-		if (!m_channel.isNull())
+		if (!m_channel.isValid())
 			return;
 		if (delayTimeMs <= 0)
-			Mix_HaltChannel(m_channel());
+			Mix_HaltChannel(m_channel);
 		else
-			Mix_ExpireChannel(m_channel(), delayTimeMs);
+			Mix_ExpireChannel(m_channel, delayTimeMs);
 	}
 
 	void SoundPlayer::cancelDelayedStop() noexcept {
-		if (!m_channel.isNull())
+		if (!m_channel.isValid())
 			return;
-		Mix_ExpireChannel(m_channel(), -1);
+		Mix_ExpireChannel(m_channel, -1);
 	}
 
 	void SoundPlayer::setRawVolume(int rawVolume) noexcept {
