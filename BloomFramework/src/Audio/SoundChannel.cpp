@@ -9,14 +9,16 @@ namespace bloom::audio {
 	int SoundChannel::s_adjustment = 0;
 	std::vector<SoundChannel*> SoundChannel::s_channels{ MIX_CHANNELS, nullptr};
 
-	SoundChannel::SoundChannel() {
-		++s_adjustment;
+	SoundChannel::SoundChannel(bool needAlloc) : m_allocFlag{ needAlloc } {
+		if (m_allocFlag)
+			++s_adjustment;
 	}
 
 	SoundChannel::~SoundChannel() {
 		if (isValid())
 			s_channels[m_channel] = nullptr;
-		--s_adjustment;
+		if (m_allocFlag)
+			--s_adjustment;
 	}
 
 	void SoundChannel::assign(int channel) {
@@ -51,7 +53,7 @@ namespace bloom::audio {
 	}
 
 	bool SoundChannel::reserve() {
-		if (auto allocatedChannels = allocated(); allocatedChannels == playing() && s_adjustment <= 0) {
+		if (const auto allocatedChannels = allocated(); allocatedChannels == playing() && s_adjustment <= 0) {
 			if (s_adjustment > 0) {
 				reallocate(allocatedChannels + s_adjustment + 1);
 				s_adjustment = -1;
@@ -77,11 +79,12 @@ namespace bloom::audio {
 			s_adjustment = 0;
 		}
 		else {
-			auto allocChannels = allocated();
+			const auto allocChannels = allocated();
 			if (s_adjustment < -allocChannels)
 				s_adjustment = -allocChannels;
-			auto oldAdjustment = s_adjustment;
-			auto cIt = s_channels.crbegin(), cEndIt = s_channels.crend();
+			const auto oldAdjustment = s_adjustment;
+			auto cIt = s_channels.crbegin();
+			const auto cEndIt = s_channels.crend();
 			while (cIt != cEndIt && !(*cIt) && s_adjustment < 0) {
 				++s_adjustment;
 				++cIt;

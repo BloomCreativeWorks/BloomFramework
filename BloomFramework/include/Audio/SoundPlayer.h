@@ -8,7 +8,7 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundPlayer {
 	public:
-		SoundPlayer(ChunkPtr chunk);
+		SoundPlayer(ChunkPtr chunk, bool needAlloc = true);
 		SoundPlayer(const SoundPlayer&) = delete;
 		SoundPlayer(SoundPlayer&&) = delete;
 		SoundPlayer& operator=(const SoundPlayer&) = delete;

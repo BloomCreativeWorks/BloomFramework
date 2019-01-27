@@ -1,9 +1,11 @@
+#include <utility>
 #include "Audio/SoundPlayer.h"
 #include "Exception.h"
 
 namespace bloom::audio {
-	SoundPlayer::SoundPlayer(ChunkPtr chunk) :
-		m_chunk(chunk)
+	SoundPlayer::SoundPlayer(ChunkPtr chunk, bool needAlloc) :
+		m_chunk(std::move(chunk)),
+		m_channel(needAlloc)
 	{}
 
 	void SoundPlayer::play(int plays, int limitTimeMs) {

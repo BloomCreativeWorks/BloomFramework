@@ -7,7 +7,7 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
 	public:
-		SoundChannel();
+		SoundChannel(bool needAlloc = true);
 		SoundChannel(const SoundChannel&) = delete;
 		SoundChannel(SoundChannel&&) = delete;
 		SoundChannel& operator=(const SoundChannel&) = delete;
@@ -30,6 +30,7 @@ namespace bloom::audio {
 
 	private:
 		int m_channel = NULL_CHANNEL;
+		bool m_allocFlag;
 
 		static void reallocate(int newQuantity);
 
