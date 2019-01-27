@@ -28,12 +28,12 @@ namespace bloom::audio {
 		bool isPlayingOrPaused() const noexcept { return m_channel.isValid(); }
 
 		void setVolume(double volumePercent) noexcept;
-		double getVolume() noexcept;
+		double getVolume() const noexcept;
 
 		void setRawVolume(int rawVolume) noexcept;
-		int getRawVolume() noexcept;
+		int getRawVolume() const noexcept;
 
-		ChunkPtr chunk() noexcept;
+		ChunkPtr chunk() const noexcept { return m_chunk; }
 
 	private:
 		ChunkPtr m_chunk;

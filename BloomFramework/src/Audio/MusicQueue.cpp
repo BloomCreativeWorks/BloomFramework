@@ -41,7 +41,7 @@ namespace bloom::audio {
 		if (s_currentQueuePtr != this)
 			activate();
 
-		auto track{ m_queue.front() };
+		const auto track{ m_queue.front() };
 		if (!bypassFade)
 			track.track->play(track.plays, track.fadeInMs);
 		else

@@ -14,8 +14,8 @@ namespace bloom::audio {
 
 		plays = (plays <= 0 ? -1 : (plays - 1));
 
-		m_channel.reserve();
-		if (auto channel = Mix_PlayChannelTimed(-1, m_chunk->m_chunk, plays, limitTimeMs); channel == -1)
+		SoundChannel::reserve();
+		if (const auto channel = Mix_PlayChannelTimed(-1, m_chunk->m_chunk, plays, limitTimeMs); channel == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 		else
 			m_channel.assign(channel);
@@ -27,8 +27,8 @@ namespace bloom::audio {
 
 		plays = (plays <= 0 ? -1 : (plays - 1));
 
-		m_channel.reserve();
-		if (auto channel = Mix_PlayChannelTimed(-1, m_chunk->m_chunk, plays, limitTimeMs); channel == -1)
+		SoundChannel::reserve();
+		if (const auto channel = Mix_PlayChannelTimed(-1, m_chunk->m_chunk, plays, limitTimeMs); channel == -1)
 			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
 		else
 			m_channel.assign(channel);
@@ -80,15 +80,11 @@ namespace bloom::audio {
 		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
 	}
 
-	double SoundPlayer::getVolume() noexcept {
+	double SoundPlayer::getVolume() const noexcept {
 		return (static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) * 100.0) / static_cast<double>(MIX_MAX_VOLUME);
 	}
 
-	int SoundPlayer::getRawVolume() noexcept {
+	int SoundPlayer::getRawVolume() const noexcept {
 		return Mix_VolumeChunk(m_chunk->m_chunk, -1);
-	}
-
-	ChunkPtr SoundPlayer::chunk() noexcept {
-		return m_chunk;
 	}
 }

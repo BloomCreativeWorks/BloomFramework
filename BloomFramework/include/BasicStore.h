@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <filesystem>
+#include "Exception.h"
 #include "HashPath.h"
 
 namespace bloom {
@@ -10,6 +11,13 @@ namespace bloom {
 	public:
 		using Type = BasicStore<VType>;
 		using ValueType = VType;
+
+		BasicStore() = default;
+		BasicStore(const BasicStore&) = default;
+		BasicStore(BasicStore&&) = default;
+		BasicStore& operator=(const BasicStore&) = default;
+		BasicStore& operator=(BasicStore&&) = default;
+		virtual ~BasicStore() = default;
 
 		virtual VType load(const std::filesystem::path& filePath) = 0;
 		VType at(const std::filesystem::path& filePath) const;

@@ -1,12 +1,9 @@
 #pragma once
 
-#include "Exception.h"
 #include "MusicStore.h"
 #include "MusicQueue.h"
-#include "SoundChunk.h"
 #include "SoundStore.h"
 #include "SoundPlayer.h"
-#include "SoundChannel.h"
 
 namespace bloom::audio {
 	class Music {

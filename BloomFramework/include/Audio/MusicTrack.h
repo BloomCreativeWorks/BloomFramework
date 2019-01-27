@@ -24,13 +24,9 @@ namespace bloom::audio {
 		static void rewind() noexcept;
 		static void stop(int fadeOutMs = 0) noexcept;
 
-		/// <summary>Checks if ANY track is playing now</summary>
 		static bool isPlaying() noexcept;
-		/// <sumary>Checks if ANY track is paused now</summary>
 		static bool isPaused() noexcept;
-		/// <sumary>Checks if ANY track is playing or paused now</summary>
 		static bool isPlayingOrPaused() noexcept;
-		/// <sumary>Checks if ANY track is fading out now</summary>
 		static Mix_Fading isFading() noexcept; /// TODO: rework this, make own enum
 
 	private:
