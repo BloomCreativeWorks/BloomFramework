@@ -17,8 +17,6 @@ class TestChar : public bloom::GameObject {
 	using bloom::GameObject::GameObject;
 
 public:
-	void init() override {}
-
 	void init(Position pos, Size size, const std::filesystem::path texturePath, std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
 		
 		Transform trans = { pos, 0.0f, size };
