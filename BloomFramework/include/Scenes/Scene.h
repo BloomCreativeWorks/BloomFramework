@@ -7,6 +7,30 @@
 #include "Components/LayerGroup.h"
 #include "StdStableSort.h"
 
+template <typename T>
+class hasInit
+{
+	typedef char one;
+	typedef long two;
+
+	//using C++11 decltype - but it works with
+	//typeof or __typeof__ on GCC compiler
+	template <typename C>
+	static one test(decltype(&C::init));
+
+	template <typename C>
+	static two test(...);
+
+
+public:
+	static constexpr bool check()
+	{
+		return (sizeof(test<T>(0)) == sizeof(char));
+
+	}
+};
+
+
 namespace bloom {
 	class BLOOMFRAMEWORK_API SceneManager;
 	struct BLOOMFRAMEWORK_API Coord;
@@ -74,6 +98,7 @@ namespace bloom {
 		static_assert(std::is_base_of_v<GameObject, GO>, "Type GO passed in is not GameObject based");
 
 		GO* obj = new GO(m_registry, m_gameInstance);
+		static_assert(hasInit<GO>::check(), "Type GO passed in does not have valid init function.");
 		obj->init(std::forward<TArgs>(initArgs)...);
 
 		m_gameObjects.emplace(tag, std::unique_ptr<GO>(obj));
