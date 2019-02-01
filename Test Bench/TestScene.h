@@ -23,10 +23,10 @@ public:
 		fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
 		fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
 
-		addGameObject<TestChar>("testSprite", Position(10, 10), Size{ 128, 128 }, spriteSheetPath, SDL_Rect{ 0, 0, 32, 32 });
-		addGameObject<TestChar>("testSprite2", Position(0, 0, bloom::relative), Size{ 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 }, 2);
-		addGameObject<TestChar>("testGO", Position(50, 50, bloom::relative, (bloom::middle | bloom::right)), Size{ 256, 256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 }, 3);
-		addGameObject<TestAnimChar>("testAnimatedSprite", testCharPath);
+		addGameObject<TestChar>("testSprite", &TestChar::init, Position(10, 10), Size{ 128, 128 }, spriteSheetPath, SDL_Rect{ 0, 0, 32, 32 }, 0);
+		addGameObject<TestChar>("testSprite2", std::mem_fn(&TestChar::init), Position(0, 0, bloom::relative), Size{ 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 }, 2);
+		addGameObject<TestChar>("testGO", &TestChar::init, Position(50, 50, bloom::relative, (bloom::middle | bloom::right)), Size{ 256, 256 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 }, 3);
+		addGameObject<TestAnimChar>("testAnimatedSprite", &TestAnimChar::init, testCharPath);
 
 		registerSystem<RandomPositionSystem>()->enabled = false; // Still wonky because of Coord change. We also don't want to start it immediately.
 		registerSystem<RenderSystem>();

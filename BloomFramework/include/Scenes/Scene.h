@@ -7,30 +7,6 @@
 #include "Components/LayerGroup.h"
 #include "StdStableSort.h"
 
-template <typename T>
-class hasInit
-{
-	typedef char one;
-	typedef long two;
-
-	//using C++11 decltype - but it works with
-	//typeof or __typeof__ on GCC compiler
-	template <typename C>
-	static one test(decltype(&C::init));
-
-	template <typename C>
-	static two test(...);
-
-
-public:
-	static constexpr bool check()
-	{
-		return (sizeof(test<T>(0)) == sizeof(char));
-
-	}
-};
-
-
 namespace bloom {
 	class BLOOMFRAMEWORK_API SceneManager;
 	struct BLOOMFRAMEWORK_API Coord;
@@ -52,8 +28,8 @@ namespace bloom {
 		Game & getGameInstance() { return m_gameInstance; }
 
 		//Game Object stuff
-		template<typename GO, typename... TArgs>
-		void addGameObject(const std::string & tag, TArgs &&... initArgs);
+		template<typename GO, typename InitFunc, typename... TArgs>
+		void addGameObject(const std::string & tag, InitFunc init, TArgs &&... initArgs);
 
 		void destroyGameObject(const std::string & tag);
 
@@ -94,12 +70,15 @@ namespace bloom {
 		bool m_sceneLoaded = false;
 	};
 
-	template<typename GO, typename... TArgs> void Scene::addGameObject(const std::string & tag, TArgs &&... initArgs) {
+	template<typename GO, typename InitFunc, typename... TArgs>
+	void Scene::addGameObject(const std::string & tag, InitFunc init, TArgs &&... initArgs) {
 		static_assert(std::is_base_of_v<GameObject, GO>, "Type GO passed in is not GameObject based");
 
 		GO* obj = new GO(m_registry, m_gameInstance);
-		static_assert(hasInit<GO>::check(), "Type GO passed in does not have valid init function.");
-		obj->init(std::forward<TArgs>(initArgs)...);
+		if constexpr (std::is_member_function_pointer_v<InitFunc>)
+			(obj->*init)(std::forward<TArgs>(initArgs)...);
+		else
+			init(obj, std::forward<TArgs>(initArgs)...); // std::mem_fn
 
 		m_gameObjects.emplace(tag, std::unique_ptr<GO>(obj));
 
