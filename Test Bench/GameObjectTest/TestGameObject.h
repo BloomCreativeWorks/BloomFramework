@@ -17,14 +17,14 @@ class TestChar : public bloom::GameObject {
 	using bloom::GameObject::GameObject;
 
 public:
-	void init(Position pos, Size size, const std::filesystem::path texturePath, std::optional<SDL_Rect> srcRect = std::nullopt, std::optional<Uint32> priority = std::nullopt) {
+	void init(Position pos, Size size, const std::filesystem::path& texturePath, std::optional<SDL_Rect> srcRect, uint32_t priority) {
 		
 		Transform trans = { pos, 0.0f, size };
 		m_registry.assign<Transform>(m_entity, trans);
 		auto tmp = m_gameInstance.textures.load(texturePath);
 		m_registry.assign<Sprite>(m_entity, tmp, srcRect);
 
-		m_registry.assign<LayerGroup>(m_entity, priority.value_or(0));
+		m_registry.assign<LayerGroup>(m_entity, priority);
 
 #pragma warning(push)
 #pragma warning(disable: 4307)

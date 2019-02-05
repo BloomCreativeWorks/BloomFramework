@@ -14,7 +14,7 @@ class TestAnimChar : public bloom::GameObject {
 	using bloom::GameObject::GameObject;
 
 public:
-	void init(const std::filesystem::path texturePath = "Assets/TestChar.png") {
+	void init(const std::filesystem::path& texturePath) {
 		Transform trans = { Position(0,0,bloom::relative), 0.0f, Size{256, 256} };
 		m_registry.assign<Transform>(m_entity, trans);
 
