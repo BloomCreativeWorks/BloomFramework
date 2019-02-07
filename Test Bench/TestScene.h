@@ -25,15 +25,15 @@ public:
 
 		auto init = [](TestChar * ptr, Position pos, Size size, const std::filesystem::path & texturePath, std::optional<SDL_Rect> srcRect = std::nullopt, uint32_t priority = 0) {
 			bloom::components::Transform trans = { pos, 0.0f, size };
-			ptr->m_registry.assign<bloom::components::Transform>(ptr->m_entity, trans);
-			auto tmp = ptr->m_gameInstance.textures.load(texturePath);
-			ptr->m_registry.assign<bloom::components::Sprite>(ptr->m_entity, tmp, srcRect);
+			ptr->registry.assign<bloom::components::Transform>(ptr->entity, trans);
+			auto tmp = ptr->gameInstance.textures.load(texturePath);
+			ptr->registry.assign<bloom::components::Sprite>(ptr->entity, tmp, srcRect);
 
-			ptr->m_registry.assign<bloom::components::LayerGroup>(ptr->m_entity, priority);
+			ptr->registry.assign<bloom::components::LayerGroup>(ptr->entity, priority);
 
 #pragma warning(push)
 #pragma warning(disable: 4307)
-			ptr->m_registry.assign<bloom::components::Label<"TestObject"_hs>>(ptr->m_entity);
+			ptr->registry.assign<bloom::components::Label<"TestObject"_hs>>(ptr->entity);
 #pragma warning(pop)
 		};
 
