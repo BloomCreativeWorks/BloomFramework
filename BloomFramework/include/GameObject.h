@@ -26,7 +26,6 @@ namespace bloom {
 
 		uint32_t getEntityID();
 
-	protected:
 		entt::DefaultRegistry & m_registry;
 		Game & m_gameInstance;
 		entt::DefaultRegistry::entity_type m_entity;
