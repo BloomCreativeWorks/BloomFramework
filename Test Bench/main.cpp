@@ -175,8 +175,6 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		}
 	}
 	game->destroy();
-	fonts.unload(UI_font);
-	testText.~SpriteText();
 }
 
 
