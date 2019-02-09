@@ -12,17 +12,17 @@ namespace bloom::graphics {
 			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
 			text += ' ';
 		}
-		refreshTexture();
+		m_refreshTexture();
 	}
 
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
-		if (text != m_previousText)
-			refreshTexture();
+		if (text != m_previousText || style != m_previousStyle)
+			m_refreshTexture();
 		SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
 		Drawable::render(srcRect, destRect, flip);
 	}
 
-	void SpriteText::refreshTexture() {
+	void SpriteText::m_refreshTexture() {
 		SDL_DestroyTexture(m_texture);
 		m_texture = nullptr;
 
@@ -33,7 +33,7 @@ namespace bloom::graphics {
 			textSurface = TTF_RenderUTF8_Solid(m_fontPtr->m_font, text.c_str(), style.foregroundColor);
 			break;
 		case TextStyle::shaded:
-			textSurface = TTF_RenderUTF8_Shaded(m_fontPtr->m_font, text.c_str(), style.foregroundColor, style.backGroundColor);
+			textSurface = TTF_RenderUTF8_Shaded(m_fontPtr->m_font, text.c_str(), style.foregroundColor, style.backgroundColor);
 			break;
 		case TextStyle::blended:
 			textSurface = TTF_RenderUTF8_Blended(m_fontPtr->m_font, text.c_str(), style.foregroundColor);
@@ -53,5 +53,6 @@ namespace bloom::graphics {
 		}
 
 		m_previousText = text;
+		m_previousStyle = style;
 	}
 }
