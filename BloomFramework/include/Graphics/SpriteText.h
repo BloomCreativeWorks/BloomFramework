@@ -14,23 +14,6 @@ namespace bloom::graphics {
 		} blendingMode = normal;
 		SDL_Color foregroundColor = { 255, 255, 255, 0 };
 		SDL_Color backgroundColor = { 0, 0, 0, 0 };
-
-		bool operator==(const TextStyle& rhs) {
-			bool foregroundSame = this->foregroundColor.a == rhs.foregroundColor.a
-				&& this->foregroundColor.r == rhs.foregroundColor.r
-				&& this->foregroundColor.g == rhs.foregroundColor.g
-				&& this->foregroundColor.b == rhs.foregroundColor.b;
-
-			bool backgroundSame = this->backgroundColor.a == rhs.backgroundColor.a
-				&& this->backgroundColor.r == rhs.backgroundColor.r
-				&& this->backgroundColor.g == rhs.backgroundColor.g
-				&& this->backgroundColor.b == rhs.backgroundColor.b;
-
-			return (this->blendingMode == rhs.blendingMode && foregroundSame && backgroundSame);
-		}
-		bool operator!=(const TextStyle& rhs) {
-			return !(*this == rhs);
-		}
 	};
 
 	static TextStyle defaultTextStyle = TextStyle();
@@ -46,8 +29,18 @@ namespace bloom::graphics {
 		int getTextHeight() const { return m_height; }
 		int getTextWidth() const { return m_width; }
 
-		std::string text;
-		TextStyle style;
+		std::string getText() const { return m_text; }
+		void setText(const std::string& newText) {
+			m_text = newText;
+			m_refreshTexture();
+		}
+
+		TextStyle getStyle() const { return m_style; }
+		void setStyle(const TextStyle& newStyle) {
+			m_style = newStyle;
+			m_refreshTexture();
+		}
+		
 
 	private:
 		void m_refreshTexture();
@@ -55,7 +48,8 @@ namespace bloom::graphics {
 		FontPtr m_fontPtr;
 		int m_height = 0;
 		int m_width = 0;
-		std::string m_previousText;
-		TextStyle m_previousStyle;
+
+		std::string m_text;
+		TextStyle m_style;
 	};
 }

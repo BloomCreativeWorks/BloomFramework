@@ -94,8 +94,22 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, fonts[UI_font], "Hello, World!");
-	testText.style.blendingMode = testText.style.blended;
-	testText.refreshTexture();
+	{
+		auto newStyle = testText.getStyle();
+		newStyle.blendingMode = TextStyle::BlendingMode::blended;
+
+		SDL_Color col, curcol = game->getColor();
+		std::clog << "current_color: r: " << +curcol.r << ", g: " << +curcol.g << ", b: " << +curcol.b << std::endl;
+		if (curcol.r + curcol.g + curcol.b >= 384) {
+			col = { 0, 0, 0, 0 };
+		}
+		else {
+			col = { 255, 255, 255, 0 };
+		}
+		newStyle.foregroundColor = col;
+
+		testText.setStyle(newStyle);
+	}
 	testText.render(std::nullopt, SDL_Point{ 300, 250 });
 	game->render();
 	game->delay(500);
@@ -128,15 +142,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 	// Test SpriteText2
 	std::string deltaTimeText;
-	SDL_Color col, curcol = game->getColor();
-	std::clog << "current_color: r: " << +curcol.r << ", g: " << +curcol.g << ", b: " << +curcol.b << std::endl;
-	if (curcol.r + curcol.g + curcol.b >= 384) {
-		col = { 0, 0, 0, 0 };
-	}
-	else {
-		col = { 255, 255, 255, 0 };
-	}
-	testText.style.foregroundColor = col;
+	
 
 	// If manual control of entities is required, this is the method to do so.
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
@@ -165,6 +171,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		renderSysTest.update(); // Test again.
 		auto fps = 1000.0 / dt;
 		deltaTimeText = "fps: " + std::to_string(fps);
+		testText.setText(deltaTimeText);
 		testText.render(std::nullopt, SDL_Point{ 0, 0 });
 		game->render();
 		//game->update();
