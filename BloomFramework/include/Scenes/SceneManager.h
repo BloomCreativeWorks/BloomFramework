@@ -12,7 +12,8 @@ namespace bloom {
 	public:
 		SceneManager(Game& gameInstance);
 
-		template<class Scn> void changeScene(std::shared_ptr<Scn> newScene);
+		template<class Scn, typename = std::enable_if_t<std::is_base_of_v<Scene, Scn>>>
+		void changeScene(std::shared_ptr<Scn> newScene);
 		void update(double deltaTime);
 		void draw();
 
@@ -23,9 +24,9 @@ namespace bloom {
 		Game & m_gameInstance;
 	};
 
-	template<class Scn>
+	template<class Scn, typename>
 	void SceneManager::changeScene(std::shared_ptr<Scn> newScene) {
-		static_assert(std::is_base_of_v<Scene, Scn>, "Type Scn passed in is not Scene based");
+		//static_assert(std::is_base_of_v<Scene, Scn>, "Type Scn passed in is not Scene based");
 
 		newScene->load();
 		m_currScene = newScene;
