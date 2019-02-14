@@ -190,7 +190,7 @@
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Graphics\Animation.h" />
     <ClInclude Include="include\Systems\AnimationSystem.h" />
-    <ClInclude Include="include\Graphics\Drawable.h" />
+    <ClInclude Include="include\Graphics\IDrawable.h" />
     <ClInclude Include="include\Graphics\Font.h" />
     <ClInclude Include="include\Graphics\FontStore.h" />
     <ClInclude Include="include\Graphics\SpriteText.h" />
@@ -215,7 +215,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Graphics\Animation.cpp" />
     <ClCompile Include="src\Graphics\AnimationSet.cpp" />
-    <ClCompile Include="src\Graphics\Drawable.cpp" />
+    <ClCompile Include="src\Graphics\IDrawable.cpp" />
     <ClCompile Include="src\Graphics\Font.cpp" />
     <ClCompile Include="src\Graphics\FontStore.cpp" />
     <ClCompile Include="src\Graphics\SpriteText.cpp" />

@@ -81,13 +81,13 @@
     <ClCompile Include="src\Graphics\Font.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Drawable.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\SpriteText.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\FontStore.cpp">
+      <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\IDrawable.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -191,10 +191,10 @@
     <ClInclude Include="include\Graphics\Font.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Graphics\Drawable.h">
+    <ClInclude Include="include\Graphics\FontStore.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="include\Graphics\FontStore.h">
+    <ClInclude Include="include\Graphics\IDrawable.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

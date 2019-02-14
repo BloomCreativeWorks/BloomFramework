@@ -2,7 +2,7 @@
 
 #include "stdIncludes.h"
 #include "Exception.h"
-#include "Drawable.h"
+#include "IDrawable.h"
 #include "Font.h"
 
 namespace bloom::graphics {
@@ -18,7 +18,7 @@ namespace bloom::graphics {
 
 	static TextStyle defaultTextStyle = TextStyle();
 
-	class BLOOMFRAMEWORK_API SpriteText : public Drawable {
+	class BLOOMFRAMEWORK_API SpriteText : public IDrawable {
 	public:
 		SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text = " ", TextStyle style = defaultTextStyle);
 		~SpriteText() = default;

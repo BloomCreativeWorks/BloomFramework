@@ -5,11 +5,11 @@
 #include "Exception.h"
 
 namespace bloom::graphics {
-	class BLOOMFRAMEWORK_API Drawable {
+	class BLOOMFRAMEWORK_API IDrawable {
 	public:
-		Drawable() = delete;
-		Drawable(SDL_Renderer *& targetRenderer);
-		virtual ~Drawable() = 0;
+		IDrawable() = delete;
+		IDrawable(SDL_Renderer *& targetRenderer);
+		virtual ~IDrawable() = 0;
 
 		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
