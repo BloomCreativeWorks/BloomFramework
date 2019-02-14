@@ -12,7 +12,7 @@ namespace bloom::graphics {
 			std::clog << "[SpriteText] the empty string will be replaced with a space" << std::endl;
 			text += ' ';
 		}
-		m_refreshTexture();
+		refreshTexture();
 	}
 
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
@@ -20,7 +20,7 @@ namespace bloom::graphics {
 		Drawable::render(srcRect, destRect, flip);
 	}
 
-	void SpriteText::m_refreshTexture() {
+	void SpriteText::refreshTexture() {
 		SDL_DestroyTexture(m_texture);
 		m_texture = nullptr;
 

@@ -32,18 +32,18 @@ namespace bloom::graphics {
 		std::string getText() const { return m_text; }
 		void setText(const std::string& newText) {
 			m_text = newText;
-			m_refreshTexture();
+			refreshTexture();
 		}
 
 		TextStyle getStyle() const { return m_style; }
 		void setStyle(const TextStyle& newStyle) {
 			m_style = newStyle;
-			m_refreshTexture();
+			refreshTexture();
 		}
 		
 
 	private:
-		void m_refreshTexture();
+		void refreshTexture();
 
 		FontPtr m_fontPtr;
 		int m_height = 0;
