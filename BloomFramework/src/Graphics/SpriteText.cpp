@@ -2,7 +2,7 @@
 
 namespace bloom::graphics {
 	SpriteText::SpriteText(SDL_Renderer *& targetRenderer, std::shared_ptr<Font> fontPtr, std::string text, TextStyle style) :
-		IDrawable(targetRenderer),
+		Drawable(targetRenderer),
 		m_fontPtr(fontPtr),
 		m_text(text),
 		m_style(style)
@@ -17,7 +17,7 @@ namespace bloom::graphics {
 
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
 		SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
-		IDrawable::render(srcRect, destRect, flip);
+		Drawable::render(srcRect, destRect, flip);
 	}
 
 	void SpriteText::refreshTexture() {
