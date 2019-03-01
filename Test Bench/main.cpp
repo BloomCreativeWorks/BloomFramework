@@ -29,7 +29,7 @@ inline int rstep(int n) {
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
-
+	music.queue.setVolume(0.0);
 	music.push(musicPath / L"music_001.mp3");
 	music.push(musicPath / L"music_002.mp3");
 	music.push(musicPath / L"music_003.mp3");
@@ -124,6 +124,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 
 		cursorPos.x = game->input.getMouseX();
 		cursorPos.y = game->input.getMouseY();
+		std::cout << game->input.getPrintable();
 		if (testGOpos.x >= WINDOW_WIDTH) {
 			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
 		}
@@ -147,6 +148,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 			game->delay(framedelay - frametime);
 		}
 	}
+	std::cout << std::endl;
 	game->destroy();
 }
 

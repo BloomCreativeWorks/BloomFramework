@@ -1,4 +1,6 @@
 #pragma once
+
+#include <array>
 #include "stdIncludes.h"
 /// All keys are defined here.
 #include "InputDefinitions.h"
@@ -25,24 +27,20 @@ namespace bloom {
 		void unlock();
 		bool isMouseInside(SDL_Rect rectangle);
 		static bool isPrintable(SDL_Keycode key);
-
-		bool isPrintableKeyDown();
-		std::string getCurPrintableKey();
+		std::string getPrintable();
 
 	private:
-		const uint8_t* m_keyboard;
+		const uint8_t* m_keyboard = nullptr;
 
 		uint32_t m_mouse;
 
-		int m_mouseX, m_mouseY;
-		int m_mouseMoveX, m_mouseMoveY;
-		int m_scrollX, m_scrollY;
-		bool m_keyDown[KEYBOARD_SIZE];
-		bool m_keyUp[KEYBOARD_SIZE];
-		bool m_mouseDown[MOUSE_MAX];
-		bool m_mouseUp[MOUSE_MAX];
-		bool m_will_quit;
-		int m_curPrintableKey;
-		bool m_isLocked;
+		int m_mouseX = 0, m_mouseY = 0;
+		int m_mouseMoveX = 0, m_mouseMoveY = 0;
+		int m_scrollX = 0, m_scrollY = 0;
+		std::array<char, KEYBOARD_SIZE> m_keyState;
+		std::array<char, KEYBOARD_SIZE> m_mouseState;
+		bool m_will_quit = false;
+		bool m_isLocked = false;
+		std::string m_printable = "";
 	};
 }
