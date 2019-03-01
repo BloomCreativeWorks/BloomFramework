@@ -137,7 +137,7 @@ namespace bloom {
 		return curr;
 	}
 
-	bool InputManager::isMouseInside(SDL_Rect rectangle) const noexcept {
+	bool InputManager::isMouseInside(const SDL_Rect& rectangle) const noexcept {
 		return ((m_mouseX >= rectangle.x)
 			&& (m_mouseX <= rectangle.x + rectangle.w)
 			&& (m_mouseY >= rectangle.y)

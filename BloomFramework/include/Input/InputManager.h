@@ -25,7 +25,7 @@ namespace bloom {
 		int getMouseY() const noexcept;
 		void lock() noexcept;
 		void unlock() noexcept;
-		bool isMouseInside(SDL_Rect rectangle) const noexcept;
+		bool isMouseInside(const SDL_Rect& rectangle) const noexcept;
 		std::string getPrintable() const noexcept;
 
 	private:
