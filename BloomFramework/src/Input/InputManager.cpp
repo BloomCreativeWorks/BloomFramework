@@ -76,33 +76,15 @@ namespace bloom {
 	}
 
 	bool InputManager::isKeyDown(int key) {
-		if (m_isLocked) return false;
-
-		if (key < 0 || key >= KEYBOARD_SIZE)
-			return false;
-
-		return (m_keyState[key] == 1);
+		return (!m_isLocked && (key < 0 || key >= KEYBOARD_SIZE) && m_keyState[key] == 1);
 	}
 
 	bool InputManager::isKeyUp(int key) {
-		if (m_isLocked) return false;
-
-		if (key < 0 || key >= KEYBOARD_SIZE)
-			return false;
-
-		return (m_keyState[key] == -1);
+		return (!m_isLocked && (key < 0 || key >= KEYBOARD_SIZE) && m_keyState[key] == -1);
 	}
 
 	bool InputManager::isKeyPressed(KeyboardKey key) {
-		if (m_isLocked) return false;
-
-		if (!(m_keyboard))
-			return false;
-
-		if (m_keyboard[key])
-			return true;
-
-		return false;
+		return (!m_isLocked && m_keyboard && static_cast<bool>(m_keyboard[key]));
 	}
 
 	bool InputManager::shift() {
@@ -118,21 +100,11 @@ namespace bloom {
 	}
 
 	bool InputManager::isMouseDown(MouseButton button) {
-		if (m_isLocked) return false;
-
-		if (button == MOUSE_MAX)
-			return false;
-
-		return (m_mouseState[button] == 1);
+		return (!m_isLocked && button < MOUSE_MAX && m_mouseState[button] == 1);
 	}
 
 	bool InputManager::isMouseUp(MouseButton button) {
-		if (m_isLocked) return false;
-
-		if (button == MOUSE_MAX)
-			return false;
-
-		return (m_mouseState[button] == -1);
+		return (!m_isLocked && button < MOUSE_MAX && m_mouseState[button] == -1);
 	}
 
 	bool InputManager::isMousePressed(MouseButton button) {
