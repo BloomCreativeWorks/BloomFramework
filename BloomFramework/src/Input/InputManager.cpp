@@ -1,5 +1,10 @@
 #include "Input/InputManager.h"
 
+// checks keyboard key
+#define checkKey(lockState, key) (!lockState && key != bloom::KeyboardKey::KEYBOARD_SIZE)
+// checks mouse button
+#define checkBtn(lockState, btn) (!lockState && btn != bloom::MouseButton::MOUSE_MAX)
+
 namespace bloom {
 	InputManager::InputManager() noexcept :
 		m_keyState(),
@@ -33,7 +38,6 @@ namespace bloom {
 				m_keyState[pressedKey.scancode] = 1;
 
 				if (isPrintable(pressedKey.sym))
-					m_printable = static_cast<char>(pressedKey.sym);
 
 				break;
 			}
@@ -71,15 +75,15 @@ namespace bloom {
 	}
 
 	bool InputManager::isKeyDown(KeyboardKey key) const noexcept {
-		return (!m_lockState && key != KeyboardKey::KEYBOARD_SIZE && m_keyState[static_cast<size_t>(key)] == 1);
+		return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == 1);
 	}
 
 	bool InputManager::isKeyUp(KeyboardKey key) const noexcept {
-		return (!m_lockState && key != KeyboardKey::KEYBOARD_SIZE && m_keyState[static_cast<size_t>(key)] == -1);
+		return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == -1);
 	}
 
 	bool InputManager::isKeyPressed(KeyboardKey key) const noexcept {
-		return (!m_lockState && m_keyboard && key != KeyboardKey::KEYBOARD_SIZE
+		return (checkKey(m_lockState, key) && m_keyboard
 			&& static_cast<bool>(m_keyboard[static_cast<size_t>(key)]));
 	}
 
@@ -96,11 +100,11 @@ namespace bloom {
 	}
 
 	bool InputManager::isMouseDown(MouseButton button) const noexcept {
-		return (!m_lockState && button != MouseButton::MOUSE_MAX && m_mouseState[static_cast<size_t>(button)] == 1);
+		return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == 1);
 	}
 
 	bool InputManager::isMouseUp(MouseButton button) const noexcept {
-		return (!m_lockState && button != MouseButton::MOUSE_MAX && m_mouseState[static_cast<size_t>(button)] == -1);
+		return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == -1);
 	}
 
 	bool InputManager::isMousePressed(MouseButton button) const noexcept {
