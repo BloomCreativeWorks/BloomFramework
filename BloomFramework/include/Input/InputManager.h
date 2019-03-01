@@ -8,39 +8,40 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API InputManager {
 	public:
-		InputManager();
+		InputManager() noexcept;
 
 		void update();
-		bool isKeyDown(int key);
-		bool isKeyUp(int key);
-		bool shift();
-		bool ctrl();
-		bool alt();
-		bool isMouseDown(MouseButton button);
-		bool isMouseUp(MouseButton button);
-		bool isKeyPressed(KeyboardKey key);
-		bool isMousePressed(MouseButton button);
-		bool quitRequested();
-		int getMouseX();
-		int getMouseY();
-		void lock();
-		void unlock();
-		bool isMouseInside(SDL_Rect rectangle);
-		static bool isPrintable(SDL_Keycode key);
-		std::string getPrintable();
+		bool isKeyDown(KeyboardKey key) const noexcept;
+		bool isKeyUp(KeyboardKey key) const noexcept;
+		bool shift() const noexcept;
+		bool ctrl() const noexcept;
+		bool alt() const noexcept;
+		bool isMouseDown(MouseButton button) const noexcept;
+		bool isMouseUp(MouseButton button) const noexcept;
+		bool isKeyPressed(KeyboardKey key) const noexcept;
+		bool isMousePressed(MouseButton button) const noexcept;
+		bool quitRequested() noexcept;
+		int getMouseX() const noexcept;
+		int getMouseY() const noexcept;
+		void lock() noexcept;
+		void unlock() noexcept;
+		bool isMouseInside(SDL_Rect rectangle) const noexcept;
+		std::string getPrintable() const noexcept;
 
 	private:
+		static bool isPrintable(SDL_Keycode key) noexcept;
+
 		const uint8_t* m_keyboard = nullptr;
 
-		uint32_t m_mouse;
+		uint32_t m_mouse = 0;
 
 		int m_mouseX = 0, m_mouseY = 0;
 		int m_mouseMoveX = 0, m_mouseMoveY = 0;
 		int m_scrollX = 0, m_scrollY = 0;
-		std::array<char, KEYBOARD_SIZE> m_keyState;
-		std::array<char, KEYBOARD_SIZE> m_mouseState;
-		bool m_will_quit = false;
-		bool m_isLocked = false;
-		std::string m_printable = "";
+		std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_keyState;
+		std::array<char, static_cast<size_t>(MouseButton::MOUSE_MAX)> m_mouseState;
+		bool m_quitState = false;
+		bool m_lockState = false;
+		std::string m_printable{ "" };
 	};
 }

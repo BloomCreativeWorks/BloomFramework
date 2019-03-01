@@ -1,26 +1,21 @@
 #include "Input/InputManager.h"
 
 namespace bloom {
-	InputManager::InputManager() :
-		m_keyboard(nullptr),
-		m_mouse(0),
-		m_mouseX(0),
-		m_mouseY(0),
-		m_will_quit(false),
-		m_isLocked(false),
+	InputManager::InputManager() noexcept :
 		m_keyState(),
-		m_mouseState() {}
+		m_mouseState()
+	{}
 
 	void InputManager::update() {
-		for (int i = 0; i < KEYBOARD_SIZE; i++)
-			m_keyState[i] = false;
+		for (int i = 0; i < static_cast<int>(KeyboardKey::KEYBOARD_SIZE); i++)
+			m_keyState[i] = 0;
 
-		for (int i = 0; i < MOUSE_MAX; i++)
-			m_mouseState[i] = false;
+		for (int i = 0; i < static_cast<int>(MouseButton::MOUSE_MAX); i++)
+			m_mouseState[i] = 0;
 
 		m_mouseMoveX = 0;
 		m_mouseMoveY = 0;
-		m_printable = "";
+		m_printable.clear();
 		m_keyboard = SDL_GetKeyboardState(nullptr);
 		m_mouse = SDL_GetMouseState(&m_mouseX, &m_mouseY);
 
@@ -29,7 +24,7 @@ namespace bloom {
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_QUIT: {
-				m_will_quit = true;
+				m_quitState = true;
 				break;
 			}
 			case SDL_KEYDOWN: {
@@ -38,7 +33,7 @@ namespace bloom {
 				m_keyState[pressedKey.scancode] = 1;
 
 				if (isPrintable(pressedKey.sym))
-					m_printable = pressedKey.sym;
+					m_printable = static_cast<char>(pressedKey.sym);
 
 				break;
 			}
@@ -75,50 +70,52 @@ namespace bloom {
 		}
 	}
 
-	bool InputManager::isKeyDown(int key) {
-		return (!m_isLocked && (key < 0 || key >= KEYBOARD_SIZE) && m_keyState[key] == 1);
+	bool InputManager::isKeyDown(KeyboardKey key) const noexcept {
+		return (!m_lockState && key != KeyboardKey::KEYBOARD_SIZE && m_keyState[static_cast<size_t>(key)] == 1);
 	}
 
-	bool InputManager::isKeyUp(int key) {
-		return (!m_isLocked && (key < 0 || key >= KEYBOARD_SIZE) && m_keyState[key] == -1);
+	bool InputManager::isKeyUp(KeyboardKey key) const noexcept {
+		return (!m_lockState && key != KeyboardKey::KEYBOARD_SIZE && m_keyState[static_cast<size_t>(key)] == -1);
 	}
 
-	bool InputManager::isKeyPressed(KeyboardKey key) {
-		return (!m_isLocked && m_keyboard && static_cast<bool>(m_keyboard[key]));
+	bool InputManager::isKeyPressed(KeyboardKey key) const noexcept {
+		return (!m_lockState && m_keyboard && key != KeyboardKey::KEYBOARD_SIZE
+			&& static_cast<bool>(m_keyboard[static_cast<size_t>(key)]));
 	}
 
-	bool InputManager::shift() {
-		return (isKeyPressed(KEY_LEFT_SHIFT) || isKeyPressed(KEY_RIGHT_SHIFT));
+	bool InputManager::shift() const noexcept {
+		return (isKeyPressed(KeyboardKey::KEY_LEFT_SHIFT) || isKeyPressed(KeyboardKey::KEY_RIGHT_SHIFT));
 	}
 
-	bool InputManager::ctrl() {
-		return (isKeyPressed(KEY_LEFT_CTRL) || isKeyPressed(KEY_RIGHT_CTRL));
+	bool InputManager::ctrl() const noexcept {
+		return (isKeyPressed(KeyboardKey::KEY_LEFT_CTRL) || isKeyPressed(KeyboardKey::KEY_RIGHT_CTRL));
 	}
 
-	bool InputManager::alt() {
-		return (isKeyPressed(KEY_LEFT_ALT) || isKeyPressed(KEY_RIGHT_ALT));
+	bool InputManager::alt() const noexcept {
+		return (isKeyPressed(KeyboardKey::KEY_LEFT_ALT) || isKeyPressed(KeyboardKey::KEY_RIGHT_ALT));
 	}
 
-	bool InputManager::isMouseDown(MouseButton button) {
-		return (!m_isLocked && button < MOUSE_MAX && m_mouseState[button] == 1);
+	bool InputManager::isMouseDown(MouseButton button) const noexcept {
+		return (!m_lockState && button != MouseButton::MOUSE_MAX && m_mouseState[static_cast<size_t>(button)] == 1);
 	}
 
-	bool InputManager::isMouseUp(MouseButton button) {
-		return (!m_isLocked && button < MOUSE_MAX && m_mouseState[button] == -1);
+	bool InputManager::isMouseUp(MouseButton button) const noexcept {
+		return (!m_lockState && button != MouseButton::MOUSE_MAX && m_mouseState[static_cast<size_t>(button)] == -1);
 	}
 
-	bool InputManager::isMousePressed(MouseButton button) {
-		if (m_isLocked) return false;
+	bool InputManager::isMousePressed(MouseButton button) const noexcept {
+		if (m_lockState)
+			return false;
 
 		switch (button)
 		{
-		case MOUSE_LEFT:
+		case MouseButton::MOUSE_LEFT:
 			return (m_mouse & SDL_BUTTON(1));
 
-		case MOUSE_MIDDLE:
+		case MouseButton::MOUSE_MIDDLE:
 			return (m_mouse & SDL_BUTTON(2));
 
-		case MOUSE_RIGHT:
+		case MouseButton::MOUSE_RIGHT:
 			return (m_mouse & SDL_BUTTON(3));
 
 		default:
@@ -126,40 +123,40 @@ namespace bloom {
 		}
 	}
 
-	int InputManager::getMouseX() {
+	int InputManager::getMouseX() const noexcept {
 		return m_mouseX;
 	}
 
-	int InputManager::getMouseY() {
+	int InputManager::getMouseY() const noexcept {
 		return m_mouseY;
 	}
 
-	bool InputManager::quitRequested() {
-		bool curr = m_will_quit;
-		m_will_quit = false;
+	bool InputManager::quitRequested() noexcept {
+		bool curr = m_quitState;
+		m_quitState = false;
 		return curr;
 	}
 
-	bool InputManager::isMouseInside(SDL_Rect rectangle) {
+	bool InputManager::isMouseInside(SDL_Rect rectangle) const noexcept {
 		return ((m_mouseX >= rectangle.x)
 			&& (m_mouseX <= rectangle.x + rectangle.w)
 			&& (m_mouseY >= rectangle.y)
 			&& (m_mouseY <= rectangle.y + rectangle.h));
 	}
 
-	bool InputManager::isPrintable(SDL_Keycode key) {
-		return ((key >= SDLK_SPACE) && (key <= SDLK_z));
+	bool InputManager::isPrintable(SDL_Keycode key) noexcept {
+		return (key >= SDLK_SPACE && key <= SDLK_z);
 	}
 
-	std::string InputManager::getPrintable() {
+	std::string InputManager::getPrintable() const noexcept {
 		return m_printable;
 	}
 
-	void InputManager::lock() {
-		m_isLocked = true;
+	void InputManager::lock() noexcept {
+		m_lockState = true;
 	}
 
-	void InputManager::unlock() {
-		m_isLocked = false;
+	void InputManager::unlock() noexcept {
+		m_lockState = false;
 	}
 }

@@ -3,7 +3,7 @@
 #include "stdIncludes.h"
 
 namespace bloom {
-	enum KeyboardKey{
+	enum class KeyboardKey{
 		KEY_UNKNOWN = SDL_SCANCODE_UNKNOWN,
 		KEY_A = SDL_SCANCODE_A,
 		KEY_B = SDL_SCANCODE_B,
@@ -247,7 +247,7 @@ namespace bloom {
 		KEYBOARD_SIZE // This defines the keyboard size
 	};
 
-	enum MouseButton{
+	enum class MouseButton{
 		MOUSE_LEFT = SDL_BUTTON_LEFT,
 		MOUSE_MIDDLE = SDL_BUTTON_MIDDLE,
 		MOUSE_RIGHT = SDL_BUTTON_RIGHT,
