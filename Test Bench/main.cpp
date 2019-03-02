@@ -122,9 +122,9 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		testGOpos.x += testX;
 		testGOpos.y += testY;
 
-		cursorPos.x = game->input.getMouseX();
-		cursorPos.y = game->input.getMouseY();
-		std::cout << game->input.getPrintable();
+		cursorPos.x = game->input.mouse.getX();
+		cursorPos.y = game->input.mouse.getY();
+		std::cout << game->input.keyboard.getPrintable();
 		if (testGOpos.x >= WINDOW_WIDTH) {
 			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
 		}
