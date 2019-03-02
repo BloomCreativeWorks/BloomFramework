@@ -12,6 +12,7 @@ namespace bloom {
 
 		class BLOOMFRAMEWORK_API Keyboard {
 			friend class InputManager;
+			using KeyboardKeys = std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)>;
 
 		public:
 			bool isPressed(KeyboardKey key) const noexcept;
@@ -26,7 +27,7 @@ namespace bloom {
 			const uint8_t* m_keyboard = nullptr;
 
 			static bool isPrintable(SDL_Keycode key) noexcept;
-			std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_keyState = std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)>();
+			KeyboardKeys m_keyState = KeyboardKeys();
 			std::string m_printable{ "" };
 
 			bool m_lockState = false;
@@ -34,6 +35,7 @@ namespace bloom {
 		
 		class BLOOMFRAMEWORK_API Mouse {
 			friend class InputManager;
+			using MouseButtons = std::array<char, static_cast<size_t>(MouseButton::MOUSE_MAX)>;
 
 		public:
 			bool isDown(MouseButton button) const noexcept;
@@ -49,8 +51,7 @@ namespace bloom {
 			int m_mouseX = 0, m_mouseY = 0;
 			int m_mouseMoveX = 0, m_mouseMoveY = 0;
 			int m_scrollX = 0, m_scrollY = 0;
-
-			std::array<char, static_cast<size_t>(MouseButton::MOUSE_MAX)> m_mouseState;
+			MouseButtons m_mouseState = MouseButtons();
 
 			bool m_lockState = false;
 		} mouse;
