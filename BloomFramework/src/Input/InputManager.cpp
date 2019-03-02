@@ -12,11 +12,8 @@ namespace bloom {
 	{}
 
 	void InputManager::update() {
-		for (int i = 0; i < static_cast<int>(KeyboardKey::KEYBOARD_SIZE); i++)
-			keyboard.m_keyState[i] = 0;
-
-		for (int i = 0; i < static_cast<int>(MouseButton::MOUSE_MAX); i++)
-			mouse.m_mouseState[i] = 0;
+		keyboard.m_keyState.fill(0);
+		mouse.m_mouseState.fill(0);
 
 		mouse.m_mouseMoveX = 0;
 		mouse.m_mouseMoveY = 0;
@@ -38,6 +35,7 @@ namespace bloom {
 				keyboard.m_keyState[pressedKey.scancode] = 1;
 
 				if (keyboard.isPrintable(pressedKey.sym))
+					keyboard.m_printable = pressedKey.sym;
 
 				break;
 			}
@@ -141,7 +139,7 @@ namespace bloom {
 		return curr;
 	}
 
-	bool InputManager::Mouse::isInside(const SDL_Rect& rectangle) const noexcept {
+	bool InputManager::Mouse::isInside(const SDL_Rect & rectangle) const noexcept {
 		return ((m_mouseX >= rectangle.x)
 			&& (m_mouseX <= rectangle.x + rectangle.w)
 			&& (m_mouseY >= rectangle.y)
