@@ -185,6 +185,7 @@
     <ClInclude Include="include\Audio\SoundChunk.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Graphics\Animation.h" />
+    <ClInclude Include="include\Input\InputEvents.h" />
     <ClInclude Include="include\Systems\AnimationSystem.h" />
     <ClInclude Include="include\Input\InputDefinitions.h" />
     <ClInclude Include="include\Input\InputManager.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="src\Graphics\AnimationSet.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\TextureStore.cpp" />
+    <ClCompile Include="src\Input\InputEvents.cpp" />
     <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>

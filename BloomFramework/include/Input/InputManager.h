@@ -3,66 +3,26 @@
 #include <array>
 #include "stdIncludes.h"
 /// All keys are defined here.
-#include "InputDefinitions.h"
+#include "InputEvents.h"
 
-namespace bloom {
+namespace bloom::input {
 	class BLOOMFRAMEWORK_API InputManager {
 	public:
-		InputManager() noexcept;
-
-		class BLOOMFRAMEWORK_API Keyboard {
-			friend class InputManager;
-			using KeyboardKeys = std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)>;
-
-		public:
-			bool isPressed(KeyboardKey key) const noexcept;
-			bool isDown(KeyboardKey key) const noexcept;
-			bool isUp(KeyboardKey key) const noexcept;
-			bool shift() const noexcept;
-			bool ctrl() const noexcept;
-			bool alt() const noexcept;
-			std::string getPrintable() const noexcept;
-
-		private:
-			const uint8_t* m_keyboard = nullptr;
-
-			static bool isPrintable(SDL_Keycode key) noexcept;
-			KeyboardKeys m_keyState = KeyboardKeys();
-			std::string m_printable{ "" };
-
-			bool m_lockState = false;
-		} keyboard;
-		
-		class BLOOMFRAMEWORK_API Mouse {
-			friend class InputManager;
-			using MouseButtons = std::array<char, static_cast<size_t>(MouseButton::MOUSE_MAX)>;
-
-		public:
-			bool isDown(MouseButton button) const noexcept;
-			bool isUp(MouseButton button) const noexcept;
-			bool isPressed(MouseButton button) const noexcept;
-			int getX() const noexcept;
-			int getY() const noexcept;
-			bool isInside(const SDL_Rect& rectangle) const noexcept;
-
-		private:
-			uint32_t m_mouse = 0;
-
-			int m_mouseX = 0, m_mouseY = 0;
-			int m_mouseMoveX = 0, m_mouseMoveY = 0;
-			int m_scrollX = 0, m_scrollY = 0;
-			MouseButtons m_mouseState = MouseButtons();
-
-			bool m_lockState = false;
-		} mouse;
+		InputManager() noexcept = default;
 
 		void update();
 		bool quitRequested() noexcept;
 		void lock() noexcept;
 		void unlock() noexcept;
+		EventType getType() const noexcept;
+
+		KeyboardEvent keyboard{};
+		MouseEvent mouse{};
 		
 	private:
-		bool m_quitState = false;
-		bool m_lockState = false;
+		void reset();
+
+		EventType m_type = EventType::UnknownEvent;
+		//bool m_lockState = false;
 	};
 }

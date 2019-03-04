@@ -2,7 +2,7 @@
 
 #include "stdIncludes.h"
 
-namespace bloom {
+namespace bloom::input {
 	enum class KeyboardKey{
 		KEY_UNKNOWN = SDL_SCANCODE_UNKNOWN,
 		KEY_A = SDL_SCANCODE_A,
