@@ -10,11 +10,12 @@ namespace bloom::input {
 	public:
 		InputManager() noexcept = default;
 
-		void update();
+		bool update(bool continueOnQuit = false);
 		bool quitRequested() noexcept;
+		void resetQuit() noexcept;
 		void lock() noexcept;
 		void unlock() noexcept;
-		EventType getType() const noexcept;
+		//EventType getType() const noexcept;
 
 		KeyboardEvent keyboard{};
 		MouseEvent mouse{};
@@ -22,7 +23,9 @@ namespace bloom::input {
 	private:
 		void reset();
 
-		EventType m_type = EventType::UnknownEvent;
+		bool m_quitState = false;
+		EventType m_lastType = EventType::UnknownEvent;
+		SDL_Event m_intlEvent;
 		//bool m_lockState = false;
 	};
 }

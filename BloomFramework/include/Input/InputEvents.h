@@ -15,64 +15,69 @@ namespace bloom::input {
 
 	class BLOOMFRAMEWORK_API KeyboardEvent {
 		friend class InputManager;
-		using KeyboardKeys = std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)>;
+		//using KeyboardKeys = std::array<char, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)>;
 
 	public:
+		KeyboardEvent() noexcept;
+
 		// TODO: what's the point of this function?
-		[[deprecated]]  bool isDown(KeyboardKey key) const noexcept;
+		[[deprecated("Function 'isDown' is deprecated. Use 'isPressed' instead.")]]
+		bool isDown(KeyboardKey key) const noexcept;
 		// TODO: what's the point of this function?
-		[[deprecated]] bool isUp(KeyboardKey key) const noexcept;
+		[[deprecated("Function 'isUp' is deprecated. Use 'isPressed' instead.")]]
+		bool isUp(KeyboardKey key) const noexcept;
 
 		bool isPressed(KeyboardKey key) const noexcept;
-		void lock();
-		void unlock();
+		void lock() noexcept;
+		void unlock() noexcept;
 		bool shift() const noexcept;
 		bool ctrl() const noexcept;
 		bool alt() const noexcept;
-		std::string getPrintable() const noexcept;
+		std::string getPrintable() const;
 
 	private:
-		void clear();
-		void set(SDL_Keysym key, int8_t keyState);
+		void reset();
+		void set(SDL_Keycode key, bool state) noexcept;
 		static bool isPrintable(SDL_Keycode key) noexcept;
 
-		const uint8_t* m_keyboard = nullptr;
-
-		KeyboardKeys m_keyState{};
-		std::string m_printable{ "" };
+		std::array<bool, static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE) > m_keyboard{};
+		char m_printable = '\0';
 
 		bool m_lockState = false;
 	};
 
 	class BLOOMFRAMEWORK_API MouseEvent {
 		friend class InputManager;
-		using MouseButtons = std::array<char, static_cast<size_t>(MouseButton::MOUSE_MAX)>;
 
 	public:
+		MouseEvent() noexcept;
+
 		// TODO: what's the point of this function?
-		[[deprecated]] bool isDown(MouseButton button) const noexcept;
+		[[deprecated("Function 'isDown' is deprecated. Use 'isPressed' instead.")]]
+		bool isDown(MouseButton button) const noexcept;
 		// TODO: what's the point of this function?
-		[[deprecated]] bool isUp(MouseButton button) const noexcept;
+		[[deprecated("Function 'isUp' is deprecated. Use 'isPressed' instead.")]]
+		bool isUp(MouseButton button) const noexcept;
 
 		bool isPressed(MouseButton button) const noexcept;
-		void lock();
-		void unlock();
+		void lock() noexcept;
+		void unlock() noexcept;
 		int getX() const noexcept;
 		int getY() const noexcept;
 		bool isInside(const SDL_Rect& rectangle) const noexcept;
 
 	private:
-		void clear();
-		void set(int32_t x, int32_t y, int32_t moveX, int32_t moveY);
-		void set(uint8_t button, int32_t state);
-		void set(int32_t scrollX, int32_t scrollY);
+		void reset() noexcept;
+		void set(std::pair<int32_t, int32_t> pos, std::pair<int32_t, int32_t> movement) noexcept;
+		void set(uint8_t button, bool state) noexcept;
+		void set(std::pair<int32_t, int32_t> scroll) noexcept;
 
-		uint32_t m_mouse = 0;
+		std::array<bool, static_cast<size_t>(MouseButton::MOUSE_MAX)> m_mouse{};
 
-		int32_t m_mouseX = 0, m_mouseY = 0,
-			m_mouseMoveX = 0, m_mouseMoveY = 0,
-			m_scrollX = 0, m_scrollY = 0;
-		MouseButtons m_mouseState{};
+		// TODO: ise Point instead of pair here
+		std::pair<int32_t, int32_t> m_pos{ 0, 0 },
+			m_offset{ 0, 0 },
+			m_scroll{ 0, 0 };;
 
 		bool m_lockState = false;
 	};

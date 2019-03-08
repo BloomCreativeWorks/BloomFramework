@@ -5,7 +5,7 @@
 // checks mouse button
 #define checkBtn(lockState, btn) (!(lockState) && (btn) != bloom::input::MouseButton::MOUSE_MAX)
 
-// TODO: do we need this?
+// TODO: do we need this? (may be helpful for input fields)
 //#define isLetter(key) ((key) >= SDLK_a && (key) <= SDLK_z)
 //#define isDigit(key) ((key) >= SDLK_0 && (key) <= SDLK_9)
 //#define isSpecialChar(key) ((key) == SDLK_MINUS || (key) == SDLK_EQUALS (key) == SDLK_COMMA || (key) == SDLK_SPACE \
@@ -13,27 +13,37 @@
 //	|| (key) == SDLK_LEFTBRACKET || (key) == SDLK_RIGHTBRACKET || (key) == SDLK_BACKSLASH || (key) == SDLK_BACKQUOTE)
 
 namespace bloom::input {
+	KeyboardEvent::KeyboardEvent() noexcept {
+		int numKeys = 0;
+		auto kb = SDL_GetKeyboardState(&numKeys);
+		size_t keys = std::min(static_cast<size_t>(numKeys), m_keyboard.size());
+		for (size_t i = 0; i < keys; ++i) {
+			m_keyboard[i] = kb[i];
+		}
+	}
 
 	// TODO: what's the point of this function?
 	bool KeyboardEvent::isDown(KeyboardKey key) const noexcept {
-		return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == 1);
+		//return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == 1);
+		return isPressed(key);
 	}
 
 	// TODO: what's the point of this function?
 	bool KeyboardEvent::isUp(KeyboardKey key) const noexcept {
-		return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == -1);
+		//return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == -1);
+		return !isPressed(key);
 	}
 
 	bool KeyboardEvent::isPressed(KeyboardKey key) const noexcept {
-		return (checkKey(m_lockState, key) && m_keyboard
-			&& static_cast<bool>(m_keyboard[static_cast<size_t>(key)]));
+		return (checkKey(m_lockState, key)
+			&& m_keyboard[static_cast<size_t>(key)]);
 	}
 
-	void KeyboardEvent::lock() {
+	void KeyboardEvent::lock() noexcept {
 		m_lockState = true;
 	}
 
-	void KeyboardEvent::unlock() {
+	void KeyboardEvent::unlock() noexcept {
 		m_lockState = false;
 	}
 
@@ -50,105 +60,104 @@ namespace bloom::input {
 	}
 
 	bool KeyboardEvent::isPrintable(SDL_Keycode key) noexcept {
-		return (key == SDLK_BACKSPACE || (key >= SDLK_SPACE && key <= SDLK_z));
+		return (key >= SDLK_SPACE && key <= SDLK_z || key == SDLK_RETURN || key == SDLK_BACKSPACE);
 	}
 
-	std::string KeyboardEvent::getPrintable() const noexcept {
-		return m_printable;
+	std::string KeyboardEvent::getPrintable() const {
+		switch (m_printable) {
+		case '\0':
+			return std::string{ "" };
+
+		case '\b':
+			return std::string{ "\b \b" };
+
+		case '\r':
+			return std::string{ "\n" };
+
+		default:
+			return std::string{ m_printable };
+		}
 	}
 
-	void KeyboardEvent::clear() {
-		m_keyState.fill(0);
-		m_printable.clear();
-		m_keyboard = SDL_GetKeyboardState(nullptr);
+	void KeyboardEvent::reset() {
+		m_printable = '\0';
 	}
 
-	void KeyboardEvent::set(SDL_Keysym key, int8_t keyState) {
-		//clear();
-		m_keyState[key.scancode] = keyState;
-
-		if (keyState == 1 && isPrintable(key.sym))
-			m_printable = static_cast<char>(key.sym);
+	void KeyboardEvent::set(SDL_Keycode key, bool state) noexcept {
+		//reset();
+		if (state && isPrintable(key))
+			m_printable = static_cast<char>(key);
+		else
+			m_printable = '\0';
 	}
 
 
+
+	MouseEvent::MouseEvent() noexcept {
+		auto mouseState = SDL_GetMouseState(nullptr, nullptr);
+		for (size_t i = 1; i <= 3; ++i) {
+			m_mouse[i] = mouseState & SDL_BUTTON(i);
+		}
+	}
 
 	// TODO: what's the point of this function?
 	bool MouseEvent::isDown(MouseButton button) const noexcept {
-		return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == 1);
+		//return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == 1);
+		return isPressed(button);
 	}
 
 	// TODO: what's the point of this function?
 	bool MouseEvent::isUp(MouseButton button) const noexcept {
-		return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == -1);
+		//return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == -1);
+		return !isPressed(button);
 	}
 
 	bool MouseEvent::isPressed(MouseButton button) const noexcept {
-		if (m_lockState)
-			return false;
-
-		switch (button)
-		{
-		case MouseButton::MOUSE_LEFT:
-			return (m_mouse & SDL_BUTTON(1));
-
-		case MouseButton::MOUSE_MIDDLE:
-			return (m_mouse & SDL_BUTTON(2));
-
-		case MouseButton::MOUSE_RIGHT:
-			return (m_mouse & SDL_BUTTON(3));
-
-		default:
-			return false;
-		}
+		return (checkBtn(m_lockState, button)
+			&& m_mouse[static_cast<size_t>(button)]);
 	}
 
 	int MouseEvent::getX() const noexcept {
-		return m_mouseX;
+		return m_pos.first;
 	}
 
 	int MouseEvent::getY() const noexcept {
-		return m_mouseY;
+		return m_pos.second;
 	}
 
 	bool MouseEvent::isInside(const SDL_Rect & rectangle) const noexcept {
-		return ((m_mouseX >= rectangle.x)
-			&& (m_mouseX <= rectangle.x + rectangle.w)
-			&& (m_mouseY >= rectangle.y)
-			&& (m_mouseY <= rectangle.y + rectangle.h));
+		return ((m_pos.first >= rectangle.x)
+			&& (m_pos.first <= rectangle.x + rectangle.w)
+			&& (m_pos.second >= rectangle.y)
+			&& (m_pos.second <= rectangle.y + rectangle.h));
 	}
 
-	void MouseEvent::lock() {
+	void MouseEvent::lock() noexcept {
 		m_lockState = true;
 	}
 
-	void MouseEvent::unlock() {
+	void MouseEvent::unlock() noexcept {
 		m_lockState = false;
 	}
 
-	void MouseEvent::clear() {
-		m_mouseState.fill(0);
-		m_scrollX = m_scrollY = 0;
-		m_mouseMoveX = m_mouseMoveY = 0;
-		m_mouse = SDL_GetMouseState(&m_mouseX, &m_mouseY);
+	void MouseEvent::reset() noexcept {
+		m_scroll = { 0, 0 };
+		m_offset = { 0, 0 };
 	}
 
-	void MouseEvent::set(int32_t x, int32_t y, int32_t moveX, int32_t moveY) {
-		//clear();
-		m_mouseX = x;
-		m_mouseY = y;
-		m_mouseMoveX = moveX;
-		m_mouseMoveY = moveY;
+	void MouseEvent::set(std::pair<int32_t, int32_t> pos, std::pair<int32_t, int32_t> offset) noexcept {
+		//reset();
+		m_pos = std::move(pos);
+		m_offset = std::move(offset);
 	}
 
-	void MouseEvent::set(uint8_t button, int32_t state) {
-		//clear();
-		m_mouseState[button] = static_cast<int8_t>(state);
+	void MouseEvent::set(uint8_t button, bool state) noexcept {
+		//reset();
+		m_mouse[button] = state;
 	}
 
-	void MouseEvent::set(int32_t scrollX, int32_t scrollY) {
-		//clear();
-		m_scrollX = scrollX;
-		m_scrollY = scrollY;
+	void MouseEvent::set(std::pair<int32_t, int32_t> scroll) noexcept {
+		//reset();
+		m_scroll = std::move(scroll);
 	}
 }
