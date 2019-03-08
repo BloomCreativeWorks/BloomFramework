@@ -8,24 +8,23 @@
 namespace bloom::input {
 	class BLOOMFRAMEWORK_API InputManager {
 	public:
-		InputManager() noexcept = default;
-
 		bool update(bool continueOnQuit = false);
+		// If timeout < 0, the function will wait for the event indefinitely
+		EventType wait(int timeout = -1);
 		bool quitRequested() noexcept;
-		void resetQuit() noexcept;
+
 		void lock() noexcept;
 		void unlock() noexcept;
-		//EventType getType() const noexcept;
 
 		KeyboardEvent keyboard{};
 		MouseEvent mouse{};
 		
 	private:
 		void reset();
+		void handle();
 
 		bool m_quitState = false;
-		EventType m_lastType = EventType::UnknownEvent;
-		SDL_Event m_intlEvent;
-		//bool m_lockState = false;
+		SDL_Event m_intlEvent{};
+		EventType m_lastType = EventType::NoEvent;
 	};
 }

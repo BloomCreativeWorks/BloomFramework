@@ -65,7 +65,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		std::cerr << e.what() << std::endl;
 	}
 
-	srand(static_cast<uint32_t>(time(0)));
+	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);

@@ -3,7 +3,7 @@
 #include "stdIncludes.h"
 
 namespace bloom::input {
-	enum class KeyboardKey{
+	enum class KeyboardKey {
 		KEY_UNKNOWN = SDL_SCANCODE_UNKNOWN,
 		KEY_A = SDL_SCANCODE_A,
 		KEY_B = SDL_SCANCODE_B,
@@ -244,13 +244,15 @@ namespace bloom::input {
 		KEY_EJECT = SDL_SCANCODE_EJECT,
 		KEY_SLEEP = SDL_SCANCODE_SLEEP,
 
-		KEYBOARD_SIZE // This defines the keyboard size
+		KEYBOARD_SIZE = SDL_NUM_SCANCODES // This defines the keyboard size
 	};
 
-	enum class MouseButton{
+	enum class MouseButton {
 		MOUSE_LEFT = SDL_BUTTON_LEFT,
 		MOUSE_MIDDLE = SDL_BUTTON_MIDDLE,
 		MOUSE_RIGHT = SDL_BUTTON_RIGHT,
+		MOUSE_X1 = SDL_BUTTON_X1,
+		MOUSE_X2 = SDL_BUTTON_X2,
 
 		MOUSE_MAX   // No button, just to define max
 					// array size.
