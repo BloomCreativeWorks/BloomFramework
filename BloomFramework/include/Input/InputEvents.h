@@ -22,14 +22,11 @@ namespace bloom::input {
 	public:
 		KeyboardEvent() noexcept;
 
-		// TODO: what's the point of this function?
-		[[deprecated("Function 'isDown' is deprecated and will be removed soon. Use 'isPressed' instead.")]]
-		bool isDown(KeyboardKey key) const noexcept;
-		// TODO: what's the point of this function?
-		[[deprecated("Function 'isUp' is deprecated and will be removed soon. Use 'isPressed' instead.")]]
-		bool isUp(KeyboardKey key) const noexcept;
+		bool wasDown(KeyboardKey key) const noexcept;
+		bool wasUp(KeyboardKey key) const noexcept;
 
 		bool isPressed(KeyboardKey key) const noexcept;
+		bool stateChanged(KeyboardKey key) const noexcept;
 		void lock() noexcept;
 		void unlock() noexcept;
 		bool shift() const noexcept;
@@ -45,6 +42,7 @@ namespace bloom::input {
 		void updateModKeys();
 
 		std::bitset<static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_keyboard{0};
+		std::bitset<static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_stateChanged{ 0 };
 		std::string m_printable{ "" };
 
 		bool m_lockState = false;
@@ -58,14 +56,11 @@ namespace bloom::input {
 
 		MouseEvent() noexcept;
 
-		// TODO: what's the point of this function?
-		[[deprecated("Function 'isDown' is deprecated and will be removed soon. Use 'isPressed' instead.")]]
-		bool isDown(MouseButton button) const noexcept;
-		// TODO: what's the point of this function?
-		[[deprecated("Function 'isUp' is deprecated and will be removed soon. Use 'isPressed' instead.")]]
-		bool isUp(MouseButton button) const noexcept;
+		bool wasDown(MouseButton button) const noexcept;
+		bool wasUp(MouseButton button) const noexcept;
 
 		uint8_t isPressed(MouseButton button) const noexcept;
+		bool stateChanged(MouseButton button) const noexcept;
 		void lock() noexcept;
 		void unlock() noexcept;
 		int getX() const noexcept;
@@ -82,6 +77,7 @@ namespace bloom::input {
 		void set(const SDL_MouseWheelEvent& mwe) noexcept;
 
 		std::array<uint8_t, static_cast<size_t>(MouseButton::MOUSE_MAX)> m_mouse{};
+		std::bitset<static_cast<size_t>(MouseButton::MOUSE_MAX)> m_stateChanged{ 0 };
 
 		// TODO: ise Point instead of pair here
 		Coordinates m_pos{ 0, 0 },

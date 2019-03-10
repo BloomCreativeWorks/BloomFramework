@@ -13,26 +13,27 @@ namespace bloom::input {
 		const auto kb = SDL_GetKeyboardState(&numKeys);
 		const size_t keys = std::min(static_cast<size_t>(numKeys), m_keyboard.size());
 		for (size_t i = 0; i < keys; ++i) {
-			m_keyboard[i] = kb[i];
+			m_keyboard.set(i, kb[i]);
 		}
 		updateModKeys();
 	}
 
-	// TODO: what's the point of this function?
-	bool KeyboardEvent::isDown(KeyboardKey key) const noexcept {
-		//return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == 1);
-		return isPressed(key);
+	bool KeyboardEvent::wasDown(KeyboardKey key) const noexcept {
+		return (isPressed(key) && m_stateChanged[static_cast<size_t>(key)]);
 	}
 
-	// TODO: what's the point of this function?
-	bool KeyboardEvent::isUp(KeyboardKey key) const noexcept {
-		//return (checkKey(m_lockState, key) && m_keyState[static_cast<size_t>(key)] == -1);
-		return !isPressed(key);
+	bool KeyboardEvent::wasUp(KeyboardKey key) const noexcept {
+		return (!isPressed(key) && m_stateChanged[static_cast<size_t>(key)]);
 	}
 
 	bool KeyboardEvent::isPressed(KeyboardKey key) const noexcept {
 		return (checkKey(m_lockState, key)
 			&& m_keyboard[static_cast<size_t>(key)]);
+	}
+
+	bool KeyboardEvent::stateChanged(KeyboardKey key) const noexcept {
+		return (checkKey(m_lockState, key)
+			&& m_stateChanged[static_cast<size_t>(key)]);
 	}
 
 	void KeyboardEvent::lock() noexcept {
@@ -65,17 +66,8 @@ namespace bloom::input {
 
 	void KeyboardEvent::updateModKeys() {
 		const auto mod = SDL_GetModState();
-		m_keyboard[SDL_SCANCODE_CAPSLOCK] = mod & KMOD_CAPS;
-		m_keyboard[SDL_SCANCODE_NUMLOCKCLEAR] = mod & KMOD_NUM;
-		// vvv	disable them	vvv
-		//m_keyboard[SDL_SCANCODE_LSHIFT] = mod & KMOD_LSHIFT;
-		//m_keyboard[SDL_SCANCODE_RSHIFT] = mod & KMOD_RSHIFT;
-		//m_keyboard[SDL_SCANCODE_LCTRL] = mod & KMOD_LCTRL;
-		//m_keyboard[SDL_SCANCODE_RCTRL] = mod & KMOD_RCTRL;
-		//m_keyboard[SDL_SCANCODE_LALT] = mod & KMOD_LALT;
-		//m_keyboard[SDL_SCANCODE_RALT] = mod & KMOD_RALT;
-		//m_keyboard[SDL_SCANCODE_LGUI] = mod & KMOD_LGUI;
-		//m_keyboard[SDL_SCANCODE_RGUI] = mod & KMOD_RGUI;
+		m_keyboard.set(SDL_SCANCODE_CAPSLOCK, mod & KMOD_CAPS);
+		m_keyboard.set(SDL_SCANCODE_NUMLOCKCLEAR, mod & KMOD_NUM);
 	}
 
 	std::string KeyboardEvent::getPrintable() const {
@@ -85,16 +77,21 @@ namespace bloom::input {
 	void KeyboardEvent::reset() {
 		m_printable.clear();
 		updateModKeys();
+		m_stateChanged.reset();
 	}
 
 	void KeyboardEvent::set(const SDL_KeyboardEvent& kbe) noexcept {
-		//reset();
 		if (isLockKey(kbe.keysym.scancode)) {
-			if (kbe.state)
-				m_keyboard[kbe.keysym.scancode].flip();
+			if (kbe.state) {
+				m_keyboard.flip(kbe.keysym.scancode);
+				m_stateChanged.set(kbe.keysym.scancode);
+			}
 		}
-		else
-			m_keyboard[kbe.keysym.scancode] = kbe.state;
+		else {
+			if (static_cast<bool>(kbe.state) != m_keyboard[kbe.keysym.scancode])
+				m_stateChanged.set(kbe.keysym.scancode);
+			m_keyboard.set(kbe.keysym.scancode, kbe.state);
+		}
 		if (kbe.state && isPrintable(kbe.keysym.sym)) {
 			if (kbe.keysym.sym == SDLK_BACKSPACE)
 				m_printable += "\b ";
@@ -113,22 +110,23 @@ namespace bloom::input {
 		}
 	}
 
-	// TODO: what's the point of this function?
-	bool MouseEvent::isDown(MouseButton button) const noexcept {
-		//return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == 1);
-		return isPressed(button);
+	bool MouseEvent::wasDown(MouseButton button) const noexcept {
+		return (isPressed(button) && m_stateChanged[static_cast<size_t>(button)]);
 	}
 
-	// TODO: what's the point of this function?
-	bool MouseEvent::isUp(MouseButton button) const noexcept {
-		//return (checkBtn(m_lockState, button) && m_mouseState[static_cast<size_t>(button)] == -1);
-		return !isPressed(button);
+	bool MouseEvent::wasUp(MouseButton button) const noexcept {
+		return (!isPressed(button) && m_stateChanged[static_cast<size_t>(button)]);
 	}
 
 	uint8_t MouseEvent::isPressed(MouseButton button) const noexcept {
 		if (checkBtn(m_lockState, button))
 			return m_mouse[static_cast<size_t>(button)];
 		return 0;
+	}
+
+	bool MouseEvent::stateChanged(MouseButton button) const noexcept {
+		return (checkBtn(m_lockState, button)
+			&& m_stateChanged[static_cast<size_t>(button)]);
 	}
 
 	int MouseEvent::getX() const noexcept {
@@ -167,12 +165,12 @@ namespace bloom::input {
 	}
 
 	void MouseEvent::reset() noexcept {
+		m_stateChanged.reset();
 		m_scroll.x = 0; m_scroll.y = 0;
 		m_offset.x = 0; m_offset.y = 0;
 	}
 
 	void MouseEvent::set(const SDL_MouseButtonEvent & mbe) noexcept {
-		//reset();
 		//switch (mbe.state) {
 		//case SDL_PRESSED:
 		//	m_mouse[mbe.button] = mbe.clicks;
@@ -181,12 +179,13 @@ namespace bloom::input {
 		//	m_mouse[mbe.button] = 0;
 		//	break;
 		//}
+		if (static_cast<bool>(m_mouse[mbe.button]) != static_cast<bool>(mbe.state))
+			m_stateChanged.set(mbe.button);
 		m_mouse[mbe.button] = mbe.state ? mbe.clicks : 0;
 		m_pos.x = mbe.x; m_pos.y = mbe.y;
 	}
 
 	void MouseEvent::set(const SDL_MouseMotionEvent & mme) noexcept {
-		//reset();
 		m_pos.x = mme.x; m_pos.y = mme.y;
 		m_offset.x = mme.xrel; m_offset.y = mme.yrel;
 	}

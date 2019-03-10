@@ -125,6 +125,22 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		cursorPos.x = game->input.mouse.getX();
 		cursorPos.y = game->input.mouse.getY();
 		std::cout << game->input.keyboard.getPrintable();
+
+		// vvv	wasUp and wasDown testing	vvv
+		if (game->input.keyboard.wasDown(input::KeyboardKey::KEY_0))
+			std::cout << std::endl << "zero was pressed" << std::endl;
+		if (game->input.keyboard.wasUp(input::KeyboardKey::KEY_0))
+			std::cout << std::endl << "zero was released" << std::endl;
+		if (game->input.keyboard.wasDown(input::KeyboardKey::KEY_CAPSLOCK))
+			std::cout << std::endl << "caps lock was pressed" << std::endl;
+		if (game->input.keyboard.wasUp(input::KeyboardKey::KEY_CAPSLOCK))
+			std::cout << std::endl << "caps lock was released" << std::endl;
+		if (game->input.mouse.wasDown(input::MouseButton::MOUSE_LEFT))
+			std::cout << std::endl << "left mouse button was pressed" << std::endl;
+		if (game->input.mouse.wasUp(input::MouseButton::MOUSE_LEFT))
+			std::cout << std::endl << "left mouse button was released" << std::endl;
+		// ^^^	wasUp and wasDown testing	^^^
+
 		if (testGOpos.x >= WINDOW_WIDTH) {
 			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
 		}
