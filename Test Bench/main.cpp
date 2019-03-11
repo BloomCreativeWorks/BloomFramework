@@ -9,6 +9,7 @@
 #include "GameObjectTest/RandomizerSystem.h"
 #include "GameObjectTest/TestAnimatedGameObject.h"
 #include "GameObjectTest/AnimationChangerSystem.h"
+#include "GameObjectTest/TestControllableObject.h"
 #include "getExePath.h"
 
 using namespace bloom;
@@ -27,7 +28,7 @@ inline int rstep(int n) {
 	return (rand() % n + 1);
 }
 
-void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
+void test_player(const std::filesystem::path & musicPath, const std::filesystem::path & soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 	music.queue.setVolume(0.0);
 	music.push(musicPath / L"music_001.mp3");
@@ -50,7 +51,7 @@ void test_player(const std::filesystem::path& musicPath, const std::filesystem::
 	music.queue.play();
 }
 
-void test_drawer(const std::filesystem::path& assetsPath) {
+void test_drawer(const std::filesystem::path & assetsPath) {
 	const int fps = 60;
 	const int framedelay = (1000 / fps);
 
@@ -78,6 +79,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	std::filesystem::path spriteSheetPath = assetsPath / L"OverworldTestSpritesheet.png";
 	std::filesystem::path testCharPath = assetsPath / L"TestChar.png";
 	std::filesystem::path testCursorPath = assetsPath / "testCursor.png";
+	std::filesystem::path testBoxPath = assetsPath / "Box.png";
 
 	// Test Game Object
 	entt::DefaultRegistry testRegistry;
@@ -109,14 +111,17 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	cursor.disableRandomPos();
 	TestAnimChar testAnim(testRegistry, game);
 	testAnim.init(testCharPath);
+	TestMovableObject testMovable(testRegistry, game);
+	testMovable.init(SDL_Rect{ 0,0, 50, 50 }, testBoxPath);
+
 
 	// If manual control of entities is required, this is the method to do so.
-	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+	auto& testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
-	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
+	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = rstep(10), testY = rstep(10);
 
-	auto & cursorPos = testRegistry.get<Position>(cursor.getEntityID());
+	auto& cursorPos = testRegistry.get<Position>(cursor.getEntityID());
 
 	while (game->isRunning()) {
 		testGOpos.x += testX;
@@ -140,6 +145,21 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 		if (game->input.mouse.wasUp(input::MouseButton::MOUSE_LEFT))
 			std::cout << std::endl << "left mouse button was released" << std::endl;
 		// ^^^	wasUp and wasDown testing	^^^
+
+		// vvv	isPressed testing	vvv
+		int xOffset = 0, yOffset = 0;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_W) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_UP))
+			yOffset -= 5;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_S) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_DOWN))
+			yOffset += 5;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_A) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_LEFT))
+			xOffset -= 5;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_D) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_RIGHT))
+			xOffset += 5;
+		// ^^^	isPressed testing	^^^
+
+		testMovable.updatePos(xOffset, yOffset);
+
 
 		if (testGOpos.x >= WINDOW_WIDTH) {
 			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
