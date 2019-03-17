@@ -27,7 +27,12 @@ inline int rstep(int n) {
 	return (rand() % n + 1);
 }
 
-void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
+namespace fs = std::filesystem;
+
+void test_player(const std::filesystem::path& dataDir) {
+	fs::path musicPath = dataDir / L"Music";
+	fs::path soundsPath = dataDir / L"Sounds";
+
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 
 	music.push(musicPath / L"music_001.mp3");
@@ -50,9 +55,8 @@ void test_player(const std::filesystem::path& musicPath, const std::filesystem::
 	music.queue.play();
 }
 
-void test_drawer(const std::filesystem::path& assetsPath) {
-	const int fps = 60;
-	const int framedelay = (1000 / fps);
+void test_drawer(const std::filesystem::path& dataDir) {
+	const int framedelay = (1000 / 60);
 
 	//Uint32 framestart;
 	Uint32 framestart;
@@ -72,24 +76,21 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	game->clear();
 	game->render();
 
-	namespace fs = std::filesystem;
+	fs::path assetsPath = dataDir / L"Assets";
+	fs::path fontsPath = dataDir / L"Fonts";
 
-	fs::path workingDir = fs::path(getExePath());
-	fs::path assetsDir = L"data\\Assets";
-	fs::path fontsDir = L"data\\Fonts";
-
-	if (!std::filesystem::exists(workingDir / assetsDir))
+	if (!std::filesystem::exists(assetsPath))
 		throw bloom::Exception("Required assets can't be found.");
 
-	fs::path spriteSheetPath = workingDir / assetsDir / "OverworldTestSpritesheet.png";
-	fs::path testCharPath = workingDir / assetsDir / "TestChar.png";
-	fs::path fontPath = workingDir / fontsDir / "Fira Code.ttf";
+	fs::path spriteSheetPath = assetsPath / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = assetsPath / "TestChar.png";
+	fs::path fontPath = fontsPath / "Fira Code.ttf";
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 
 	FontStore fonts;
 	constexpr size_t UI_font = 0;
-	fonts.load(fontPath, UI_font, defaultFontStyle);
+	fonts.load(fontPath, UI_font);
 
 	SDL_Renderer * renderer = game->getRenderer();
 	// Test SpriteText(NFont)
@@ -197,14 +198,10 @@ int main() {
 		exit(-1);
 	}
 
-	namespace fs = std::filesystem;
 	fs::path dataDir = fs::path(getExePath()) / L"data";
-	fs::path assetsPath = dataDir / L"Assets";
-	fs::path musicPath = dataDir / L"Music";
-	fs::path soundsPath = dataDir / L"Sounds";
 
-	std::thread drawer_thread{ test_drawer, assetsPath };
-	std::thread player_thread{ test_player, musicPath, soundsPath };
+	std::thread drawer_thread{ test_drawer, dataDir };
+	std::thread player_thread{ test_player, dataDir };
 
 	drawer_thread.join();
 	player_thread.join();

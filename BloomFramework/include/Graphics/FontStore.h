@@ -7,7 +7,7 @@ namespace bloom::graphics {
 	public:
 		FontStore() = default;
 
-		FontPtr load(const std::filesystem::path & filePath, size_t presetNumber, FontStyle style = defaultFontStyle);
+		FontPtr load(const std::filesystem::path& filePath, size_t presetNumber, FontStyle style = FontStyle{});
 		FontPtr find(size_t presetNumber) const noexcept;
 		void unload(size_t presetNumber);
 		void clear();
