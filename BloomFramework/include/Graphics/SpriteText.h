@@ -28,14 +28,16 @@ namespace bloom::graphics {
 
 		std::string getText() const { return m_text; }
 		void setText(std::string_view newText) {
-			m_text = newText;
-			refreshTexture();
+			if (m_text != newText) {
+				m_text = newText;
+				m_refreshRequired = true;
+			}
 		}
 
 		TextStyle getStyle() const { return m_style; }
 		void setStyle(const TextStyle& newStyle) {
 			m_style = newStyle;
-			refreshTexture();
+			m_refreshRequired = true;
 		}
 
 	private:
@@ -47,5 +49,7 @@ namespace bloom::graphics {
 
 		std::string m_text;
 		TextStyle m_style;
+
+		bool m_refreshRequired = false;
 	};
 }

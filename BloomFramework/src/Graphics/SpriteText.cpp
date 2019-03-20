@@ -11,6 +11,9 @@ namespace bloom::graphics {
 	}
 
 	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
+		if (m_refreshRequired)
+			refreshTexture();
+
 		if (m_texture) {
 			SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
 			Drawable::render(srcRect, destRect, flip);
@@ -48,5 +51,7 @@ namespace bloom::graphics {
 		if (!m_texture)
 			throw Exception("[Font -> SDL_Texture] " + std::string(SDL_GetError()));
 		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
+
+		m_refreshRequired = false;
 	}
 }
