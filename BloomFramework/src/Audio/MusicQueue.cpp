@@ -39,13 +39,13 @@ namespace bloom::audio {
 
 	void MusicQueue::play(bool bypassFade) {
 		if (m_queue.empty())
-			throw Exception("[MusicStore] store is empty");
+			throw Exception{ "MusicQueue::play", "Queue is empty" };
 
 		if (s_currentQueuePtr != this)
 			activate();
 
 		auto track = m_queue.front();
-		if (track.fadeInMs > 0 and !bypassFade)
+		if (track.fadeInMs > 0 && !bypassFade)
 			track.track->play(track.plays, track.fadeInMs);
 		else
 			track.track->play(track.plays);

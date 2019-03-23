@@ -73,7 +73,7 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	game->render();
 
 	if (!std::filesystem::exists(assetsPath))
-		throw bloom::Exception("Required assets can't be found.");
+		throw bloom::Exception{ "Test Bench", "Required assets can't be found" };
 
 	std::filesystem::path spriteSheetPath = assetsPath / L"OverworldTestSpritesheet.png";
 	std::filesystem::path testCharPath = assetsPath / L"TestChar.png";
@@ -149,9 +149,8 @@ int main() {
 		Game::initialize();
 	}
 	catch (Exception & e) {
-		std::cerr << e.what() << std::endl;
-		system("pause");
-		exit(-1);
+		std::cerr << e;
+		abort();
 	}
 
 	namespace fs = std::filesystem;

@@ -4,7 +4,7 @@ namespace bloom::graphics {
 	AnimationPtr AnimationSet::changeCurrent(const std::string & setName) {
 		auto it = m_sets.find(setName);
 		if (it == m_sets.end())
-			throw Exception("[AnimationSet::changeAnimation] Set doesn't exist");
+			throw Exception{ "AnimationSet::changeCurrent", "Set doesn't exist" };
 
 		if (m_current != it->second) {
 			if (m_current)
