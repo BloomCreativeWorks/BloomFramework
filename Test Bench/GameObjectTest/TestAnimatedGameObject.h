@@ -11,18 +11,16 @@ class TestAnimChar : public bloom::GameObject {
 	using Animation = bloom::components::Animation;
 	using AnimationSet = bloom::components::AnimationSet;
 	using Transform = bloom::components::Transform;
-	using bloom::GameObject::GameObject;
+	using GameObject::GameObject;
 
 public:
-	void init() override {}
-
-	void init(const std::filesystem::path texturePath = "Assets/TestChar.png") {
+	void init(const std::filesystem::path& texturePath) {
 		Transform trans = { Position(0,0,bloom::relative), 0.0f, Size{256, 256} };
-		m_registry.assign<Transform>(m_entity, trans);
+		registry.assign<Transform>(entity, trans);
 
-		auto tmp = m_gameInstance.textures.load(texturePath);
+		auto tmp = gameInstance.textures.load(texturePath);
 
-		m_registry.assign<Sprite>(m_entity, tmp, SDL_Rect{ 0,32,32,32 });
+		registry.assign<Sprite>(entity, tmp, SDL_Rect{ 0,32,32,32 });
 
 
 		// Seriously not the best way to initialize object animation.
@@ -70,8 +68,8 @@ public:
 		animSet.add("left", left);
 		animSet.add("right", right);
 
-		m_registry.assign<AnimationSet>(m_entity, animSet);
-		m_registry.assign<AnimationPtr>(m_entity, up);
-		m_registry.assign<NoRandomPos>(m_entity);
+		registry.assign<AnimationSet>(entity, animSet);
+		registry.assign<AnimationPtr>(entity, up);
+		registry.assign<NoRandomPos>(entity);
 	}
 };
