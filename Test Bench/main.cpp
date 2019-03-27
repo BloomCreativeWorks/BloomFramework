@@ -27,7 +27,7 @@ inline int rstep(int n) {
 
 void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
-
+	music.queue.setVolume(15.0);
 	music.push(musicPath / L"music_001.mp3");
 	music.push(musicPath / L"music_002.mp3");
 	music.push(musicPath / L"music_003.mp3");
