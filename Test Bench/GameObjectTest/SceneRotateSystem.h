@@ -27,5 +27,4 @@ public:
 
 private:
 	double m_currentAngle = 0.0;
-	
 };

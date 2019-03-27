@@ -20,7 +20,6 @@ namespace bloom::systems {
 		void update(std::optional<double> deltaTime = std::nullopt) override {
 			m_registry.view<Transform, Sprite>().each(
 				[&](auto entity, Transform& trans, Sprite& spr) {
-
 				if (trans.size.w < 0)
 					trans.size.w = 0;
 				if (trans.size.h < 0)
