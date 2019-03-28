@@ -1,3 +1,4 @@
+#include "Exception.h"
 #include "Graphics/SpriteText.h"
 
 namespace bloom::graphics {
@@ -14,10 +15,8 @@ namespace bloom::graphics {
 		if (m_refreshRequired)
 			refreshTexture();
 
-		if (m_texture) {
-			SDL_Rect destRect{ destPoint.x, destPoint.y, m_width, m_height };
-			Drawable::render(srcRect, destRect, flip);
-		}
+		if (m_texture)
+			Drawable::render(srcRect, SDL_Rect{ destPoint.x, destPoint.y, m_width, m_height }, flip);
 	}
 
 	void SpriteText::refreshTexture() {
@@ -35,17 +34,17 @@ namespace bloom::graphics {
 
 		switch (m_style.blendingMode) {
 		case TextStyle::BlendingMode::normal:
-			textSurface = TTF_RenderUTF8_Solid(m_fontPtr->m_font, m_text.c_str(), m_style.foregroundColor);
+			textSurface = TTF_RenderUTF8_Solid(*m_fontPtr, m_text.c_str(), m_style.foregroundColor);
 			break;
 		case TextStyle::BlendingMode::shaded:
-			textSurface = TTF_RenderUTF8_Shaded(m_fontPtr->m_font, m_text.c_str(), m_style.foregroundColor, m_style.backgroundColor);
+			textSurface = TTF_RenderUTF8_Shaded(*m_fontPtr, m_text.c_str(), m_style.foregroundColor, m_style.backgroundColor);
 			break;
 		case TextStyle::BlendingMode::blended:
-			textSurface = TTF_RenderUTF8_Blended(m_fontPtr->m_font, m_text.c_str(), m_style.foregroundColor);
+			textSurface = TTF_RenderUTF8_Blended(*m_fontPtr, m_text.c_str(), m_style.foregroundColor);
 			break;
 		}
 		if (!textSurface)
-			throw Exception("[Font -> TTF_RenderUTF8] " + std::string(SDL_GetError()));
+			throw Exception("[Font -> TTF_RenderUTF8] " + std::string(TTF_GetError()));
 		m_texture = SDL_CreateTextureFromSurface(c_renderer, textSurface);
 		SDL_FreeSurface(textSurface);
 		if (!m_texture)

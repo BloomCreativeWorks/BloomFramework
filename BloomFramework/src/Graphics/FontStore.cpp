@@ -3,7 +3,7 @@
 namespace bloom::graphics {
 	FontPtr FontStore::load(const std::filesystem::path& filePath, size_t presetNumber, FontStyle style) {
 		if (auto fontIt = m_store.find(presetNumber); fontIt != m_store.end()) {
-			std::clog << "[FontStore::load] font preset with that name already exists, returning that instead" << std::endl;
+			//std::clog << "[FontStore::load] font preset with that name already exists, returning that instead" << std::endl;
 			return fontIt->second;
 		}
 
@@ -22,7 +22,7 @@ namespace bloom::graphics {
 		m_store.erase(presetNumber);
 	}
 
-	void FontStore::clear() {
+	void FontStore::clear() noexcept {
 		m_store.clear();
 	}
 

@@ -2,7 +2,6 @@
 
 #include <optional>
 #include "stdIncludes.h"
-#include "Exception.h"
 
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API Drawable {

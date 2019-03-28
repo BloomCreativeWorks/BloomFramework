@@ -1,3 +1,4 @@
+#include "Exception.h"
 #include "Graphics/Font.h"
 #include "Graphics/SpriteText.h"
 
@@ -51,15 +52,11 @@ namespace bloom::graphics {
 
 	std::string Font::getFamilyName() const {
 		const char* fontName = TTF_FontFaceFamilyName(m_font);
-		if (fontName)
-			return std::string{ fontName };
-		return std::string{};
+		return fontName ? std::string{ fontName } : std::string{};
 	}
 
-	std::string Font::getStyle() const {
+	std::string Font::getStyleName() const {
 		const char* fontStyle = TTF_FontFaceStyleName(m_font);
-		if (fontStyle)
-			return std::string{ fontStyle };
-		return std::string{};
+		return fontStyle ? std::string{ fontStyle } : std::string{};
 	}
 }

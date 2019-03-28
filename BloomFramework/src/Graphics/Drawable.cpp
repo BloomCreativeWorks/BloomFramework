@@ -1,4 +1,5 @@
 #include "Graphics/Drawable.h"
+#include "Exception.h"
 
 namespace bloom::graphics {
 	Drawable::Drawable(SDL_Renderer* const& targetRenderer) : c_renderer(targetRenderer) {
@@ -21,24 +22,9 @@ namespace bloom::graphics {
 			throw Exception("[Drawable::render] destRect.h is <= 0");
 
 		auto sRectPtr = (srcRect.has_value() && srcRect->w > 0 && srcRect->h > 0) ? &srcRect.value() : nullptr;
+		// Render to screen
 		if (SDL_RenderCopyEx(c_renderer, m_texture, sRectPtr, &destRect, 0.0, nullptr, flip))
 			throw Exception("[Drawable::render] -> " + std::string{ SDL_GetError() });
-
-		//if (srcRect.has_value()) {
-		//	if (srcRect->w <= 0)
-		//		throw Exception("[Drawable::render] srcRect.w is <= 0");
-		//	if (srcRect->h <= 0)
-		//		throw Exception("[Drawable::render] srcRect.h is <= 0");
-
-		//	//Set rendering space and render to screen
-		//	//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
-
-		//	//Render to screen
-		//	SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, 0.0, nullptr, flip);
-		//}
-		//else
-		//	//Render to screen
-		//	SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &destRect, 0.0, nullptr, flip);
 	}
 }
 

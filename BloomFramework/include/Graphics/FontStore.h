@@ -1,4 +1,5 @@
 #pragma once
+
 #include "stdIncludes.h"
 #include "Font.h"
 
@@ -10,7 +11,7 @@ namespace bloom::graphics {
 		FontPtr load(const std::filesystem::path& filePath, size_t presetNumber, FontStyle style = FontStyle{});
 		FontPtr find(size_t presetNumber) const noexcept;
 		void unload(size_t presetNumber);
-		void clear();
+		void clear() noexcept;
 
 		FontPtr operator[](size_t key) const noexcept;
 

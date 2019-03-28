@@ -1,10 +1,8 @@
 #pragma once
 
 #include "stdIncludes.h"
-#include "Exception.h"
 
 namespace bloom::graphics {
-	struct TextStyle;
 	class SpriteText;
 
 	struct FontStyle {
@@ -25,14 +23,14 @@ namespace bloom::graphics {
 		~Font();
 
 		std::string getFamilyName() const;
-		std::string getStyle() const;
+		std::string getStyleName() const;
 		int getPointSize() const { return m_style.pointSize; }
 		bool isFixedWidth() const { return TTF_FontFaceIsFixedWidth(m_font); }
 
-		//TTF_Font * getFont() const { return m_font; }
-
 	private:
 		void initFont();
+
+		operator TTF_Font*() const { return m_font; }
 
 		TTF_Font* m_font = nullptr;
 		FontStyle m_style{};

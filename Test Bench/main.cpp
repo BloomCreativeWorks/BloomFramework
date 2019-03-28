@@ -56,9 +56,8 @@ void test_player(const std::filesystem::path& dataDir) {
 }
 
 void test_drawer(const std::filesystem::path& dataDir) {
-	const int framedelay = (1000 / 60);
+	const int framedelay = 1000 / 60;
 
-	//Uint32 framestart;
 	Uint32 framestart;
 
 	game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -69,9 +68,9 @@ void test_drawer(const std::filesystem::path& dataDir) {
 		std::cerr << e.what() << std::endl;
 	}
 
-	srand(static_cast<uint32_t>(time(0)));
+	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
-	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
+		static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
 	game->clear();
 	game->render();
@@ -142,7 +141,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	testAnim.init(testCharPath);
 
 	// Test SpriteText2
-	std::string deltaTimeText;
+	std::string deltaTimeText{ "fps: " };
 	
 
 	// If manual control of entities is required, this is the method to do so.
@@ -171,7 +170,8 @@ void test_drawer(const std::filesystem::path& dataDir) {
 		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
 		renderSysTest.update(); // Test again.
 		auto fps = 1000.0 / dt;
-		deltaTimeText = "fps: " + std::to_string(fps);
+		deltaTimeText.erase(5);
+		deltaTimeText += std::to_string(fps);
 		testText.setText(deltaTimeText);
 		testText.render(std::nullopt, SDL_Point{ 0, 0 });
 		game->render();
