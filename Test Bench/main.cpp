@@ -91,7 +91,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	constexpr size_t UI_font = 0;
 	fonts.load(fontPath, UI_font);
 
-	SDL_Renderer * renderer = game->getRenderer();
+	auto renderer = game->getRenderer();
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, fonts[UI_font], "Hello, World!");
 	{

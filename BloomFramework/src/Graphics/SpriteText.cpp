@@ -2,7 +2,7 @@
 #include "Graphics/SpriteText.h"
 
 namespace bloom::graphics {
-	SpriteText::SpriteText(SDL_Renderer* const& targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text, TextStyle style) :
+	SpriteText::SpriteText(SDL_Renderer* targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text, TextStyle style) :
 		Drawable(targetRenderer),
 		m_fontPtr(std::move(fontPtr)),
 		m_text(text),

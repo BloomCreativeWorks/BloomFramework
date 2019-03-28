@@ -17,7 +17,7 @@ namespace bloom::graphics {
 
 	class BLOOMFRAMEWORK_API SpriteText : public Drawable {
 	public:
-		SpriteText(SDL_Renderer* const& targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text = std::string_view{}, TextStyle style = TextStyle{});
+		SpriteText(SDL_Renderer* targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text = std::string_view{}, TextStyle style = TextStyle{});
 		~SpriteText() = default;
 
 		void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip = SDL_FLIP_NONE);

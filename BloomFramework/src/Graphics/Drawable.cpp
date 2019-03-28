@@ -2,7 +2,7 @@
 #include "Exception.h"
 
 namespace bloom::graphics {
-	Drawable::Drawable(SDL_Renderer* const& targetRenderer) : c_renderer(targetRenderer) {
+	Drawable::Drawable(SDL_Renderer* targetRenderer) : c_renderer(targetRenderer) {
 		if (!c_renderer)
 			throw Exception("[Drawable] `renderer` pointer can not be nullptr");
 	}
