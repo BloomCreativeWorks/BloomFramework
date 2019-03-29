@@ -187,4 +187,8 @@ namespace bloom {
 	SDL_Event Game::getEvent() {
 		return m_event;
 	}
+	SDL_Renderer * Game::getRenderer()
+	{
+		return m_renderer;
+	}
 }
