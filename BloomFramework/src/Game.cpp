@@ -130,7 +130,7 @@ namespace bloom {
 	}
 
 	void Game::clear() {
-		SDL_SetRenderTarget(m_renderer, NULL);
+		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 		SDL_RenderClear(m_renderer);
 	}
 
@@ -139,7 +139,6 @@ namespace bloom {
 	}
 
 	void Game::render() {
-		SDL_SetRenderTarget(m_renderer, NULL);
 		sceneManager.draw();
 		SDL_RenderPresent(m_renderer);
 	}
@@ -166,12 +165,10 @@ namespace bloom {
 
 	void Game::setColor(const SDL_Color & color) {
 		m_color = color;
-		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
 
 	void Game::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 		m_color = { r, g, b, a };
-		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
 
 	SDL_Color Game::getColor() {

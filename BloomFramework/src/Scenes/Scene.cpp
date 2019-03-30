@@ -11,7 +11,7 @@ namespace bloom {
 		m_sceneTexture = SDL_CreateTexture(m_gameInstance.getRenderer(), SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET,
 			m_gameInstance.getScreenWidth(),
 			m_gameInstance.getScreenHeight());
-
+		
 		SDL_SetTextureBlendMode(m_sceneTexture, SDL_BLENDMODE_BLEND);
 	}
 
@@ -21,6 +21,7 @@ namespace bloom {
 
 	void Scene::update(double deltaTime) {
 		SDL_SetRenderTarget(m_gameInstance.getRenderer(), m_sceneTexture);
+		SDL_SetRenderDrawColor(m_gameInstance.getRenderer(), 0, 0, 0, 0);
 		SDL_RenderClear(m_gameInstance.getRenderer());
 		for (auto & sys : m_systems)
 			if (sys->enabled)
