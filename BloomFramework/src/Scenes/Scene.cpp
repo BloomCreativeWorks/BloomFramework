@@ -25,6 +25,7 @@ namespace bloom {
 		for (auto & sys : m_systems)
 			if (sys->enabled)
 				sys->update(deltaTime);
+		SDL_SetRenderTarget(m_gameInstance.getRenderer(), nullptr);
 	}
 
 	void Scene::draw() {

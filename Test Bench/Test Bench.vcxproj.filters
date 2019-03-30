@@ -61,5 +61,8 @@
     <ClInclude Include="GameObjectTest\SpriteRotatorSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectTest\TestTextObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@
 using namespace bloom;
 using namespace bloom::audio;
 using namespace std::chrono_literals;
+using namespace bloom::graphics;
 
 Game* game = nullptr;
 
@@ -25,7 +26,12 @@ inline int rstep(int n) {
 	return (rand() % n + 1);
 }
 
-void test_player(const std::filesystem::path& musicPath, const std::filesystem::path& soundsPath) {
+namespace fs = std::filesystem;
+
+void test_player(const std::filesystem::path& dataDir) {
+	fs::path musicPath = dataDir / L"Music";
+	fs::path soundsPath = dataDir / L"Sounds";
+
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 	music.queue.setVolume(15.0);
 	music.push(musicPath / L"music_001.mp3");
@@ -48,11 +54,9 @@ void test_player(const std::filesystem::path& musicPath, const std::filesystem::
 	music.queue.play();
 }
 
-void test_drawer(const std::filesystem::path& assetsPath) {
-	const int fps = 60;
-	const int framedelay = (1000 / fps);
+void test_drawer(const std::filesystem::path& dataDir) {
+	const int framedelay = 1000 / 60;
 
-	//Uint32 framestart;
 	Uint32 framestart;
 
 	game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -62,36 +66,75 @@ void test_drawer(const std::filesystem::path& assetsPath) {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-	srand(static_cast<uint32_t>(time(0)));
+	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
-	static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
+		static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
 	game->setColor(randColor);
 	game->clear();
 	game->render();
 
+	fs::path assetsPath = dataDir / L"Assets";
+	fs::path fontsPath = dataDir / L"Fonts";
+
 	if (!std::filesystem::exists(assetsPath))
 		throw bloom::Exception("Required assets can't be found.");
 
-	std::filesystem::path spriteSheetPath = assetsPath / L"OverworldTestSpritesheet.png";
-	std::filesystem::path testCharPath = assetsPath / L"TestChar.png";
+
+	fs::path spriteSheetPath = assetsPath / "OverworldTestSpritesheet.png";
+	fs::path testCharPath = assetsPath / "TestChar.png";
+	fs::path fontPath = fontsPath / "Fira Code.ttf";
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	game->sceneManager.changeScene(std::make_shared<TestScene>(game->sceneManager));
 
+	FontStore fonts;
+	constexpr size_t UI_font = 0;
+	fonts.load(fontPath, UI_font);
+
+	auto renderer = game->getRenderer();
+	// Test SpriteText(NFont)
+	bloom::graphics::SpriteText testText(renderer, fonts[UI_font], "Hello, World!");
+	{
+		auto newStyle = testText.getStyle();
+		newStyle.blendingMode = TextStyle::BlendingMode::blended;
+
+		SDL_Color col, curcol = game->getColor();
+		std::clog << "current_color: r: " << +curcol.r << ", g: " << +curcol.g << ", b: " << +curcol.b << std::endl;
+		if (curcol.r + curcol.g + curcol.b >= 384) {
+			col = { 0, 0, 0, 0 };
+		}
+		else {
+			col = { 255, 255, 255, 0 };
+		}
+		newStyle.foregroundColor = col;
+
+		testText.setStyle(newStyle);
+	}
+	testText.render(std::nullopt, SDL_Point{ 300, 250 });
+	game->render();
+	game->delay(500);
+
+	std::string deltaTimeText{ "fps: " };
+
 	while (game->isRunning()) {
 		framestart = SDL_GetTicks();
+		auto dt = game->timer.split();
 		game->handleEvents();
 		game->clear();
 		game->update();
+		auto fps = 1000.0 / dt;
+		deltaTimeText.erase(5);
+		deltaTimeText += std::to_string(fps);
+		testText.setText(deltaTimeText);
+		testText.render(std::nullopt, SDL_Point{ 0, 0 });
 		game->render();
-
+		//game->update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime) {
 			game->delay(framedelay - frametime);
 		}
 	}
-
 	game->destroy();
 }
 
@@ -107,14 +150,10 @@ int main() {
 		exit(-1);
 	}
 
-	namespace fs = std::filesystem;
 	fs::path dataDir = fs::path(getExePath()) / L"data";
-	fs::path assetsPath = dataDir / L"Assets";
-	fs::path musicPath = dataDir / L"Music";
-	fs::path soundsPath = dataDir / L"Sounds";
 
-	std::thread drawer_thread{ test_drawer, assetsPath };
-	std::thread player_thread{ test_player, musicPath, soundsPath };
+	std::thread drawer_thread{ test_drawer, dataDir };
+	std::thread player_thread{ test_player, dataDir };
 
 	drawer_thread.join();
 	player_thread.join();
