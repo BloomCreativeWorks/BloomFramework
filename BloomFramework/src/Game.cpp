@@ -110,6 +110,7 @@ namespace bloom {
 		else {
 			std::clog << "Renderer initialized." << std::endl;
 		}
+		SDL_RenderSetLogicalSize(m_renderer, m_screenWidth, m_screenHeight);
 
 		m_isRunning = true;
 		std::clog << "Game is now running!" << std::endl;
@@ -123,10 +124,13 @@ namespace bloom {
 	}
 
 	void Game::update() {
-		std::clog << "Delta time: " << timer.lap() << std::endl;
+		//double dt = timer.lap();
+		sceneManager.update(timer.lap());
+		//std::clog << "Delta Time: " << dt << "ms" << std::endl;
 	}
 
 	void Game::clear() {
+		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 		SDL_RenderClear(m_renderer);
 	}
 
@@ -135,6 +139,7 @@ namespace bloom {
 	}
 
 	void Game::render() {
+		sceneManager.draw();
 		SDL_RenderPresent(m_renderer);
 	}
 
@@ -160,12 +165,10 @@ namespace bloom {
 
 	void Game::setColor(const SDL_Color & color) {
 		m_color = color;
-		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
 
 	void Game::setColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 		m_color = { r, g, b, a };
-		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
 
 	SDL_Color Game::getColor() {

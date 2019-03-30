@@ -17,18 +17,7 @@ class TestChar : public bloom::GameObject {
 	using GameObject::GameObject;
 
 public:
-	void init(Position pos, Size size, const std::filesystem::path& texturePath, std::optional<SDL_Rect> srcRect, uint32_t priority) {	
-		Transform trans = { pos, 0.0f, size };
-		registry.assign<Transform>(entity, trans);
-		auto tmp = gameInstance.textures.load(texturePath);
-		registry.assign<Sprite>(entity, tmp, srcRect);
-
-		registry.assign<LayerGroup>(entity, priority);
-
-#pragma warning(push)
-#pragma warning(disable: 4307)
-		registry.assign<Label<"TestObject"_hs>>(entity);
-#pragma warning(pop)
+	void init(Position pos, Size size, const std::filesystem::path& texturePath, std::optional<SDL_Rect> srcRect, uint32_t priority) {
 	}
 
 	void disableRandomPos() {

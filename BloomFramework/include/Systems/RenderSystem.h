@@ -1,28 +1,44 @@
 #pragma once
 
+#include <utility>
 #include "stdIncludes.h"
 #include "Components/Components.h"
 #include "DefaultSystem.h"
+#include "Components/Components.h"
 
 namespace bloom::systems {
-	class RenderSystem : public System {
-		using Position = bloom::components::Position;
-		using Size = bloom::components::Size;
+	class RenderSystem : public DefaultSystem {
+		using Transform = bloom::components::Transform;
+		using Rotation = double;
 		using Sprite = bloom::components::Sprite;
-		using System::DefaultSystem;
+		using LayerGroup = bloom::components::LayerGroup;
+		using DefaultSystem::System;
 
 	public:
+		~RenderSystem() = default;
+
 		void update(std::optional<double> deltaTime = std::nullopt) override {
-			m_registry.view<Position, Size, Sprite>().each(
-				[](auto entity, Position & pos, Size& size, Sprite & spr) {
+			m_registry.view<Transform, Sprite>().each(
+				[&](auto entity, Transform& trans, Sprite& spr) {
+				if (trans.size.w < 0)
+					trans.size.w = 0;
+				if (trans.size.h < 0)
+					trans.size.h = 0;
+
+				Coord actualPos = trans.position.getSDLPos(parentScene.getGameInstance().getRenderer(), trans.size.w, trans.size.h);
 				SDL_Rect destRect{
-					static_cast<int>(pos.x),
-					static_cast<int>(pos.y),
-					static_cast<int>(size.w),
-					static_cast<int>(size.h)
+					actualPos.x,
+					actualPos.y,
+					trans.size.w,
+					trans.size.h
 				};
-				spr.texture->render(spr.srcRect, destRect);
+
+				// Draw sprite to scene texture
+				spr.texture->render(spr.srcRect, destRect, trans.rotation);
 			});
 		}
+
+	private:
+		SDL_Renderer* renderer;
 	};
 }

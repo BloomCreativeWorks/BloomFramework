@@ -10,13 +10,12 @@
 #include "GameObjectTest/TestAnimatedGameObject.h"
 #include "GameObjectTest/AnimationChangerSystem.h"
 #include "getExePath.h"
+#include "TestScene.h"
 
 using namespace bloom;
 using namespace bloom::audio;
 using namespace std::chrono_literals;
-using bloom::components::Position;
 using namespace bloom::graphics;
-using bloom::components::Size;
 
 Game* game = nullptr;
 
@@ -34,7 +33,7 @@ void test_player(const std::filesystem::path& dataDir) {
 	fs::path soundsPath = dataDir / L"Sounds";
 
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
-
+	music.queue.setVolume(15.0);
 	music.push(musicPath / L"music_001.mp3");
 	music.push(musicPath / L"music_002.mp3");
 	music.push(musicPath / L"music_003.mp3");
@@ -67,7 +66,6 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
 	}
-
 	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 		static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
@@ -81,11 +79,13 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	if (!std::filesystem::exists(assetsPath))
 		throw bloom::Exception("Required assets can't be found.");
 
+
 	fs::path spriteSheetPath = assetsPath / "OverworldTestSpritesheet.png";
 	fs::path testCharPath = assetsPath / "TestChar.png";
 	fs::path fontPath = fontsPath / "Fira Code.ttf";
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	game->sceneManager.changeScene(std::make_shared<TestScene>(game->sceneManager));
 
 	FontStore fonts;
 	constexpr size_t UI_font = 0;
@@ -114,61 +114,14 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	game->render();
 	game->delay(500);
 
-	// Test Game Object
-	entt::DefaultRegistry testRegistry;
-	AnimationChangerSystem animChangerTest(testRegistry);
-	bloom::systems::AnimationSystem animSysTest(testRegistry);
-	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	//game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	//game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
-	TestChar testSprite = TestChar(testRegistry, game);
-	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
-	renderSysTest.update();
-	game->render();
-	TestChar testSprite2 = TestChar(testRegistry, game);
-	testSprite2.init(SDL_Rect{ 128, 0, 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
-	renderSysTest.update();
-	game->render();
-	TestChar testGO = TestChar(testRegistry, game);
-	testGO.init(SDL_Rect{ 50, 50, 192, 192 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
-	testGO.disableRandomPos();
-	renderSysTest.update();
-	game->render();
-
-	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
-	RandomPositionSystem randomizer(testRegistry);
-	TestAnimChar testAnim(testRegistry, game);
-	testAnim.init(testCharPath);
-
-	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
-	
-
-	// If manual control of entities is required, this is the method to do so.
-	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
-
-	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
-	int testX = rstep(10), testY = rstep(10);
-
 
 	while (game->isRunning()) {
-		testGOpos.x += testX;
-		testGOpos.y += testY;
-		if (testGOpos.x >= WINDOW_WIDTH) {
-			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
-		}
-		if (testGOpos.y >= WINDOW_HEIGHT) {
-			testGOpos.y = -testGOsize.h; testX = rstep(10); testY = rstep(10);
-		}
-		// Demo ends here.
 		framestart = SDL_GetTicks();
-		auto dt = game->timer.lap();
+		auto dt = game->timer.split();
 		game->handleEvents();
 		game->clear();
-		animChangerTest.update();
-		animSysTest.update(dt);
-		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
-		renderSysTest.update(); // Test again.
+		game->update();
 		auto fps = 1000.0 / dt;
 		deltaTimeText.erase(5);
 		deltaTimeText += std::to_string(fps);
@@ -184,7 +137,6 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	}
 	game->destroy();
 }
-
 
 int main() {
 	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);

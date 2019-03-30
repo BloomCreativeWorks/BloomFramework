@@ -12,7 +12,7 @@ namespace bloom::graphics {
 			SDL_DestroyTexture(m_texture);
 	}
 
-	void Drawable::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
+	void Drawable::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, double rotationAngle, SDL_RendererFlip flip) {
 		if (!m_texture)
 			return;
 
@@ -23,7 +23,7 @@ namespace bloom::graphics {
 
 		auto sRectPtr = (srcRect.has_value() && srcRect->w > 0 && srcRect->h > 0) ? &srcRect.value() : nullptr;
 		// Render to screen
-		if (SDL_RenderCopyEx(c_renderer, m_texture, sRectPtr, &destRect, 0.0, nullptr, flip))
+		if (SDL_RenderCopyEx(c_renderer, m_texture, sRectPtr, &destRect, rotationAngle, nullptr, flip))
 			throw Exception("[Drawable::render] -> " + std::string{ SDL_GetError() });
 	}
 }

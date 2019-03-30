@@ -9,7 +9,7 @@ namespace bloom::graphics {
 		Drawable(SDL_Renderer* targetRenderer);
 		virtual ~Drawable() = 0;
 
-		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		virtual void render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, double rotationAngle = 0.0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 	protected:
 		SDL_Renderer* const c_renderer;

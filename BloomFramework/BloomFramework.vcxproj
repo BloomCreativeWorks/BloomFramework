@@ -181,6 +181,10 @@
     <ClInclude Include="include\Components\Position.h" />
     <ClInclude Include="include\Components\Size.h" />
     <ClInclude Include="include\Components\Sprite.h" />
+    <ClInclude Include="include\Components\Tag.h" />
+    <ClInclude Include="include\Components\Transform.h" />
+    <ClInclude Include="include\Coord.h" />
+    <ClInclude Include="include\Components\LayerGroup.h" />
     <ClInclude Include="include\Graphics\AnimationSet.h" />
     <ClInclude Include="include\Graphics\Sprite.h" />
     <ClInclude Include="include\Exception.h" />
@@ -188,7 +192,10 @@
     <ClInclude Include="include\Game.h" />
     <ClInclude Include="include\Audio\SoundChunk.h" />
     <ClInclude Include="include\GameObject.h" />
+    <ClInclude Include="include\Scenes\Scene.h" />
+    <ClInclude Include="include\Scenes\SceneManager.h" />
     <ClInclude Include="include\Graphics\Animation.h" />
+    <ClInclude Include="include\StdStableSort.h" />
     <ClInclude Include="include\Systems\AnimationSystem.h" />
     <ClInclude Include="include\Graphics\Drawable.h" />
     <ClInclude Include="include\Graphics\Font.h" />
@@ -203,6 +210,7 @@
     <ClInclude Include="include\Timer.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Coord.cpp" />
     <ClCompile Include="src\Audio\SoundChannel.cpp" />
     <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Audio\SoundPlayer.cpp" />
@@ -213,6 +221,8 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Audio\SoundChunk.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\Scenes\Scene.cpp" />
+    <ClCompile Include="src\Scenes\SceneManager.cpp" />
     <ClCompile Include="src\Graphics\Animation.cpp" />
     <ClCompile Include="src\Graphics\AnimationSet.cpp" />
     <ClCompile Include="src\Graphics\Drawable.cpp" />
@@ -221,6 +231,7 @@
     <ClCompile Include="src\Graphics\SpriteText.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\TextureStore.cpp" />
+    <ClCompile Include="src\Systems\DefaultSystem.cpp" />
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

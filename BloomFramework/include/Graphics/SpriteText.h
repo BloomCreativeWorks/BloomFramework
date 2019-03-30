@@ -20,7 +20,7 @@ namespace bloom::graphics {
 		SpriteText(SDL_Renderer* targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text = std::string_view{}, TextStyle style = TextStyle{});
 		~SpriteText() = default;
 
-		void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip = SDL_FLIP_NONE);
+		void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, double rotationAngle = 0.0, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
 		int getTextHeight() const { return m_height; }
 		int getTextWidth() const { return m_width; }

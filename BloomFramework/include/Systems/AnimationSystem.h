@@ -9,7 +9,7 @@ namespace bloom::systems {
 		using AnimationPtr = bloom::components::AnimationPtr;
 		using AnimationSet = bloom::components::AnimationSet;
 		using Sprite = bloom::components::Sprite;
-		using System::DefaultSystem;
+		using System::System;
 
 	public:
 		void update(std::optional<double> deltaTime = 0.0) override {

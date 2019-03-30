@@ -194,7 +194,7 @@
       <DeploymentContent>false</DeploymentContent>
     </Image>
     <Image Include="Assets\TestChar.png">
-      <DeploymentContent>true</DeploymentContent>
+      <DeploymentContent>false</DeploymentContent>
       <FileType>Image</FileType>
     </Image>
   </ItemGroup>
@@ -202,8 +202,12 @@
     <ClInclude Include="GameObjectTest\AnimationChangerSystem.h" />
     <ClInclude Include="GameObjectTest\NoRandomComponent.h" />
     <ClInclude Include="GameObjectTest\RandomizerSystem.h" />
+    <ClInclude Include="GameObjectTest\SceneRotateSystem.h" />
+    <ClInclude Include="GameObjectTest\SpriteRotatorSystem.h" />
     <ClInclude Include="GameObjectTest\TestGameObject.h" />
+    <ClInclude Include="GameObjectTest\TestTextObject.h" />
     <ClInclude Include="getExePath.h" />
+    <ClInclude Include="TestScene.h" />
     <ClInclude Include="GameObjectTest\TestAnimatedGameObject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

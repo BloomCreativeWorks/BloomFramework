@@ -11,12 +11,12 @@ namespace bloom::graphics {
 		refreshTexture();
 	}
 
-	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip) {
+	void SpriteText::render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, double rotationAngle, SDL_RendererFlip flip) {
 		if (m_refreshRequired)
 			refreshTexture();
 
 		if (m_texture)
-			Drawable::render(srcRect, SDL_Rect{ destPoint.x, destPoint.y, m_width, m_height }, flip);
+			Drawable::render(srcRect, SDL_Rect{ destPoint.x, destPoint.y, m_width, m_height }, rotationAngle, flip);
 	}
 
 	void SpriteText::refreshTexture() {

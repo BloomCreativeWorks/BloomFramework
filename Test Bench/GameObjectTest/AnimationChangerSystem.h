@@ -10,7 +10,7 @@
 class AnimationChangerSystem : public bloom::systems::System {
 	using AnimationSet = bloom::components::AnimationSet;
 	using AnimationPtr = bloom::components::AnimationPtr;
-	using bloom::systems::System::DefaultSystem;
+	using bloom::systems::System::System;
 
 public:
 	void update(std::optional<double> deltaTime = std::nullopt) override {

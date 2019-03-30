@@ -12,3 +12,4 @@
 #include "Graphics/Font.h"
 #include "Graphics/FontStore.h"
 #include "Graphics/SpriteText.h"
+#include "Coord.h"

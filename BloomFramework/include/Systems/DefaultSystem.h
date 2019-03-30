@@ -3,16 +3,22 @@
 #include <optional>
 #include "stdIncludes.h"
 
-namespace bloom::systems {
-	class DefaultSystem {
-	public:
-		DefaultSystem(entt::DefaultRegistry & registry) : m_registry(registry) {};
+namespace bloom {
+	class Scene;
+	namespace systems {
+		class BLOOMFRAMEWORK_API System {
+		public:
+			System(bloom::Scene & sceneObject);
+			virtual ~System() = default;
 
-		virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
+			virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
 
-	protected:
-		entt::DefaultRegistry & m_registry;
-	};
+			bool enabled = true;
+		protected:
+			bloom::Scene & parentScene;
+			entt::DefaultRegistry & m_registry;
+		};
 
-	using System = DefaultSystem;
+		using DefaultSystem = System;
+	}
 }

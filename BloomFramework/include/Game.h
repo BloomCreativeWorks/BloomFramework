@@ -3,6 +3,8 @@
 #include "stdIncludes.h"
 #include "Graphics/TextureStore.h"
 #include "Timer.h"
+#include "Exception.h"
+#include "Scenes/SceneManager.h"
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
@@ -10,8 +12,8 @@ namespace bloom {
 		friend TextureStore::TextureStore(Game & object);
 
 	public:
-		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
+		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_TARGETTEXTURE);
 		~Game();
 
 		static void initialize(Uint32 initFlags = SDL_INIT_EVERYTHING,
@@ -44,6 +46,8 @@ namespace bloom {
 
 		TextureStore	textures = TextureStore(m_renderer);
 		Timer			timer;
+
+		SceneManager sceneManager = SceneManager(*this);
 
 	protected:
 		SDL_Renderer *	m_renderer = nullptr;
