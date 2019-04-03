@@ -2,44 +2,19 @@
 #include "Exception.h"
 
 namespace bloom::graphics {
-	Texture::Texture(SDL_Renderer*& targetRenderer, const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey) : m_renderer(targetRenderer) {
+	Texture::Texture(SDL_Renderer* targetRenderer, const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey) : Drawable(targetRenderer) {
 		//Load image at specified path
 		SDL_Surface* loadedSurface = IMG_Load(filePath.u8string().c_str());
-		if (loadedSurface == nullptr)
+		if (!loadedSurface)
 			throw Exception{ "Texture", SDL_GetError() };
+
 		if (colorKey.has_value())
 			SDL_SetColorKey(loadedSurface, true, SDL_MapRGB(loadedSurface->format, colorKey->r, colorKey->g, colorKey->b));
+
 		//Create texture from surface pixels
-		m_texture = SDL_CreateTextureFromSurface(m_renderer, loadedSurface);
-		if (m_texture == nullptr)
-			throw Exception{ "Texture", SDL_GetError() };
+		m_texture = SDL_CreateTextureFromSurface(c_renderer, loadedSurface);
 		SDL_FreeSurface(loadedSurface);
-	}
-
-	void Texture::render(std::optional<SDL_Rect> srcRect, SDL_Rect destRect, SDL_RendererFlip flip) {
-		if (destRect.w <= 0)
-			throw Exception{ "Texture::render", "destRect.w cannot be <= 0" };
-		if (destRect.h <= 0)
-			throw Exception{ "Texture::render","destRect.h cannot be <= 0" };
-
-		if (srcRect.has_value()) {
-			if (srcRect->w <= 0)
-				throw Exception{ "Texture::render", "srcRect.w cannot be <= 0" };
-			if (srcRect->h <= 0)
-				throw Exception{ "Texture::render", "srcRect.h cannot be <= 0" };
-
-			//Set rendering space and render to screen
-			//SDL_Rect renderQuad = { xPos, yPos, _textureWidth*_scale, _textureHeight*_scale };
-
-			//Render to screen
-			SDL_RenderCopyEx(m_renderer, m_texture, &srcRect.value(), &destRect, 0.0, nullptr, flip);
-		}
-		else
-			//Render to screen
-			SDL_RenderCopyEx(m_renderer, m_texture, nullptr, &destRect, 0.0, nullptr, flip);
-	}
-
-	Texture::~Texture() {
-		SDL_DestroyTexture(m_texture);
+		if (!m_texture)
+			throw Exception{ "Texture", SDL_GetError() };
 	}
 }
