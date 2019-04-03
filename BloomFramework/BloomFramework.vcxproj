@@ -204,7 +204,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\SoundChannel.cpp" />
-    <ClCompile Include="src\Exception.cpp" />
     <ClCompile Include="src\Audio\SoundPlayer.cpp" />
     <ClCompile Include="src\Audio\SoundStore.cpp" />
     <ClCompile Include="src\Audio\MusicTrack.cpp" />

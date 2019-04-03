@@ -2,7 +2,6 @@
 #include <random>
 #include "stdIncludes.h"
 #include "Animation.h"
-#include "Exception.h"
 
 namespace bloom::graphics {
 	class BLOOMFRAMEWORK_API AnimationSet {

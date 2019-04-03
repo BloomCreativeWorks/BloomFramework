@@ -14,9 +14,9 @@ namespace bloom {
 		if (SDL_WasInit(0) == 0)
 			initialize();
 
-		if ((windowFlags & SDL_WINDOW_FULLSCREEN) == SDL_WINDOW_FULLSCREEN && (windowFlags & SDL_WINDOW_FULLSCREEN_DESKTOP) != SDL_WINDOW_FULLSCREEN_DESKTOP) {
-			throw Exception("[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead.");
-		}
+		if ((windowFlags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_FULLSCREEN_DESKTOP)) == SDL_WINDOW_FULLSCREEN)
+			throw Exception{ "Game", "SDL_WINDOW_FULLSCREEN flag is used. \
+				This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead." };
 
 		m_runningInstancesQnt++;
 	}
@@ -47,20 +47,14 @@ namespace bloom {
 		int imageFlags)
 	{
 		// Initialize SDL
-		if (SDL_Init(initFlags) < 0) {
-			throw Exception("[SDL_Init] " + std::string(SDL_GetError()));
-		}
-		else {
-			std::clog << "Subsystems initialized!" << std::endl;
-		}
+		if (SDL_Init(initFlags) < 0)
+			throw Exception{ "Game::initialize", SDL_GetError() };
+		std::clog << "Subsystems initialized!" << std::endl;
 
 		// Initialize SDL_mixer
-		if (Mix_OpenAudio(mixerFrequency, mixerFormat, mixerChannels, mixerChunksize) < 0) {
-			throw Exception("[Mix_OpenAudio] " + std::string(SDL_GetError()));
-		}
-		else {
-			std::clog << "SDL_mixer initialized." << std::endl;
-		}
+		if (Mix_OpenAudio(mixerFrequency, mixerFormat, mixerChannels, mixerChunksize) < 0)
+			throw Exception{ "Game::initialize", SDL_GetError() };
+		std::clog << "SDL_mixer initialized." << std::endl;
 
 		int isCapture = 0;
 		int n = SDL_GetNumAudioDevices(isCapture);
@@ -71,20 +65,14 @@ namespace bloom {
 		}
 
 		// Initialize SDL_ttf
-		if (TTF_Init() != 0) {
-			throw Exception("[TTF_Init] " + std::string(SDL_GetError()));
-		}
-		else {
-			std::clog << "SDL_ttf initialized." << std::endl;
-		}
+		if (TTF_Init() != 0)
+			throw Exception{ "Game::initialize", SDL_GetError() };
+		std::clog << "SDL_ttf initialized." << std::endl;
 
 		// Initialize SDL_image
-		if (IMG_Init(imageFlags) != imageFlags) {
-			throw Exception("[IMG_Init] " + std::string(SDL_GetError()));
-		}
-		else {
-			std::clog << "SDL_image initialized." << std::endl;
-		}
+		if (IMG_Init(imageFlags) != imageFlags)
+			throw Exception{ "Game::initialize", SDL_GetError() };
+		std::clog << "SDL_image initialized." << std::endl;
 	}
 
 	void Game::exit() {
@@ -96,20 +84,14 @@ namespace bloom {
 
 	void Game::create(std::string const& title, int xpos, int ypos) {
 		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
-		if (m_window == nullptr) {
-			throw Exception("[SDL_CreateWindow] " + std::string(SDL_GetError()));
-		}
-		else {
-			std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
-		}
+		if (m_window == nullptr)
+			throw Exception{ "Game::initialize", SDL_GetError() };
+		std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
 
 		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
-		if (m_renderer == nullptr) {
-			throw Exception("[SDL_CreateRenderer] " + std::string(SDL_GetError()));
-		}
-		else {
-			std::clog << "Renderer initialized." << std::endl;
-		}
+		if (m_renderer == nullptr)
+			throw Exception{ "Game::initialize", SDL_GetError() };
+		std::clog << "Renderer initialized." << std::endl;
 
 		m_isRunning = true;
 		std::clog << "Game is now running!" << std::endl;

@@ -79,7 +79,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	fs::path fontsPath = dataDir / L"Fonts";
 
 	if (!std::filesystem::exists(assetsPath))
-		throw bloom::Exception("Required assets can't be found.");
+		throw bloom::Exception{ "Test Bench", "Required assets can't be found" };
 
 	fs::path spriteSheetPath = assetsPath / "OverworldTestSpritesheet.png";
 	fs::path testCharPath = assetsPath / "TestChar.png";
@@ -193,9 +193,8 @@ int main() {
 		Game::initialize();
 	}
 	catch (Exception & e) {
-		std::cerr << e.what() << std::endl;
-		system("pause");
-		exit(-1);
+		std::cerr << e;
+		abort();
 	}
 
 	fs::path dataDir = fs::path(getExePath()) / L"data";
