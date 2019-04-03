@@ -44,11 +44,11 @@ namespace bloom::graphics {
 			break;
 		}
 		if (!textSurface)
-			throw Exception("[Font -> TTF_RenderUTF8] " + std::string(TTF_GetError()));
+			throw Exception{ "SpriteText::refreshTexture", TTF_GetError() };
 		m_texture = SDL_CreateTextureFromSurface(c_renderer, textSurface);
 		SDL_FreeSurface(textSurface);
 		if (!m_texture)
-			throw Exception("[Font -> SDL_Texture] " + std::string(SDL_GetError()));
+			throw Exception{ "SpriteText::refreshTexture", SDL_GetError()};
 		SDL_QueryTexture(m_texture, nullptr, nullptr, &m_width, &m_height);
 
 		m_refreshRequired = false;

@@ -1,4 +1,5 @@
 #include "Graphics/AnimationSet.h"
+#include "Exception.h"
 
 namespace bloom::graphics {
 	AnimationPtr AnimationSet::changeCurrent(const std::string & setName) {
