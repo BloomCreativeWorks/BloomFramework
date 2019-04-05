@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 
 namespace bloom::graphics {
@@ -22,10 +21,23 @@ namespace bloom::graphics {
 		Font(const std::filesystem::path& fontPath, const FontStyle& style = FontStyle{});
 		~Font();
 
-		std::string getFamilyName() const;
-		std::string getStyleName() const;
-		int getPointSize() const { return m_style.pointSize; }
-		bool isFixedWidth() const { return TTF_FontFaceIsFixedWidth(m_font); }
+		std::string getFamilyName() const {
+			const char* fontName = TTF_FontFaceFamilyName(m_font);
+			return fontName ? std::string{ fontName } : std::string{};
+		}
+
+		std::string getStyleName() const {
+			const char* fontStyle = TTF_FontFaceStyleName(m_font);
+			return fontStyle ? std::string{ fontStyle } : std::string{};
+		}
+
+		int getPointSize() const {
+			return m_style.pointSize;
+		}
+
+		bool isFixedWidth() const { // maybe `isMonospaced` is better?
+			return TTF_FontFaceIsFixedWidth(m_font);
+		}
 
 	private:
 		void initFont();

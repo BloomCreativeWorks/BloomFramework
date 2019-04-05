@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 #include "Drawable.h"
 #include "Font.h"
@@ -17,15 +16,23 @@ namespace bloom::graphics {
 
 	class BLOOMFRAMEWORK_API SpriteText : public Drawable {
 	public:
-		SpriteText(SDL_Renderer* targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text = std::string_view{}, TextStyle style = TextStyle{});
+		SpriteText(SDL_Renderer* const& targetRenderer, std::shared_ptr<Font> fontPtr, std::string_view text = std::string_view{}, TextStyle style = TextStyle{});
 		~SpriteText() = default;
 
 		void render(std::optional<SDL_Rect> srcRect, SDL_Point destPoint, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
-		int getTextHeight() const { return m_height; }
-		int getTextWidth() const { return m_width; }
+		int getTextHeight() const {
+			return m_height;
+		}
 
-		std::string getText() const { return m_text; }
+		int getTextWidth() const {
+			return m_width;
+		}
+
+		std::string getText() const {
+			return m_text;
+		}
+
 		void setText(std::string_view newText) {
 			if (m_text != newText) {
 				m_text = newText;
@@ -33,7 +40,10 @@ namespace bloom::graphics {
 			}
 		}
 
-		TextStyle getStyle() const { return m_style; }
+		TextStyle getStyle() const {
+			return m_style;
+		}
+
 		void setStyle(const TextStyle& newStyle) {
 			m_style = newStyle;
 			m_refreshRequired = true;

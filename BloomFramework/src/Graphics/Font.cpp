@@ -9,7 +9,7 @@ namespace bloom::graphics {
 
 		m_font = TTF_OpenFont(fontPath.u8string().c_str(), pointSize);
 		if (!m_font)
-			throw Exception{"Font", TTF_GetError() };
+			throw Exception{ "Font", TTF_GetError() };
 		m_style.pointSize = pointSize;
 		initFont();
 	}
@@ -20,7 +20,7 @@ namespace bloom::graphics {
 
 		m_font = TTF_OpenFontIndex(fontPath.u8string().c_str(), pointSize, fontFaceIndex);
 		if (!m_font)
-			throw Exception{ "Font", TTF_GetError()};
+			throw Exception{ "Font", TTF_GetError() };
 		m_style.pointSize = pointSize;
 		initFont();
 	}
@@ -47,16 +47,5 @@ namespace bloom::graphics {
 		TTF_SetFontHinting(m_font, m_style.hinting);
 		TTF_SetFontKerning(m_font, static_cast<int>(m_style.allowKerning));
 		TTF_SetFontOutline(m_font, m_style.outlineWidth);
-	}
-
-
-	std::string Font::getFamilyName() const {
-		const char* fontName = TTF_FontFaceFamilyName(m_font);
-		return fontName ? std::string{ fontName } : std::string{};
-	}
-
-	std::string Font::getStyleName() const {
-		const char* fontStyle = TTF_FontFaceStyleName(m_font);
-		return fontStyle ? std::string{ fontStyle } : std::string{};
 	}
 }

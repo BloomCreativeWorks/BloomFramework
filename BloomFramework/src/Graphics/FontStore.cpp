@@ -2,31 +2,11 @@
 
 namespace bloom::graphics {
 	FontPtr FontStore::load(const std::filesystem::path& filePath, size_t presetNumber, FontStyle style) {
-		if (auto fontIt = m_store.find(presetNumber); fontIt != m_store.end()) {
-			//std::clog << "[FontStore::load] font preset with that name already exists, returning that instead" << std::endl;
-			return fontIt->second;
-		}
+		if (auto fontPtr = find(presetNumber); fontPtr)
+			return fontPtr;
 
 		FontPtr ptr = std::make_shared<Font>(filePath, style);
 		m_store.emplace(presetNumber, ptr);
 		return ptr;
-	}
-
-	FontPtr FontStore::find(size_t presetNumber) const noexcept {
-		if (auto fontIt = m_store.find(presetNumber); fontIt != m_store.end())
-			return fontIt->second;
-		return FontPtr{};
-	}
-
-	void FontStore::unload(size_t presetNumber) {
-		m_store.erase(presetNumber);
-	}
-
-	void FontStore::clear() noexcept {
-		m_store.clear();
-	}
-
-	FontPtr FontStore::operator[](size_t key) const noexcept {
-		return find(key);
 	}
 }

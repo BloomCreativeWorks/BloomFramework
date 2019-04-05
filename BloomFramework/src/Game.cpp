@@ -2,13 +2,13 @@
 #include "Exception.h"
 
 namespace bloom {
-	int Game::m_runningInstancesQnt = 0;
+	int Game::s_runningInstancesQnt = 0;
 
 	Game::Game(int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
-		m_windowFlags(windowFlags),
-		m_rendererFlags(rendererFlags),
+		c_windowFlags(windowFlags),
+		c_rendererFlags(rendererFlags),
 		m_isRunning(false)
 	{
 		if (SDL_WasInit(0) == 0)
@@ -18,14 +18,14 @@ namespace bloom {
 			throw Exception{ "Game", "SDL_WINDOW_FULLSCREEN flag is used. \
 				This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead." };
 
-		m_runningInstancesQnt++;
+		s_runningInstancesQnt++;
 	}
 
 	Game::Game(std::nothrow_t, int width, int height, int windowFlags, int rendererFlags) :
 		m_screenWidth(width),
 		m_screenHeight(height),
-		m_windowFlags(windowFlags),
-		m_rendererFlags(rendererFlags),
+		c_windowFlags(windowFlags),
+		c_rendererFlags(rendererFlags),
 		m_isRunning(false)
 	{
 		if (SDL_WasInit(0) == 0)
@@ -37,8 +37,8 @@ namespace bloom {
 
 	Game::~Game() {
 		destroy();
-		m_runningInstancesQnt--;
-		if (m_runningInstancesQnt <= 0)
+		s_runningInstancesQnt--;
+		if (s_runningInstancesQnt <= 0)
 			exit();
 	}
 
@@ -83,12 +83,12 @@ namespace bloom {
 	}
 
 	void Game::create(std::string const& title, int xpos, int ypos) {
-		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, m_windowFlags);
+		m_window = SDL_CreateWindow(title.c_str(), xpos, ypos, m_screenWidth, m_screenHeight, c_windowFlags);
 		if (m_window == nullptr)
 			throw Exception{ "Game::initialize", SDL_GetError() };
 		std::clog << "Window created with width of " << m_screenWidth << " and height of " << m_screenHeight << "." << std::endl;
 
-		m_renderer = SDL_CreateRenderer(m_window, -1, m_rendererFlags);
+		m_renderer = SDL_CreateRenderer(m_window, -1, c_rendererFlags);
 		if (m_renderer == nullptr)
 			throw Exception{ "Game::initialize", SDL_GetError() };
 		std::clog << "Renderer initialized." << std::endl;
@@ -169,7 +169,7 @@ namespace bloom {
 	SDL_Event Game::getEvent() {
 		return m_event;
 	}
-	SDL_Renderer * Game::getRenderer()
+	SDL_Renderer*& Game::_getRenderer()
 	{
 		return m_renderer;
 	}

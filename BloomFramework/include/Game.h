@@ -6,9 +6,6 @@
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
-		using TextureStore = bloom::graphics::TextureStore;
-		friend TextureStore::TextureStore(Game & object);
-
 	public:
 		Game(int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 		Game(std::nothrow_t, int width, int height, int windowFlags = NULL, int rendererFlags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
@@ -40,22 +37,22 @@ namespace bloom {
 		int getScreenHeight();
 		SDL_Event getEvent();
 
-		SDL_Renderer * getRenderer();
+		SDL_Renderer*& _getRenderer();
 
-		TextureStore	textures = TextureStore(m_renderer);
-		Timer			timer;
+		graphics::TextureStore textures{ m_renderer };
+		Timer timer;
 
 	protected:
-		SDL_Renderer *	m_renderer = nullptr;
-		SDL_Window *	m_window = nullptr;
-		int				m_screenWidth, m_screenHeight;
-		const int		m_windowFlags, m_rendererFlags;
-		SDL_Color		m_color;
-		SDL_Event		m_event;
-		bool			m_isRunning;
+		SDL_Renderer* m_renderer = nullptr;
+		SDL_Window* m_window = nullptr;
+		int m_screenWidth, m_screenHeight;
+		const int c_windowFlags, c_rendererFlags;
+		SDL_Color m_color;
+		SDL_Event m_event;
+		bool m_isRunning;
 
 	private:
 		static void exit();
-		static int m_runningInstancesQnt;
+		static int s_runningInstancesQnt;
 	};
 }
