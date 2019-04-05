@@ -15,10 +15,10 @@ class TestAnimChar : public bloom::GameObject {
 public:
 	void init() override {}
 
-	void init(const std::filesystem::path texturePath = "Assets/TestChar.png") {
+	void init(const std::filesystem::path& texturePath = "Assets/TestChar.png") {
 		m_registry.replace<Position>(m_entity, 50, 50);
-		m_registry.assign<Size>(m_entity, 256, 256);
-		auto tmp = m_gameInstance->textures.load(texturePath);
+		m_registry.replace<Size>(m_entity, 256, 256);
+		auto tmp = c_gameInstance->textures.load(texturePath);
 
 		m_registry.assign<Sprite>(m_entity, tmp, SDL_Rect{ 0,32,32,32 });
 
