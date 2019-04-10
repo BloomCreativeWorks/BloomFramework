@@ -13,12 +13,11 @@ public:
 	}
 
 	void update(int frameWidth, int frameHeight, double = 0.0) {
-		m_registry.view<Position>().each(
-			[this, frameWidth, frameHeight](auto entity, Position& pos) {
-			if (m_registry.has<RandomPos>(entity)) {
+		m_registry.view<Position, RandomPos>().each(
+			[this, frameWidth, frameHeight](auto, Position & pos, RandomPos&) {
 				pos.x = rand() % frameWidth;
 				pos.y = rand() % frameHeight;
 			}
-		});
+		);
 	}
 };
