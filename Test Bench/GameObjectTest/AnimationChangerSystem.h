@@ -13,19 +13,19 @@ class AnimationChangerSystem : public bloom::systems::System {
 	using bloom::systems::System::DefaultSystem;
 
 public:
-	void update(std::optional<double> deltaTime = std::nullopt) override {
-		counter = (counter + 1) % 100;
-		if (counter == 0) {
+	void update(double = 0.0) override {
+		m_counter = (m_counter + 1) % 100;
+		if (m_counter == 0) {
 			m_registry.view<AnimationSet>().each(
-				[&](auto entity, AnimationSet& animSet) {
-					animSet.changeCurrent(animations[rand() % 4]);
+				[&](auto, AnimationSet& set) {
+					set.changeCurrent(c_animations[rand() % 4]);
 				}
 			);
 		}
 	}
 private:
-	int counter = 99;
-	std::vector<std::string> animations{
+	int m_counter = 99;
+	const std::vector<std::string> c_animations{
 		"up",
 		"down",
 		"left",
