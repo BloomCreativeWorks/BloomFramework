@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework.h"
-#include "NoRandomComponent.h"
+#include "RandomComponent.h"
 
 class TestChar : public bloom::GameObject {
 	using Position = bloom::components::Position;
@@ -25,10 +25,10 @@ public:
 	}
 
 	void disableRandomPos() {
-		m_registry.assign<NoRandomPos>(m_entity);
+		m_registry.reset<RandomPos>(m_entity);
 	}
 
 	void enableRandomPos() {
-		m_registry.reset<NoRandomPos>(m_entity);
+		m_registry.assign<RandomPos>(m_entity);
 	}
 };

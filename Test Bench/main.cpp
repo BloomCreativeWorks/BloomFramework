@@ -123,19 +123,20 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	//game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
+	testSprite.enableRandomPos();
 	renderSysTest.update();
 	game->render();
 	TestChar testSprite2 = TestChar(testRegistry, game);
 	testSprite2.init(SDL_Rect{ 128, 0, 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.enableRandomPos();
 	renderSysTest.update();
 	game->render();
 	TestChar testGO = TestChar(testRegistry, game);
 	testGO.init(SDL_Rect{ 50, 50, 192, 192 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
-	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
 
-	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
+	// Randomizes position of entities (which has `RandomPos` component)
 	RandomPositionSystem randomizer(testRegistry);
 	TestAnimChar testAnim(testRegistry, game);
 	testAnim.init(testCharPath);

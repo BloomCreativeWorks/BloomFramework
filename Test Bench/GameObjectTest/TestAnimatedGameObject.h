@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Framework.h"
-#include "NoRandomComponent.h"
+#include "RandomComponent.h"
 
 class TestAnimChar : public bloom::GameObject {
 	using Position = bloom::components::Position;
@@ -70,6 +70,5 @@ public:
 
 		m_registry.assign<AnimationSet>(m_entity, animSet);
 		m_registry.assign<AnimationPtr>(m_entity, up);
-		m_registry.assign<NoRandomPos>(m_entity);
 	}
 };
