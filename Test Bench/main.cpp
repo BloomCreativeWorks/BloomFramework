@@ -59,10 +59,9 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	const int framedelay = 1000 / 60;
 
 	Uint32 framestart;
-
-	game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
+	game = new Game({ WINDOW_WIDTH, WINDOW_HEIGHT });
 	try {
-		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		game->create("Bloom Test", { SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED });
 	}
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
@@ -209,6 +208,7 @@ int main() {
 	sounds[1]->play();
 	std::this_thread::sleep_for(3s);
 	sounds.clear();
+	delete game;
 
 	return 0;
 }
