@@ -25,8 +25,8 @@ namespace bloom::audio {
 
 		static bool isActive() noexcept { return s_state; }
 
-		int operator()() const noexcept { return m_channel; };
-		operator int() const noexcept { return m_channel; };
+		int operator()() const noexcept { return m_channel; }
+		operator int() const noexcept { return m_channel; }
 
 	private:
 		int m_channel = NULL_CHANNEL;

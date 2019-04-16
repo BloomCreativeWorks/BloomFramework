@@ -19,10 +19,10 @@ namespace bloom::audio {
 	}
 
 	bool SoundChunk::operator==(const SoundChunk& other) const noexcept {
-		return (m_chunk == other.m_chunk);
+		return m_chunk == other.m_chunk;
 	}
 
 	bool SoundChunk::operator!=(const SoundChunk& other) const noexcept {
-		return (m_chunk != other.m_chunk);
+		return m_chunk != other.m_chunk;
 	}
 }
