@@ -29,18 +29,16 @@ namespace bloom::audio {
 	bool MusicTrack::tryPlay(int plays, int fadeIn) {
 		if (Mix_PlayingMusic())
 			return false;
-		else {
-			play(plays, fadeIn);
-			return true;
-		}
+		play(plays, fadeIn);
+		return true;
 	}
 
 	bool MusicTrack::operator==(const MusicTrack& other) const noexcept {
-		return (m_track == other.m_track);
+		return m_track == other.m_track;
 	}
 
 	bool MusicTrack::operator!=(const MusicTrack& other) const noexcept {
-		return (m_track != other.m_track);
+		return m_track != other.m_track;
 	}
 
 	void MusicTrack::pause() noexcept {
@@ -61,21 +59,5 @@ namespace bloom::audio {
 	void MusicTrack::stop(int fadeOut) noexcept {
 		fadeOut = fadeOut < 0 ? 0 : fadeOut;
 		Mix_FadeOutMusic(fadeOut);
-	}
-
-	bool MusicTrack::isPlaying() noexcept {
-		return (Mix_PlayingMusic() && !isPaused());
-	}
-
-	bool MusicTrack::isPaused() noexcept {
-		return (Mix_PausedMusic());
-	}
-
-	bool MusicTrack::isPlayingOrPaused() noexcept {
-		return (Mix_PlayingMusic());
-	}
-
-	Mix_Fading MusicTrack::isFading() noexcept {
-		return (Mix_FadingMusic());
 	}
 }

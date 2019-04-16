@@ -24,10 +24,21 @@ namespace bloom::audio {
 		static void rewind() noexcept;
 		static void stop(int fadeOutMs = 0) noexcept;
 
-		static bool isPlaying() noexcept;
-		static bool isPaused() noexcept;
-		static bool isPlayingOrPaused() noexcept;
-		static Mix_Fading isFading() noexcept; /// TODO: rework this, make own enum
+		static bool isPlaying() noexcept {
+			return Mix_PlayingMusic() && !isPaused();
+		}
+
+		static bool isPaused() noexcept {
+			return Mix_PausedMusic();
+		}
+
+		static bool isPlayingOrPaused() noexcept {
+			return Mix_PlayingMusic();
+		}
+
+		static Mix_Fading isFading() noexcept { // TODO: rework this, make own enum
+			return Mix_FadingMusic();
+		}
 
 	private:
 		Mix_Music* m_track;
