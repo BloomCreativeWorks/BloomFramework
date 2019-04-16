@@ -58,24 +58,24 @@ namespace bloom::audio {
 		Mix_ExpireChannel(m_channel, -1);
 	}
 
+	void SoundPlayer::setVolume(double volumePercent) noexcept {
+		if (volumePercent < 0.0)
+			volumePercent = 0.0;
+		else if (volumePercent > 100.0)
+			volumePercent = 100.0;
+		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>(static_cast<double>(MIX_MAX_VOLUME) * volumePercent / 100.0));
+	}
+
+	double SoundPlayer::getVolume() const noexcept {
+		return static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) * 100.0 / static_cast<double>(MIX_MAX_VOLUME);
+	}
+
 	void SoundPlayer::setRawVolume(int rawVolume) noexcept {
 		if (rawVolume < 0)
 			rawVolume = 0;
 		else if (rawVolume > MIX_MAX_VOLUME)
 			rawVolume = MIX_MAX_VOLUME;
 		Mix_VolumeChunk(m_chunk->m_chunk, rawVolume);
-	}
-
-	void SoundPlayer::setVolume(double volumePercent) noexcept {
-		if (volumePercent < 0.0)
-			volumePercent = 0.0;
-		else if (volumePercent > 100.0)
-			volumePercent = 100.0;
-		Mix_VolumeChunk(m_chunk->m_chunk, static_cast<int>((static_cast<double>(MIX_MAX_VOLUME) / 100.0) * volumePercent));
-	}
-
-	double SoundPlayer::getVolume() const noexcept {
-		return (static_cast<double>(Mix_VolumeChunk(m_chunk->m_chunk, -1)) * 100.0) / static_cast<double>(MIX_MAX_VOLUME);
 	}
 
 	int SoundPlayer::getRawVolume() const noexcept {
