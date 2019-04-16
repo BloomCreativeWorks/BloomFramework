@@ -1,8 +1,13 @@
 #include "Audio/SoundChannel.h"
 #include "Exception.h"
 
-#define allocated()	Mix_AllocateChannels(-1)
-#define playing()	Mix_Playing(-1)
+inline auto allocated() {
+	return Mix_AllocateChannels(-1);
+}
+
+inline auto playing() {
+	return Mix_Playing(-1);
+}
 
 namespace bloom::audio {
 	bool SoundChannel::s_state = false;
