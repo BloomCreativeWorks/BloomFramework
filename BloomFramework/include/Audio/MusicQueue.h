@@ -15,9 +15,11 @@ namespace bloom::audio {
 
 		bool tryActivate() noexcept;
 		void activate() noexcept;
-		void add(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
-		void add(TrackExt&& track);
-		void play(bool bypassFade = false);
+		void pushBack(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
+		void pushBack(TrackExt&& track);
+		void pushFront(TrackPtr track, int plays = 1, int fadeInMs = 0, bool bypassInfinitePlayback = false);
+		void pushFront(TrackExt&& track);
+		bool play();
 		void pause();
 		void resume();
 		void rewind();
@@ -32,18 +34,43 @@ namespace bloom::audio {
 		static void setRawVolume(int rawVolume) noexcept;
 		static int getRawVolume() noexcept;
 
-		void setInfinitePlayback(bool state) noexcept;
-		bool isInfinitePlayback() const noexcept;
+		void setInfinitePlayback(bool state) noexcept {
+			m_infinitePlayback = state;
+		}
 
-		bool isActive() const noexcept;
-		bool isPlaying() const noexcept;
-		bool isPaused() const noexcept;
+		bool isInfinitePlayback() const noexcept {
+			return m_infinitePlayback;
+		}
+
+		void setFadeInPolicy(bool state) noexcept {
+			m_fadeIn = state;
+		}
+
+		bool setFadeInPolicy() const noexcept {
+			return m_fadeIn;
+		}
+
+		bool isActive() const noexcept {
+			return s_currentQueuePtr == this;
+		}
+
+		bool isPlaying() const noexcept {
+			return m_playbackState;
+		}
+
+		bool isPaused() const noexcept {
+			return m_pauseState;
+		}
 
 	private:
-		std::queue<TrackExt> m_queue;
-		bool m_infinitePlayback = true;
-		bool m_playbackState = false;
-		bool m_pauseState = false;
+		void replay();
+
+		std::deque<TrackExt> m_queue;
+		std::optional<TrackExt> m_currentTrack{};
+		bool m_infinitePlayback{ true };
+		bool m_playbackState{ false };
+		bool m_pauseState{ false };
+		bool m_fadeIn{ true };
 
 		static void _next_track();
 		static void _finalize();

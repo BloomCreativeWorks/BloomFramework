@@ -12,7 +12,7 @@ namespace bloom::audio {
 		Music(MusicStore& existingStore) : m_intlStore{ nullptr }, store { existingStore } {}
 
 		void push(const std::filesystem::path& filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
-			queue.add(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
+			queue.pushBack(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
 		}
 
 		void clear() {
