@@ -13,12 +13,11 @@ namespace bloom::systems {
 		using System::DefaultSystem;
 
 	public:
-		void update(std::optional<double> deltaTime = std::nullopt) override {
+		void update(uint64_t = 0) override {
 			m_registry.view<Position, Size, Sprite>().each(
-				[](auto entity, Position& pos, Size& size, Sprite& spr) {
-				SDL_Rect destRect{ pos.x, pos.y, size.w, size.h };
-				spr.texture->render(spr.srcRect, destRect);
-			});
+				[](auto, Position& position, Size& size, Sprite& sprite) {
+					sprite.texture->render(sprite.srcRect, SDL_Rect{ position.x, position.y, size.w, size.h });
+				});
 		}
 	};
 }

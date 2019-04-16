@@ -5,11 +5,14 @@
 namespace bloom::systems {
 	class DefaultSystem {
 	public:
-		DefaultSystem(entt::DefaultRegistry& registry) noexcept :
-			m_registry(registry) 
-		{}
+		DefaultSystem(entt::DefaultRegistry& registry) : m_registry(registry) {}
+		DefaultSystem(const DefaultSystem&) = default;
+		DefaultSystem(DefaultSystem&&) = default;
+		DefaultSystem& operator=(const DefaultSystem&) = delete;
+		DefaultSystem& operator=(DefaultSystem&&) = delete;
+		virtual ~DefaultSystem() = default;
 
-		virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
+		virtual void update(uint64_t deltaTime = 0) = 0;
 
 	protected:
 		entt::DefaultRegistry& m_registry;

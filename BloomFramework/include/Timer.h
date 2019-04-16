@@ -3,19 +3,38 @@
 #include "export.h"
 
 namespace bloom {
-	class BLOOMFRAMEWORK_API Timer {
+	class Timer {
 	public:
-		Timer() noexcept;
+		Timer() : m_startTicks(SDL_GetPerformanceCounter()), m_timerTicks(m_startTicks) {}
 
-		static Uint32 totalLifetime() noexcept;
+		static uint32_t totalLifetime() {
+			return SDL_GetTicks();
+		}
 
-		void start() noexcept;
-		void restart() noexcept;
-		double split() const noexcept;
-		double lap() noexcept;
-		double objectLifetime() const noexcept;
+		void restart() {
+			m_timerTicks = SDL_GetPerformanceCounter();
+		}
+
+		[[deprecated("This function is deprecated. Use `restart()` instead")]]
+		void start() {
+			restart();
+		}
+
+		uint64_t split() const {
+			return ((SDL_GetPerformanceCounter() - m_timerTicks) / (SDL_GetPerformanceFrequency() / 1000));
+		}
+
+		uint64_t lap() {
+			const auto oldTicks = m_timerTicks;
+			m_timerTicks = SDL_GetPerformanceCounter();
+			return ((m_timerTicks - oldTicks) / (SDL_GetPerformanceFrequency() / 1000));
+		}
+
+		uint64_t objectLifetime() const {
+			return ((SDL_GetPerformanceCounter() - m_startTicks) / (SDL_GetPerformanceFrequency() / 1000));
+		}
 
 	private:
-		Uint64	m_startTicks, m_timerTicks;
+		uint64_t m_startTicks, m_timerTicks;
 	};
 }

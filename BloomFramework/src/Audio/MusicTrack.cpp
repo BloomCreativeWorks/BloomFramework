@@ -4,12 +4,12 @@
 namespace bloom::audio {
 	MusicTrack::MusicTrack(const std::filesystem::path& filePath) {
 		if (!std::filesystem::exists(filePath))
-			throw Exception("[MusicTrack::load] " + filePath.u8string() + " not exists");
+			throw Exception{ "MusicTrack::load", "File \"" + filePath.u8string() + "\" not exists" };
 
 		m_track = Mix_LoadMUS(filePath.u8string().c_str());
 
 		if (!m_track)
-			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+			throw Exception{ "MusicTrack::load", SDL_GetError() };
 	}
 
 	MusicTrack::~MusicTrack() {
@@ -23,7 +23,7 @@ namespace bloom::audio {
 			plays = 0;
 
 		if (Mix_FadeInMusic(m_track, plays, fadeIn) == -1)
-			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+			throw Exception{ "MusicTrack::play", SDL_GetError() };
 	}
 
 	bool MusicTrack::tryPlay(int plays, int fadeIn) {

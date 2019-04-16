@@ -1,7 +1,4 @@
 #pragma once
-
-#include "stdIncludes.h"
-
 #include <unordered_map>
 #include "HashPath.h"
 #include "Texture.h"
@@ -13,19 +10,27 @@ namespace bloom {
 		class BLOOMFRAMEWORK_API TextureStore {
 		public:
 			TextureStore(SDL_Renderer*& renderer);
-			TextureStore(Game& renderer);
+			TextureStore(Game& object);
 
 			TexturePtr load(const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey = std::nullopt);
-			TexturePtr at(const std::filesystem::path& filePath) const;
-			TexturePtr find(const std::filesystem::path& filePath) const noexcept;
-			void unload(const std::filesystem::path& filePath);
-			void unloadAll() noexcept;
 
-			TexturePtr operator[](const std::filesystem::path& key) const noexcept;
+			TexturePtr find(const std::filesystem::path& filePath) const noexcept {
+				const auto textureIt = m_store.find(filePath.u8string());
+				return textureIt != m_store.end() ? textureIt->second : TexturePtr{};
+			}
+
+			void unload(const std::filesystem::path& filePath) {
+				if (const auto textureIt = m_store.find(filePath.u8string()); textureIt != m_store.end())
+					m_store.erase(textureIt); // We can't dispose the actual Texture since others may still be using it.
+			}
+
+			TexturePtr operator[](const std::filesystem::path& key) const noexcept {
+				return find(key);
+			}
 
 		private:
-			SDL_Renderer*&	m_renderer;
-			std::unordered_map<std::filesystem::path, TexturePtr, HashPath> m_store;
+			SDL_Renderer* const& c_renderer;
+			std::unordered_map<std::string, TexturePtr>	m_store;
 		};
 	}
 }

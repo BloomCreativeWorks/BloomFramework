@@ -28,7 +28,7 @@ namespace bloom::audio {
 
 	void SoundChannel::assign(int channel) {
 		if (static_cast<size_t>(channel) >= s_channels.size() || channel < 0)
-			throw Exception{ "[SoundChannel] assignment failed" };
+			throw Exception{ "SoundChannel", "channel assignment failed" };
 		if (!s_state)
 			activate();
 		m_channel = channel;

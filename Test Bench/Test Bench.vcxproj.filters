@@ -40,10 +40,16 @@
     <ClInclude Include="GameObjectTest\RandomizerSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GameObjectTest\NoRandomComponent.h">
+    <ClInclude Include="getExePath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="getExePath.h">
+    <ClInclude Include="GameObjectTest\TestAnimatedGameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTest\AnimationChangerSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectTest\RandomComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -44,7 +44,7 @@ namespace bloom::audio {
 
 	bool MusicQueue::play() {
 		if (m_queue.empty())
-			throw Exception("[MusicQueue] queue is empty");
+			throw Exception{ "MusicQueue::play", "Queue is empty" };
 
 		if (s_currentQueuePtr != this)
 			activate();
