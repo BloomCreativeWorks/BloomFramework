@@ -41,14 +41,14 @@ void test_player(const std::filesystem::path& dataDir) {
 
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
 	//track1.stop();
-	::music.push(musicPath / L"music_001.mp3");
-	::music.push(musicPath / L"music_002.mp3");
-	::music.push(musicPath / L"music_003.mp3");
-	::music.push(musicPath / L"music_003.mp3", 1, 200, true);
-	::music.push(musicPath / L"music_004.mp3");
-	::music.push(musicPath / L"music_005.mp3");
-	//music.push(musicPath / L"music_006.mp3");
-	//music.push(musicPath / L"music_007.mp3");
+	::music.pushBack(musicPath / L"music_001.mp3");
+	::music.pushBack(musicPath / L"music_002.mp3");
+	::music.pushBack(musicPath / L"music_003.mp3");
+	::music.pushBack(musicPath / L"music_003.mp3", 1, 200, true);
+	::music.pushBack(musicPath / L"music_004.mp3");
+	::music.pushBack(musicPath / L"music_005.mp3");
+	//music.pushBack(musicPath / L"music_006.mp3");
+	//music.pushBack(musicPath / L"music_007.mp3");
 
 	::sounds.add(soundsPath / L"sound_001.wav"); //0
 	::sounds.add(soundsPath / L"sound_002.wav"); //1

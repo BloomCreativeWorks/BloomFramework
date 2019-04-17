@@ -8,11 +8,15 @@
 namespace bloom::audio {
 	class Music {
 	public:
-		Music() : m_intlStore{ new MusicStore }, store{ *m_intlStore } {}
-		Music(MusicStore& existingStore) : m_intlStore{ nullptr }, store { existingStore } {}
+		Music() : m_intlStore{ std::make_shared<MusicStore>() }, store{ *m_intlStore } {}
+		explicit Music(MusicStore& existingStore) : m_intlStore{ nullptr }, store { existingStore } {}
 
-		void push(const std::filesystem::path& filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
+		void pushBack(const std::filesystem::path& filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
 			queue.pushBack(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
+		}
+
+		void pushFront(const std::filesystem::path& filePath, int plays = 1, int fadeInMs = 0, bool ignoreInfinitePlayback = false) {
+			queue.pushFront(store.load(filePath), plays, fadeInMs, ignoreInfinitePlayback);
 		}
 
 		void clear() {
@@ -45,12 +49,12 @@ namespace bloom::audio {
 
 	class Sounds {
 	public:
-		Sounds() : m_intlStore{ new SoundStore }, store{ *m_intlStore } {}
-		Sounds(SoundStore& existingStore) : m_intlStore{ nullptr }, store{ existingStore } {}
+		Sounds() : m_intlStore{ std::make_shared<SoundStore>() }, store{ *m_intlStore } {}
+		explicit Sounds(SoundStore& existingStore) : m_intlStore{ nullptr }, store{ existingStore } {}
 
 		int add(const std::filesystem::path& filePath) {
 			players.emplace_back(std::make_unique<SoundPlayer>(store.load(filePath)));
-			return (static_cast<int>(players.size()) - 1);
+			return static_cast<int>(players.size()) - 1;
 		}
 
 		void stopAll() noexcept {
