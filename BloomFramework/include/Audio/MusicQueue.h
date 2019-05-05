@@ -26,7 +26,8 @@ namespace bloom::audio {
 		void skip(int fadeOutMs = 0, bool allowUnpause = true);
 		void eject(int fadeOutMs = 0);
 		void clear(int fadeOutMs = 0);
-		void deactivate(bool forced = false) noexcept;
+
+		static void deactivate(bool forced = false) noexcept;
 
 		static void setVolume(double volumePercent) noexcept;
 		static double getVolume() noexcept;
