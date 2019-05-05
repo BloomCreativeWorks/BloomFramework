@@ -27,7 +27,7 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::pushBack(TrackPtr track, int plays, int fadeInMs, bool bypassInfinitePlayback) {
-		m_queue.push_back({ track, plays, fadeInMs, bypassInfinitePlayback });
+		m_queue.emplace_back(std::move(track), plays, fadeInMs, bypassInfinitePlayback);
 	}
 
 	void MusicQueue::pushBack(TrackExt&& track) {
@@ -35,7 +35,7 @@ namespace bloom::audio {
 	}
 
 	void MusicQueue::pushFront(TrackPtr track, int plays, int fadeInMs, bool bypassInfinitePlayback) {
-		m_queue.push_front({ track, plays, fadeInMs, bypassInfinitePlayback });
+		m_queue.emplace_front(std::move(track), plays, fadeInMs, bypassInfinitePlayback);
 	}
 
 	void MusicQueue::pushFront(TrackExt&& track) {
