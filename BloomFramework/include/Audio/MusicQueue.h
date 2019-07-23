@@ -52,7 +52,7 @@ namespace bloom::audio {
 		}
 
 		bool isActive() const noexcept {
-			return s_currentQueuePtr == this;
+			return s_current.queue == this;
 		}
 
 		bool isPlaying() const noexcept {
@@ -66,8 +66,7 @@ namespace bloom::audio {
 	private:
 		void replay();
 
-		std::deque<TrackExt> m_queue;
-		std::optional<TrackExt> m_currentTrack{};
+		std::deque<TrackExt> m_queue{};
 		bool m_infinitePlayback{ true };
 		bool m_playbackState{ false };
 		bool m_pauseState{ false };
@@ -75,6 +74,10 @@ namespace bloom::audio {
 
 		static void _next_track();
 		static void _finalize();
-		static MusicQueue* s_currentQueuePtr;
+
+        static struct {
+            MusicQueue* queue = nullptr;
+            std::optional<TrackExt> track = std::nullopt;
+        } s_current;
 	};
 }
