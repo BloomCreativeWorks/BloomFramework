@@ -1,5 +1,6 @@
 #pragma once
 #include "stdIncludes.h"
+#include <optional>
 
 namespace bloom::graphics {
 	class SpriteText;
@@ -40,12 +41,12 @@ namespace bloom::graphics {
 		}
 
 	private:
-		void initFont();
+        Font(const std::filesystem::path& fontPath, FontStyle style, std::optional<int> pointSize, std::optional<long> fontFaceIndex);
 
 		operator TTF_Font*() const { return m_font; }
 
 		TTF_Font* m_font = nullptr;
-		FontStyle m_style{};
+		FontStyle m_style;
 	};
 
 	using FontPtr = std::shared_ptr<Font>;
