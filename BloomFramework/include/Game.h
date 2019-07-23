@@ -55,7 +55,7 @@ namespace bloom {
 		/**
 		 * @brief Hangs the window for the specified time (in milliseconds)
 		 */
-		void delay(int intervalMs);
+        static void delay(int intervalMs);
 
 		/**
 		 * @brief Updates the screen with any rendering performed since the previous call
