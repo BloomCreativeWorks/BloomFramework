@@ -44,7 +44,7 @@ namespace bloom::audio {
 
     public:
         MusicStore& store;
-        MusicQueue queue;
+        MusicQueue queue{};
     };
 
     class Sounds {
@@ -88,6 +88,6 @@ namespace bloom::audio {
 
     public:
         SoundStore& store;
-        std::vector<SoundPlayerPtr> players;
+        std::vector<SoundPlayerPtr> players{};
     };
 }

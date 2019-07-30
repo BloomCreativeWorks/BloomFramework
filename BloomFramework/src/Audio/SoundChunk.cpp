@@ -2,27 +2,27 @@
 #include "Exception.h"
 
 namespace bloom::audio {
-	SoundChunk::SoundChunk(const std::filesystem::path& filePath) {
-		if (!std::filesystem::exists(filePath))
-				throw Exception{ "SoundChunk", "File \"" + filePath.u8string() + "\" not exists" };
+    SoundChunk::SoundChunk(const std::filesystem::path& filePath) {
+        if (!std::filesystem::exists(filePath))
+            throw Exception{ "SoundChunk", "File \"" + filePath.u8string() + "\" not exists" };
 
-		if (filePath.extension() != std::filesystem::path(L".wav"))
-				throw Exception{ "SoundChunk",  "non-wav file provided, use wav files only" };
+        if (filePath.extension() != std::filesystem::path(L".wav"))
+            throw Exception{ "SoundChunk",  "non-wav file provided, use wav files only" };
 
-		m_chunk = Mix_LoadWAV(filePath.u8string().c_str());
-		if (!m_chunk)
-			throw Exception{ "SoundChunk", SDL_GetError() };
-	}
+        m_chunk = Mix_LoadWAV(filePath.u8string().c_str());
+        if (!m_chunk)
+            throw Exception{ "SoundChunk", SDL_GetError() };
+    }
 
-	SoundChunk::~SoundChunk() {
-		Mix_FreeChunk(m_chunk);
-	}
+    SoundChunk::~SoundChunk() {
+        Mix_FreeChunk(m_chunk);
+    }
 
-	bool SoundChunk::operator==(const SoundChunk& other) const noexcept {
-		return m_chunk == other.m_chunk;
-	}
+    bool SoundChunk::operator==(const SoundChunk& other) const noexcept {
+        return m_chunk == other.m_chunk;
+    }
 
-	bool SoundChunk::operator!=(const SoundChunk& other) const noexcept {
-		return m_chunk != other.m_chunk;
-	}
+    bool SoundChunk::operator!=(const SoundChunk& other) const noexcept {
+        return m_chunk != other.m_chunk;
+    }
 }
