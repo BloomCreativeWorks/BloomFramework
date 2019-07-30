@@ -2,6 +2,8 @@
 #include "Exception.h"
 
 namespace bloom::audio {
+    MusicQueue::CurrentTrack MusicQueue::s_current{};
+
 	MusicQueue::~MusicQueue() {
 		clear();
 	}

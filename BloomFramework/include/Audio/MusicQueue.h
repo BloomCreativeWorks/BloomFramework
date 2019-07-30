@@ -75,7 +75,7 @@ namespace bloom::audio {
 		static void _next_track();
 		static void _finalize();
 
-        static struct {
+        static struct CurrentTrack {
             MusicQueue* queue = nullptr;
             std::optional<TrackExt> track = std::nullopt;
         } s_current;
