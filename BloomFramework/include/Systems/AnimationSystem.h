@@ -12,7 +12,7 @@ namespace bloom::systems {
 		using System::DefaultSystem;
 
 	public:
-		void update(uint64_t deltaTime = 0) override {
+		void update(double deltaTime = 0) override {
 			m_registry.view<AnimationPtr>().each(
 				[this, deltaTime](auto entity, AnimationPtr& animation) {
 					if (m_registry.has<AnimationSet>(entity))

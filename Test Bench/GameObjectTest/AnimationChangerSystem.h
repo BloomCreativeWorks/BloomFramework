@@ -13,7 +13,7 @@ class AnimationChangerSystem : public bloom::systems::System {
 	using bloom::systems::System::DefaultSystem;
 
 public:
-	void update(uint64_t = 0.0) override {
+	void update(double = 0.0) override {
 		m_counter = (m_counter + 1) % 100;
 		if (m_counter == 0) {
 			m_registry.view<AnimationSet>().each(

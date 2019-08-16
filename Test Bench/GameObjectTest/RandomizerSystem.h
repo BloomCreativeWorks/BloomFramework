@@ -8,11 +8,11 @@ class RandomPositionSystem : public bloom::systems::System {
 	using bloom::systems::System::DefaultSystem;
 
 public:
-	void update(uint64_t = 0) override {
+	void update(double = 0) override {
 		update(672, 472);
 	}
 
-	void update(int frameWidth, int frameHeight, uint64_t = 0) {
+	void update(int frameWidth, int frameHeight, double = 0) {
 		m_registry.view<Position, RandomPos>().each(
 			[frameWidth, frameHeight](auto, Position& pos, RandomPos&) {
 				pos.x = rand() % frameWidth;

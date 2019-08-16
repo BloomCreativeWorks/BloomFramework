@@ -12,7 +12,7 @@ namespace bloom::systems {
 		DefaultSystem& operator=(DefaultSystem&&) = delete;
 		virtual ~DefaultSystem() = default;
 
-		virtual void update(uint64_t deltaTime = 0) = 0;
+		virtual void update(double deltaTime = 0) = 0;
 
 	protected:
 		entt::DefaultRegistry& m_registry;

@@ -13,18 +13,18 @@ namespace bloom::graphics {
 		Animation& operator=(Animation&&) = default;
 		~Animation() = default;
 
-		Sprite update(uint64_t deltaTime);
+		Sprite update(double deltaTime);
 
 		void stop() {
 			m_currentFrame = 0;
 			m_lastUpdateTime = 0;
 		}
 
-		void setFrameTime(uint64_t ms) {
+		void setFrameTime(double ms) {
 			m_frameTime = ms;
 		}
 
-		void setFPS(uint64_t fps) {
+		void setFPS(double fps) {
 			setFrameTime(1000 / fps);
 		}
 
@@ -32,9 +32,9 @@ namespace bloom::graphics {
 		// std::unordered_map<int, Sprite> animationFrames; // Frames can be inserted in any order as long as the correct number is given.
 
 	private:
-		uint64_t m_lastUpdateTime = 0;
+		double m_lastUpdateTime = 0;
 		size_t m_currentFrame = 0;
-		uint64_t m_frameTime = 0;
+		double m_frameTime = 0;
 	};
 
 	using AnimationPtr = std::shared_ptr<Animation>;

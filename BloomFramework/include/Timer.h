@@ -20,18 +20,18 @@ namespace bloom {
 			restart();
 		}
 
-		uint64_t split() const {
-			return ((SDL_GetPerformanceCounter() - m_timerTicks) / (SDL_GetPerformanceFrequency() / 1000));
+		double split() const {
+			return (static_cast<double>(SDL_GetPerformanceCounter() - m_timerTicks) / static_cast<double>(SDL_GetPerformanceFrequency() / 1000.0));
 		}
 
-		uint64_t lap() {
+		double lap() {
 			const auto oldTicks = m_timerTicks;
 			m_timerTicks = SDL_GetPerformanceCounter();
-			return ((m_timerTicks - oldTicks) / (SDL_GetPerformanceFrequency() / 1000));
+			return (static_cast<double>(m_timerTicks - oldTicks) / static_cast<double>(SDL_GetPerformanceFrequency() / 1000.0));
 		}
 
-		uint64_t objectLifetime() const {
-			return ((SDL_GetPerformanceCounter() - m_startTicks) / (SDL_GetPerformanceFrequency() / 1000));
+		double objectLifetime() const {
+			return (static_cast<double>(SDL_GetPerformanceCounter() - m_startTicks) / static_cast<double>(SDL_GetPerformanceFrequency() / 1000.0));
 		}
 
 	private:
