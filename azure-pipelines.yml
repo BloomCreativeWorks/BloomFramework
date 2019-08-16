@@ -13,7 +13,7 @@ pr:
 - '*'
 
 pool:
-  vmImage: 'VS2017-Win2016'
+  vmImage: 'windows-2019'
   demands:
   - 'msbuild'
   - 'visualstudio'
@@ -41,11 +41,6 @@ steps:
   lfs: true
   submodules: 'recursive'
 
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.4.1'
-  inputs:
-    versionSpec: '4.4.1'
-
 - task: NuGetCommand@2
   displayName: 'Restore NuGet packages'
   inputs:
@@ -56,6 +51,6 @@ steps:
   displayName: 'Build solution'
   inputs:
     solution: '$(solution)'
-    vsVersion: '15.0'
+    vsVersion: '16.0'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'

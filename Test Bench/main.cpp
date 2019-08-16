@@ -80,7 +80,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	fs::path fontsPath = dataDir / L"Fonts";
 
 	if (!std::filesystem::exists(assetsPath))
-		throw bloom::Exception("Required assets can't be found.");
+		throw bloom::Exception{ "Test Bench", "Required assets can't be found" };
 
 	std::filesystem::path spriteSheetPath = assetsPath / L"OverworldTestSpritesheet.png";
 	std::filesystem::path testCharPath = assetsPath / L"TestChar.png";
@@ -151,7 +151,6 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
 	
-
 	// If manual control of entities is required, this is the method to do so.
 	auto& testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
@@ -230,17 +229,15 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	game->destroy();
 }
 
-
-int main() {
+int main(int argc, char* argv[]) {
 	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
 
 	try {
 		Game::initialize();
 	}
 	catch (Exception & e) {
-		std::cerr << e.what() << std::endl;
-		system("pause");
-		exit(-1);
+		std::cerr << e;
+		abort();
 	}
 
 	fs::path dataDir = fs::path(getExePath()) / L"data";
