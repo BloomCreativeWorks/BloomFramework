@@ -4,7 +4,7 @@
 namespace bloom::graphics {
 	Drawable::Drawable(SDL_Renderer* targetRenderer) : c_renderer(targetRenderer) {
 		if (!c_renderer)
-			throw Exception("[Drawable] `renderer` pointer can not be nullptr");
+			throw Exception{ "Drawable", "targetRenderer can not be nullptr" };
 	}
 
 	Drawable::~Drawable() {
@@ -17,14 +17,13 @@ namespace bloom::graphics {
 			return;
 
 		if (destRect.w <= 0)
-			throw Exception("[Drawable::render] destRect.w is <= 0");
+			throw Exception{ "Drawable::render", "destRect.w must be > 0" };
 		if (destRect.h <= 0)
-			throw Exception("[Drawable::render] destRect.h is <= 0");
+			throw Exception{ "Drawable::render", "destRect.h must be > 0" };
 
 		auto sRectPtr = (srcRect.has_value() && srcRect->w > 0 && srcRect->h > 0) ? &srcRect.value() : nullptr;
 		// Render to screen
 		if (SDL_RenderCopyEx(c_renderer, m_texture, sRectPtr, &destRect, 0.0, nullptr, flip))
-			throw Exception("[Drawable::render] -> " + std::string{ SDL_GetError() });
+			throw Exception{ "Drawable::render", SDL_GetError() };
 	}
 }
-

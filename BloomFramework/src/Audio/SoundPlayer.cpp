@@ -13,7 +13,7 @@ namespace bloom::audio {
 			--plays;
 
 		if (Mix_PlayChannelTimed(m_channel, m_chunk->m_chunk, plays, limitTimeMs) == -1)
-			throw Exception("[SDL_Mixer] " + std::string(SDL_GetError()));
+			throw Exception{ "SoundPlayer::play", SDL_GetError() };
 	}
 
 	void SoundPlayer::pause() {
