@@ -143,13 +143,11 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
 	
-
 	// If manual control of entities is required, this is the method to do so.
 	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
 	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = rstep(10), testY = rstep(10);
-
 
 	while (game->isRunning()) {
 		testGOpos.x += testX;
@@ -185,8 +183,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	game->destroy();
 }
 
-
-int main() {
+int main(int argc, char* argv[]) {
 	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
 
 	try {

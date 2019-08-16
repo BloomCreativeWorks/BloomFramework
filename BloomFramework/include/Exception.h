@@ -2,6 +2,7 @@
 
 #include <exception>
 #include <string_view>
+#include <iostream>
 
 namespace bloom {
 	class Exception : public std::exception {
