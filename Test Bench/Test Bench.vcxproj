@@ -22,19 +22,19 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{69BCBA61-1EF9-4E33-92FB-DC40D2F2319C}</ProjectGuid>
     <RootNamespace>TestBench</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -42,12 +42,12 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -93,7 +93,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
       <PreprocessorDefinitions>BLOOM_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -115,7 +115,7 @@
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
       <PreprocessorDefinitions>BLOOM_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -139,7 +139,7 @@
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
       <PreprocessorDefinitions>BLOOM_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -165,7 +165,7 @@
       <AdditionalIncludeDirectories>..\BloomFramework\include\;..\entt\src\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp17</LanguageStandard>
       <DiagnosticsFormat>Caret</DiagnosticsFormat>
       <PreprocessorDefinitions>BLOOM_DEBUG;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
