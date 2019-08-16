@@ -2,7 +2,7 @@
 
 #include <exception>
 #include <string>
-#include "stdIncludes.h"
+#include <iostream>
 
 namespace bloom {
 	class BLOOMFRAMEWORK_API std::exception;
