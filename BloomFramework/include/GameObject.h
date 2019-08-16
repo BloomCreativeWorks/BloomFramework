@@ -24,7 +24,8 @@ namespace bloom {
 		}
 
 		virtual ~GameObject() {
-			m_registry.destroy(m_entity);
+			if (m_registry.valid(m_entity))
+				m_registry.destroy(m_entity);
 		}
 
 		virtual void init() = 0;
