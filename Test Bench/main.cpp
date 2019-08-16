@@ -185,8 +185,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	game->destroy();
 }
 
-
-int main() {
+int main(int argc, char* argv[]) {
 	SetConsoleCP(CP_UTF8); SetConsoleOutputCP(CP_UTF8);
 
 	try {

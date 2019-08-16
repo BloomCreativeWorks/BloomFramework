@@ -16,6 +16,5 @@
 #include "SDL_image.h"
 #include "SDL_ttf.h"
 #include "SDL_mixer.h"
-#undef main // undef it because SDL_main function assumed not to throw exceptions
 
 #include "entt/entt.hpp"
