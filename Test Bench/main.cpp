@@ -114,7 +114,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	game->delay(500);
 
 	// Test Game Object
-	entt::DefaultRegistry testRegistry;
+	entt::registry testRegistry;
 	AnimationChangerSystem animChangerTest(testRegistry);
 	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);

@@ -14,7 +14,7 @@ public:
 
 	void update(int frameWidth, int frameHeight, double = 0) {
 		m_registry.view<Position, RandomPos>().each(
-			[frameWidth, frameHeight](auto, Position& pos, RandomPos&) {
+			[frameWidth, frameHeight](auto, Position& pos, RandomPos) {
 				pos.x = rand() % frameWidth;
 				pos.y = rand() % frameHeight;
 			}
