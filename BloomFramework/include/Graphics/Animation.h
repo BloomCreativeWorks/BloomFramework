@@ -25,16 +25,16 @@ namespace bloom::graphics {
 		}
 
 		void setFPS(double fps) {
-			setFrameTime(1000 / fps);
+			setFrameTime(1000.0 / fps);
 		}
 
 		std::vector<Sprite> animationFrames; // Frames must be inserted in order.
 		// std::unordered_map<int, Sprite> animationFrames; // Frames can be inserted in any order as long as the correct number is given.
 
 	private:
-		double m_lastUpdateTime = 0;
+		double m_lastUpdateTime = 0.0;
 		size_t m_currentFrame = 0;
-		double m_frameTime = 0;
+		double m_frameTime = 0.0;
 	};
 
 	using AnimationPtr = std::shared_ptr<Animation>;

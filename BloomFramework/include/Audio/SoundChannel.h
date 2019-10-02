@@ -7,7 +7,7 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
 	public:
-		SoundChannel(SoundChannel * objThisPtr);
+		SoundChannel(SoundChannel* objThisPtr);
 		~SoundChannel();
 
 		static void optimize();

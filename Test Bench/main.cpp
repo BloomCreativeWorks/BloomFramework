@@ -142,11 +142,11 @@ void test_drawer(const std::filesystem::path& dataDir) {
 
 	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
-	
-	// If manual control of entities is required, this is the method to do so.
-	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
-	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
+	// If manual control of entities is required, this is the method to do so.
+	auto& testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+
+	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = rstep(10), testY = rstep(10);
 
 	while (game->isRunning()) {

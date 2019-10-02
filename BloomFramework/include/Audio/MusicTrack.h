@@ -6,10 +6,10 @@ namespace bloom::audio {
 	class BLOOMFRAMEWORK_API MusicTrack {
 	public:
 		MusicTrack() {}
-		MusicTrack(const std::filesystem::path & filePath);
+		MusicTrack(const std::filesystem::path& filePath);
 		~MusicTrack();
 
-		void load(const std::filesystem::path & filePath);
+		void load(const std::filesystem::path& filePath);
 		void play(int plays = 1, int fadeIn = 0);
 		bool tryPlay(int plays = 1, int fadeIn = 0);
 		void pause();
@@ -21,7 +21,7 @@ namespace bloom::audio {
 		static bool isPaused();
 
 	private:
-		Mix_Music * m_track = nullptr;
+		Mix_Music* m_track = nullptr;
 	};
 
 	using Track = MusicTrack;

@@ -41,7 +41,7 @@ namespace bloom::graphics {
 		}
 
 	private:
-        Font(const std::filesystem::path& fontPath, FontStyle style, std::optional<int> pointSize, std::optional<long> fontFaceIndex);
+		Font(const std::filesystem::path& fontPath, FontStyle style, std::optional<int> pointSize, std::optional<long> fontFaceIndex);
 
 		operator TTF_Font*() const { return m_font; }
 
