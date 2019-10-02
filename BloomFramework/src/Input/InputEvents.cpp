@@ -1,13 +1,15 @@
 #include "Input/InputEvents.h"
 
-// checks keyboard key
-#define checkKey(lockState, key) (!(lockState) && (key) != bloom::input::KeyboardKey::KEYBOARD_SIZE)
-// checks mouse button
-#define checkBtn(lockState, btn) (!(lockState) && (btn) != bloom::input::MouseButton::MOUSE_MAX)
-
-#define isLockKey(key) ((key) == SDL_SCANCODE_CAPSLOCK || (key) == SDL_SCANCODE_NUMLOCKCLEAR || (key) == SDL_SCANCODE_SCROLLLOCK)
-
 namespace bloom::input {
+	constexpr bool checkKey(bool lockState, KeyboardKey key) { return !lockState && key != KeyboardKey::KEYBOARD_SIZE; }
+
+	constexpr bool checkButton(bool lockState, MouseButton button) { return !lockState && button != MouseButton::MOUSE_SIZE; }
+
+	constexpr bool isLockKey(SDL_Scancode key) {
+		return key == SDL_SCANCODE_CAPSLOCK || key == SDL_SCANCODE_NUMLOCKCLEAR || key == SDL_SCANCODE_SCROLLLOCK;
+	}
+
+
 	KeyboardEvent::KeyboardEvent() noexcept {
 		int numKeys = 0;
 		const auto kb = SDL_GetKeyboardState(&numKeys);
@@ -45,19 +47,19 @@ namespace bloom::input {
 	}
 
 	bool KeyboardEvent::shift() const noexcept {
-		return (isPressed(KeyboardKey::KEY_LEFT_SHIFT) || isPressed(KeyboardKey::KEY_RIGHT_SHIFT));
+		return (isPressed(KeyboardKey::LShift) || isPressed(KeyboardKey::RShift));
 	}
 
 	bool KeyboardEvent::ctrl() const noexcept {
-		return (isPressed(KeyboardKey::KEY_LEFT_CTRL) || isPressed(KeyboardKey::KEY_RIGHT_CTRL));
+		return (isPressed(KeyboardKey::LCtrl) || isPressed(KeyboardKey::RCtrl));
 	}
 
 	bool KeyboardEvent::alt() const noexcept {
-		return (isPressed(KeyboardKey::KEY_LEFT_ALT) || isPressed(KeyboardKey::KEY_RIGHT_ALT));
+		return (isPressed(KeyboardKey::LAlt) || isPressed(KeyboardKey::RAlt));
 	}
 
 	bool KeyboardEvent::capsLock() const noexcept {
-		return isPressed(KeyboardKey::KEY_CAPSLOCK);
+		return isPressed(KeyboardKey::CapsLock);
 	}
 
 	bool KeyboardEvent::isPrintable(SDL_Keycode key) noexcept {
@@ -70,12 +72,12 @@ namespace bloom::input {
 		m_keyboard.set(SDL_SCANCODE_NUMLOCKCLEAR, mod & KMOD_NUM);
 	}
 
-	std::string KeyboardEvent::getPrintable() const {
-		return m_printable;
+	char KeyboardEvent::toChar() const {
+		return m_char;
 	}
 
 	void KeyboardEvent::reset() {
-		m_printable.clear();
+		m_char = '\0';
 		updateModKeys();
 		m_stateChanged.reset();
 	}
@@ -93,14 +95,41 @@ namespace bloom::input {
 			m_keyboard.set(kbe.keysym.scancode, kbe.state);
 		}
 		if (kbe.state && isPrintable(kbe.keysym.sym)) {
-			if (kbe.keysym.sym == SDLK_BACKSPACE)
-				m_printable += "\b ";
-			m_printable += static_cast<char>(kbe.keysym.sym);
+			m_char = static_cast<char>(kbe.keysym.sym);
 			if ((shift() || capsLock()) && kbe.keysym.sym >= SDLK_a && kbe.keysym.sym <= SDLK_z)
-				m_printable.back() -= ('a' - 'A');
+				m_char -= ('a' - 'A');
+			recorder.append(m_char);
 		}
 	}
 
+	void KeyboardEvent::SymRecorder::start() noexcept { m_state = true; }
+
+	void KeyboardEvent::SymRecorder::cancel() { m_state = false; m_str.clear(); }
+
+	std::string KeyboardEvent::SymRecorder::transfer() { return std::move(m_str); }
+
+	const std::string& KeyboardEvent::SymRecorder::get() const { return m_str; }
+
+	std::string KeyboardEvent::SymRecorder::stop() { m_state = false; return std::move(m_str); }
+
+	void KeyboardEvent::SymRecorder::clear() { m_str.clear(); }
+
+	void KeyboardEvent::SymRecorder::append(char sym) {
+		if (m_state) {
+			switch (sym) {
+			case '\0':
+				break;
+			case '\r': case '\n':
+				m_str += "\r\n";
+			case '\b':
+				if (!m_str.empty())
+					m_str.pop_back();
+				break;
+			default:
+				m_str.push_back(sym);
+			}
+		}
+	}
 
 
 	MouseEvent::MouseEvent() noexcept {
@@ -119,13 +148,13 @@ namespace bloom::input {
 	}
 
 	uint8_t MouseEvent::isPressed(MouseButton button) const noexcept {
-		if (checkBtn(m_lockState, button))
+		if (checkButton(m_lockState, button))
 			return m_mouse[static_cast<size_t>(button)];
 		return 0;
 	}
 
 	bool MouseEvent::stateChanged(MouseButton button) const noexcept {
-		return (checkBtn(m_lockState, button)
+		return (checkButton(m_lockState, button)
 			&& m_stateChanged[static_cast<size_t>(button)]);
 	}
 
@@ -149,7 +178,7 @@ namespace bloom::input {
 		return m_scroll;
 	}
 
-	bool MouseEvent::isInside(const SDL_Rect & rectangle) const noexcept {
+	bool MouseEvent::isInside(const SDL_Rect& rectangle) const noexcept {
 		return ((m_pos.x >= rectangle.x)
 			&& (m_pos.x <= rectangle.x + rectangle.w)
 			&& (m_pos.y >= rectangle.y)
@@ -166,32 +195,22 @@ namespace bloom::input {
 
 	void MouseEvent::reset() noexcept {
 		m_stateChanged.reset();
-		m_scroll.x = 0; m_scroll.y = 0;
-		m_offset.x = 0; m_offset.y = 0;
+		m_scroll.x = m_scroll.y = m_offset.x = m_offset.y = 0;
 	}
 
-	void MouseEvent::set(const SDL_MouseButtonEvent & mbe) noexcept {
-		//switch (mbe.state) {
-		//case SDL_PRESSED:
-		//	m_mouse[mbe.button] = mbe.clicks;
-		//	break;
-		//case SDL_RELEASED:
-		//	m_mouse[mbe.button] = 0;
-		//	break;
-		//}
+	void MouseEvent::set(const SDL_MouseButtonEvent& mbe) noexcept {
 		if (static_cast<bool>(m_mouse[mbe.button]) != static_cast<bool>(mbe.state))
 			m_stateChanged.set(mbe.button);
 		m_mouse[mbe.button] = mbe.state ? mbe.clicks : 0;
 		m_pos.x = mbe.x; m_pos.y = mbe.y;
 	}
 
-	void MouseEvent::set(const SDL_MouseMotionEvent & mme) noexcept {
+	void MouseEvent::set(const SDL_MouseMotionEvent& mme) noexcept {
 		m_pos.x = mme.x; m_pos.y = mme.y;
 		m_offset.x = mme.xrel; m_offset.y = mme.yrel;
 	}
 
-	void MouseEvent::set(const SDL_MouseWheelEvent & mwe) noexcept {
-		//reset();
+	void MouseEvent::set(const SDL_MouseWheelEvent& mwe) noexcept {
 		m_scroll.x = mwe.x; m_scroll.y = mwe.y;
 	}
 }

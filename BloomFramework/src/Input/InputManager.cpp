@@ -8,7 +8,7 @@ namespace bloom::input {
 
 		//mouse.m_mouseMoveX = 0;
 		//mouse.m_mouseMoveY = 0;
-		//keyboard.m_printable.reset();
+		//keyboard.m_char.reset();
 		//keyboard.m_keyboard = SDL_GetKeyboardState(nullptr);
 		//mouse.m_mouse = SDL_GetMouseState(&mouse.m_mouseX, &mouse.m_mouseY);
 
@@ -55,9 +55,9 @@ namespace bloom::input {
 
 			//if (keyboard.isPrintable(pressedKey.sym)) {
 			//	if (pressedKey.sym == SDLK_BACKSPACE)
-			//		keyboard.m_printable = "\b \b";
+			//		keyboard.m_char = "\b \b";
 			//	else
-			//		keyboard.m_printable = pressedKey.sym;
+			//		keyboard.m_char = pressedKey.sym;
 			//}
 
 			break;

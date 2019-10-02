@@ -33,7 +33,29 @@ namespace bloom::input {
 		bool ctrl() const noexcept;
 		bool alt() const noexcept;
 		bool capsLock() const noexcept;
-		std::string getPrintable() const;
+		char toChar() const;
+
+		operator char() const {
+			return toChar();
+		}
+
+		class SymRecorder {
+			friend class KeyboardEvent;
+			
+		public:
+			void start() noexcept;
+			std::string stop();
+			void clear();
+			void cancel();
+			std::string transfer();
+			const std::string& get() const;
+			
+		private:
+			void append(char sym);
+			
+			bool m_state{ false };
+			std::string m_str{};
+		} recorder{};
 
 	private:
 		void reset();
@@ -41,9 +63,9 @@ namespace bloom::input {
 		static bool isPrintable(SDL_Keycode key) noexcept;
 		void updateModKeys();
 
-		std::bitset<static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_keyboard{0};
-		std::bitset<static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_stateChanged{ 0 };
-		std::string m_printable{ "" };
+		std::bitset<static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_keyboard{};
+		std::bitset<static_cast<size_t>(KeyboardKey::KEYBOARD_SIZE)> m_stateChanged{};
+		char m_char{'\0'};
 
 		bool m_lockState = false;
 	};
@@ -76,10 +98,9 @@ namespace bloom::input {
 		void set(const SDL_MouseMotionEvent& mme) noexcept;
 		void set(const SDL_MouseWheelEvent& mwe) noexcept;
 
-		std::array<uint8_t, static_cast<size_t>(MouseButton::MOUSE_MAX)> m_mouse{};
-		std::bitset<static_cast<size_t>(MouseButton::MOUSE_MAX)> m_stateChanged{ 0 };
+		std::array<uint8_t, static_cast<size_t>(MouseButton::MOUSE_SIZE)> m_mouse{};
+		std::bitset<static_cast<size_t>(MouseButton::MOUSE_SIZE)> m_stateChanged{ 0 };
 
-		// TODO: ise Point instead of pair here
 		Coordinates m_pos{ 0, 0 },
 			m_offset{ 0, 0 },
 			m_scroll{ 0, 0 };

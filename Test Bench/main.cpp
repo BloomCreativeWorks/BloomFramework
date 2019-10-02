@@ -150,7 +150,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 
 	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
-	
+
 	// If manual control of entities is required, this is the method to do so.
 	auto& testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
@@ -165,32 +165,43 @@ void test_drawer(const std::filesystem::path& dataDir) {
 
 		cursorPos.x = game->input.mouse.getX();
 		cursorPos.y = game->input.mouse.getY();
-		std::cout << game->input.keyboard.getPrintable();
+		switch (char sym = game->input.keyboard) {
+		case '\0':
+			break;
+		case '\b':
+			std::cout << "\b \b";
+			break;
+		case '\n': case '\r':
+			std::cout << "\r\n";
+			break;
+		default:
+			std::cout << sym;
+		}
 
 		// vvv	wasUp and wasDown testing	vvv
-		if (game->input.keyboard.wasDown(input::KeyboardKey::KEY_0))
+		if (game->input.keyboard.wasDown(input::KeyboardKey::Num0))
 			std::cout << std::endl << "zero was pressed" << std::endl;
-		if (game->input.keyboard.wasUp(input::KeyboardKey::KEY_0))
+		if (game->input.keyboard.wasUp(input::KeyboardKey::Num0))
 			std::cout << std::endl << "zero was released" << std::endl;
-		if (game->input.keyboard.wasDown(input::KeyboardKey::KEY_CAPSLOCK))
+		if (game->input.keyboard.wasDown(input::KeyboardKey::CapsLock))
 			std::cout << std::endl << "caps lock was pressed" << std::endl;
-		if (game->input.keyboard.wasUp(input::KeyboardKey::KEY_CAPSLOCK))
+		if (game->input.keyboard.wasUp(input::KeyboardKey::CapsLock))
 			std::cout << std::endl << "caps lock was released" << std::endl;
-		if (game->input.mouse.wasDown(input::MouseButton::MOUSE_LEFT))
+		if (game->input.mouse.wasDown(input::MouseButton::Left))
 			std::cout << std::endl << "left mouse button was pressed" << std::endl;
-		if (game->input.mouse.wasUp(input::MouseButton::MOUSE_LEFT))
+		if (game->input.mouse.wasUp(input::MouseButton::Left))
 			std::cout << std::endl << "left mouse button was released" << std::endl;
 		// ^^^	wasUp and wasDown testing	^^^
 
 		// vvv	isPressed testing	vvv
 		int xOffset = 0, yOffset = 0;
-		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_W) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_UP))
+		if (game->input.keyboard.isPressed(input::KeyboardKey::W) || game->input.keyboard.isPressed(input::KeyboardKey::Up))
 			yOffset -= 5;
-		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_S) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_DOWN))
+		if (game->input.keyboard.isPressed(input::KeyboardKey::S) || game->input.keyboard.isPressed(input::KeyboardKey::Down))
 			yOffset += 5;
-		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_A) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_LEFT))
+		if (game->input.keyboard.isPressed(input::KeyboardKey::A) || game->input.keyboard.isPressed(input::KeyboardKey::Left))
 			xOffset -= 5;
-		if (game->input.keyboard.isPressed(input::KeyboardKey::KEY_D) || game->input.keyboard.isPressed(input::KeyboardKey::KEY_RIGHT))
+		if (game->input.keyboard.isPressed(input::KeyboardKey::D) || game->input.keyboard.isPressed(input::KeyboardKey::Right))
 			xOffset += 5;
 		// ^^^	isPressed testing	^^^
 
