@@ -14,7 +14,6 @@ namespace bloom {
 		m_isRunning(false)
 	{
 		++s_runningInstancesQnt;
-
 	}
 	Game::~Game() {
 		destroy();
