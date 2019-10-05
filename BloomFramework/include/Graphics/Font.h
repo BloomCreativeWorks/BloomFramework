@@ -1,6 +1,6 @@
 #pragma once
-#include "stdIncludes.h"
 #include <optional>
+#include "stdIncludes.h"
 
 namespace bloom::graphics {
 	class SpriteText;
@@ -43,7 +43,7 @@ namespace bloom::graphics {
 	private:
 		Font(const std::filesystem::path& fontPath, FontStyle style, std::optional<int> pointSize, std::optional<long> fontFaceIndex);
 
-		operator TTF_Font*() const { return m_font; }
+		operator TTF_Font* () const { return m_font; }
 
 		TTF_Font* m_font = nullptr;
 		FontStyle m_style;

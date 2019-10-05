@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 
 namespace bloom::systems {
@@ -12,7 +11,7 @@ namespace bloom::systems {
 		DefaultSystem& operator=(DefaultSystem&&) = delete;
 		virtual ~DefaultSystem() = default;
 
-		virtual void update(double deltaTime = 0) = 0;
+		virtual void update(double deltaTime = 0.0) = 0;
 
 	protected:
 		entt::registry& m_registry;

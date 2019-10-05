@@ -6,9 +6,9 @@
 namespace bloom::graphics {
 	struct TextStyle {
 		enum class BlendingMode {
-			normal = 0,
-			shaded = 1,
-			blended = 2
+			normal,
+			shaded,
+			blended
 		} blendingMode = BlendingMode::normal;
 		SDL_Color foregroundColor = { 255, 255, 255, 0 };
 		SDL_Color backgroundColor = { 0, 0, 0, 0 };

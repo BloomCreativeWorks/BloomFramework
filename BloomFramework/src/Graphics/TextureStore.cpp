@@ -3,7 +3,7 @@
 #include "Game.h"
 
 namespace bloom::graphics {
-	TextureStore::TextureStore(SDL_Renderer*& renderer) : c_renderer(renderer) {}
+	TextureStore::TextureStore(SDL_Renderer* const& renderer) : c_renderer(renderer) {}
 
 	TextureStore::TextureStore(Game& object) : c_renderer(object._getRenderer()) {}
 

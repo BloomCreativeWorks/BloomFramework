@@ -1,9 +1,9 @@
 #pragma once
-
+#include <array>
 #include "Framework.h"
 
 /*
- Crap system just to test if shit works, don't mind the hard coded fuckery here.
+ Crap system just to test if shit works, don't mind the hard coded duckery here.
  Definitely shouldn't be in bloom::systems.
 */
 
@@ -25,7 +25,7 @@ public:
 	}
 private:
 	int m_counter = 99;
-	const std::vector<std::string> c_animations{
+	const std::array<std::string, 4> c_animations{
 		"up",
 		"down",
 		"left",

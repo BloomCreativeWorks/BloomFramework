@@ -10,7 +10,7 @@ namespace bloom {
 	namespace graphics {
 		class BLOOMFRAMEWORK_API TextureStore {
 		public:
-			TextureStore(SDL_Renderer*& renderer);
+			TextureStore(SDL_Renderer* const& renderer);
 			TextureStore(Game& object);
 
 			TexturePtr load(const std::filesystem::path& filePath, std::optional<SDL_Color> colorKey = std::nullopt);

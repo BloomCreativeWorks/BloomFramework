@@ -82,14 +82,16 @@ namespace bloom {
 		std::clog << "SDL_image initialized" << std::endl;
 	}
 
-	void Game::exit() {
+	bool Game::exit() {
 		// Prevent the SDL from being unloaded if there is at least one alive object
 		if (!s_runningInstancesQnt) {
 			IMG_Quit();
 			TTF_Quit();
 			Mix_Quit();
 			SDL_Quit();
+			return true;
 		}
+		return false;
 	}
 
 	void Game::create(std::string_view title, components::Position pos) {

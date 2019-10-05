@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 #include "Components/Components.h"
 #include "DefaultSystem.h"
@@ -12,7 +11,7 @@ namespace bloom::systems {
 		using System::DefaultSystem;
 
 	public:
-		void update(double = 0) override {
+		void update(double = 0.0) override {
 			m_registry.view<Position, Size, Sprite>().each(
 				[](auto, Position& position, Size& size, Sprite& sprite) {
 					sprite.texture->render(sprite.srcRect, SDL_Rect{ position.x, position.y, size.w, size.h });

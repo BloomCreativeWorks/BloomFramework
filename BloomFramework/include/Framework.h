@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 #include "Audio/Audio.h"
 #include "Exception.h"

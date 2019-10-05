@@ -1,7 +1,5 @@
 #pragma once
-
 #include "Framework.h"
-#include "RandomComponent.h"
 
 class TestAnimChar : public bloom::GameObject {
 	using Position = bloom::components::Position;
