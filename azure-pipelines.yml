@@ -12,45 +12,49 @@ trigger:
 pr:
 - '*'
 
-pool:
-  vmImage: 'windows-2019'
-  demands:
-  - 'msbuild'
-  - 'visualstudio'
+jobs:
+- job: BloomFramework
+  pool:
+    vmImage: 'windows-2019'
+    demands:
+    - 'msbuild'
+    - 'visualstudio'
 
-variables:
-  solution: '**/*.sln'
+  variables:
+    solution: '*.sln'
 
-strategy:
-  matrix:
-    debug-x86:
-      buildPlatform: 'x86'
-      buildConfiguration: 'Debug'
-    debug-x64:
-      buildPlatform: 'x64'
-      buildConfiguration: 'Debug'
-    release-x86:
-      buildPlatform: 'x86'
-      buildConfiguration: 'Release'
-    release-x64:
-      buildPlatform: 'x64'
-      buildConfiguration: 'Release'
+  strategy:
+    maxParallel: 10
+    matrix:
+      debug-x86:
+        buildPlatform: 'x86'
+        buildConfiguration: 'Debug'
+      debug-x64:
+        buildPlatform: 'x64'
+        buildConfiguration: 'Debug'
+      release-x86:
+        buildPlatform: 'x86'
+        buildConfiguration: 'Release'
+      release-x64:
+        buildPlatform: 'x64'
+        buildConfiguration: 'Release'
 
-steps:
-- checkout: 'self'
-  lfs: true
-  submodules: 'recursive'
+  steps:
+  - checkout: 'self'
+    lfs: true
+    submodules: 'recursive'
 
-- task: NuGetCommand@2
-  displayName: 'Restore NuGet packages'
-  inputs:
-    restoreSolution: '$(solution)'
-    verbosityRestore: 'Normal'
+  - task: NuGetCommand@2
+    displayName: 'Restore NuGet packages'
+    inputs:
+      restoreSolution: '$(solution)'
+      verbosityRestore: 'Normal'
 
-- task: VSBuild@1
-  displayName: 'Build solution'
-  inputs:
-    solution: '$(solution)'
-    vsVersion: '16.0'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+  - task: VSBuild@1
+    displayName: 'Build solution $(solution)'
+    inputs:
+      solution: '$(solution)'
+      vsVersion: '16.0'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+      maximumCpuCount: true
