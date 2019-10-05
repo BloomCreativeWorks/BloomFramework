@@ -3,7 +3,7 @@
 
 #ifdef BLOOMFRAMEWORK_EXPORT
 #define BLOOMFRAMEWORK_API __declspec(dllexport)
-#else 
+#else
 #define BLOOMFRAMEWORK_API __declspec(dllimport)
 #endif
 

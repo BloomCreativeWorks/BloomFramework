@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 #include "Components/Components.h"
 #include "Game.h"
@@ -15,20 +14,26 @@ namespace bloom {
 	*
 	* The destructor will automatically destroy the entity from the registry when GameObject gets out of scope.
 	*/
-	class BLOOMFRAMEWORK_API GameObject {
-		using Position = bloom::components::Position;
-
+	class GameObject {
 	public:
-		GameObject(entt::DefaultRegistry & registry, Game *& gameInstance);
-		~GameObject();
+		GameObject(entt::registry& registry, Game*& gameInstance) : m_registry(registry), c_gameInstance(gameInstance) {
+			m_entity = m_registry.create();
+			m_registry.assign<components::Position>(m_entity);
+			m_registry.assign<components::Size>(m_entity);
+		}
+
+		virtual ~GameObject() {
+			if (m_registry.valid(m_entity))
+				m_registry.destroy(m_entity);
+		}
 
 		virtual void init() = 0;
 
-		uint32_t getEntityID();
+		uint32_t getEntityID() const { return m_entity; }
 
 	protected:
-		entt::DefaultRegistry & m_registry;
-		Game *& m_gameInstance;
+		entt::registry& m_registry;
+		Game* const& c_gameInstance;
 		uint32_t m_entity;
 	};
 }

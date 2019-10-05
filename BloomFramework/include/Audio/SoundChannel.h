@@ -1,5 +1,4 @@
 #pragma once
-
 #include <vector>
 #include <stack>
 #include "stdIncludes.h"
@@ -7,7 +6,7 @@
 namespace bloom::audio {
 	class BLOOMFRAMEWORK_API SoundChannel {
 	public:
-		SoundChannel(SoundChannel * objThisPtr);
+		SoundChannel(SoundChannel* objThisPtr);
 		~SoundChannel();
 
 		static void optimize();

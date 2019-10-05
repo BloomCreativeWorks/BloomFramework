@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 #include "Components/Components.h"
 #include "DefaultSystem.h"
@@ -12,15 +11,13 @@ namespace bloom::systems {
 		using System::DefaultSystem;
 
 	public:
-		void update(std::optional<double> deltaTime = 0.0) override {
+		void update(double deltaTime = 0.0) override {
 			m_registry.view<AnimationPtr>().each(
-				[&](auto entity, AnimationPtr& anim) {
-					if (m_registry.has<AnimationSet>(entity)) {
-						AnimationPtr newAnim = m_registry.get<AnimationSet>(entity).getCurrent();
-						if (newAnim)
-							anim = newAnim;
-					}
-					m_registry.replace<Sprite>(entity, anim->update(deltaTime.value()));
+				[this, deltaTime](auto entity, AnimationPtr& animation) {
+					if (m_registry.has<AnimationSet>(entity))
+						if (auto currentAnimation = m_registry.get<AnimationSet>(entity).getCurrent(); currentAnimation)
+							animation = currentAnimation;
+					m_registry.replace<Sprite>(entity, animation->update(deltaTime));
 				}
 			);
 		}

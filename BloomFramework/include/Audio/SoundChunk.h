@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdIncludes.h"
 
 namespace bloom::audio {
@@ -9,11 +8,11 @@ namespace bloom::audio {
 		friend class SoundPlayer;
 
 	public:
-		SoundChunk(const std::filesystem::path & filePath, bool ignoreChecks = false);
+		SoundChunk(const std::filesystem::path& filePath, bool ignoreChecks = false);
 		~SoundChunk();
 
 	private:
-		Mix_Chunk * m_chunk = nullptr;
+		Mix_Chunk* m_chunk = nullptr;
 	};
 
 	using SoundChunkPtr = std::shared_ptr<SoundChunk>;

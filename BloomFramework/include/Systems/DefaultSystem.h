@@ -1,17 +1,20 @@
 #pragma once
-
-#include <optional>
 #include "stdIncludes.h"
 
 namespace bloom::systems {
 	class DefaultSystem {
 	public:
-		DefaultSystem(entt::DefaultRegistry & registry) : m_registry(registry) {};
+		DefaultSystem(entt::registry& registry) : m_registry(registry) {}
+		DefaultSystem(const DefaultSystem&) = default;
+		DefaultSystem(DefaultSystem&&) = default;
+		DefaultSystem& operator=(const DefaultSystem&) = delete;
+		DefaultSystem& operator=(DefaultSystem&&) = delete;
+		virtual ~DefaultSystem() = default;
 
-		virtual void update(std::optional<double> deltaTime = std::nullopt) = 0;
+		virtual void update(double deltaTime = 0.0) = 0;
 
 	protected:
-		entt::DefaultRegistry & m_registry;
+		entt::registry& m_registry;
 	};
 
 	using System = DefaultSystem;

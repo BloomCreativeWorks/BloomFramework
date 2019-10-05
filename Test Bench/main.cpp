@@ -59,10 +59,9 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	const int framedelay = 1000 / 60;
 
 	Uint32 framestart;
-
-	game = new Game(WINDOW_WIDTH, WINDOW_HEIGHT);
+	game = new Game({ WINDOW_WIDTH, WINDOW_HEIGHT });
 	try {
-		game->create("Bloom Test", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+		game->create("Bloom Test", { SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED });
 	}
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
@@ -91,7 +90,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	constexpr size_t UI_font = 0;
 	fonts.load(fontPath, UI_font);
 
-	auto renderer = game->getRenderer();
+	auto renderer = game->_getRenderer();
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, fonts[UI_font], "Hello, World!");
 	{
@@ -115,38 +114,37 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	game->delay(500);
 
 	// Test Game Object
-	entt::DefaultRegistry testRegistry;
+	entt::registry testRegistry;
 	AnimationChangerSystem animChangerTest(testRegistry);
 	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	//game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	//game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
+	testSprite.enableRandomPos();
 	renderSysTest.update();
 	game->render();
 	TestChar testSprite2 = TestChar(testRegistry, game);
 	testSprite2.init(SDL_Rect{ 128, 0, 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
+	testSprite2.enableRandomPos();
 	renderSysTest.update();
 	game->render();
 	TestChar testGO = TestChar(testRegistry, game);
 	testGO.init(SDL_Rect{ 50, 50, 192, 192 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
-	testGO.disableRandomPos();
 	renderSysTest.update();
 	game->render();
 
-	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
+	// Randomizes position of entities (which has `RandomPos` component)
 	RandomPositionSystem randomizer(testRegistry);
 	TestAnimChar testAnim(testRegistry, game);
 	testAnim.init(testCharPath);
 
 	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
-	
-	// If manual control of entities is required, this is the method to do so.
-	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
-	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
+	// If manual control of entities is required, this is the method to do so.
+	auto& testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+
+	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = rstep(10), testY = rstep(10);
 
 	while (game->isRunning()) {
@@ -205,6 +203,7 @@ int main(int argc, char* argv[]) {
 	sounds[1]->play();
 	std::this_thread::sleep_for(3s);
 	sounds.clear();
+	delete game;
 
 	return 0;
 }
