@@ -118,8 +118,6 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	AnimationChangerSystem animChangerTest(testRegistry);
 	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	//game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	//game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	testSprite.enableRandomPos();

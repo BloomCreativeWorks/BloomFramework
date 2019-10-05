@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "Exception.h"
 
-// Yeah, I know macros are bad
 #define CHECK_IMG_FORMAT_FAILED(format) if (failed & IMG_INIT_##format) \
 std::clog << "Failed to initialize " << #format << " format support" << std::endl;
 
@@ -16,26 +15,7 @@ namespace bloom {
 	{
 		++s_runningInstancesQnt;
 
-		// Can't reproduce it :(
-		//if ((c_windowFlags & (SDL_WINDOW_FULLSCREEN | SDL_WINDOW_FULLSCREEN_DESKTOP)) == SDL_WINDOW_FULLSCREEN)
-		//	throw Exception{ "Game", "SDL_WINDOW_FULLSCREEN flag is used. \
-		//		This can lead to graphic oddities when using hardware acceleration! Use SDL_WINDOW_FULLSCREEN_DESKTOP flag instead." };
 	}
-
-	//Game::Game(std::nothrow_t, components::Size windowSize, const std::pair<int, int>& flags) :
-	//	m_screenWidth(windowSize.w),
-	//	m_screenHeight(windowSize.h),
-	//	c_windowFlags(flags.first),
-	//	c_rendererFlags(flags.second),
-	//	m_isRunning(false)
-	//{
-	//	if (SDL_WasInit(0) == 0)
-	//		initialize();
-
-	//	if (c_windowFlags & SDL_WINDOW_FULLSCREEN)
-	//		std::clog << "[Game] SDL_WINDOW_FULLSCREEN flag is used. This can lead to graphic oddities when using hardware acceleration!" << std::endl;
-	//}
-
 	Game::~Game() {
 		destroy();
 		--s_runningInstancesQnt;
@@ -152,9 +132,4 @@ namespace bloom {
 		m_color = color;
 		SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
 	}
-
-	//void Game::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-	//	m_color = { r, g, b, a };
-	//	SDL_SetRenderDrawColor(m_renderer, m_color.r, m_color.g, m_color.b, m_color.a);
-	//}
 }

@@ -36,7 +36,7 @@ namespace bloom::graphics {
 			return m_style.pointSize;
 		}
 
-		bool isFixedWidth() const { // maybe `isMonospaced` is better?
+		bool isFixedWidth() const {
 			return TTF_FontFaceIsFixedWidth(m_font);
 		}
 
