@@ -8,13 +8,13 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 	public:
+
 		/**
-		 * @param windowSize Required window size
-		 * @param flags Window and renderer flags
+		 * @brief Retrieves a reference to an instance of Game
+		 *
+		 * Only one instance of Game can exist at any singular moment, and will be initialized on first use.
 		 */
-		Game(components::Size windowSize, const std::pair<int, int>& flags = { 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC });
-		//Game(std::nothrow_t, components::Size windowSize, const std::pair<int, int>& flags = { SDL_WINDOW_FULLSCREEN, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC });
-		~Game();
+		static Game& getInstance();
 
 		/**
 		 * @brief Initializes SDL subsystems and modules with certain parameters
@@ -28,18 +28,14 @@ namespace bloom {
 			int imageFlags = IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF | IMG_INIT_WEBP);
 
 		/**
-		 * @brief Cleans up initialized SDL subsystems and modules
-		 */
-		static bool exit();
-
-
-		/**
 		 * @brief Creates a window with certain parameters
 		 *
 		 * @param title Window title
 		 * @param pos Window position
+		 * @param windowSize Required window size
+		 * @param flags Window and renderer flags
 		 */
-		void create(std::string_view title, components::Position pos);
+		void create(std::string_view title, components::Position pos, components::Size windowSize, const std::pair<int, int>& flags = { 0, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC });
 
 		/**
 		 * @brief Updates timer
@@ -127,12 +123,19 @@ namespace bloom {
 		SDL_Renderer* m_renderer{ nullptr };
 		SDL_Window* m_window{ nullptr };
 		components::Size m_windowSize;
-		const int c_windowFlags, c_rendererFlags;
+		//const int c_windowFlags, c_rendererFlags;
 		SDL_Color m_color{};
 		SDL_Event m_event{};
 		bool m_isRunning;
 
 	private:
-		static int s_runningInstancesQnt;
+		Game() = default;
+		//Game(std::nothrow_t, components::Size windowSize, const std::pair<int, int>& flags = { SDL_WINDOW_FULLSCREEN, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC });
+		~Game();
+
+		/**
+		 * @brief Cleans up initialized SDL subsystems and modules
+		 */
+		static void exit();
 	};
 }

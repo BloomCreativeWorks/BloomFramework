@@ -5,21 +5,15 @@
 std::clog << "Failed to initialize " << #format << " format support" << std::endl;
 
 namespace bloom {
-	int Game::s_runningInstancesQnt = 0;
 
-	Game::Game(components::Size windowSize, const std::pair<int, int>& flags) :
-		m_windowSize(windowSize),
-		c_windowFlags(flags.first),
-		c_rendererFlags(flags.second),
-		m_isRunning(false)
-	{
-		++s_runningInstancesQnt;
+	Game& Game::getInstance() {
+		static Game instance;
+		return instance;
 	}
+
 	Game::~Game() {
 		destroy();
-		--s_runningInstancesQnt;
-		//if (s_runningInstancesQnt <= 0)
-		//	exit();
+		exit();
 	}
 
 	void Game::initialize(uint32_t initFlags,
@@ -61,25 +55,21 @@ namespace bloom {
 		std::clog << "SDL_image initialized" << std::endl;
 	}
 
-	bool Game::exit() {
-		// Prevent the SDL from being unloaded if there is at least one alive object
-		if (!s_runningInstancesQnt) {
-			IMG_Quit();
-			TTF_Quit();
-			Mix_Quit();
-			SDL_Quit();
-			return true;
-		}
-		return false;
+	void Game::exit() {
+		IMG_Quit();
+		TTF_Quit();
+		Mix_Quit();
+		SDL_Quit();
 	}
 
-	void Game::create(std::string_view title, components::Position pos) {
-		m_window = SDL_CreateWindow(title.data(), pos.x, pos.y, m_windowSize.w, m_windowSize.h, c_windowFlags);
+	void Game::create(std::string_view title, components::Position pos, components::Size windowSize, const std::pair<int, int>& flags) {
+		m_windowSize = windowSize;
+		m_window = SDL_CreateWindow(title.data(), pos.x, pos.y, windowSize.w, windowSize.h, flags.first);
 		if (!m_window)
 			throw Exception{ "Game::initialize", SDL_GetError() };
-		std::clog << "Window created with width of " << m_windowSize.w << " and height of " << m_windowSize.h << std::endl;
+		std::clog << "Window created with width of " << windowSize.w << " and height of " << windowSize.h << std::endl;
 
-		m_renderer = SDL_CreateRenderer(m_window, -1, c_rendererFlags);
+		m_renderer = SDL_CreateRenderer(m_window, -1, flags.second);
 		if (!m_renderer)
 			throw Exception{ "Game::initialize", SDL_GetError() };
 		std::clog << "Renderer initialized." << std::endl;
