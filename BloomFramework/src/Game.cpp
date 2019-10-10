@@ -5,7 +5,6 @@
 std::clog << "Failed to initialize " << #format << " format support" << std::endl;
 
 namespace bloom {
-
 	Game& Game::getInstance() {
 		static Game instance;
 		return instance;

@@ -8,6 +8,8 @@
 namespace bloom {
 	class BLOOMFRAMEWORK_API Game {
 	public:
+		Game(Game const&) = delete;
+		void operator=(Game const&) = delete;
 
 		/**
 		 * @brief Retrieves a reference to an instance of Game
