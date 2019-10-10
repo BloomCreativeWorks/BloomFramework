@@ -18,7 +18,7 @@ using bloom::components::Position;
 using namespace bloom::graphics;
 using bloom::components::Size;
 
-Game* game = nullptr;
+Game& game = Game::getInstance();
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
@@ -59,9 +59,8 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	const int framedelay = 1000 / 60;
 
 	Uint32 framestart;
-	game = new Game({ WINDOW_WIDTH, WINDOW_HEIGHT });
 	try {
-		game->create("Bloom Test", { SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED });
+		game.create("Bloom Test", { SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED }, { WINDOW_WIDTH, WINDOW_HEIGHT });
 	}
 	catch (Exception & e) {
 		std::cerr << e.what() << std::endl;
@@ -70,9 +69,9 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	srand(static_cast<uint32_t>(time(nullptr)));
 	SDL_Color randColor = { static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255),
 		static_cast<Uint8>(rand() % 255), static_cast<Uint8>(rand() % 255) };
-	game->setColor(randColor);
-	game->clear();
-	game->render();
+	game.setColor(randColor);
+	game.clear();
+	game.render();
 
 	fs::path assetsPath = dataDir / L"Assets";
 	fs::path fontsPath = dataDir / L"Fonts";
@@ -83,21 +82,21 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	fs::path spriteSheetPath = assetsPath / "OverworldTestSpritesheet.png";
 	fs::path testCharPath = assetsPath / "TestChar.png";
 	fs::path fontPath = fontsPath / "Fira Code.ttf";
-	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	game.textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
+	game.textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
 
 	FontStore fonts;
 	constexpr size_t UI_font = 0;
 	fonts.load(fontPath, UI_font);
 
-	auto renderer = game->_getRenderer();
+	auto renderer = game._getRenderer();
 	// Test SpriteText(NFont)
 	bloom::graphics::SpriteText testText(renderer, fonts[UI_font], "Hello, World!");
 	{
 		auto newStyle = testText.getStyle();
 		newStyle.blendingMode = TextStyle::BlendingMode::blended;
 
-		SDL_Color col, curcol = game->getColor();
+		SDL_Color col, curcol = game.getColor();
 		std::clog << "current_color: r: " << +curcol.r << ", g: " << +curcol.g << ", b: " << +curcol.b << std::endl;
 		if (curcol.r + curcol.g + curcol.b >= 384) {
 			col = { 0, 0, 0, 0 };
@@ -110,8 +109,8 @@ void test_drawer(const std::filesystem::path& dataDir) {
 		testText.setStyle(newStyle);
 	}
 	testText.render(std::nullopt, SDL_Point{ 300, 250 });
-	game->render();
-	game->delay(500);
+	game.render();
+	game.delay(500);
 
 	// Test Game Object
 	entt::registry testRegistry;
@@ -122,16 +121,16 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	testSprite.enableRandomPos();
 	renderSysTest.update();
-	game->render();
+	game.render();
 	TestChar testSprite2 = TestChar(testRegistry, game);
 	testSprite2.init(SDL_Rect{ 128, 0, 128, 128 }, testCharPath, SDL_Rect{ 0, 0, 32, 32 });
 	testSprite2.enableRandomPos();
 	renderSysTest.update();
-	game->render();
+	game.render();
 	TestChar testGO = TestChar(testRegistry, game);
 	testGO.init(SDL_Rect{ 50, 50, 192, 192 }, testCharPath, SDL_Rect{ 64, 96, 32, 32 });
 	renderSysTest.update();
-	game->render();
+	game.render();
 
 	// Randomizes position of entities (which has `RandomPos` component)
 	RandomPositionSystem randomizer(testRegistry);
@@ -147,7 +146,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = rstep(10), testY = rstep(10);
 
-	while (game->isRunning()) {
+	while (game.isRunning()) {
 		testGOpos.x += testX;
 		testGOpos.y += testY;
 		if (testGOpos.x >= WINDOW_WIDTH) {
@@ -158,9 +157,9 @@ void test_drawer(const std::filesystem::path& dataDir) {
 		}
 		// Demo ends here.
 		framestart = SDL_GetTicks();
-		auto dt = game->timer.lap();
-		game->handleEvents();
-		game->clear();
+		auto dt = game.timer.lap();
+		game.handleEvents();
+		game.clear();
 		animChangerTest.update();
 		animSysTest.update(dt);
 		randomizer.update(WINDOW_WIDTH - 128, WINDOW_HEIGHT - 128);
@@ -170,15 +169,15 @@ void test_drawer(const std::filesystem::path& dataDir) {
 		deltaTimeText += std::to_string(fps);
 		testText.setText(deltaTimeText);
 		testText.render(std::nullopt, SDL_Point{ 0, 0 });
-		game->render();
-		//game->update();
+		game.render();
+		//game.update();
 		int frametime = SDL_GetTicks() - framestart;
 
 		if (framedelay > frametime) {
-			game->delay(framedelay - frametime);
+			game.delay(framedelay - frametime);
 		}
 	}
-	game->destroy();
+	game.destroy();
 }
 
 int main(int argc, char* argv[]) {
@@ -203,7 +202,6 @@ int main(int argc, char* argv[]) {
 	sounds[1]->play();
 	std::this_thread::sleep_for(3s);
 	sounds.clear();
-	delete game;
 
 	return 0;
 }

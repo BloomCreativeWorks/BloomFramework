@@ -19,7 +19,7 @@ public:
 	}
 
 	void init(SDL_Rect pos_and_size = SDL_Rect{ 50,50, 256, 256 }, const std::filesystem::path& texturePath = "Assets/TestChar.png", std::optional<SDL_Rect> srcRect = std::nullopt) {
-		auto tmp = c_gameInstance->textures.load(texturePath);
+		auto tmp = c_gameInstance.textures.load(texturePath);
 		init(tmp, pos_and_size, srcRect);
 	}
 

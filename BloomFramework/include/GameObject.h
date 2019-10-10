@@ -16,7 +16,7 @@ namespace bloom {
 	*/
 	class GameObject {
 	public:
-		GameObject(entt::registry& registry, Game*& gameInstance) : m_registry(registry), c_gameInstance(gameInstance) {
+		GameObject(entt::registry& registry, Game& gameInstance) : m_registry(registry), c_gameInstance(gameInstance) {
 			m_entity = m_registry.create();
 			m_registry.assign<components::Position>(m_entity);
 			m_registry.assign<components::Size>(m_entity);
@@ -33,7 +33,7 @@ namespace bloom {
 
 	protected:
 		entt::registry& m_registry;
-		Game* const& c_gameInstance;
+		Game& c_gameInstance;
 		uint32_t m_entity;
 	};
 }
