@@ -98,9 +98,8 @@ namespace bloom {
 	}
 
 	void Game::handleEvents() {
-		SDL_PollEvent(&m_event);
-
-		if (m_event.type == SDL_QUIT)
+		input.update();
+		if (input.quitRequested())
 			m_isRunning = false;
 	}
 

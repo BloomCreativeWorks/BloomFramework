@@ -52,5 +52,8 @@
     <ClInclude Include="GameObjectTest\AnimationChangerSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameObjectTest\TestControllableObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

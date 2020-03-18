@@ -193,11 +193,14 @@
     <ClInclude Include="include\Audio\SoundChunk.h" />
     <ClInclude Include="include\GameObject.h" />
     <ClInclude Include="include\Graphics\Animation.h" />
+    <ClInclude Include="include\Input\InputEvents.h" />
     <ClInclude Include="include\Systems\AnimationSystem.h" />
     <ClInclude Include="include\Graphics\Drawable.h" />
     <ClInclude Include="include\Graphics\Font.h" />
     <ClInclude Include="include\Graphics\FontStore.h" />
     <ClInclude Include="include\Graphics\SpriteText.h" />
+    <ClInclude Include="include\Input\InputDefinitions.h" />
+    <ClInclude Include="include\Input\InputManager.h" />
     <ClInclude Include="include\Systems\DefaultSystem.h" />
     <ClInclude Include="include\Systems\RenderSystem.h" />
     <ClInclude Include="include\Systems\Systems.h" />
@@ -224,6 +227,8 @@
     <ClCompile Include="src\Graphics\SpriteText.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\TextureStore.cpp" />
+    <ClCompile Include="src\Input\InputEvents.cpp" />
+    <ClCompile Include="src\Input\InputManager.cpp" />
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{901b4a12-4da2-4795-b576-f703b5eb63bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{bc7594da-4383-42e6-9da9-5122304c4bfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{1f775a83-4d98-4f93-bf11-b69ad3949381}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Audio">
       <UniqueIdentifier>{91153568-16e8-4684-82a5-dce4be5c6640}</UniqueIdentifier>
     </Filter>
@@ -69,6 +75,9 @@
     <ClCompile Include="src\Graphics\TextureStore.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Input\InputManager.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
     <ClCompile Include="src\Graphics\Animation.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
@@ -86,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\FontStore.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Input\InputEvents.cpp">
+      <Filter>Source Files\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +173,12 @@
     <ClInclude Include="include\Graphics\TextureStore.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="include\Input\InputManager.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input\InputDefinitions.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
     <ClInclude Include="include\Components\Animation.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
@@ -193,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="include\Graphics\FontStore.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Input\InputEvents.h">
+      <Filter>Header Files\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

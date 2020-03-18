@@ -9,6 +9,7 @@
 #include "GameObjectTest/RandomizerSystem.h"
 #include "GameObjectTest/TestAnimatedGameObject.h"
 #include "GameObjectTest/AnimationChangerSystem.h"
+#include "GameObjectTest/TestControllableObject.h"
 #include "getExePath.h"
 
 using namespace bloom;
@@ -34,7 +35,7 @@ void test_player(const std::filesystem::path& dataDir) {
 	fs::path soundsPath = dataDir / L"Sounds";
 
 	//MusicTrack track1{ musicPath / L"music_007.mp3" };
-
+	music.queue.setVolume(0.0);
 	music.push(musicPath / L"music_001.mp3");
 	music.push(musicPath / L"music_002.mp3");
 	music.push(musicPath / L"music_003.mp3");
@@ -81,11 +82,14 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	if (!std::filesystem::exists(assetsPath))
 		throw bloom::Exception{ "Test Bench", "Required assets can't be found" };
 
-	fs::path spriteSheetPath = assetsPath / "OverworldTestSpritesheet.png";
-	fs::path testCharPath = assetsPath / "TestChar.png";
+	std::filesystem::path spriteSheetPath = assetsPath / L"OverworldTestSpritesheet.png";
+	std::filesystem::path testCharPath = assetsPath / L"TestChar.png";
+	std::filesystem::path testCursorPath = assetsPath / "testCursor.png";
+	std::filesystem::path testBoxPath = assetsPath / "Box.png";
 	fs::path fontPath = fontsPath / "Fira Code.ttf";
 	game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
 	game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	game->textures.load(testCursorPath);
 
 	FontStore fonts;
 	constexpr size_t UI_font = 0;
@@ -119,8 +123,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 	AnimationChangerSystem animChangerTest(testRegistry);
 	bloom::systems::AnimationSystem animSysTest(testRegistry);
 	bloom::systems::RenderSystem renderSysTest(testRegistry);
-	//game->textures.load(spriteSheetPath, SDL_Color{ 64, 176, 104, 113 });
-	//game->textures.load(testCharPath, SDL_Color{ 144,168,0,0 });
+	TestChar cursor = TestChar(testRegistry, game);
 	TestChar testSprite = TestChar(testRegistry, game);
 	testSprite.init(SDL_Rect{ 0, 0, 128, 128 }, spriteSheetPath, SDL_Rect{ 0,0,32,32 });
 	renderSysTest.update();
@@ -137,21 +140,74 @@ void test_drawer(const std::filesystem::path& dataDir) {
 
 	// Randomizes position of entities(excluding those with `NoRandomPos` Component.
 	RandomPositionSystem randomizer(testRegistry);
+
+	cursor.init(SDL_Rect{ 0,0,39,55 }, testCursorPath);
+	cursor.disableRandomPos();
 	TestAnimChar testAnim(testRegistry, game);
 	testAnim.init(testCharPath);
+	TestMovableObject testMovable(testRegistry, game);
+	testMovable.init(SDL_Rect{ 0,0, 50, 50 }, testBoxPath);
 
 	// Test SpriteText2
 	std::string deltaTimeText{ "fps: " };
-	
-	// If manual control of entities is required, this is the method to do so.
-	auto & testGOpos = testRegistry.get<Position>(testGO.getEntityID());
 
-	auto & testGOsize = testRegistry.get<Size>(testGO.getEntityID());
+	// If manual control of entities is required, this is the method to do so.
+	auto& testGOpos = testRegistry.get<Position>(testGO.getEntityID());
+
+	auto& testGOsize = testRegistry.get<Size>(testGO.getEntityID());
 	int testX = rstep(10), testY = rstep(10);
+
+	auto& cursorPos = testRegistry.get<Position>(cursor.getEntityID());
 
 	while (game->isRunning()) {
 		testGOpos.x += testX;
 		testGOpos.y += testY;
+
+		cursorPos.x = game->input.mouse.getX();
+		cursorPos.y = game->input.mouse.getY();
+		switch (char sym = game->input.keyboard) {
+		case '\0':
+			break;
+		case '\b':
+			std::cout << "\b \b";
+			break;
+		case '\n': case '\r':
+			std::cout << "\r\n";
+			break;
+		default:
+			std::cout << sym;
+		}
+
+		// vvv	wasUp and wasDown testing	vvv
+		if (game->input.keyboard.wasDown(input::KeyboardKey::Num0))
+			std::cout << std::endl << "zero was pressed" << std::endl;
+		if (game->input.keyboard.wasUp(input::KeyboardKey::Num0))
+			std::cout << std::endl << "zero was released" << std::endl;
+		if (game->input.keyboard.wasDown(input::KeyboardKey::CapsLock))
+			std::cout << std::endl << "caps lock was pressed" << std::endl;
+		if (game->input.keyboard.wasUp(input::KeyboardKey::CapsLock))
+			std::cout << std::endl << "caps lock was released" << std::endl;
+		if (game->input.mouse.wasDown(input::MouseButton::Left))
+			std::cout << std::endl << "left mouse button was pressed" << std::endl;
+		if (game->input.mouse.wasUp(input::MouseButton::Left))
+			std::cout << std::endl << "left mouse button was released" << std::endl;
+		// ^^^	wasUp and wasDown testing	^^^
+
+		// vvv	isPressed testing	vvv
+		int xOffset = 0, yOffset = 0;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::W) || game->input.keyboard.isPressed(input::KeyboardKey::Up))
+			yOffset -= 5;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::S) || game->input.keyboard.isPressed(input::KeyboardKey::Down))
+			yOffset += 5;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::A) || game->input.keyboard.isPressed(input::KeyboardKey::Left))
+			xOffset -= 5;
+		if (game->input.keyboard.isPressed(input::KeyboardKey::D) || game->input.keyboard.isPressed(input::KeyboardKey::Right))
+			xOffset += 5;
+		// ^^^	isPressed testing	^^^
+
+		testMovable.updatePos(xOffset, yOffset);
+
+
 		if (testGOpos.x >= WINDOW_WIDTH) {
 			testGOpos.x = -testGOsize.w; testX = rstep(10); testY = rstep(10);
 		}
@@ -180,6 +236,7 @@ void test_drawer(const std::filesystem::path& dataDir) {
 			game->delay(framedelay - frametime);
 		}
 	}
+	std::cout << std::endl;
 	game->destroy();
 }
 
